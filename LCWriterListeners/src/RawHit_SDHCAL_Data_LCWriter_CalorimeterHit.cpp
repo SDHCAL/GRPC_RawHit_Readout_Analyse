@@ -1,0 +1,67 @@
+#include "RawHit_SDHCAL_Data_LCWriter_CalorimeterHit.h"
+
+#include "RawHit_SDHCAL_Data.h"
+#include "IMPL/LCCollectionVec.h"
+#include "IMPL/LCFlagImpl.h"
+#include "IMPL/CalorimeterHitImpl.h"
+#include "EVENT/LCIO.h"
+
+#include <sstream>
+
+RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName) : RawHit_SDHCAL_Data_LCWriter(collectionName), m_setup(&setup) 
+{
+  if (m_setup->hasBIF()) m_parametersFromSetup["BIF"]=std::vector<int>(1,m_setup->getBIF());
+  std::vector<DIFdrivenDevice*> plans=m_setup->getPlans();
+  for (unsigned int i=0; i<plans.size(); ++i)
+    {
+      std::stringstream ss;
+      ss << "Plan_" << i << "_";
+      std::vector<unsigned int> uDIFs=plans[i]->DIFnumbers();
+      std::vector<int> DIFs;
+      for (std::vector<unsigned int>::iterator itdif=uDIFs.begin(); itdif != uDIFs.end(); ++itdif) DIFs.push_back(*itdif);
+      if (m_setup->DIFnumberIsStrip(DIFs[0])) ss << "strip";
+      if (m_setup->DIFnumberIsPad(DIFs[0])) ss << "pad";
+      m_parametersFromSetup[ss.str()]=DIFs;
+    }
+}
+
+
+IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFillCollection(const RawHit_SDHCAL_Data& d)
+{
+  IMPL::LCCollectionVec *col=new IMPL::LCCollectionVec(EVENT::LCIO::RAWCALORIMETERHIT);
+  //Prepare a flag to tag data type in  col (precise ce qu'on va enregistrer)
+  IMPL::LCFlagImpl chFlag(0) ;
+  //chFlag.setBit(EVENT::LCIO::RCHBIT_LONG ) ;                  // To be set when position will be provided
+  chFlag.setBit(EVENT::LCIO::RCHBIT_BARREL ) ;                  // barrel
+  chFlag.setBit(EVENT::LCIO::RCHBIT_ID1 ) ;                     // cell ID1 set (ID0 du raw calorimeter hit )
+  chFlag.setBit(EVENT::LCIO::RCHBIT_TIME ) ;                    // timestamp set
+  col->setFlag( chFlag.getFlag() ) ; 
+
+  for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=d.getHitVector().begin(); itHit!=d.getHitVector().end(); ++itHit)
+    {
+      unsigned int I,J,K;
+      m_setup->getCoord3D(itHit->dif(), itHit->asic(), itHit->channel(), I, J, K);
+      unsigned int ID0=((K&0xFF)<<16)+((J&0xFF)<<8)+(I&0xFF);
+      
+      IMPL::CalorimeterHitImpl *newHit=new IMPL::CalorimeterHitImpl();
+      newHit->setCellID0(ID0);
+      newHit->setCellID1((*itHit)->getCellID0());
+      newHit->setEnergy((*itHit)->getAmplitude());
+      newHit->setTime((*itHit)->getTimeStamp());
+      //newHit->setPosition(const float pos[3])  ; //a mettre plus tard
+      col->addElement(newHit);
+    }
+  return col;
+}
+
+void RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::finalizeCollection(IMPL::LCCollectionVec* col)
+{
+  //Fixme, should recopy value if it exists
+  col->parameters().setValue( "CellID0Encoding", "DIF:8,ASIC:8,Channel:6" );
+
+  col->parameters().setValue( EVENT::LCIO::CellIDEncoding, "I:8,J:8,K:8" );
+  
+  for (std::map<std::string, std::vector<int> >::iterator it=m_parametersFromSetup.begin(); it != m_parametersFromSetup.end(); ++it)
+    col->parameters().setValues(it->first,it->second);
+    
+}
