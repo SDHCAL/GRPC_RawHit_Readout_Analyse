@@ -7,7 +7,7 @@
 
 RawHit_SDHCAL_Data_Reader_FromBIF::~RawHit_SDHCAL_Data_Reader_FromBIF()
 {
-  std::cout << "RawHit_SDHCAL_Data_Reader_fromBIF has seen " << m_nBIFseen << " BIF triggers" << std::endl;
+  std::cout << "RawHit_SDHCAL_Data_Reader_FromBIF has seen " << m_nBIFseen << " BIF triggers" << std::endl;
 }
 
 
