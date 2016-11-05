@@ -40,7 +40,7 @@ std::vector<RawCalorimeterHitPointer> extract(const std::vector<RawCalorimeterHi
 
 //functors
 struct rawHit_TimeStamp { unsigned int get(const RawCalorimeterHitPointer &h) {return h->getTimeStamp();} };
-struct rawHit_Amplitude_ { unsigned int get(const RawCalorimeterHitPointer &h) {return h->getAmplitude();} };  //erreur volontaire
+struct rawHit_Amplitude { unsigned int get(const RawCalorimeterHitPointer &h) {return h->getAmplitude();} };  
 struct rawHit_Threshold { unsigned int get(const RawCalorimeterHitPointer &h) {return h.thresholdCrossed();} };
 struct rawHit_DIF       { unsigned int get(const RawCalorimeterHitPointer &h) {return h.dif();} };
 struct rawHit_ASIC      { unsigned int get(const RawCalorimeterHitPointer &h) {return h.asic();} };

@@ -80,7 +80,7 @@ int main()
   
   
   std::cout << "hit with amplitude above 4" << std::endl;
-  testedVec=extract(hitvec,UI_intervalle(0,4),rawHit_Amplitude_(),false); print( testedVec, std::cout);
+  testedVec=extract(hitvec,UI_intervalle(0,4),rawHit_Amplitude(),false); print( testedVec, std::cout);
   assert(testedVec.size()==1); assert(testedVec[0]->getAmplitude()>4);
 
 
