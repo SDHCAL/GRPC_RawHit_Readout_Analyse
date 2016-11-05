@@ -7,6 +7,7 @@
 RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, int eventNumber, int64_t eventTimeStamp) 
   : m_runNumber(runNumber),
     m_eventNumber(eventNumber),
+    m_numberOfEventInThisData(1),
     m_eventTimeStamp(eventTimeStamp)
 {
   m_originalCollectionParameters=&col.getParameters();
@@ -19,18 +20,20 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, 
     }
 }
 
-RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, int runNumber, int eventNumber, int64_t eventTimeStamp)
+RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, int runNumber, int eventNumber, int64_t eventTimeStamp, int numberOfEventInThisData)
  : m_runNumber(runNumber),
    m_eventNumber(eventNumber),
+   m_numberOfEventInThisData(numberOfEventInThisData),
    m_eventTimeStamp(eventTimeStamp),
    m_hitvec(vec),
    m_DIFtimeInfo(),
    m_originalCollectionParameters(NULL)
 {}
 
-RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, const RawHit_SDHCAL_Data &d) 
+RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData) 
   : m_runNumber(d.getRunNumber()),
     m_eventNumber(d.getEventNumber()),
+    m_numberOfEventInThisData(numberOfEventInThisData),
     m_eventTimeStamp(d.getEventTimeStamp()),
     m_hitvec(vec),
     m_DIFtimeInfo(d.DIFtimeInfo()),

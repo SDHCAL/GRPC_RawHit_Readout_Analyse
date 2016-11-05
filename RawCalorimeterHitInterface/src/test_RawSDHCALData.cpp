@@ -53,7 +53,8 @@ void testDataContent(const RawHit_SDHCAL_Data& d)
   assert( d.getEventTimeStamp()==720 );
   assert( d.DIFtimeInfo().size()==3 );
   assert( d.getCollectionParameters()!=NULL ); 
-  
+  assert( d.getNumberOfEventInThisData()==1);
+
   std::map<unsigned int,DIF_timeInfo>::iterator it=d.DIFtimeInfo().begin();
   assert( it->first==3 );
   ++it; assert( it->first==4 );
@@ -80,12 +81,18 @@ int main()
   assert( a.getHitVector().empty() );
   assert( a.DIFtimeInfo().empty() );
   assert( a.getCollectionParameters()==NULL ); 
+  assert( a.getNumberOfEventInThisData()==1 );
+  RawHit_SDHCAL_Data aa(myvec, 5, 6, 144,5);
+  assert( aa.getNumberOfEventInThisData()==5 );
 
   std::vector<RawCalorimeterHitPointer> myvecBis;
   myvecBis.push_back(createRawHit(1,1,1,1, 1));
   a.replaceVec(myvecBis);
   assert( a.getHitVector().size()==1 );
   assert( a.DIFtimeInfo().empty() );
+  assert( a.getNumberOfEventInThisData()==1 );
+  a.replaceVec(myvecBis,3);
+  assert( a.getNumberOfEventInThisData()==3 );
 
   IMPL::LCParametersImpl LCparam;
   LCparam.setValue("DUMMY",35);
@@ -122,6 +129,14 @@ int main()
   testDataContent(c);
   assert( c.getHitVector().size()==1 );
 
+  c.replaceVec(myvecBis,4);
+  assert(c.getNumberOfEventInThisData()==4);
+
+  RawHit_SDHCAL_Data d(myvecBis,c);
+  testDataContent(d);
+
+  RawHit_SDHCAL_Data e(myvecBis,c,78);
+  assert(e.getNumberOfEventInThisData()==78);
 
   return 0;
 }

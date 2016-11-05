@@ -23,14 +23,15 @@ class RawHit_SDHCAL_Data
 {
  public:
   RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, int eventNumber, int64_t eventTimeStamp);
-  RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, int runNumber, int eventNumber, int64_t eventTimeStamp);
-  RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, const RawHit_SDHCAL_Data &d);
+  RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, int runNumber, int eventNumber, int64_t eventTimeStamp, int numberOfEventInThisData=1);
+  RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData=1);
   
   void FillTimeInfo(const EVENT::LCParameters&);
-  void replaceVec(const std::vector<RawCalorimeterHitPointer>&vec) {m_hitvec=vec;}
+  void replaceVec(const std::vector<RawCalorimeterHitPointer>&vec, int numberOfEventInThisData=1) {m_hitvec=vec; m_numberOfEventInThisData=numberOfEventInThisData;}
 
   int getRunNumber() const {return m_runNumber;}
   int getEventNumber() const {return m_eventNumber;}
+  int getNumberOfEventInThisData() const {return m_numberOfEventInThisData;}
   int64_t getEventTimeStamp() const {return m_eventTimeStamp;}
   const std::vector<RawCalorimeterHitPointer>& getHitVector() const {return m_hitvec;}
   std::map<unsigned int,DIF_timeInfo> DIFtimeInfo() const {return m_DIFtimeInfo;}
@@ -39,6 +40,7 @@ class RawHit_SDHCAL_Data
  private:
   int m_runNumber;
   int m_eventNumber;
+  int m_numberOfEventInThisData;
   int64_t m_eventTimeStamp;
   std::vector<RawCalorimeterHitPointer> m_hitvec;
   std::map<unsigned int,DIF_timeInfo> m_DIFtimeInfo;
