@@ -13,7 +13,7 @@ class RawHit_SDHCAL_Data_Reader_Trivent : public RawHit_SDHCAL_Data_Reader_FromT
   unsigned int m_timeWin;
   unsigned int m_noiseCut;
 
-  virtual void translateToEventTimeIntervalle(std::vector<unsigned int>& eventsTimes);
+  virtual void translateToEventTimeIntervalle(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data&);
 };
 
 #endif

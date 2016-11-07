@@ -3,18 +3,20 @@
 
 #include "RawHit_SDHCAL_Data_Listener.h"
 #include "RawHit_SDHCAL_Data_Reader.h"
+#include "RawCalorimeterHitPointer.h"
 #include "intervalle.h"
 #include "GG_messageCounter.h"
 #include <map>
 #include <vector>
+#include <list>
 
 class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Listener, public RawHit_SDHCAL_Data_Reader
 {
  public:
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(intervalle<int> timeWindow) 
-    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true) {;}
+    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false) {;}
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle timeWindow) 
-    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true) {;}
+    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false)  {;}
   virtual ~RawHit_SDHCAL_Data_Reader_FromTimeAnalysis();
 
 
@@ -29,13 +31,14 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
 
   void setEventTimeWindow(intervalle<int> timeWindow) {m_SelectEventTimeWindow=timeWindow;}
   void setEventTimeWindow(UI_intervalle timeWindow) {setEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second));}
+  void setVetoOnBIF(bool value=true) {m_vetoOnBIF=value;}
+
 
   void process(const RawHit_SDHCAL_Data&);
 
   //messages (public)
   GG_messageCounter outOfTimeReadout=GG_messageCounter("WARNING : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : requested intervalle after readout"); //C++11
   GG_messageCounter outOfTimeBIF=GG_messageCounter("WARNING : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : requested intervalle for BIF after readout"); //C++11
-
 
  private:
   intervalle<int> m_SelectEventTimeWindow;
@@ -54,11 +57,17 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   bool m_discardNegativeTimeStamp;
   bool m_skipIfBIFisOutsideReadout;
   bool m_splitEventForListeners;
+ protected:
+  bool m_vetoOnBIF;
+ private:
 
   //processing event steps
   void FillReadoutTimeDistribution(const RawHit_SDHCAL_Data&);
-  virtual void translateToEventTimeIntervalle(std::vector<unsigned int>& eventsTimes)=0;
-  virtual bool veto(const RawHit_SDHCAL_Data&) {return false;}
+  virtual void translateToEventTimeIntervalle(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data& d)=0;
+  void BIFveto(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data& d);
+
+  //internal needed data for process
+  std::vector<RawCalorimeterHitPointer> BIF_hitvector;
 
 };
 

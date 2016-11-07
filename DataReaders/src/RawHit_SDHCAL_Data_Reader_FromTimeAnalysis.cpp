@@ -21,40 +21,74 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::FillReadoutTimeDistribution(con
     }
 }
 
+
+void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::BIFveto(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data& d)
+{
+  if (! m_vetoOnBIF) return;
+  std::list<unsigned int>::iterator it=eventsTimes.begin();
+  while (it!= eventsTimes.end())
+    {
+      bool toDelete=false;
+      if (m_BIFtimeWindow.first+int(*it)+m_SelectEventTimeWindow.first<0 || m_BIFtimeWindow.second+int(*it)+m_SelectEventTimeWindow.second<0) toDelete=true;
+      else 
+	{
+	  UI_intervalle BIF_timeWindow_to_search((*it)+m_SelectEventTimeWindow.first+m_BIFtimeWindow.first,(*it)+m_SelectEventTimeWindow.second+m_BIFtimeWindow.second);
+	  if (std::count_if(BIF_hitvector.begin(), BIF_hitvector.end(), rawHit_IsInIntervalle<rawHit_TimeStamp>(BIF_timeWindow_to_search))>0) toDelete=true;
+	}
+      if (toDelete) it=eventsTimes.erase(it);
+      else ++it;
+    }
+}
+
+
 void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Data& d)
 {
   std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis called " << std::endl;
-  RawHit_SDHCAL_Data eventData(std::vector<RawCalorimeterHitPointer>(),d);
-  std::vector<RawCalorimeterHitPointer> eventHits;
+
+  BIF_hitvector=extract(d.getHitVector(),m_DIFnumber_of_the_BIF,rawHit_DIF());
   FillReadoutTimeDistribution(d);
-  std::vector<unsigned int> eventTimes;
-  translateToEventTimeIntervalle(eventTimes);
-  std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis eventTimes size is  " << eventTimes.size() << std::endl;
-  std::vector<RawCalorimeterHitPointer> BIF_hitvector=extract(d.getHitVector(),m_DIFnumber_of_the_BIF,rawHit_DIF());
-  unsigned int ntime=0;
-  for (std::vector<unsigned int>::iterator itTime=eventTimes.begin(); itTime!=eventTimes.end(); ++itTime)
+
+  std::list<unsigned int> eventTimes;
+  translateToEventTimeIntervalle(eventTimes,d);
+  BIFveto(eventTimes,d);
+
+  while (eventTimes.size()>0 && *(eventTimes.begin())+m_SelectEventTimeWindow.first <0)
     {
-      std::cout << "processing time " << ++ntime << "\r"; std::cout.flush();
-      int intervalleLowerBound=m_SelectEventTimeWindow.first+(*itTime);
-      if (intervalleLowerBound<0) {outOfTimeReadout.print(); continue;}
-      std::vector<RawCalorimeterHitPointer> eventHits=extract(d.getHitVector(),UI_intervalle(intervalleLowerBound,m_SelectEventTimeWindow.second+(*itTime)),rawHit_TimeStamp());
-      if (hasBIFnumber())
-	{
-	  eventHits.erase(std::remove_if(eventHits.begin(),eventHits.end(), rawHit_IsEqual<rawHit_DIF>(m_DIFnumber_of_the_BIF) ),eventHits.end());//remove BIF data
-	  int BIFintervalleLowerBound=m_BIFtimeWindow.first+intervalleLowerBound;
-	  if (BIFintervalleLowerBound<0)
-	    {
-	      outOfTimeBIF.print();
-	      if (m_skipIfBIFisOutsideReadout) continue;
-	    }
-	  std::vector<RawCalorimeterHitPointer> BIFhits=extract(BIF_hitvector,UI_intervalle(BIFintervalleLowerBound,m_BIFtimeWindow.second+m_SelectEventTimeWindow.second),rawHit_TimeStamp());
-	  eventHits.insert(eventHits.end(),BIFhits.begin(),BIFhits.end());
-	}
-      RawHit_SDHCAL_Data thisEventData(eventHits,eventData);
-      if (veto(eventData)) continue;
-      ++m_nEventSeen;
-      if (m_splitEventForListeners) notifyListeners(thisEventData);
-      else eventData.appendVec(eventHits);
+      outOfTimeReadout.print();
+      eventTimes.pop_front();
     }
-  if (!m_splitEventForListeners) notifyListeners(eventData);
+  std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis eventTimes size is  " << eventTimes.size() << std::endl;
+
+  std::vector<RawCalorimeterHitPointer> eventHits;
+  if (m_splitEventForListeners)
+    for (std::list<unsigned int>::iterator itTime=eventTimes.begin(); itTime!=eventTimes.end(); ++itTime)
+      {
+	int intervalleLowerBound=m_SelectEventTimeWindow.first+ (*itTime);
+	std::vector<RawCalorimeterHitPointer> eventHits=extract(d.getHitVector(),UI_intervalle(intervalleLowerBound,m_SelectEventTimeWindow.second+(*itTime)),rawHit_TimeStamp());
+	if (hasBIFnumber())
+	  {
+	    eventHits.erase(std::remove_if(eventHits.begin(),eventHits.end(), rawHit_IsEqual<rawHit_DIF>(m_DIFnumber_of_the_BIF) ),eventHits.end());//remove BIF data
+	    int BIFintervalleLowerBound=m_BIFtimeWindow.first+intervalleLowerBound;
+	    if (BIFintervalleLowerBound<0)
+	      {
+		outOfTimeBIF.print();
+		if (m_skipIfBIFisOutsideReadout) continue;
+	      }
+	    std::vector<RawCalorimeterHitPointer> BIFhits=extract(BIF_hitvector,UI_intervalle(BIFintervalleLowerBound,m_BIFtimeWindow.second+m_SelectEventTimeWindow.second),rawHit_TimeStamp());
+	    eventHits.insert(eventHits.end(),BIFhits.begin(),BIFhits.end());
+	    ++m_nEventSeen;
+	    RawHit_SDHCAL_Data eventData(eventHits,d);
+	    notifyListeners(eventData);
+	  }
+      } 
+  else
+    {
+      UI_domain timeDomains;
+      for (std::list<unsigned int>::iterator itTime=eventTimes.begin(); itTime!=eventTimes.end(); ++itTime)
+	timeDomains.addIntervalle(UI_intervalle(m_SelectEventTimeWindow.second+(*itTime),m_SelectEventTimeWindow.second+(*itTime)));
+      std::vector<RawCalorimeterHitPointer> eventHits=extract(d.getHitVector(),timeDomains,rawHit_TimeStamp());
+      m_nEventSeen+=eventTimes.size();
+      RawHit_SDHCAL_Data eventData(eventHits,d,eventTimes.size());
+      notifyListeners(eventData);
+    }    
 }

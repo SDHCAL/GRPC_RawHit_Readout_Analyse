@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-void RawHit_SDHCAL_Data_Reader_Trivent::translateToEventTimeIntervalle(std::vector<unsigned int>& eventsTimes)
+void RawHit_SDHCAL_Data_Reader_Trivent::translateToEventTimeIntervalle(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data&)
 {
   bool eraseFirst=false;
   bool nextHasBeenErased=false;
