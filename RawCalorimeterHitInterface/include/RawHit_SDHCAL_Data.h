@@ -28,6 +28,7 @@ class RawHit_SDHCAL_Data
   
   void FillTimeInfo(const EVENT::LCParameters&);
   void replaceVec(const std::vector<RawCalorimeterHitPointer>&vec, int numberOfEventInThisData=1) {m_hitvec=vec; m_numberOfEventInThisData=numberOfEventInThisData;}
+  void appendVec(const std::vector<RawCalorimeterHitPointer>&vec, int numberOfEventInThisData=1) {m_hitvec.insert(m_hitvec.end(),vec.begin(),vec.end()); m_numberOfEventInThisData+=numberOfEventInThisData;}
 
   int getRunNumber() const {return m_runNumber;}
   int getEventNumber() const {return m_eventNumber;}

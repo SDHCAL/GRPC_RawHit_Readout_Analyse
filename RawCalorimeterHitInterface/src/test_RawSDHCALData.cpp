@@ -131,6 +131,13 @@ int main()
 
   c.replaceVec(myvecBis,4);
   assert(c.getNumberOfEventInThisData()==4);
+  assert( c.getHitVector().size()==1);
+  c.appendVec(myvecBis);
+  assert(c.getNumberOfEventInThisData()==5);
+  assert( c.getHitVector().size()==2);
+  c.appendVec( b.getHitVector(),3);
+  assert(c.getNumberOfEventInThisData()==8);
+  assert( c.getHitVector().size()==14);
 
   RawHit_SDHCAL_Data d(myvecBis,c);
   testDataContent(d);
