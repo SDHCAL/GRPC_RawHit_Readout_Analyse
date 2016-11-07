@@ -85,7 +85,7 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
     {
       UI_domain timeDomains;
       for (std::list<unsigned int>::iterator itTime=eventTimes.begin(); itTime!=eventTimes.end(); ++itTime)
-	timeDomains.addIntervalle(UI_intervalle(m_SelectEventTimeWindow.second+(*itTime),m_SelectEventTimeWindow.second+(*itTime)));
+	timeDomains.addIntervalle(UI_intervalle(m_SelectEventTimeWindow.first+(*itTime),m_SelectEventTimeWindow.second+(*itTime)));
       std::vector<RawCalorimeterHitPointer> eventHits=extract(d.getHitVector(),timeDomains,rawHit_TimeStamp());
       m_nEventSeen+=eventTimes.size();
       RawHit_SDHCAL_Data eventData(eventHits,d,eventTimes.size());
