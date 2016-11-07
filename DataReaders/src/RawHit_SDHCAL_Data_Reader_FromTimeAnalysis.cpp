@@ -43,7 +43,7 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::BIFveto(std::list<unsigned int>
 
 void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Data& d)
 {
-  std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis called " << std::endl;
+  //std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis called " << std::endl;
 
   BIF_hitvector=extract(d.getHitVector(),m_DIFnumber_of_the_BIF,rawHit_DIF());
   FillReadoutTimeDistribution(d);
@@ -57,7 +57,7 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
       outOfTimeReadout.print();
       eventTimes.pop_front();
     }
-  std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis eventTimes size is  " << eventTimes.size() << std::endl;
+  //std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis eventTimes size is  " << eventTimes.size() << std::endl;
 
   std::vector<RawCalorimeterHitPointer> eventHits;
   if (m_splitEventForListeners)

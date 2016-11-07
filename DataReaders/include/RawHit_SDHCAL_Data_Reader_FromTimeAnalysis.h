@@ -57,9 +57,7 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   bool m_discardNegativeTimeStamp;
   bool m_skipIfBIFisOutsideReadout;
   bool m_splitEventForListeners;
- protected:
   bool m_vetoOnBIF;
- private:
 
   //processing event steps
   void FillReadoutTimeDistribution(const RawHit_SDHCAL_Data&);
