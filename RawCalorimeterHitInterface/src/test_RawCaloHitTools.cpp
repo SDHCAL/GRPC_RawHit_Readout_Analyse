@@ -10,6 +10,7 @@
 #include "RawCalorimeterHitUtilities.h"
 
 
+#include <algorithm>
 
 int main()
 {
@@ -106,6 +107,16 @@ int main()
   assert(testedVec.size()==2); for (std::vector<RawCalorimeterHitPointer>::iterator it=testedVec.begin(); it!=testedVec.end(); ++it) assert(it->dif() ==3 && (it->thresholdCrossed()==1 || it->thresholdCrossed()==3) );
 
 
+  std::cout << "check for counting " << std::endl;
+  assert(std::count_if(hitvec.begin(),hitvec.end(), rawHit_IsEqual<rawHit_Amplitude>(1) )==3);
+  assert(std::count_if(hitvec.begin(),hitvec.end(), rawHit_IsEqual<rawHit_ASIC>(1) )==2);
+  assert(std::count_if(hitvec.begin(),hitvec.end(), rawHit_IsInIntervalle<rawHit_Amplitude>(1,2) )==4);
+  assert(std::count_if(hitvec.begin(),hitvec.end(), rawHit_IsInIntervalle_combined<rawHit_DIF, rawHit_IsInIntervalle<rawHit_Amplitude> > (3,7, rawHit_IsInIntervalle<rawHit_Amplitude>(1) ) )  ==2);
+  
+  assert(std::count_if(hitvec.begin(),hitvec.end(), rawHit_IsInIntervalle_combined<rawHit_DIF, rawHit_IsInIntervalle_combined<rawHit_ASIC,  rawHit_IsEqual<rawHit_Channel> > >(3, rawHit_IsInIntervalle_combined<rawHit_ASIC,  rawHit_IsEqual<rawHit_Channel> >(1, rawHit_IsEqual<rawHit_Channel>(14)) ) )==1);
+  assert(std::count_if(hitvec.begin(),hitvec.end(), rawHit_IsInIntervalle_combined<rawHit_DIF, rawHit_IsInIntervalle_combined<rawHit_ASIC,  rawHit_IsEqual<rawHit_Channel> > >(3, rawHit_IsInIntervalle_combined<rawHit_ASIC,  rawHit_IsEqual<rawHit_Channel> >(1, rawHit_IsEqual<rawHit_Channel>(15)) ) )==0);
+  
+  assert(std::count_if(hitvec.begin(),hitvec.end(), timed_rawHit_IsInIntervalle<rawHit_DIF>(UI_intervalle(3,3),UI_intervalle(5,6)))==2); 
 
   return 0;
 }

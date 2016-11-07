@@ -23,14 +23,18 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::FillReadoutTimeDistribution(con
 
 void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Data& d)
 {
+  std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis called " << std::endl;
   RawHit_SDHCAL_Data eventData(std::vector<RawCalorimeterHitPointer>(),d);
   std::vector<RawCalorimeterHitPointer> eventHits;
   FillReadoutTimeDistribution(d);
   std::vector<unsigned int> eventTimes;
   translateToEventTimeIntervalle(eventTimes);
+  std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis eventTimes size is  " << eventTimes.size() << std::endl;
   std::vector<RawCalorimeterHitPointer> BIF_hitvector=extract(d.getHitVector(),m_DIFnumber_of_the_BIF,rawHit_DIF());
+  unsigned int ntime=0;
   for (std::vector<unsigned int>::iterator itTime=eventTimes.begin(); itTime!=eventTimes.end(); ++itTime)
     {
+      std::cout << "processing time " << ++ntime << "\r"; std::cout.flush();
       int intervalleLowerBound=m_SelectEventTimeWindow.first+(*itTime);
       if (intervalleLowerBound<0) {outOfTimeReadout.print(); continue;}
       std::vector<RawCalorimeterHitPointer> eventHits=extract(d.getHitVector(),UI_intervalle(intervalleLowerBound,m_SelectEventTimeWindow.second+(*itTime)),rawHit_TimeStamp());

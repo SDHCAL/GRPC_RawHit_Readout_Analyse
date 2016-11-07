@@ -59,4 +59,37 @@ public:
 private:
   unsigned int m_value;
 };
+
+template <class T>
+struct rawHit_IsInIntervalle
+{ 
+public:
+  rawHit_IsInIntervalle(UI_intervalle inter) : m_intervalle(inter) {;}
+rawHit_IsInIntervalle(unsigned int minvalue,unsigned int maxvalue) : m_intervalle(UI_intervalle(minvalue,maxvalue)) {;}
+  rawHit_IsInIntervalle(unsigned int singlevalue) : m_intervalle(UI_intervalle(singlevalue,singlevalue)) {;}
+  bool operator()(const RawCalorimeterHitPointer &h) {T truc; return truc.get(h)>=m_intervalle.first && truc.get(h)<=m_intervalle.second;}
+private:
+  UI_intervalle m_intervalle;
+};
+
+template <class T, class TSUB>
+struct rawHit_IsInIntervalle_combined 
+{
+public:
+  rawHit_IsInIntervalle_combined(UI_intervalle inter, TSUB sub) : m_intervalle(inter), m_sub(sub) {;}
+  rawHit_IsInIntervalle_combined(unsigned int minvalue, unsigned int maxvalue, TSUB sub) : m_intervalle(UI_intervalle(minvalue,maxvalue)), m_sub(sub) {;}
+  rawHit_IsInIntervalle_combined(unsigned int singlevalue, TSUB sub) : m_intervalle(UI_intervalle(singlevalue,singlevalue)), m_sub(sub) {;}
+  bool operator()(const RawCalorimeterHitPointer &h) {T truc; return truc.get(h)>=m_intervalle.first && truc.get(h)<=m_intervalle.second && m_sub(h);}
+private:
+  UI_intervalle m_intervalle;
+  TSUB m_sub;
+};
+
+template <class T> 
+struct timed_rawHit_IsInIntervalle : public rawHit_IsInIntervalle_combined<T,rawHit_IsInIntervalle<rawHit_TimeStamp > >
+{
+ public:
+ timed_rawHit_IsInIntervalle(UI_intervalle value_intervalle, UI_intervalle time_intervalle) : rawHit_IsInIntervalle_combined<T,rawHit_IsInIntervalle<rawHit_TimeStamp > >(value_intervalle,rawHit_IsInIntervalle<rawHit_TimeStamp >(time_intervalle)) {;}
+};
+
 #endif
