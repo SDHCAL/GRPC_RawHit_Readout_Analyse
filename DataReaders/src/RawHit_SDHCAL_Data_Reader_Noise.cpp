@@ -11,6 +11,7 @@ RawHit_SDHCAL_Data_Reader_Noise::RawHit_SDHCAL_Data_Reader_Noise(ExperimentalSet
     m_setup(setup), m_noiseWindowLength(noiseWindowLength), m_maxTouchedPlans(NO_CUTVALUE), m_maxNumberOfHits(NO_CUTVALUE), m_vetoOnBIF(true)  
 {
   if (m_setup.hasBIF()) setBIFparameters(m_setup.getBIF(),intervalle<int>(-8,-6)); //default interval corresponds to october 2016 GIF++ test beam
+  setSplitEventForListeners(false);
 }
 
 void RawHit_SDHCAL_Data_Reader_Noise::translateToEventTimeIntervalle(std::vector<unsigned int>& eventsTimes)

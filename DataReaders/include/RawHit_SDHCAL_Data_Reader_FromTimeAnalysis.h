@@ -12,14 +12,15 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
 {
  public:
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(intervalle<int> timeWindow) 
-    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true) {;}
+    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true) {;}
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle timeWindow) 
-    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true) {;}
+    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true) {;}
   virtual ~RawHit_SDHCAL_Data_Reader_FromTimeAnalysis();
 
 
   void setDiscardNegativeTimeStamp(bool value=true)  {m_discardNegativeTimeStamp=value;}
   void setSkipIfBIFisOutsideReadout(bool value=true) {m_skipIfBIFisOutsideReadout=value;}
+  void setSplitEventForListeners(bool value=true) {m_splitEventForListeners=value;}
   void setBIFparameters(unsigned int BIF,intervalle<int> timeWindow) {m_DIFnumber_of_the_BIF=BIF; m_BIFtimeWindow=timeWindow;}
   void setBIFparameters(unsigned int BIF,UI_intervalle timeWindow) {setBIFparameters(BIF,intervalle<int>(timeWindow.first,timeWindow.second));}
   void setBIFtimeWindow(intervalle<int> timeWindow) {m_BIFtimeWindow=timeWindow;}
@@ -52,6 +53,7 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   //control flags
   bool m_discardNegativeTimeStamp;
   bool m_skipIfBIFisOutsideReadout;
+  bool m_splitEventForListeners;
 
   //processing event steps
   void FillReadoutTimeDistribution(const RawHit_SDHCAL_Data&);

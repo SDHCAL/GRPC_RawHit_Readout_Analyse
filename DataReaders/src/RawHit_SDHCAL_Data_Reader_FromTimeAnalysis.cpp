@@ -46,9 +46,11 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
 	  std::vector<RawCalorimeterHitPointer> BIFhits=extract(BIF_hitvector,UI_intervalle(BIFintervalleLowerBound,m_BIFtimeWindow.second+m_SelectEventTimeWindow.second),rawHit_TimeStamp());
 	  eventHits.insert(eventHits.end(),BIFhits.begin(),BIFhits.end());
 	}
-      eventData.replaceVec(eventHits);
+      RawHit_SDHCAL_Data thisEventData(eventHits,eventData);
       if (veto(eventData)) continue;
       ++m_nEventSeen;
-      notifyListeners(eventData);
+      if (m_splitEventForListeners) notifyListeners(thisEventData);
+      else eventData.appendVec(eventHits);
     }
+  if (!m_splitEventForListeners) notifyListeners(eventData);
 }
