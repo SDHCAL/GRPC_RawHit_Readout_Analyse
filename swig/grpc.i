@@ -30,6 +30,8 @@
 #include "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis.h"
 #include "RawHit_SDHCAL_Data_Reader_Noise.h"
 #include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
+
+  void debug_message(void *ptr) {std::cout << "DEBUG : pointer passing " << ptr<< std::endl;}
 %}
 
 %include "DIFdrivenDevice.h"
@@ -61,5 +63,5 @@
 %template(uint_intervalle) intervalle<unsigned int>; 
 %template(int_intervalle) intervalle<int>; 
 
-%extend RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016 { void reportAndSaveTo_wrap(void *ptr_TDirectory) {self->reportAndSaveTo((TDirectory*)ptr_TDirectory);} }
-%extend RawHit_Occupancy_Listener { void saveTo_wrap(void *ptr_TDirectory,ExperimentalSetup * v) {self->saveTo((TDirectory*)ptr_TDirectory,v);} }
+%extend RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016 { void reportAndSaveTo_wrap(void *ptr_TDirectory) {debug_message(ptr_TDirectory);self->reportAndSaveTo((TDirectory*)ptr_TDirectory);} }
+%extend RawHit_Occupancy_Listener { void saveTo_wrap(void *ptr_TDirectory,ExperimentalSetup * v) {debug_message(ptr_TDirectory);self->saveTo((TDirectory*)ptr_TDirectory,v);} }
