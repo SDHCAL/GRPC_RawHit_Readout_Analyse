@@ -27,6 +27,9 @@
 #include "RawHit_Occupancy_Listener.h"
 #include "RawHit_SDHCAL_Data_Reader_FromBIF.h"
 #include "RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016.h"
+#include "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis.h"
+#include "RawHit_SDHCAL_Data_Reader_Noise.h"
+#include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
 %}
 
 %include "DIFdrivenDevice.h"
@@ -48,6 +51,9 @@
 %include "GG_messageCounter.h"
 %include "RawHit_SDHCAL_Data_Reader_FromBIF.h"
 %include "RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016.h"
+%include "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis.h"
+%include "RawHit_SDHCAL_Data_Reader_Noise.h"
+%include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
 
 %template(std_string_vec) std::vector< std::string >;
 %template(uint_pair) std::pair<unsigned int, unsigned int>;
