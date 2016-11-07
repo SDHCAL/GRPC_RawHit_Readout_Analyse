@@ -13,7 +13,7 @@
 
 void RawHit_Occupancy_Listener::process(const RawHit_SDHCAL_Data& d) 
 {
-  ++m_total;
+  m_total+=d.getNumberOfEventInThisData();
   //std::cout << "Got called " << m_total << std::endl;
   //unsigned int value=1;
   for (std::vector<RawCalorimeterHitPointer>::const_iterator it=d.getHitVector().begin(); it !=d.getHitVector().end(); ++it)
