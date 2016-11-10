@@ -30,6 +30,7 @@
 #include "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis.h"
 #include "RawHit_SDHCAL_Data_Reader_Noise.h"
 #include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
+#include "RawHit_SDHCAL_Data_Reader_Threshold_Filter.h" 
 
   void debug_message(void *ptr) {std::cout << "DEBUG : pointer passing " << ptr<< std::endl;}
 %}
@@ -56,6 +57,7 @@
 %include "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis.h"
 %include "RawHit_SDHCAL_Data_Reader_Noise.h"
 %include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
+%include "RawHit_SDHCAL_Data_Reader_Threshold_Filter.h" 
 
 %template(std_string_vec) std::vector< std::string >;
 %template(uint_pair) std::pair<unsigned int, unsigned int>;

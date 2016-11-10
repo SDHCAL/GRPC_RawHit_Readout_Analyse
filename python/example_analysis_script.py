@@ -40,6 +40,15 @@ BIF_splitter.registerDataListener(BIFtrigger_subdata)
 triggeredHitOccupancyForGIFoct2016efficiency=grpc.RawHit_Occupancy_Listener()
 BIFtrigger_subdata.registerDataListener(triggeredHitOccupancyForGIFoct2016efficiency)
 
+BIFtrigger_subdata_thresh2=grpc.RawHit_SDHCAL_Data_Reader_Threshold_Filter(2)
+BIFtrigger_subdata_thresh3=grpc.RawHit_SDHCAL_Data_Reader_Threshold_Filter(3)
+BIFtrigger_subdata.registerDataListener(BIFtrigger_subdata_thresh2)
+BIFtrigger_subdata.registerDataListener(BIFtrigger_subdata_thresh3)
+BIFtrigger_subdata_thresh2_print=grpc.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
+BIFtrigger_subdata_thresh3_print=grpc.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
+BIFtrigger_subdata_thresh2.registerDataListener(BIFtrigger_subdata_thresh2_print)
+BIFtrigger_subdata_thresh3.registerDataListener(BIFtrigger_subdata_thresh3_print)
+
 
 #open file and event loop
 lcReader.open( inputFileNames )
@@ -52,6 +61,10 @@ allHitOccupancy.saveTo_wrap(ROOT.AsCObject(d),experience)
 triggeredHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedData")),experience)
 triggeredHitOccupancyForGIFoct2016efficiency.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedDataTimeAndSpace")),experience)
 BIFtrigger_subdata.reportAndSaveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies")))
+print "threshold 2"
+BIFtrigger_subdata_thresh2_print.reportAndSaveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies_2")))  #faut que je trouve comment passer un pointeur nul
+print "threshold 3"
+BIFtrigger_subdata_thresh3_print.reportAndSaveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies_3")))
 
 rootFile.Close()
 
