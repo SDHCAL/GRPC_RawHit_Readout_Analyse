@@ -17,10 +17,11 @@ class RawHit_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
   typedef unsigned int ASICNUMBER;
   typedef unsigned int CHANNELNUMBER;
   void process(const RawHit_SDHCAL_Data&);
-  void saveTo(TDirectory* d,ExperimentalSetup* e=NULL);
+  void saveTo(TDirectory* d,ExperimentalSetup* e=NULL); 
+  void saveToThreshold(unsigned int threshold,TDirectory* d,ExperimentalSetup* e=NULL);
  private:
   unsigned int m_total=0; //C++11
-  DIFCounters m_countBy_DifAsicChannel;
+  DIFCounters m_countBy_DifAsicChannel[3];
 };
 
 #endif

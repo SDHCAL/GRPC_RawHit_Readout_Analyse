@@ -28,6 +28,8 @@ class RawCalorimeterHitPointer
   //decode amplitude
   unsigned int thresholdCrossed() const {return (m_ptr->getAmplitude())&0x3;}
   unsigned int amplitudeInfo() const {return (m_ptr->getAmplitude())>>2;}
+  bool aboveSecondThreshold() const {return thresholdCrossed()!=2;}
+  bool aboveThirdThreshold() const {return thresholdCrossed()==3;}
 
   //translate stuff for HR2 pad ASU 
   unsigned int I_local() const {return ASIC_Coordinate_Translator::I(asic(),channel());}
