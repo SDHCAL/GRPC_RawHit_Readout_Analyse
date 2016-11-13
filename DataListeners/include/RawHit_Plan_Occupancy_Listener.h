@@ -18,8 +18,11 @@ class RawHit_Plan_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
   void setUnitString(std::string unit) {m_unit=unit;}
 
   void efficiencyReport();
+  void efficiencyReportThreshold(unsigned int threshold);
   void noiseReport();
+  void noiseReportThreshold(unsigned int threshold);
   void saveTo(TDirectory* ROOTdir);
+  void saveToThreshold(unsigned int threshold,TDirectory* d);
  private:
   unsigned int m_DIFnumber_of_the_BIF; 
   UI_domain m_padDIFs, m_stripEvenDifs, m_stripOddDifs;
@@ -27,7 +30,7 @@ class RawHit_Plan_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
   ExperimentalSetup& m_setup;   
 
   unsigned int m_total;
-  MappedCounters<MappedCounters<SingleCounter> > m_PlaneAsicCounters;
+  MappedCounters<MappedCounters<SingleCounter> > m_PlaneAsicCounters[3];
 
   float m_noiseScale;
   std::string m_unit;
