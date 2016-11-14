@@ -14,15 +14,11 @@ class RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016 : public RawHit_SDHCAL_Dat
  public:
   RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016();
   void process(const RawHit_SDHCAL_Data&);
-  void reportAndSaveTo(TDirectory* ROOTdir);
  private:
   unsigned int m_DIFnumber_of_the_BIF; 
   UI_domain m_padDIFs, m_stripEvenDifs, m_stripOddDifs;
 
   GIF_oct2016_ExperimentalSetup m_setup;   
-
-  unsigned int m_total=0; //C++11
-  MappedCounters<MappedCounters<SingleCounter> > m_PlaneAsicCounters;
 };
 
 #endif

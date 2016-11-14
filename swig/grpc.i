@@ -67,7 +67,6 @@
 %template(uint_intervalle) intervalle<unsigned int>; 
 %template(int_intervalle) intervalle<int>; 
 
-%extend RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016 { void reportAndSaveTo_wrap(void *ptr_TDirectory) {debug_message(ptr_TDirectory);self->reportAndSaveTo((TDirectory*)ptr_TDirectory);} }
 %extend RawHit_Occupancy_Listener { void saveTo_wrap(void *ptr_TDirectory,ExperimentalSetup * v) {debug_message(ptr_TDirectory);self->saveTo((TDirectory*)ptr_TDirectory,v);} }
 %extend RawHit_Occupancy_Listener { void saveToThreshold_wrap(unsigned int i,void *ptr_TDirectory,ExperimentalSetup * v) {debug_message(ptr_TDirectory);self->saveToThreshold(i,(TDirectory*)ptr_TDirectory,v);} }
 %extend RawHit_Plan_Occupancy_Listener { void saveTo_wrap(void *ptr_TDirectory) {debug_message(ptr_TDirectory);self->saveTo((TDirectory*)ptr_TDirectory);} }

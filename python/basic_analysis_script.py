@@ -87,7 +87,6 @@ triggeredHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedData"
 noisePlanOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneNoise")))
 effPlanOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies")))
 
-BIFtrigger_subdata.reportAndSaveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies_BIS")))
 noisePlanOccupancy.noiseReport()
 effPlanOccupancy.efficiencyReport()
 
