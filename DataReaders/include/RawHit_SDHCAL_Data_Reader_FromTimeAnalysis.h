@@ -9,14 +9,15 @@
 #include <map>
 #include <vector>
 #include <list>
+#include <limits>
 
 class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Listener, public RawHit_SDHCAL_Data_Reader
 {
  public:
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(intervalle<int> timeWindow) 
-    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false) {;}
+    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false) {setMaxEventsToSendDefault();}
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle timeWindow) 
-    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false)  {;}
+    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false)  {setMaxEventsToSendDefault();}
   virtual ~RawHit_SDHCAL_Data_Reader_FromTimeAnalysis();
 
 
@@ -32,13 +33,15 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   void setEventTimeWindow(intervalle<int> timeWindow) {m_SelectEventTimeWindow=timeWindow;}
   void setEventTimeWindow(UI_intervalle timeWindow) {setEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second));}
   void setVetoOnBIF(bool value=true) {m_vetoOnBIF=value;}
-
+  void setMaxEventsToSend(unsigned int maxEventsToSend) {m_maxEventsToSend=maxEventsToSend;}
+  void setMaxEventsToSendDefault() {m_maxEventsToSend=std::numeric_limits<unsigned int>::max()-1000000;}
 
   void process(const RawHit_SDHCAL_Data&);
 
   //messages (public)
   GG_messageCounter outOfTimeReadout=GG_messageCounter("WARNING : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : requested intervalle after readout"); //C++11
   GG_messageCounter outOfTimeBIF=GG_messageCounter("WARNING : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : requested intervalle for BIF after readout"); //C++11
+ GG_messageCounter tooMuchEvent=GG_messageCounter("INFORMATION : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : above max events"); //C++11
 
  private:
   intervalle<int> m_SelectEventTimeWindow;
@@ -48,7 +51,7 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   //counters;
   unsigned int m_nEventSeen;
   unsigned int m_nHitWithNegativeTimeStampSeen;
-
+  unsigned int m_maxEventsToSend;
 
  protected:
   std::map<unsigned int,unsigned int> m_readoutTimeDistribution;

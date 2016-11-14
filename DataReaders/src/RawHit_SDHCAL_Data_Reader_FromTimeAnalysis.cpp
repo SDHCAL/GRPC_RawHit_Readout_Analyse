@@ -7,7 +7,7 @@
 
 RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::~RawHit_SDHCAL_Data_Reader_FromTimeAnalysis()
 {
-  std::cout << " RawHit_SDHCAL_Data_Reader_fromTimeAnalysis " << m_nEventSeen << "  events seen  and " << m_nHitWithNegativeTimeStampSeen << " hits discarded due to negative time stamp " << std::endl;
+  std::cout << " RawHit_SDHCAL_Data_Reader_fromTimeAnalysis " << m_nEventSeen << "  events seen  and " << m_nHitWithNegativeTimeStampSeen << " hits discarded due to negative time stamp. Maximum was set to  " << m_maxEventsToSend << std::endl;
 }
 
 void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::FillReadoutTimeDistribution(const RawHit_SDHCAL_Data& d)
@@ -44,6 +44,8 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::BIFveto(std::list<unsigned int>
 void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Data& d)
 {
   //std::cout << "RawHit_SDHCAL_Data_Reader_FromTimeAnalysis called " << std::endl;
+
+  if (m_nEventSeen>=m_maxEventsToSend) {tooMuchEvent.print(); return;}
 
   BIF_hitvector=extract(d.getHitVector(),m_DIFnumber_of_the_BIF,rawHit_DIF());
   FillReadoutTimeDistribution(d);

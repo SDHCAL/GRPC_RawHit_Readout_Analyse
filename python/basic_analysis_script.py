@@ -62,6 +62,7 @@ masterReader.registerDataListener(BIF_splitter)
 noiseReader=grpc.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
 noiseReader.setVetoOnBIF()
 noiseReader.setBIFtimeWindow(BIFtriggerWindowNoise)
+noiseReader.setMaxEventsToSend(1000000)
 masterReader.registerDataListener(noiseReader)
 
 BIFtrigger_subdata=grpc.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
