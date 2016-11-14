@@ -80,7 +80,13 @@ lcReader.open( inputFileNames )
 lcReader.readStream()
 
 #end of event loop
-rootFile=ROOT.TFile("analyse.root"  , "RECREATE")
+rootFileName="analyse"
+for run in set(runNumbers):
+  rootFileName=rootFileName+"_"+run
+rootFileName=rootFileName+".root"
+print rootFileName
+
+rootFile=ROOT.TFile(rootFileName  , "RECREATE")
 
 allHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("AllData")),experience)
 triggeredHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedData")),experience)
