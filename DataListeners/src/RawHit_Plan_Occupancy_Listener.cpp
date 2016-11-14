@@ -91,6 +91,12 @@ void RawHit_Plan_Occupancy_Listener::saveToThreshold(unsigned int threshold, TDi
   if (m_total==0) return;
   if (NULL==ROOTdir) return;
   ROOTdir->cd();
+  if (m_PlaneAsicCounters[index].empty()) 
+    { 
+      std::cout << "RawHit_Plan_Occupancy_Listener for threshold " << threshold << " : no data in plan for " 
+		<< m_total << " events seen. Check your Experimental Setup !!!!!!!!!!!!!" << std::endl;
+      return;
+    }
   std::pair<TH1F*,TH1F*> planeHisto=convert(m_PlaneAsicCounters[index],"Plane_occupancy","Plane",1/float(m_total));
   planeHisto.first->Scale(m_noiseScale);
   planeHisto.first->Write();
@@ -104,6 +110,7 @@ void RawHit_Plan_Occupancy_Listener::saveToThreshold(unsigned int threshold, TDi
 	forGapEfficiencies[1+10*itplane->first]=m_PlaneAsicCounters[index][itplane->first][1];
 	forGapEfficiencies[2+10*itplane->first]=m_PlaneAsicCounters[index][itplane->first][2];
       }
+  if (forGapEfficiencies.empty()) return;
   std::pair<TH1F*,TH1F*> gapHisto=convert(forGapEfficiencies,"Gap_occupancy","Strip plane or gap",1/float(m_total));
   gapHisto.first->Scale(m_noiseScale);
   gapHisto.first->Write();
