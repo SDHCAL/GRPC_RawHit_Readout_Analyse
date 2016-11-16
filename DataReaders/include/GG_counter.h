@@ -17,6 +17,12 @@ class SingleCounter
   unsigned int flagcount() const {return m_flagcount;}
   void print(std::string* labels=NULL,std::ostream& oflux=std::cout) { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
 
+  void ASCIIwrite(std::ostream& oflux=std::cout) const { oflux << m_count << " " << m_flagcount<< " " ; }
+  void ASCIIread(std::istream& iflux=std::cin) {iflux >> m_count >> m_flagcount;}
+
+  bool operator==(const SingleCounter& other) const {return sumcount()==other.sumcount() && flagcount()==other.flagcount();}
+  bool operator!=(const SingleCounter& other) const {return ! ((*this)==other);}
+
   static const unsigned int printIndentLevel=0;
 
  private:
@@ -36,6 +42,28 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
     SingleCounter::print(labels,oflux); 
     for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) {printIndent(oflux); oflux << it->first << " "; it->second.print(labels+1,oflux);}
   }
+
+  void ASCIIwrite(std::ostream& oflux=std::cout) const
+  { 
+    SingleCounter::ASCIIwrite(oflux);  
+    oflux << this->size() << " ";
+    for (typename std::map<unsigned int,COUNTER>::const_iterator it=this->begin(); it!= this->end(); ++it) 
+      { oflux << it->first << " "; it->second.ASCIIwrite(oflux); }
+  }
+  void ASCIIread(std::istream& iflux=std::cin)
+  {
+    this->clear();
+    SingleCounter::ASCIIread(iflux);
+    unsigned int mapsize;
+    iflux >> mapsize;
+    for (unsigned int i=0; i<mapsize; ++i)
+      { unsigned int aKey; iflux >> aKey; (*this)[aKey].ASCIIread(iflux); }
+  }
+
+  const std::map<unsigned int,COUNTER>& the_map() const {return *this;}
+  bool operator==(const MappedCounters<COUNTER>& other) const {return  SingleCounter::operator==(other) && the_map()==other.the_map();}
+  bool operator!=(const MappedCounters<COUNTER>& other) const {return ! ((*this)==other);}
+
   static const unsigned int printIndentLevel=COUNTER::printIndentLevel+1;
  private:
   static void printIndent(std::ostream& oflux) { for (unsigned int i=printIndentLevel; i<5;  ++i) oflux << "  ";}
