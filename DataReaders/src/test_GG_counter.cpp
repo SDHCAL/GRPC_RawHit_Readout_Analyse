@@ -149,5 +149,28 @@ int main()
   infile.open("test.txt"); difasichannelcount_readback.ASCIIread(infile); infile.close();
   assert(difasichannelcount==difasichannelcount_readback);
 
+  extendedMappedCounters<MappedCounters<MappedCounters<SingleCounter> > > difasichannelcount_extended;
+  difasichannelcount_extended.n_event=5678;
+  difasichannelcount_extended.labels[0]="setup";
+  difasichannelcount_extended.labels[1]="dif";
+  difasichannelcount_extended.labels[2]="asic";
+  difasichannelcount_extended.labels[3]="channel";
+  difasichannelcount_extended=difasichannelcount;
+  difasichannelcount_extended.print();
+
+  outfile.open("test.txt");
+  difasichannelcount_extended.ASCIIwrite(outfile);
+  outfile.close();
+  infile.open("test.txt");
+  extendedMappedCounters<SingleCounter> tofailread;
+  assert(tofailread.ASCIIread(infile)==false);
+  extendedMappedCounters<MappedCounters<MappedCounters<SingleCounter> > > difasichannelcount_extended_readback;
+  assert(difasichannelcount_extended_readback.ASCIIread(infile));
+  infile.close();
+  assert(difasichannelcount_extended_readback.n_event==difasichannelcount_extended.n_event);
+  assert(difasichannelcount_extended_readback.labels[2]==difasichannelcount_extended.labels[2]);
+  assert(difasichannelcount_extended_readback==difasichannelcount_extended);
+
+
   return 0;
 }
