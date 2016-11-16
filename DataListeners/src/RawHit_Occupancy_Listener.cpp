@@ -11,19 +11,25 @@
 #include "GG_counter_histos.h"
 #include <sstream>
 
+RawHit_Occupancy_Listener::RawHit_Occupancy_Listener()
+{
+  m_countBy_DifAsicChannel.n_event=0;
+}
+
 void RawHit_Occupancy_Listener::process(const RawHit_SDHCAL_Data& d) 
 {
-  m_total+=d.getNumberOfEventInThisData();
+  m_countBy_DifAsicChannel.n_event+=d.getNumberOfEventInThisData();
   //std::cout << "Got called " << m_total << " et " << d.getHitVector().size() << std::endl;
   //unsigned int value=1;
   for (std::vector<RawCalorimeterHitPointer>::const_iterator it=d.getHitVector().begin(); it !=d.getHitVector().end(); ++it)
     {
       unsigned int keys[3]={it->dif(),it->asic(),it->channel()};
-      m_countBy_DifAsicChannel[0].add(1,keys);
-      if (it->aboveSecondThreshold()) m_countBy_DifAsicChannel[1].add(1,keys);
-      if (it->aboveThirdThreshold()) m_countBy_DifAsicChannel[2].add(1,keys);
+      unsigned int upTo=0;
+      if (it->aboveSecondThreshold()) upTo=1;
+      if (it->aboveThirdThreshold())  upTo=2;
+      m_countBy_DifAsicChannel.m_thresholdCounters.add(1,upTo,keys);
     }
-  for (unsigned int i=0; i<3; ++i) m_countBy_DifAsicChannel[i].newSet();
+  m_countBy_DifAsicChannel.m_thresholdCounters.newSet();
 }
 
 void RawHit_Occupancy_Listener::saveToThreshold(unsigned int threshold,TDirectory* ROOTdir,ExperimentalSetup* e)
@@ -32,23 +38,23 @@ void RawHit_Occupancy_Listener::saveToThreshold(unsigned int threshold,TDirector
   if (index>=3) return;
   if (NULL==ROOTdir) return;
   ROOTdir->cd();
-  if (m_total==0) 
+  if (m_countBy_DifAsicChannel.n_event==0) 
     {
       std::cout << "RawHit_Occupancy_Listener : no data to save to ROOT directory " << ROOTdir->GetName() << std::endl;
       return;
     }
 
-  std::pair<TH1F*,TH1F*> difHisto=convert(m_countBy_DifAsicChannel[index],"DIF_occupancy","DIF",1/float(m_total));
+  std::pair<TH1F*,TH1F*> difHisto=convert(m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index),std::string("DIF_occupancy"),std::string("DIF"),1/float(m_countBy_DifAsicChannel.n_event));
   difHisto.first->Write();
   difHisto.second->Write();
   std::cout << "1D DIF histo saved" << std::endl;
 
-  std::pair<TH2F*,TH2F*> difAsicHisto=convert(m_countBy_DifAsicChannel[index],"ASIC_occupancy","DIF","ASIC",1/float(m_total));
+  std::pair<TH2F*,TH2F*> difAsicHisto=convert(m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index),"ASIC_occupancy","DIF","ASIC",1/float(m_countBy_DifAsicChannel.n_event));
   difAsicHisto.first->Write();
   difAsicHisto.second->Write();
 
-  std::pair<TH2F*,TH2F*>* difAsicChannelHistos=convert(m_countBy_DifAsicChannel[index],"CHANNEL_occupancy","DIF","ASIC","CHANNEL",1/float(m_total));
-  for (unsigned int i=0; i<m_countBy_DifAsicChannel[index].size(); ++i)
+  std::pair<TH2F*,TH2F*>* difAsicChannelHistos=convert(m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index),"CHANNEL_occupancy","DIF","ASIC","CHANNEL",1/float(m_countBy_DifAsicChannel.n_event));
+  for (unsigned int i=0; i<m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index).size(); ++i)
     {
       difAsicChannelHistos[i].first->Write();
       difAsicChannelHistos[i].second->Write();
@@ -59,7 +65,7 @@ void RawHit_Occupancy_Listener::saveToThreshold(unsigned int threshold,TDirector
   if (e==NULL) return;
 
   PlaneCounters Plane_IJ_counters;
-  for (std::map<unsigned int,MappedCounters<MappedCounters<SingleCounter> > >::iterator itdif=m_countBy_DifAsicChannel[index].begin(); itdif!=m_countBy_DifAsicChannel[index].end(); ++itdif)
+  for (std::map<unsigned int,MappedCounters<MappedCounters<SingleCounter> > >::iterator itdif=m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index).begin(); itdif!=m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index).end(); ++itdif)
     {
       if (e->DIFnumberIsBIF(itdif->first)) continue;
       for (std::map<unsigned int, MappedCounters<SingleCounter> >::iterator itasic=itdif->second.begin(); itasic!=itdif->second.end(); ++itasic)
@@ -74,10 +80,10 @@ void RawHit_Occupancy_Listener::saveToThreshold(unsigned int threshold,TDirector
 	    Plane_IJ_counters.add(val,keys);
 	  }
     }
-  difHisto=convert(Plane_IJ_counters,"Plane_occupancy","Layer",1/float(m_total)); //second histo is meaningless here 
+  difHisto=convert(Plane_IJ_counters,"Plane_occupancy","Layer",1/float(m_countBy_DifAsicChannel.n_event)); //second histo is meaningless here 
   difHisto.first->Write(); 
   delete [] difAsicChannelHistos;
-  difAsicChannelHistos=convert(Plane_IJ_counters,"CHANNEL_occupancy","PLANE","I or strip","J or Gap",1/float(m_total), "CHANNEL", false);
+  difAsicChannelHistos=convert(Plane_IJ_counters,"CHANNEL_occupancy","PLANE","I or strip","J or Gap",1/float(m_countBy_DifAsicChannel.n_event), "CHANNEL", false);
   for (unsigned int i=0; i<Plane_IJ_counters.size(); ++i) difAsicChannelHistos[i].first->Write();
   delete [] difAsicChannelHistos;
 }

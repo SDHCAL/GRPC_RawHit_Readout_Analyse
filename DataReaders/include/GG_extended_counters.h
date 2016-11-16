@@ -30,7 +30,7 @@ public:
     for (unsigned int i=0; i<theSize; ++i) m_counters[i].ASCIIread(iflux);
   }
   unsigned int size() {return m_counters.size();}
-  COUNTER getCounter(unsigned int i) {return m_counters[i];}
+  COUNTER& getCounter(unsigned int i) {return m_counters[i];}
 private:
   std::vector<COUNTER> m_counters;
 };
