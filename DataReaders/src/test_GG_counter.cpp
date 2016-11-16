@@ -7,7 +7,82 @@
 
 
 #include "GG_counter.h"
+#include "GG_extended_counters.h"
 
+
+void testArrayCounterLevelThree(ArrayCounter<DIFCounters>& level3counter)
+{
+  assert( level3counter.size()==2 );
+  assert( level3counter.getCounter(0).sumcount()==3);
+  assert( level3counter.getCounter(0).flagcount()==1);
+  assert( level3counter.getCounter(0).size()==1 );
+  assert( level3counter.getCounter(0).begin()->first==3 );
+  assert( level3counter.getCounter(0).begin()->second.size()==1 );
+  assert( level3counter.getCounter(0).begin()->second.sumcount()==3 );
+  assert( level3counter.getCounter(0).begin()->second.flagcount()==1 );
+  assert( level3counter.getCounter(0).begin()->second.begin()->first==4 );
+  assert( level3counter.getCounter(0).begin()->second.begin()->second.size()==1 );
+  assert( level3counter.getCounter(0).begin()->second.begin()->second.sumcount()==3 );
+  assert( level3counter.getCounter(0).begin()->second.begin()->second.flagcount()==1 );
+  assert( level3counter.getCounter(0).begin()->second.begin()->second.begin()->first==5);
+  assert( level3counter.getCounter(0).begin()->second.begin()->second.begin()->second.sumcount() ==3);
+  assert( level3counter.getCounter(0).begin()->second.begin()->second.begin()->second.flagcount() ==1);
+  assert( level3counter.getCounter(1).sumcount()==0);
+  assert( level3counter.getCounter(1).flagcount()==0);
+  assert( level3counter.getCounter(1).size()==0 );
+  
+}
+
+
+void testRunPlaneGap(RunThresholdCounter_PlaneGap &bob)
+{
+  assert ( bob.n_event==7866 );
+  assert ( bob.labels[0]=="Threshold" );
+  assert ( bob.labels[1]=="all_plans" );
+  assert ( bob.labels[2]=="plan" );
+  assert ( bob.labels[3]=="gap" );
+  assert ( bob.m_thresholdCounters.size() == 3 );
+  assert ( bob.m_thresholdCounters.getCounter(2).size()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(2).sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(2).flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(2).begin()->first==88 );
+  assert ( bob.m_thresholdCounters.getCounter(2)[88].size() == 1 );
+  assert ( bob.m_thresholdCounters.getCounter(2)[88].sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(2)[88].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(2)[88].begin()->first==5 );
+  assert ( bob.m_thresholdCounters.getCounter(2)[88][5].sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(2)[88][5].flagcount()==1 );
+
+  assert ( bob.m_thresholdCounters.getCounter(1).size()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(1).sumcount()== 11 );
+  assert ( bob.m_thresholdCounters.getCounter(1).flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[4].sumcount()==3 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[4].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[4][5].sumcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[4][5].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[4][6].sumcount()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[4][6].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[88].sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[88].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[88].begin()->first==5 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[88][5].sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(1)[88][5].flagcount()==1 );
+  
+  assert ( bob.m_thresholdCounters.getCounter(0).size()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(0).sumcount()== 14 );
+  assert ( bob.m_thresholdCounters.getCounter(0).flagcount()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[4].sumcount()==6 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[4].flagcount()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[4][5].sumcount()==4 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[4][5].flagcount()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[4][6].sumcount()==2 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[4][6].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[88].sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[88].flagcount()==1 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[88].begin()->first==5 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[88][5].sumcount()==8 );
+  assert ( bob.m_thresholdCounters.getCounter(0)[88][5].flagcount()==1 );
+}
 
 int main()
 {
@@ -149,28 +224,82 @@ int main()
   infile.open("test.txt"); difasichannelcount_readback.ASCIIread(infile); infile.close();
   assert(difasichannelcount==difasichannelcount_readback);
 
-  extendedMappedCounters<MappedCounters<MappedCounters<SingleCounter> > > difasichannelcount_extended;
-  difasichannelcount_extended.n_event=5678;
-  difasichannelcount_extended.labels[0]="setup";
-  difasichannelcount_extended.labels[1]="dif";
-  difasichannelcount_extended.labels[2]="asic";
-  difasichannelcount_extended.labels[3]="channel";
-  difasichannelcount_extended=difasichannelcount;
-  difasichannelcount_extended.print();
 
+  ArrayCounter<SingleCounter> counterArray(5);
+  ArrayUpToCounter<SingleCounter> counterArrayUpTo(5);
+  assert(counterArray.size()==5);
+  assert(counterArrayUpTo.size()==5);
+  param[1]=3; param[2]=88; 
+  counterArray.add(2,param+1);  //+2 pour [3]
+  counterArray.newSet();
+  counterArray.add(4,1,param+2); //+4 pour [1]
+  counterArrayUpTo.add(2,param+1);  // +2 pour [0], [1],[2],[3] 
+  counterArrayUpTo.newSet();
+  counterArrayUpTo.add(4,1,param+2); // +4 pour [0] et [1] 
+  std::string singleArrayLabel[2]={"indice", "array_element"};
+  //counterArray.print(singleArrayLabel);
+  //counterArrayUpTo.print(singleArrayLabel);
+  unsigned int expectedFlagCount[5]={0,1,0,1,0};
+  unsigned int expectedSumCount[5]={0,4,0,2,0};
+  unsigned int expectedFlagCountUpTo[5]={2,2,1,1,0};
+  unsigned int expectedSumCountUpTo[5]={6,6,2,2,0};
+  for (unsigned int i=0; i<5; ++i)
+    {
+      assert(counterArray.getCounter(i).sumcount()==expectedSumCount[i]);
+      assert(counterArray.getCounter(i).flagcount()==expectedFlagCount[i]);
+      assert(counterArrayUpTo.getCounter(i).sumcount()==expectedSumCountUpTo[i]);
+      assert(counterArrayUpTo.getCounter(i).flagcount()==expectedFlagCountUpTo[i]);
+   }
+
+  ArrayCounter<DIFCounters> level3counter(2);
+  assert (level3counter.size()==2);
+  param[0]=3; param[1]=4; param[2]=5; //dif=3, asic=4, channel=5
+  level3counter.add(3,0,param); //add data to first counter
+  std::string difasiclabelsarray[5]={"setup", "all DIFs", "DIF", "ASIC", "channel"};
+  level3counter.print(difasiclabelsarray);
+  testArrayCounterLevelThree(level3counter);
+  
   outfile.open("test.txt");
-  difasichannelcount_extended.ASCIIwrite(outfile);
+  level3counter.ASCIIwrite(outfile);
   outfile.close();
   infile.open("test.txt");
-  extendedMappedCounters<SingleCounter> tofailread;
-  assert(tofailread.ASCIIread(infile)==false);
-  extendedMappedCounters<MappedCounters<MappedCounters<SingleCounter> > > difasichannelcount_extended_readback;
-  assert(difasichannelcount_extended_readback.ASCIIread(infile));
+  ArrayCounter<DIFCounters> level3counter_readback(8);
+  level3counter_readback.ASCIIread(infile);
   infile.close();
-  assert(difasichannelcount_extended_readback.n_event==difasichannelcount_extended.n_event);
-  assert(difasichannelcount_extended_readback.labels[2]==difasichannelcount_extended.labels[2]);
-  assert(difasichannelcount_extended_readback==difasichannelcount_extended);
+  testArrayCounterLevelThree(level3counter_readback);
 
+  RunThresholdCounter_PlaneGap bob;
+  bob.n_event=7866;
+  assert (bob.m_thresholdCounters.size() == 3 );
+  assert (bob.nLevels() == 4);
+  bob.labels[0]="Threshold";
+  bob.labels[1]="all_plans";
+  bob.labels[2]="plan";
+  bob.labels[3]="gap";
+  param[1]=4; param[2]=5; // plan=4, asic=5
+  bob.m_thresholdCounters.add(3,0,param+1); // [0] set (3,1) to [4][5]
+  bob.m_thresholdCounters.newSet();
+  bob.m_thresholdCounters.add(1,1,param+1); // [0][4][5] = (4,2), [1][4][5]  =(1,1)
+  param[1]=4; param[2]=6;
+  bob.m_thresholdCounters.add(2,1,param+1); // [0][4][6] = (2,1), [1][4][6] = (2,1)
+  param[1]=88; param[2]=5;
+  bob.m_thresholdCounters.add(8,2,param+1); // [0][88][5] = (8,1), [1][88][5] = (8,1), [2][88][5] = (8,1)
+  bob.print();
+
+  testRunPlaneGap(bob);
+
+  outfile.open("test.txt");
+  bob.ASCIIwrite(outfile);
+  outfile.close();
+  infile.open("test.txt");
+  RunThresholdCounter_DifAsicChannel failread;
+  assert (failread.nLevels() == 5);
+  assert (failread.ASCIIread(infile)==false);
+  RunThresholdCounter_PlaneGap bob_readback;
+  bob_readback.ASCIIread(infile);
+  infile.close();
+  bob_readback.print();
+  testRunPlaneGap(bob_readback);
 
   return 0;
 }
