@@ -3,8 +3,6 @@
 #include "RawCalorimeterHitPointerTools.h"
 #include "RawHit_SDHCAL_Data.h"
 
-#include "GG_counter_histos.h"
-
 #include "TDirectory.h"
 #include "TH1F.h"
 

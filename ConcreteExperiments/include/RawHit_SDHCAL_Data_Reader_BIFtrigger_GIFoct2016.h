@@ -6,7 +6,6 @@
 #include "domain.h"
 #include "ConcreteExperimentalSetup.h"
 
-#include "GG_counter.h"
 class TDirectory;
 
 class RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016 : public RawHit_SDHCAL_Data_Listener, public RawHit_SDHCAL_Data_Reader
