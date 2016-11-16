@@ -5,7 +5,7 @@
 #include "domain.h"
 #include "ExperimentalSetup.h"
 
-#include "GG_counter.h"
+#include "GG_extended_counters.h"
 class TDirectory;
 
 class RawHit_Plan_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
@@ -29,8 +29,7 @@ class RawHit_Plan_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
 
   ExperimentalSetup& m_setup;   
 
-  unsigned int m_total;
-  MappedCounters<MappedCounters<SingleCounter> > m_PlaneAsicCounters[3];
+  RunThresholdCounter_PlaneGap m_PlaneAsicCounters;
 
   float m_noiseScale;
   std::string m_unit;

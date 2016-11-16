@@ -12,7 +12,11 @@
 
 RawHit_Plan_Occupancy_Listener::RawHit_Plan_Occupancy_Listener(ExperimentalSetup& setup) : m_setup(setup), m_noiseScale(1), m_unit("")
 {
-  m_total=0;
+  m_PlaneAsicCounters.n_event=0;
+  m_PlaneAsicCounters.labels[0]="threshold";
+  m_PlaneAsicCounters.labels[1]="setup";
+  m_PlaneAsicCounters.labels[2]="plane";
+  m_PlaneAsicCounters.labels[3]="gap";
   m_DIFnumber_of_the_BIF=m_setup.getBIF();
   std::vector<DIFdrivenDevice*> plans=m_setup.getPlans();
   for (std::vector<DIFdrivenDevice*>::iterator it=plans.begin(); it!= plans.end(); ++it)
@@ -32,16 +36,17 @@ RawHit_Plan_Occupancy_Listener::RawHit_Plan_Occupancy_Listener(ExperimentalSetup
 
 void RawHit_Plan_Occupancy_Listener::process(const RawHit_SDHCAL_Data& d)
 {
-  m_total+=d.getNumberOfEventInThisData();
+  m_PlaneAsicCounters.n_event+=d.getNumberOfEventInThisData();
   for (std::vector<RawCalorimeterHitPointer>::const_iterator it=d.getHitVector().begin(); it !=d.getHitVector().end(); ++it)
     {
       if (m_setup.DIFnumberIsBIF(it->dif())) continue;
       unsigned int keys[2]={m_setup.getPlanNumber(it->dif()),it->asic()};
-      m_PlaneAsicCounters[0].add(1,keys);
-      if (it->aboveSecondThreshold()) m_PlaneAsicCounters[1].add(1,keys);
-      if (it->aboveThirdThreshold()) m_PlaneAsicCounters[2].add(1,keys);
+      unsigned int upTo=0;
+      if (it->aboveSecondThreshold()) upTo=1;
+      if (it->aboveThirdThreshold())  upTo=2;
+      m_PlaneAsicCounters.m_thresholdCounters.add(1,upTo,keys);
     }
-  for (unsigned int i=0; i<3; ++i) m_PlaneAsicCounters[i].newSet();
+  m_PlaneAsicCounters.m_thresholdCounters.newSet();
 }
 
 void RawHit_Plan_Occupancy_Listener::efficiencyReportThreshold(unsigned int threshold)
@@ -49,18 +54,18 @@ void RawHit_Plan_Occupancy_Listener::efficiencyReportThreshold(unsigned int thre
  unsigned int index=threshold-1;
  if (index>=3) return;
  std::cout << "Efficiency report from RawHit_Plan_Occupancy_Listener threshold " << threshold << " :"<<std::endl;
- if (m_total==0) {std::cout << "Nothing to report" << std::endl; return;}
- for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters[index].begin(); itplane!=m_PlaneAsicCounters[index].end(); ++itplane)
+ if (m_PlaneAsicCounters.n_event==0) {std::cout << "Nothing to report" << std::endl; return;}
+ for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).begin(); itplane!=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).end(); ++itplane)
     {
-      std::cout << "Plane number " << itplane->first << "  :  efficiency=  " << itplane->second.flagcount()/float(m_total);
-      if (m_setup.PlanIsStrip(itplane->first)) std::cout << "  strip efficiency # gap 1 : " <<  itplane->second[1].flagcount()/float(m_total) << " gap 2 : " <<  itplane->second[2].flagcount()/float(m_total);
+      std::cout << "Plane number " << itplane->first << "  :  efficiency=  " << itplane->second.flagcount()/float(m_PlaneAsicCounters.n_event);
+      if (m_setup.PlanIsStrip(itplane->first)) std::cout << "  strip efficiency # gap 1 : " <<  itplane->second[1].flagcount()/float(m_PlaneAsicCounters.n_event) << " gap 2 : " <<  itplane->second[2].flagcount()/float(m_PlaneAsicCounters.n_event);
       std::cout << std::endl;
     }
 }
 
 void RawHit_Plan_Occupancy_Listener::efficiencyReport()
 {
-  if (m_total==0) {std::cout << "Nothing to report" << std::endl; return;}
+  if (m_PlaneAsicCounters.n_event==0) {std::cout << "Nothing to report" << std::endl; return;}
   for (unsigned int i=1; i<=3; ++i) efficiencyReportThreshold(i);
 }
 
@@ -69,18 +74,18 @@ void RawHit_Plan_Occupancy_Listener::noiseReportThreshold(unsigned int threshold
  unsigned int index=threshold-1;
  if (index>=3) return;
  std::cout << "Noise report from RawHit_Plan_Occupancy_Listener at threshold " << threshold << " :"<<std::endl;
- if (m_total==0) {std::cout << "Nothing to report" << std::endl; return;}
- for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters[index].begin(); itplane!=m_PlaneAsicCounters[index].end(); ++itplane)
+ if (m_PlaneAsicCounters.n_event==0) {std::cout << "Nothing to report" << std::endl; return;}
+ for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).begin(); itplane!=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).end(); ++itplane)
     {
-      std::cout << "Plane number " << itplane->first << "  :  noise rate=  " << itplane->second.sumcount()/float(m_total)*m_noiseScale << m_unit;
-      if (m_setup.PlanIsStrip(itplane->first)) std::cout << "  strip noise rate # gap 1 : " <<  itplane->second[1].sumcount()/float(m_total)*m_noiseScale << m_unit << " gap 2 : " <<  itplane->second[2].sumcount()/float(m_total)*m_noiseScale << m_unit;
+      std::cout << "Plane number " << itplane->first << "  :  noise rate=  " << itplane->second.sumcount()/float(m_PlaneAsicCounters.n_event)*m_noiseScale << m_unit;
+      if (m_setup.PlanIsStrip(itplane->first)) std::cout << "  strip noise rate # gap 1 : " <<  itplane->second[1].sumcount()/float(m_PlaneAsicCounters.n_event)*m_noiseScale << m_unit << " gap 2 : " <<  itplane->second[2].sumcount()/float(m_PlaneAsicCounters.n_event)*m_noiseScale << m_unit;
       std::cout << std::endl;
     }  
 }
 
 void RawHit_Plan_Occupancy_Listener::noiseReport()
 {
-  if (m_total==0) {std::cout << "Nothing to report" << std::endl; return;}
+  if (m_PlaneAsicCounters.n_event==0) {std::cout << "Nothing to report" << std::endl; return;}
   for (unsigned int i=1; i<=3; ++i) noiseReportThreshold(i);
 }
 
@@ -88,30 +93,30 @@ void RawHit_Plan_Occupancy_Listener::saveToThreshold(unsigned int threshold, TDi
 {
   unsigned int index=threshold-1;
   if (index>=3) return;
-  if (m_total==0) return;
+  if (m_PlaneAsicCounters.n_event==0) return;
   if (NULL==ROOTdir) return;
   ROOTdir->cd();
-  if (m_PlaneAsicCounters[index].empty()) 
+  if (m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).empty()) 
     { 
       std::cout << "RawHit_Plan_Occupancy_Listener for threshold " << threshold << " : no data in plan for " 
-		<< m_total << " events seen. Check your Experimental Setup !!!!!!!!!!!!!" << std::endl;
+		<< m_PlaneAsicCounters.n_event << " events seen. Check your Experimental Setup !!!!!!!!!!!!!" << std::endl;
       return;
     }
-  std::pair<TH1F*,TH1F*> planeHisto=convert(m_PlaneAsicCounters[index],"Plane_occupancy","Plane",1/float(m_total));
+  std::pair<TH1F*,TH1F*> planeHisto=convert(m_PlaneAsicCounters.m_thresholdCounters.getCounter(index),"Plane_occupancy","Plane",1/float(m_PlaneAsicCounters.n_event));
   planeHisto.first->Scale(m_noiseScale);
   planeHisto.first->Write();
   planeHisto.second->Write();
 
   MappedCounters<SingleCounter> forGapEfficiencies;
-  for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters[index].begin(); itplane!=m_PlaneAsicCounters[index].end(); ++itplane)
+  for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).begin(); itplane!=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).end(); ++itplane)
     if (m_setup.PlanIsStrip(itplane->first)) 
       {
-	forGapEfficiencies[10*itplane->first]=m_PlaneAsicCounters[index][itplane->first];
-	forGapEfficiencies[1+10*itplane->first]=m_PlaneAsicCounters[index][itplane->first][1];
-	forGapEfficiencies[2+10*itplane->first]=m_PlaneAsicCounters[index][itplane->first][2];
+	forGapEfficiencies[10*itplane->first]=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index)[itplane->first];
+	forGapEfficiencies[1+10*itplane->first]=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index)[itplane->first][1];
+	forGapEfficiencies[2+10*itplane->first]=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index)[itplane->first][2];
       }
   if (forGapEfficiencies.empty()) return;
-  std::pair<TH1F*,TH1F*> gapHisto=convert(forGapEfficiencies,"Gap_occupancy","Strip plane or gap",1/float(m_total));
+  std::pair<TH1F*,TH1F*> gapHisto=convert(forGapEfficiencies,"Gap_occupancy","Strip plane or gap",1/float(m_PlaneAsicCounters.n_event));
   gapHisto.first->Scale(m_noiseScale);
   gapHisto.first->Write();
   gapHisto.second->Write();
