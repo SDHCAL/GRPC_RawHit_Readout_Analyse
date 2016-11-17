@@ -1,11 +1,12 @@
-#ifndef GG_counter
-#define GG_counter
+#ifndef GG_counter_HH
+#define GG_counter_HH
 
 #include <map>
 #include <iostream>
 #include <string>
+#include "ASCIIpersistance.h"
 
-class SingleCounter
+class SingleCounter : public ASCIIpersistance
 {
  public:
  SingleCounter() : m_count(0), m_flagcount(0), m_flag(false) {;}
@@ -17,8 +18,8 @@ class SingleCounter
   unsigned int flagcount() const {return m_flagcount;}
   void print(std::string* labels=NULL,std::ostream& oflux=std::cout) { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
 
-  void ASCIIwrite(std::ostream& oflux=std::cout) const { oflux << m_count << " " << m_flagcount<< " " ; }
-  void ASCIIread(std::istream& iflux=std::cin) {iflux >> m_count >> m_flagcount;}
+  bool ASCIIwrite(std::ostream& oflux=std::cout) const { oflux << m_count << " " << m_flagcount<< " " ; return oflux.good();}
+  bool ASCIIread(std::istream& iflux=std::cin) {iflux >> m_count >> m_flagcount; return iflux.good();}
 
   bool operator==(const SingleCounter& other) const {return sumcount()==other.sumcount() && flagcount()==other.flagcount();}
   bool operator!=(const SingleCounter& other) const {return ! ((*this)==other);}
@@ -43,14 +44,15 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
     for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) {printIndent(oflux); oflux << it->first << " "; it->second.print(labels+1,oflux);}
   }
 
-  void ASCIIwrite(std::ostream& oflux=std::cout) const
+  bool ASCIIwrite(std::ostream& oflux=std::cout) const
   { 
     SingleCounter::ASCIIwrite(oflux);  
     oflux << this->size() << " ";
     for (typename std::map<unsigned int,COUNTER>::const_iterator it=this->begin(); it!= this->end(); ++it) 
       { oflux << it->first << " "; it->second.ASCIIwrite(oflux); }
+    return oflux.good();
   }
-  void ASCIIread(std::istream& iflux=std::cin)
+  bool ASCIIread(std::istream& iflux=std::cin)
   {
     this->clear();
     SingleCounter::ASCIIread(iflux);
@@ -58,6 +60,7 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
     iflux >> mapsize;
     for (unsigned int i=0; i<mapsize; ++i)
       { unsigned int aKey; iflux >> aKey; (*this)[aKey].ASCIIread(iflux); }
+    return iflux.good();
   }
 
   const std::map<unsigned int,COUNTER>& the_map() const {return *this;}

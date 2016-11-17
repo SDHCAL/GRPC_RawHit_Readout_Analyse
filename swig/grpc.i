@@ -33,6 +33,7 @@
 #include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
 #include "RawHit_SDHCAL_Data_Reader_Threshold_Filter.h" 
 #include "RawHit_Plan_Occupancy_Listener.h"
+#include "ASCIIpersistance.h"
 #include "GG_counter.h"
 #include "GG_extended_counters.h"
 
@@ -63,6 +64,7 @@
 %include "RawHit_SDHCAL_Data_Reader_Trivent.h" 
 %include "RawHit_SDHCAL_Data_Reader_Threshold_Filter.h" 
 %include "RawHit_Plan_Occupancy_Listener.h"
+%include "ASCIIpersistance.h"
 %include "GG_counter.h"
 %include "GG_extended_counters.h"
 

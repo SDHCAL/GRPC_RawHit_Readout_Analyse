@@ -5,7 +5,7 @@
 #include <vector>
 
 template <class COUNTER>
-class ArrayCounter 
+class ArrayCounter : public ASCIIpersistance
 {
 public:
   ArrayCounter(unsigned int theSize) : m_counters(theSize) {;}
@@ -17,17 +17,19 @@ public:
     for (unsigned int i=0; i<m_counters.size();++i)
       {oflux << labels[0] << " " << i << " : "; m_counters[i].print(labels+1,oflux);}
   }
-  void ASCIIwrite(std::ostream& oflux=std::cout) const
+  bool ASCIIwrite(std::ostream& oflux=std::cout) const
   {
     oflux << m_counters.size() << " "; 
     for (typename std::vector<COUNTER>::const_iterator it=m_counters.begin(); it!= m_counters.end(); ++it) it->ASCIIwrite(oflux);
+    return oflux.good();
   }
-  void ASCIIread(std::istream& iflux=std::cin)
+  bool ASCIIread(std::istream& iflux=std::cin)
   {
     unsigned int theSize; 
     iflux>>theSize;
     m_counters=std::vector<COUNTER>(theSize);
     for (unsigned int i=0; i<theSize; ++i) m_counters[i].ASCIIread(iflux);
+    return iflux.good();
   }
   unsigned int size() {return m_counters.size();}
   COUNTER& getCounter(unsigned int i) {return m_counters[i];}
@@ -47,7 +49,7 @@ public:
 
 
 template <class COUNTER>
-class RunThresholdCounter
+class RunThresholdCounter : public ASCIIpersistance
 {
 public:
   //kind of structure 
@@ -59,12 +61,13 @@ public:
   RunThresholdCounter() : m_thresholdCounters(3), n_event(0) {;}
 
   void print(std::ostream& oflux=std::cout) { oflux << n_event << " events " << std::endl; m_thresholdCounters.print(labels,oflux);}
-  void ASCIIwrite(std::ostream& oflux=std::cout) const
+  bool ASCIIwrite(std::ostream& oflux=std::cout) const
   {
     oflux << nLevels() << " ";
     for (unsigned int i=0; i<nLevels(); ++i) oflux << labels[i] << " ";
     oflux << n_event<< " ";
     m_thresholdCounters.ASCIIwrite(oflux);
+    return oflux.good();
   }
   bool ASCIIread(std::istream& iflux=std::cin)
   {
@@ -79,7 +82,7 @@ public:
     for (unsigned int i=0; i<nLevels(); ++i) iflux >> labels[i];
     iflux >> n_event;
     m_thresholdCounters.ASCIIread(iflux);
-    return true;
+    return iflux.good();
   }
 private:
 };
