@@ -14,11 +14,11 @@
 RawHit_Occupancy_Listener::RawHit_Occupancy_Listener()
 {
   m_countBy_DifAsicChannel.n_event=0;
-  m_countBy_DifAsicChannel.labels[0]="threshold";
-  m_countBy_DifAsicChannel.labels[1]="setup";
-  m_countBy_DifAsicChannel.labels[2]="dif";
-  m_countBy_DifAsicChannel.labels[3]="asic";
-  m_countBy_DifAsicChannel.labels[4]="channel";
+  m_countBy_DifAsicChannel.setLabel(0,"threshold");
+  m_countBy_DifAsicChannel.setLabel(1,"setup");
+  m_countBy_DifAsicChannel.setLabel(2,"dif");
+  m_countBy_DifAsicChannel.setLabel(3,"asic");
+  m_countBy_DifAsicChannel.setLabel(4,"channel");
 }
 
 void RawHit_Occupancy_Listener::process(const RawHit_SDHCAL_Data& d) 

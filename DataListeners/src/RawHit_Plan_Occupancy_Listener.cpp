@@ -13,10 +13,10 @@
 RawHit_Plan_Occupancy_Listener::RawHit_Plan_Occupancy_Listener(ExperimentalSetup& setup) : m_setup(setup), m_noiseScale(1), m_unit("")
 {
   m_PlaneAsicCounters.n_event=0;
-  m_PlaneAsicCounters.labels[0]="threshold";
-  m_PlaneAsicCounters.labels[1]="setup";
-  m_PlaneAsicCounters.labels[2]="plane";
-  m_PlaneAsicCounters.labels[3]="gap";
+  m_PlaneAsicCounters.setLabel(0,"threshold");
+  m_PlaneAsicCounters.setLabel(1,"setup");
+  m_PlaneAsicCounters.setLabel(2,"plane");
+  m_PlaneAsicCounters.setLabel(3,"gap");
   m_DIFnumber_of_the_BIF=m_setup.getBIF();
   std::vector<DIFdrivenDevice*> plans=m_setup.getPlans();
   for (std::vector<DIFdrivenDevice*>::iterator it=plans.begin(); it!= plans.end(); ++it)

@@ -37,10 +37,10 @@ void testArrayCounterLevelThree(ArrayCounter<DIFCounters>& level3counter)
 void testRunPlaneGap(RunThresholdCounter_PlaneGap &bob)
 {
   assert ( bob.n_event==7866 );
-  assert ( bob.labels[0]=="Threshold" );
-  assert ( bob.labels[1]=="all_plans" );
-  assert ( bob.labels[2]=="plan" );
-  assert ( bob.labels[3]=="gap" );
+  assert ( bob.getLabel(0)=="Threshold" );
+  assert ( bob.getLabel(1)=="all_plans" );
+  assert ( bob.getLabel(2)=="plan" );
+  assert ( bob.getLabel(3)=="gap" );
   assert ( bob.m_thresholdCounters.size() == 3 );
   assert ( bob.m_thresholdCounters.getCounter(2).size()==1 );
   assert ( bob.m_thresholdCounters.getCounter(2).sumcount()==8 );
@@ -258,7 +258,7 @@ int main()
   std::string difasiclabelsarray[5]={"setup", "all DIFs", "DIF", "ASIC", "channel"};
   level3counter.print(difasiclabelsarray);
   testArrayCounterLevelThree(level3counter);
-  
+
   outfile.open("test.txt");
   level3counter.ASCIIwrite(outfile);
   outfile.close();
@@ -272,10 +272,10 @@ int main()
   bob.n_event=7866;
   assert (bob.m_thresholdCounters.size() == 3 );
   assert (bob.nLevels() == 4);
-  bob.labels[0]="Threshold";
-  bob.labels[1]="all_plans";
-  bob.labels[2]="plan";
-  bob.labels[3]="gap";
+  bob.setLabel(0,"Threshold");
+  bob.setLabel(1,"all plans"); //should be  converted to "all_plans"
+  bob.setLabel(2,"plan");
+  bob.setLabel(3,"gap");
   param[1]=4; param[2]=5; // plan=4, asic=5
   bob.m_thresholdCounters.add(3,0,param+1); // [0] set (3,1) to [4][5]
   bob.m_thresholdCounters.newSet();

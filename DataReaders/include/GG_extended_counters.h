@@ -3,6 +3,7 @@
 
 #include "GG_counter.h"
 #include <vector>
+#include <algorithm>
 
 template <class COUNTER>
 class ArrayCounter : public ASCIIpersistance
@@ -55,16 +56,19 @@ public:
   //kind of structure 
   unsigned int n_event;
   unsigned int nLevels() const {return COUNTER::printIndentLevel+2;}
-  std::string labels[COUNTER::printIndentLevel+2];
   ArrayUpToCounter<COUNTER> m_thresholdCounters;
 
-  RunThresholdCounter() : m_thresholdCounters(3), n_event(0) {;}
+ RunThresholdCounter() : n_event(0), m_thresholdCounters(3) { for (unsigned int i=0; i<nLevels(); ++i) m_labels[i]="Unset_label";}
 
-  void print(std::ostream& oflux=std::cout) { oflux << n_event << " events " << std::endl; m_thresholdCounters.print(labels,oflux);}
+  void setLabel(unsigned int i, std::string label) 
+  {std::replace(label.begin(),label.end(),' ','_');if (label.empty()) label="Unset_label"; m_labels[i]=label;}
+  std::string getLabel(unsigned int i) const {return m_labels[i];}
+
+  void print(std::ostream& oflux=std::cout) { oflux << n_event << " events " << std::endl; m_thresholdCounters.print(m_labels,oflux);}
   bool ASCIIwrite(std::ostream& oflux=std::cout) const
   {
     oflux << nLevels() << " ";
-    for (unsigned int i=0; i<nLevels(); ++i) oflux << labels[i] << " ";
+    for (unsigned int i=0; i<nLevels(); ++i) oflux << m_labels[i] << " ";
     oflux << n_event<< " ";
     m_thresholdCounters.ASCIIwrite(oflux);
     return oflux.good();
@@ -79,12 +83,13 @@ public:
 	iflux.seekg(before);
 	return false;
       }
-    for (unsigned int i=0; i<nLevels(); ++i) iflux >> labels[i];
+    for (unsigned int i=0; i<nLevels(); ++i) iflux >> m_labels[i];
     iflux >> n_event;
     m_thresholdCounters.ASCIIread(iflux);
     return iflux.good();
   }
 private:
+  std::string m_labels[COUNTER::printIndentLevel+2];
 };
 
 typedef RunThresholdCounter<DIFCounters> RunThresholdCounter_DifAsicChannel;  //3 level counters [dif][asic][channel]
