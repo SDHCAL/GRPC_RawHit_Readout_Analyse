@@ -103,9 +103,12 @@ void RawHit_Plan_Occupancy_Listener::saveToThreshold(unsigned int threshold, TDi
       return;
     }
   std::pair<TH1F*,TH1F*> planeHisto=convert(m_PlaneAsicCounters.m_thresholdCounters.getCounter(index),"Plane_occupancy","Plane",1/float(m_PlaneAsicCounters.n_event));
-  planeHisto.first->Scale(m_noiseScale);
-  planeHisto.first->Write();
-  planeHisto.second->Write();
+  if (planeHisto.first)
+    {
+      planeHisto.first->Scale(m_noiseScale);
+      planeHisto.first->Write();
+      planeHisto.second->Write();
+    }
 
   MappedCounters<SingleCounter> forGapEfficiencies;
   for (std::map<unsigned int,MappedCounters<SingleCounter> >::iterator itplane=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).begin(); itplane!=m_PlaneAsicCounters.m_thresholdCounters.getCounter(index).end(); ++itplane)
@@ -117,9 +120,12 @@ void RawHit_Plan_Occupancy_Listener::saveToThreshold(unsigned int threshold, TDi
       }
   if (forGapEfficiencies.empty()) return;
   std::pair<TH1F*,TH1F*> gapHisto=convert(forGapEfficiencies,"Gap_occupancy","Strip plane or gap",1/float(m_PlaneAsicCounters.n_event));
-  gapHisto.first->Scale(m_noiseScale);
-  gapHisto.first->Write();
-  gapHisto.second->Write();
+  if (gapHisto.first)
+    {
+      gapHisto.first->Scale(m_noiseScale);
+      gapHisto.first->Write();
+      gapHisto.second->Write();
+    }
 }
 
 void RawHit_Plan_Occupancy_Listener::saveTo(TDirectory* ROOTdir)

@@ -50,19 +50,19 @@ void RawHit_Occupancy_Listener::saveToThreshold(unsigned int threshold,TDirector
     }
 
   std::pair<TH1F*,TH1F*> difHisto=convert(m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index),std::string("DIF_occupancy"),std::string("DIF"),1/float(m_countBy_DifAsicChannel.n_event));
-  difHisto.first->Write();
-  difHisto.second->Write();
+  if (difHisto.first) difHisto.first->Write();
+  if (difHisto.second) difHisto.second->Write();
   std::cout << "1D DIF histo saved" << std::endl;
 
   std::pair<TH2F*,TH2F*> difAsicHisto=convert(m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index),"ASIC_occupancy","DIF","ASIC",1/float(m_countBy_DifAsicChannel.n_event));
-  difAsicHisto.first->Write();
-  difAsicHisto.second->Write();
+  if (difAsicHisto.first) difAsicHisto.first->Write();
+  if (difAsicHisto.second) difAsicHisto.second->Write();
 
   std::pair<TH2F*,TH2F*>* difAsicChannelHistos=convert(m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index),"CHANNEL_occupancy","DIF","ASIC","CHANNEL",1/float(m_countBy_DifAsicChannel.n_event));
   for (unsigned int i=0; i<m_countBy_DifAsicChannel.m_thresholdCounters.getCounter(index).size(); ++i)
     {
-      difAsicChannelHistos[i].first->Write();
-      difAsicChannelHistos[i].second->Write();
+      if (difAsicChannelHistos[i].first) difAsicChannelHistos[i].first->Write();
+      if (difAsicChannelHistos[i].second) difAsicChannelHistos[i].second->Write();
     }
   std::cout << "2D DIF-ASIC-CHANNEL histo saved" << std::endl;
 
@@ -86,10 +86,10 @@ void RawHit_Occupancy_Listener::saveToThreshold(unsigned int threshold,TDirector
 	  }
     }
   difHisto=convert(Plane_IJ_counters,"Plane_occupancy","Layer",1/float(m_countBy_DifAsicChannel.n_event)); //second histo is meaningless here 
-  difHisto.first->Write(); 
+  if (difHisto.first) difHisto.first->Write(); 
   delete [] difAsicChannelHistos;
   difAsicChannelHistos=convert(Plane_IJ_counters,"CHANNEL_occupancy","PLANE","I or strip","J or Gap",1/float(m_countBy_DifAsicChannel.n_event), "CHANNEL", false);
-  for (unsigned int i=0; i<Plane_IJ_counters.size(); ++i) difAsicChannelHistos[i].first->Write();
+  for (unsigned int i=0; i<Plane_IJ_counters.size(); ++i) if (difAsicChannelHistos[i].first) difAsicChannelHistos[i].first->Write();
   delete [] difAsicChannelHistos;
 }
 

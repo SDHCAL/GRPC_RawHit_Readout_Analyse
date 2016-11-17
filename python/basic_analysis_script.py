@@ -17,6 +17,9 @@ for run in runNumbers:
     filelist.extend( glob.glob(directory+'/*'+run+'*.slcio') )
 
 filelist=set(filelist)
+if len(filelist)==0 :
+    sys.exit("No file for this run number "+str(runNumbers))
+
 
 inputFileNames=grpc.std_string_vec()
 for file in filelist:
