@@ -98,6 +98,9 @@ effPlanOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies
 
 noisePlanOccupancy.noiseReport()
 effPlanOccupancy.efficiencyReport()
+outputReport='report_'+runNumbers[0]+'.txt'
+noisePlanOccupancy.runSummary().ASCIIfilewrite(outputReport)
+effPlanOccupancy.runSummary().ASCIIfileappend(outputReport)
 
 rootFile.Close()
 

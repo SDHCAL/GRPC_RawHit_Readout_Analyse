@@ -16,6 +16,9 @@ class ASCIIpersistance
 
   bool ASCIIfilewrite(std::string filename) const { return ASCIIfilewrite(filename.c_str());}
   bool ASCIIfileread(std::string filename)        { return ASCIIfileread (filename.c_str());}
+
+  bool ASCIIfileappend(const char* filename) const { std::ofstream f(filename,std::ios::app); return (f.good() &&  ASCIIwrite(f));}
+  bool ASCIIfileappend(std::string filename) const { return ASCIIfileappend(filename.c_str());}
 };
 
 #endif
