@@ -10,12 +10,13 @@ class RawHit_SDHCAL_Data_Reader_From_LCEvent : public RawHit_SDHCAL_Data_Reader,
 {
  public:
   RawHit_SDHCAL_Data_Reader_From_LCEvent(std::string cname="DHCALRawHits")
-    : m_nProcessedEvent(0),m_collectionName(cname){;}
+    : m_nProcessedEvent(0),m_nMissingCollectionEvent(0),m_collectionName(cname){;}
   ~RawHit_SDHCAL_Data_Reader_From_LCEvent();
   void processEvent(EVENT::LCEvent * evt);
   void modifyEvent(EVENT::LCEvent * evt) {;}
  private:
   unsigned int m_nProcessedEvent; 
+  unsigned int m_nMissingCollectionEvent; 
   std::string m_collectionName;
 };
 
