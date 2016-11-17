@@ -34,6 +34,7 @@
 #include "RawHit_SDHCAL_Data_Reader_Threshold_Filter.h" 
 #include "RawHit_Plan_Occupancy_Listener.h"
 #include "GG_counter.h"
+#include "GG_extended_counters.h"
 
   void debug_message(void *ptr) {std::cout << "DEBUG : pointer passing " << ptr<< std::endl;}
 %}
@@ -63,6 +64,7 @@
 %include "RawHit_SDHCAL_Data_Reader_Threshold_Filter.h" 
 %include "RawHit_Plan_Occupancy_Listener.h"
 %include "GG_counter.h"
+%include "GG_extended_counters.h"
 
 %template(std_string_vec) std::vector< std::string >;
 %template(uint_pair) std::pair<unsigned int, unsigned int>;
@@ -75,6 +77,18 @@
 %template(MappedCounters_leveltwo) MappedCounters<MappedCounters<SingleCounter> >;
 %template(Mappedcounter_levelthree_map) std::map< unsigned int, MappedCounters<MappedCounters<SingleCounter> > >;
 %template(MappedCounters_levelthree) MappedCounters<MappedCounters<MappedCounters<SingleCounter> > >;
+%template(ArrayCounter_single) ArrayCounter<SingleCounter>;
+%template(ArrayCounter_MappedCounters_single) ArrayCounter<MappedCounters<SingleCounter> >;
+%template(ArrayCounter_MappedCounters_leveltwo) ArrayCounter<MappedCounters<MappedCounters<SingleCounter> > >;
+%template(ArrayCounter_MappedCounters_levelthree) ArrayCounter<MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > >;
+%template(ArrayUpToCounter_single) ArrayUpToCounter<SingleCounter>;
+%template(ArrayUpToCounter_MappedCounters_single) ArrayUpToCounter<MappedCounters<SingleCounter> >;
+%template(ArrayUpToCounter_MappedCounters_leveltwo) ArrayUpToCounter<MappedCounters<MappedCounters<SingleCounter> > >;
+%template(ArrayUpToCounter_MappedCounters_levelthree) ArrayUpToCounter<MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > >;
+%template(RunThresholdCounter_single) RunThresholdCounter<SingleCounter>;
+%template(RunThresholdCounter_MappedCounters_single) RunThresholdCounter<MappedCounters<SingleCounter> >;
+%template(RunThresholdCounter_MappedCounters_leveltwo) RunThresholdCounter<MappedCounters<MappedCounters<SingleCounter> > >;
+%template(RunThresholdCounter_MappedCounters_levelthree) RunThresholdCounter<MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > >;
 
 %extend RawHit_Occupancy_Listener { void saveTo_wrap(void *ptr_TDirectory,ExperimentalSetup * v) {debug_message(ptr_TDirectory);self->saveTo((TDirectory*)ptr_TDirectory,v);} }
 %extend RawHit_Occupancy_Listener { void saveToThreshold_wrap(unsigned int i,void *ptr_TDirectory,ExperimentalSetup * v) {debug_message(ptr_TDirectory);self->saveToThreshold(i,(TDirectory*)ptr_TDirectory,v);} }

@@ -20,7 +20,7 @@ class RawHit_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
   void process(const RawHit_SDHCAL_Data&);
   void saveTo(TDirectory* d,ExperimentalSetup* e=NULL); 
   void saveToThreshold(unsigned int threshold,TDirectory* d,ExperimentalSetup* e=NULL);
-  //extendedMappedCounters<AsicCounters> runSummary(unsigned int threshold);
+  RunThresholdCounter<DIFCounters>& runSummary() {return m_countBy_DifAsicChannel;}
 
  private:
   //unsigned int m_total=0; //C++11
