@@ -1,13 +1,18 @@
 #!/usr/bin/python
 
-#to be executed in the lib directory where all the needed libraries are installed 
-#it uses the swig interface 
+#to be executed in the lib directory where all the needed libraries are installed or set LD_LIBRARY_PATH to contain the lib directory
+#it uses the pyroot ROOT dictionnary interface 
 # usage python <name>.py  list_of_slcio_files
-import grpc
+
 import sys
 import glob
 import ROOT
 ROOT.gROOT.Reset()
+
+ROOT.gSystem.Load('liblcio')
+#ROOT.gSystem.Load('liblcioDict')
+ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser')
+ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
 
 directory=sys.argv[1]
 runNumbers=sys.argv[2:]
@@ -22,7 +27,7 @@ if len(filelist)==0 :
     sys.exit("No file for this run number "+str(runNumbers))
 
 
-inputFileNames=grpc.std_string_vec()
+inputFileNames=ROOT.vector("string")()
 for file in filelist:
     inputFileNames.push_back(file)
 
@@ -30,19 +35,19 @@ for file in inputFileNames:
     print file
 
 
-experience=grpc.GIF_oct2016_ExperimentalSetup()
-numeroBIF=experience.getBIF();
+experience=ROOT.GIF_oct2016_ExperimentalSetup()
+numeroBIF=experience.getBIF()
 
 print numeroBIF
 
-BIFtriggerWindow=grpc.uint_intervalle(6,8)
-BIFtriggerWindowNoise=grpc.int_intervalle(-BIFtriggerWindow.second,-BIFtriggerWindow.first)
+BIFtriggerWindow=ROOT.intervalle('unsigned int')(6,8)
+BIFtriggerWindowNoise=ROOT.intervalle('int')(-BIFtriggerWindow.second,-BIFtriggerWindow.first)
 NoiseWindowLength=50; #10 microsecond
 decalage=10
-BIFtriggerWindowShifted=grpc.uint_intervalle(BIFtriggerWindow.first+decalage,BIFtriggerWindow.second+decalage)
+BIFtriggerWindowShifted=ROOT.intervalle('unsigned int')(BIFtriggerWindow.first+decalage,BIFtriggerWindow.second+decalage)
 
 #start LCIO reader
-lcReader=grpc.LCFactory_getInstance().createLCReader()
+lcReader=ROOT.IOIMPL.LCFactory.getInstance().createLCReader()
 
 ######################################################
 ##            master
@@ -57,35 +62,36 @@ lcReader=grpc.LCFactory_getInstance().createLCReader()
 ##   Plan_occupancy (eff)    Plan_occupancy (fake eff)
 
 #create architecture of listeners
-masterReader=grpc.RawHit_SDHCAL_Data_Reader_From_LCEvent()
+masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
 lcReader.registerLCEventListener(masterReader)
 
-allHitOccupancy=grpc.RawHit_Occupancy_Listener()
+allHitOccupancy=ROOT.RawHit_Occupancy_Listener()
 masterReader.registerDataListener(allHitOccupancy)
-BIF_splitter=grpc.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWindow)
+
+BIF_splitter=ROOT.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWindow)
 masterReader.registerDataListener(BIF_splitter)
-BIF_splitter_shift=grpc.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWindowShifted)
+BIF_splitter_shift=ROOT.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWindowShifted)
 masterReader.registerDataListener(BIF_splitter_shift)
-noiseReader=grpc.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
+noiseReader=ROOT.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
 noiseReader.setVetoOnBIF()
 noiseReader.setBIFtimeWindow(BIFtriggerWindowNoise)
 noiseReader.setMaxEventsToSend(1000000)
 masterReader.registerDataListener(noiseReader)
 
-BIFtrigger_subdata=grpc.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
+BIFtrigger_subdata=ROOT.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
 BIF_splitter.registerDataListener(BIFtrigger_subdata)
-triggeredHitOccupancy=grpc.RawHit_Occupancy_Listener()
+triggeredHitOccupancy=ROOT.RawHit_Occupancy_Listener()
 BIF_splitter.registerDataListener(triggeredHitOccupancy)
-BIFtrigger_subdata_shift=grpc.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
+BIFtrigger_subdata_shift=ROOT.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
 BIF_splitter_shift.registerDataListener(BIFtrigger_subdata_shift)
-triggeredHitOccupancy_shift=grpc.RawHit_Occupancy_Listener()
+triggeredHitOccupancy_shift=ROOT.RawHit_Occupancy_Listener()
 BIF_splitter_shift.registerDataListener(triggeredHitOccupancy_shift)
-noisePlanOccupancy=grpc.RawHit_Plan_Occupancy_Listener(experience)
+noisePlanOccupancy=ROOT.RawHit_Plan_Occupancy_Listener(experience)
 noiseReader.registerDataListener(noisePlanOccupancy)
 
-effPlanOccupancy=grpc.RawHit_Plan_Occupancy_Listener(experience)
+effPlanOccupancy=ROOT.RawHit_Plan_Occupancy_Listener(experience)
 BIFtrigger_subdata.registerDataListener(effPlanOccupancy)
-effPlanOccupancy_shift=grpc.RawHit_Plan_Occupancy_Listener(experience)
+effPlanOccupancy_shift=ROOT.RawHit_Plan_Occupancy_Listener(experience)
 BIFtrigger_subdata_shift.registerDataListener(effPlanOccupancy_shift)
 
 #open file and event loop
@@ -101,12 +107,14 @@ print rootFileName
 
 rootFile=ROOT.TFile(rootFileName  , "RECREATE")
 
-allHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("AllData")),experience)
-triggeredHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedData")),experience)
-triggeredHitOccupancy_shift.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedData_shift")),experience)
-noisePlanOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneNoise")))
-effPlanOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies")))
-effPlanOccupancy_shift.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies_shift")))
+#load ROOT library missing
+ROOT.TH1F
+allHitOccupancy.saveTo(rootFile.mkdir("AllData"),experience)
+triggeredHitOccupancy.saveTo(rootFile.mkdir("BIFtriggedData"),experience)
+triggeredHitOccupancy_shift.saveTo(rootFile.mkdir("BIFtriggedData_shift"),experience)
+noisePlanOccupancy.saveTo(rootFile.mkdir("GapPlaneNoise"))
+effPlanOccupancy.saveTo(rootFile.mkdir("GapPlaneEfficiencies"))
+effPlanOccupancy_shift.saveTo(rootFile.mkdir("GapPlaneEfficiencies_shift"))
 
 noisePlanOccupancy.noiseReport()
 effPlanOccupancy.efficiencyReport()

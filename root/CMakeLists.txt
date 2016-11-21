@@ -1,7 +1,8 @@
 include($ENV{ROOTSYS}/cmake/modules/RootNewMacros.cmake)
 
 get_property(dict_include_dir DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-list (REMOVE_ITEM dict_include_dir ${LCIO_INCLUDE_DIRS} ${ROOT_INCLUDE_DIRS})
+#list (REMOVE_ITEM dict_include_dir ${LCIO_INCLUDE_DIRS} ${ROOT_INCLUDE_DIRS})
+list (REMOVE_ITEM dict_include_dir ${ROOT_INCLUDE_DIRS})
 
 
 foreach(incdir ${dict_include_dir})

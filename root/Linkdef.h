@@ -4,7 +4,16 @@
 #pragma link off all functions;
 #pragma link C++ nestedclasses;
 
+//#pragma link C++ class IO::LCEventListener+;
+//#pragma link C++ class IO::LCRunListener+;
+#pragma link C++ class IO::LCReader+;
+#pragma link C++ class IO::LCWriter+;
+#pragma link C++ class IO::ILCFactory+;
+#pragma link C++ class IOIMPL::LCFactory+;
+
+
 #pragma link C++ class ASIC_Coordinate_Translator+;
+#pragma link C++ class pair<unsigned int,unsigned int>+;
 #pragma link C++ class intervalle<unsigned int>+;
 #pragma link C++ class intervalle<int>+;
 
@@ -50,6 +59,8 @@
 #pragma link C++ class CMSTree_Writer+;
 #pragma link C++ class RawHit_Occupancy_Listener;
 #pragma link C++ class RawHit_Plan_Occupancy_Listener;
+
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016;
 
 #pragma link C++ class RawHit_SDHCAL_Data_LCWriter;
 #pragma link C++ class RawHit_SDHCAL_Data_LCWriter_RawCalorimeterHit;
