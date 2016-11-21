@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/Modules")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "$ENV{ROOTSYS}/etc/cmake")
 
-
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_definitions("-std=c++11")
 
 option(GENERATE_SWIG "Flag to toggle python module generation" ON)
+option(GENERATE_ROOT_DICT "Flag to toggle ROOT dictionnary genaration" ON)
 
 enable_testing()
 
@@ -25,6 +25,7 @@ include_directories(${LCIO_INCLUDE_DIRS})
 
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIRS})
+
 
 add_subdirectory(RawCalorimeterHitInterface)
 include_directories(${RawCalorimeterHitInterface_include})
@@ -50,6 +51,10 @@ add_subdirectory(binsrc)
 
 if (GENERATE_SWIG)
  add_subdirectory(swig)
+endif()
+
+if (GENERATE_ROOT_DICT)
+  add_subdirectory(root)
 endif()
 
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
