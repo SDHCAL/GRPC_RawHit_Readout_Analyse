@@ -93,7 +93,7 @@ int main()
   countA.add(3);   assert(countA.sumcount() == 4); assert(countA.flagcount()==1);
   countA.newSet(); assert(countA.sumcount() == 4); assert(countA.flagcount()==1);
   countA.add(2);   assert(countA.sumcount() == 6); assert(countA.flagcount()==2);
-  std::cout << "countA"; countA.print();
+  std::cout << "countA"; countA.write();
  
   std::ofstream outfile;
   outfile.open("test.txt");
@@ -125,7 +125,7 @@ int main()
   assert(ita->second.sumcount()==1);
   assert(ita->second.flagcount()==1);
   std::string labels[2]={"all Channels", "channel"};
-  channelCount.print(labels);
+  channelCount.write(labels);
 
   outfile.open("test.txt");
   channelCount.ASCIIwrite(outfile);
@@ -134,7 +134,7 @@ int main()
   MappedCounters<SingleCounter>  channelCount_readback;
   channelCount_readback.ASCIIread(infile);
   infile.close();
-  channelCount_readback.print(labels);
+  channelCount_readback.write(labels);
   assert(channelCount_readback.sumcount()==3);
   assert(channelCount_readback.flagcount()==2);
   assert(channelCount.sumcount() == channelCount_readback.sumcount());
@@ -142,16 +142,16 @@ int main()
   assert(channelCount.size() == channelCount_readback.size());
   assert(channelCount == channelCount_readback);
   channelCount_readback[4].add(3);
-  //channelCount_readback.print(labels);
+  //channelCount_readback.write(labels);
   assert(channelCount != channelCount_readback);
   infile.open("test.txt"); channelCount_readback.ASCIIread(infile); infile.close();
-  //channelCount_readback.print(labels);
+  //channelCount_readback.write(labels);
   assert(channelCount == channelCount_readback);
   param[2]=7; channelCount_readback.add(valeur, param+2);
-  channelCount_readback.print(labels);
+  channelCount_readback.write(labels);
   assert(channelCount != channelCount_readback);
   infile.open("test.txt"); channelCount_readback.ASCIIread(infile); infile.close();
-  channelCount_readback.print(labels);
+  channelCount_readback.write(labels);
   assert(channelCount == channelCount_readback);
  
   MappedCounters<MappedCounters<SingleCounter> > asicchannelcount;
@@ -185,7 +185,7 @@ int main()
   assert(asicchannelcount.sumcount()==5);
   assert(asicchannelcount.flagcount()==2);
   std::string asiclabels[3]={"all ASICs", "ASIC", "channel"};
-  asicchannelcount.print(asiclabels);
+  asicchannelcount.write(asiclabels);
 
   outfile.open("test.txt");
   asicchannelcount.ASCIIwrite(outfile);
@@ -194,7 +194,7 @@ int main()
   MappedCounters<MappedCounters<SingleCounter> > asicchannelcount_readback;
   asicchannelcount_readback.ASCIIread(infile);
   infile.close();
-  asicchannelcount_readback.print(asiclabels);
+  asicchannelcount_readback.write(asiclabels);
   assert(asicchannelcount==asicchannelcount_readback);
 
 
@@ -208,7 +208,7 @@ int main()
   valeur=1; param[2]=4; param[1]=1; param[0]=1; difasichannelcount.add(valeur, param);
   valeur=1; param[2]=5; param[1]=2; param[0]=1; difasichannelcount.add(valeur, param);
   std::string difasiclabels[4]={"all DIFs", "DIF", "ASIC", "channel"};
-  difasichannelcount.print(difasiclabels);
+  difasichannelcount.write(difasiclabels);
 
   outfile.open("test.txt");
   difasichannelcount.ASCIIwrite(outfile);
@@ -217,7 +217,7 @@ int main()
   MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > difasichannelcount_readback;
   difasichannelcount_readback.ASCIIread(infile);
   infile.close();
-  difasichannelcount_readback.print(difasiclabels);
+  difasichannelcount_readback.write(difasiclabels);
   assert(difasichannelcount==difasichannelcount_readback);
   param[2]=8; difasichannelcount_readback.add(valeur, param);
   assert(difasichannelcount!=difasichannelcount_readback);
@@ -237,8 +237,8 @@ int main()
   counterArrayUpTo.newSet();
   counterArrayUpTo.add(4,1,param+2); // +4 pour [0] et [1] 
   std::string singleArrayLabel[2]={"indice", "array_element"};
-  //counterArray.print(singleArrayLabel);
-  //counterArrayUpTo.print(singleArrayLabel);
+  //counterArray.write(singleArrayLabel);
+  //counterArrayUpTo.write(singleArrayLabel);
   unsigned int expectedFlagCount[5]={0,1,0,1,0};
   unsigned int expectedSumCount[5]={0,4,0,2,0};
   unsigned int expectedFlagCountUpTo[5]={2,2,1,1,0};
@@ -256,7 +256,7 @@ int main()
   param[0]=3; param[1]=4; param[2]=5; //dif=3, asic=4, channel=5
   level3counter.add(3,0,param); //add data to first counter
   std::string difasiclabelsarray[5]={"setup", "all DIFs", "DIF", "ASIC", "channel"};
-  level3counter.print(difasiclabelsarray);
+  level3counter.write(difasiclabelsarray);
   testArrayCounterLevelThree(level3counter);
 
   outfile.open("test.txt");
@@ -284,7 +284,7 @@ int main()
   bob.m_thresholdCounters.add(2,1,param+1); // [0][4][6] = (2,1), [1][4][6] = (2,1)
   param[1]=88; param[2]=5;
   bob.m_thresholdCounters.add(8,2,param+1); // [0][88][5] = (8,1), [1][88][5] = (8,1), [2][88][5] = (8,1)
-  bob.print();
+  bob.write();
 
   testRunPlaneGap(bob);
 
@@ -298,7 +298,7 @@ int main()
   RunThresholdCounter_PlaneGap bob_readback;
   bob_readback.ASCIIread(infile);
   infile.close();
-  bob_readback.print();
+  bob_readback.write();
   testRunPlaneGap(bob_readback);
 
   return 0;

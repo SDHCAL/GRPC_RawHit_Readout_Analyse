@@ -16,7 +16,7 @@ class SingleCounter : public ASCIIpersistance
   
   unsigned int sumcount() const {return m_count;}
   unsigned int flagcount() const {return m_flagcount;}
-  void print(std::string* labels=NULL,std::ostream& oflux=std::cout) { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
+  void write(std::string* labels=NULL,std::ostream& oflux=std::cout) { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
 
   bool ASCIIwrite(std::ostream& oflux=std::cout) const { oflux << m_count << " " << m_flagcount<< " " ; return oflux.good();}
   bool ASCIIread(std::istream& iflux=std::cin) {iflux >> m_count >> m_flagcount; return iflux.good();}
@@ -38,10 +38,10 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
  public:
   void add(unsigned int val, unsigned int *keys) {SingleCounter::add(val); (*this)[keys[0]].add(val,keys+1); }
   void newSet() {SingleCounter::newSet(); for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) it->second.newSet();}
-  void print(std::string* labels,std::ostream& oflux=std::cout) 
+  void write(std::string* labels,std::ostream& oflux=std::cout) 
   {
-    SingleCounter::print(labels,oflux); 
-    for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) {printIndent(oflux); oflux << it->first << " "; it->second.print(labels+1,oflux);}
+    SingleCounter::write(labels,oflux); 
+    for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) {printIndent(oflux); oflux << it->first << " "; it->second.write(labels+1,oflux);}
   }
 
   bool ASCIIwrite(std::ostream& oflux=std::cout) const

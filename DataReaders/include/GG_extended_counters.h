@@ -13,10 +13,10 @@ public:
   void add(unsigned int val, unsigned int *keys) { m_counters[keys[0]].add(val,keys+1);}
   void add(unsigned int val, unsigned int indice, unsigned int *keys) {m_counters[indice].add(val,keys);}
   void newSet() {for (typename std::vector<COUNTER>::iterator it=m_counters.begin(); it!= m_counters.end(); ++it) it->newSet();}
-  void print(std::string* labels,std::ostream& oflux=std::cout) 
+  void write(std::string* labels,std::ostream& oflux=std::cout) 
   {
     for (unsigned int i=0; i<m_counters.size();++i)
-      {oflux << labels[0] << " " << i << " : "; m_counters[i].print(labels+1,oflux);}
+      {oflux << labels[0] << " " << i << " : "; m_counters[i].write(labels+1,oflux);}
   }
   bool ASCIIwrite(std::ostream& oflux=std::cout) const
   {
@@ -64,7 +64,7 @@ public:
   {std::replace(label.begin(),label.end(),' ','_');if (label.empty()) label="Unset_label"; m_labels[i]=label;}
   std::string getLabel(unsigned int i) const {return m_labels[i];}
 
-  void print(std::ostream& oflux=std::cout) { oflux << n_event << " events " << std::endl; m_thresholdCounters.print(m_labels,oflux);}
+  void write(std::ostream& oflux=std::cout) { oflux << n_event << " events " << std::endl; m_thresholdCounters.write(m_labels,oflux);}
   bool ASCIIwrite(std::ostream& oflux=std::cout) const
   {
     oflux << nLevels() << " ";
