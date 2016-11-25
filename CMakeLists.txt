@@ -8,6 +8,7 @@ add_definitions("-std=c++11")
 
 option(GENERATE_SWIG "Flag to toggle python module generation" ON)
 option(GENERATE_ROOT_DICT "Flag to toggle ROOT dictionnary genaration" ON)
+option(BUILD_AGAINST_CONFDB "If ON, include code depending on configuration database code" ON)
 
 enable_testing()
 
@@ -19,6 +20,19 @@ set( ${PROJECT_NAME}_VERSION_MAJOR 1 )
 set( ${PROJECT_NAME}_VERSION_MINOR 0 )
 set( ${PROJECT_NAME}_VERSION_PATCH 0 )
 
+if (BUILD_AGAINST_CONFDB)
+  #ILCCONFDB need Xerces-c
+  if (CMAKE_VERSION   VERSION_GREATER 3.1)
+    include(FindXercesC)
+    find_package(XercesC REQUIRED)
+  else()
+    set(XercesC_INCLUDE_DIRS /usr/include/xercesc/)
+    find_library(XercesC_LIBRARIES xerces-c)
+  endif()
+  message ("XercesC ${XercesC_INCLUDE_DIRS} et ${XercesC_LIBRARIES}")
+  find_package(SDHCAL_ILCCONFDB REQUIRED)
+  include_directories(${SDHCAL_ILCCONFDB_INCLUDE_DIRS})
+endif()
 
 find_package(LCIO REQUIRED)
 include_directories(${LCIO_INCLUDE_DIRS})
@@ -56,5 +70,6 @@ endif()
 if (GENERATE_ROOT_DICT)
   add_subdirectory(root)
 endif()
+
 
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
