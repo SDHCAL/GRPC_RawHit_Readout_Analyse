@@ -55,6 +55,9 @@ class Setup_ConfigInfo
   void setConfig(unsigned int DIF,ASIC_HR_ConfigInfo a) { m_setup_ConfigInfo[DIF]=DIF_ASIC_HR_ConfigInfo(a);}
   void setConfig(unsigned int DIF,unsigned int asic,ASIC_HR_ConfigInfo a){ m_setup_ConfigInfo[DIF].setConfig(asic,a);}
   const DIF_ASIC_HR_ConfigInfo& getConfig(unsigned int DIF) const; //throw UnknownDIFexception
+  std::vector<unsigned int> getKnownDIFnumbers() const;
+  void clear() {m_setup_ConfigInfo.clear();}
+  bool setToRun(unsigned int run);
  private:
   std::map<unsigned int,DIF_ASIC_HR_ConfigInfo> m_setup_ConfigInfo;
 };
@@ -76,6 +79,8 @@ class GIF_Conditions
   unsigned int getUpAtt() const {return m_sourceAttUp;}
   STATE getBeamStatus() const {return m_beamState;}
   std::string getScintillator() {return m_scintillator;}
+  void clear();
+  bool setToRun(unsigned int run);
  private:
   STATE m_beamState;
   STATE m_sourceState;

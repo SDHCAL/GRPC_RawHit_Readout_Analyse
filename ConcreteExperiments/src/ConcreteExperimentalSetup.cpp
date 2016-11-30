@@ -1,6 +1,7 @@
 #include "ConcreteExperimentalSetup.h"
 #include "ConfigInfo.h"
 
+
 GIF_oct2016_ExperimentalSetup::GIF_oct2016_ExperimentalSetup()
 {
   //Counting from source 
@@ -13,6 +14,7 @@ GIF_oct2016_ExperimentalSetup::GIF_oct2016_ExperimentalSetup()
   addCMSstrip(23,2); //bakelite
 
   setConfig();
+  setRunList();
   setGIFconditions();
 }
 
