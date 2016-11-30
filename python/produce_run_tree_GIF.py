@@ -24,8 +24,8 @@ all=ROOT.all_ConfigInfo.instance()
 
 
 runNumBranchObject = array( 'I', [ 0 ] )
-hasConfBranchObject = array( 'B', [0] )
-hasGIFCondBranchObject = array( 'B', [0] )
+hasConfBranchObject = array( 'I', [ 0 ] )
+hasGIFCondBranchObject = array( 'I', [ 0 ] )
 Noise = ROOT.RunThresholdCounter('MappedCounters<MappedCounters<SingleCounter> >')() 
 Eff = ROOT.RunThresholdCounter('MappedCounters<MappedCounters<SingleCounter> >')() 
 FakeEff = ROOT.RunThresholdCounter('MappedCounters<MappedCounters<SingleCounter> >')() 
@@ -39,9 +39,9 @@ tree.Branch( 'runNumber',runNumBranchObject , 'runNumber/i' )
 tree.Branch( 'Noise', Noise, 32000, 0 )
 tree.Branch( 'Efficiency', Eff, 32000, 0 )
 tree.Branch( 'FakeEfficiency', FakeEff, 32000, 0 )
-tree.Branch( 'hasConf', hasConfBranchObject, 'hasConf/b' )
+tree.Branch( 'hasConf', hasConfBranchObject, 'hasConf/i' )
 tree.Branch( 'ConfigInfo', ConfigInfo, 32000, 0 )
-tree.Branch( 'hasGIFCond', hasGIFCondBranchObject, 'hasGIFCond/b' )
+tree.Branch( 'hasGIFCond', hasGIFCondBranchObject, 'hasGIFCond/i' )
 tree.Branch( 'GIFcond', GIFconditions)
 
 for dir in resultsDirectory :
