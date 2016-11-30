@@ -16,6 +16,7 @@ class SingleCounter : public ASCIIpersistance
   
   unsigned int sumcount() const {return m_count;}
   unsigned int flagcount() const {return m_flagcount;}
+
   void write(std::string* labels=NULL,std::ostream& oflux=std::cout) { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
 
   bool ASCIIwrite(std::ostream& oflux=std::cout) const { oflux << m_count << " " << m_flagcount<< " " ; return oflux.good();}
@@ -25,6 +26,8 @@ class SingleCounter : public ASCIIpersistance
   bool operator!=(const SingleCounter& other) const {return ! ((*this)==other);}
 
   static const unsigned int printIndentLevel=0;
+
+  SingleCounter& counterAtLevel(unsigned int level, unsigned int *) {return *this;} 
 
  private:
   unsigned int m_count;
@@ -38,6 +41,13 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
  public:
   void add(unsigned int val, unsigned int *keys) {SingleCounter::add(val); (*this)[keys[0]].add(val,keys+1); }
   void newSet() {SingleCounter::newSet(); for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) it->second.newSet();}
+ 
+  SingleCounter& counterAtLevel(unsigned int level, unsigned int *keys) 
+    {
+      if (level>=printIndentLevel) return SingleCounter::counterAtLevel(level,keys);
+      return (*this)[keys[0]].counterAtLevel(level,keys+1);
+    }
+
   void write(std::string* labels,std::ostream& oflux=std::cout) 
   {
     SingleCounter::write(labels,oflux); 

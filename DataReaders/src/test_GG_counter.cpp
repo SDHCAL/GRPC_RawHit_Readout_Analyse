@@ -116,6 +116,9 @@ int main()
   assert(channelCount.sumcount()==3);
   assert(channelCount.flagcount()==2);
   assert(channelCount.size()==2);
+  assert(channelCount.counterAtLevel(1,param+2).sumcount()==3);
+  assert(channelCount.counterAtLevel(2,param+2).sumcount()==3);
+  assert(channelCount.counterAtLevel(0,param+2).sumcount()==1);
   std::map<unsigned int,SingleCounter>::iterator ita=channelCount.begin();
   assert(ita->first==4);
   assert(ita->second.sumcount()==2);
@@ -184,6 +187,10 @@ int main()
   assert(itb->second.flagcount()==1);
   assert(asicchannelcount.sumcount()==5);
   assert(asicchannelcount.flagcount()==2);
+  assert(asicchannelcount.counterAtLevel(2,param+1).sumcount()==5); //param[1]=1 et param[2]=5
+  assert(asicchannelcount.counterAtLevel(3,param+1).sumcount()==5); 
+  assert(asicchannelcount.counterAtLevel(1,param+1).sumcount()==4); 
+  assert(asicchannelcount.counterAtLevel(0,param+1).sumcount()==3); 
   std::string asiclabels[3]={"all ASICs", "ASIC", "channel"};
   asicchannelcount.write(asiclabels);
 
@@ -209,6 +216,12 @@ int main()
   valeur=1; param[2]=5; param[1]=2; param[0]=1; difasichannelcount.add(valeur, param);
   std::string difasiclabels[4]={"all DIFs", "DIF", "ASIC", "channel"};
   difasichannelcount.write(difasiclabels);
+  assert(difasichannelcount.counterAtLevel(3,param).sumcount()==8); //param[0]=1 param[1]=2 et param[2]=5
+  assert(difasichannelcount.counterAtLevel(4,param).sumcount()==8); 
+  assert(difasichannelcount.counterAtLevel(2,param).sumcount()==5); 
+  assert(difasichannelcount.counterAtLevel(1,param).sumcount()==2); 
+  assert(difasichannelcount.counterAtLevel(0,param).sumcount()==1); 
+  
 
   outfile.open("test.txt");
   difasichannelcount.ASCIIwrite(outfile);
@@ -249,6 +262,8 @@ int main()
       assert(counterArray.getCounter(i).flagcount()==expectedFlagCount[i]);
       assert(counterArrayUpTo.getCounter(i).sumcount()==expectedSumCountUpTo[i]);
       assert(counterArrayUpTo.getCounter(i).flagcount()==expectedFlagCountUpTo[i]);
+      assert(counterArray.getCounterAtLevel(i,0,NULL).sumcount()==expectedSumCount[i]);
+      assert(counterArrayUpTo.getCounterAtLevel(i,0,NULL).sumcount()==expectedSumCountUpTo[i]);
    }
 
   ArrayCounter<DIFCounters> level3counter(2);
@@ -287,6 +302,12 @@ int main()
   bob.write();
 
   testRunPlaneGap(bob);
+  assert( bob.getCounterAtLevel(1,2,param+1).sumcount()==14 ); // param[1]=88 param[2]=5 access to [0]
+  assert( bob.getCounterAtLevel(2,2,param+1).sumcount()==11 ); // access to [1]
+  assert( bob.getCounterAtLevel(1,1,param+1).sumcount()==8 ); // access to [0][88]
+  assert( bob.getCounterAtLevel(3,0,param+1).sumcount()==8 ); // access to [2][88][5]
+  assert( bob.getCounterAtLevel(1,4).sumcount()==6 ); //access to [0][4]
+  assert( bob.getCounterAtLevel(2,4,6).sumcount()==2 ); //access to [1][4][6]
 
   outfile.open("test.txt");
   bob.ASCIIwrite(outfile);

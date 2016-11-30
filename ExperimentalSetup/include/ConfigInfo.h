@@ -18,9 +18,9 @@ class ASIC_HR_ConfigInfo
   }
   void setGainVec( const std::vector<unsigned int>& vec) { m_gain=vec;}
   unsigned int get_threshold(unsigned int i) const {return m_threshold[i-1];}
-  unsigned int get_first_thresold() const {return m_threshold[0];}
-  unsigned int get_second_thresold() const {return m_threshold[1];}
-  unsigned int get_third_thresold() const {return m_threshold[2];}
+  unsigned int get_first_threshold() const {return m_threshold[0];}
+  unsigned int get_second_threshold() const {return m_threshold[1];}
+  unsigned int get_third_threshold() const {return m_threshold[2];}
   unsigned int getGain(unsigned int channel) const { return (m_gain.empty() ? m_default_gain : m_gain[channel]);}
   
  private:
@@ -55,7 +55,15 @@ class Setup_ConfigInfo
   void setConfig(unsigned int DIF,ASIC_HR_ConfigInfo a) { m_setup_ConfigInfo[DIF]=DIF_ASIC_HR_ConfigInfo(a);}
   void setConfig(unsigned int DIF,unsigned int asic,ASIC_HR_ConfigInfo a){ m_setup_ConfigInfo[DIF].setConfig(asic,a);}
   const DIF_ASIC_HR_ConfigInfo& getConfig(unsigned int DIF) const; //throw UnknownDIFexception
+  // To ease interactive access
   std::vector<unsigned int> getKnownDIFnumbers() const;
+  const ASIC_HR_ConfigInfo& getConfig(unsigned int DIF,unsigned int asic) const {return getConfig(DIF).getConfig(asic);}
+  unsigned int get_threshold(unsigned int DIF,unsigned int asic,unsigned int threshold) const { return getConfig(DIF,asic).get_threshold(threshold);}
+  unsigned int get_first_threshold(unsigned int DIF,unsigned int asic) const {return get_threshold(DIF,asic,1);}
+  unsigned int get_second_threshold(unsigned int DIF,unsigned int asic) const {return get_threshold(DIF,asic,2);}
+  unsigned int get_third_threshold(unsigned int DIF,unsigned int asic) const {return get_threshold(DIF,asic,3);}
+  unsigned int getGain(unsigned int DIF,unsigned int asic,unsigned int channel) const { return getConfig(DIF,asic).getGain(channel);}
+  // end to ease interactive access
   void clear() {m_setup_ConfigInfo.clear();}
   bool setToRun(unsigned int run);
  private:

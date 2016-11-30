@@ -34,6 +34,9 @@ public:
   }
   unsigned int size() {return m_counters.size();}
   COUNTER& getCounter(unsigned int i) {return m_counters[i];}
+
+  SingleCounter& getCounterAtLevel(unsigned int i, unsigned int level, unsigned int *keys) {return m_counters[i].counterAtLevel(level,keys);}
+
 private:
   std::vector<COUNTER> m_counters;
 };
@@ -58,7 +61,8 @@ public:
   unsigned int nLevels() const {return COUNTER::printIndentLevel+2;}
   ArrayUpToCounter<COUNTER> m_thresholdCounters;
 
- RunThresholdCounter() : n_event(0), m_thresholdCounters(3) { for (unsigned int i=0; i<nLevels(); ++i) m_labels[i]="Unset_label";}
+  
+  RunThresholdCounter() : n_event(0), m_thresholdCounters(3) { for (unsigned int i=0; i<nLevels(); ++i) m_labels[i]="Unset_label";}
 
   void setLabel(unsigned int i, std::string label) 
   {std::replace(label.begin(),label.end(),' ','_');if (label.empty()) label="Unset_label"; m_labels[i]=label;}
@@ -88,6 +92,38 @@ public:
     m_thresholdCounters.ASCIIread(iflux);
     return iflux.good();
   }
+
+  COUNTER& getCounter(unsigned int threshold) {return m_thresholdCounters.getCounter(threshold-1);}
+  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int level, unsigned int *keys) {return m_thresholdCounters.getCounterAtLevel(threshold-1,level,keys);}
+  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/) 
+    {  
+      unsigned int level=0;
+      if (COUNTER::printIndentLevel>0) level=COUNTER::printIndentLevel-1;
+      return getCounterAtLevel(threshold,level,&subLevelKey);
+    }
+  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/, unsigned int subsubLevelKey /*asic or gap*/)
+    { 
+      unsigned int keys[2]={subLevelKey,subsubLevelKey};
+      unsigned int level=0;
+      if (COUNTER::printIndentLevel>1) level=COUNTER::printIndentLevel-2;
+      return getCounterAtLevel(threshold,level,keys);
+    }
+  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif*/, unsigned int subsubLevelKey /*asic*/,unsigned int subsubsubLevelKey /*channel*/)
+    { 
+      unsigned int keys[3]={subLevelKey,subsubLevelKey,subsubsubLevelKey};
+      unsigned int level=0;
+      if (COUNTER::printIndentLevel>2) level=COUNTER::printIndentLevel-3;
+      return getCounterAtLevel(threshold,level,keys);
+    }
+ 
+  unsigned int sumcount(unsigned int threshold) {return getCounter(threshold).sumcount();}
+  unsigned int flagcount(unsigned int threshold) {return getCounter(threshold).flagcount();}
+  unsigned int sumcount(unsigned int threshold, unsigned int subLevelKey) {return getCounterAtLevel(threshold,subLevelKey).sumcount();}
+  unsigned int flagcount(unsigned int threshold, unsigned int subLevelKey) {return getCounterAtLevel(threshold,subLevelKey).flagcount();}
+  unsigned int sumcount(unsigned int threshold, unsigned int subLevelKey, unsigned int subsubLevelKey) {return getCounterAtLevel(threshold,subLevelKey,subsubLevelKey).sumcount();}
+  unsigned int flagcount(unsigned int threshold, unsigned int subLevelKey, unsigned int subsubLevelKey) {return getCounterAtLevel(threshold,subLevelKey,subsubLevelKey).flagcount();}
+  unsigned int sumcount(unsigned int threshold, unsigned int subLevelKey, unsigned int subsubLevelKey, unsigned int subsubsubLevelKey) {return getCounterAtLevel(threshold,subLevelKey,subsubLevelKey,subsubsubLevelKey).sumcount();}
+  unsigned int flagcount(unsigned int threshold, unsigned int subLevelKey, unsigned int subsubLevelKey, unsigned int subsubsubLevelKey) {return getCounterAtLevel(threshold,subLevelKey,subsubLevelKey,subsubsubLevelKey).flagcount();}
 private:
   std::string m_labels[COUNTER::printIndentLevel+2];
 };
