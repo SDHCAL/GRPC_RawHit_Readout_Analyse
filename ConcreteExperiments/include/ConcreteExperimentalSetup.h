@@ -7,7 +7,12 @@ class GIF_oct2016_ExperimentalSetup : public ExperimentalSetup
 {
  public:
   GIF_oct2016_ExperimentalSetup();
+ private:
+  void setConfig();
+  void setRunList();
+  void setGIFconditions();
 };
+
 
 
 #endif

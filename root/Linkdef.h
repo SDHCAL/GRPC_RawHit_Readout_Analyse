@@ -19,6 +19,8 @@
 
 #pragma link C++ class DIFdrivenDevice+;
 #pragma link C++ class ExperimentalSetup+;
+#pragma link C++ defined_in "ConfigInfoExceptions.h";
+#pragma link C++ defined_in "ConfigInfo.h";
 #pragma link C++ defined_in "ConcreteExperimentalSetup.h";
 
 #pragma link C++ class ASCIIpersistance+;
