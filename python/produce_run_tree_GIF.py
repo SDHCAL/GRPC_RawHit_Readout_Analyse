@@ -31,6 +31,7 @@ Eff = ROOT.RunThresholdCounter('MappedCounters<MappedCounters<SingleCounter> >')
 FakeEff = ROOT.RunThresholdCounter('MappedCounters<MappedCounters<SingleCounter> >')() 
 ConfigInfo = ROOT.Setup_ConfigInfo()
 GIFconditions = ROOT.GIF_Conditions()
+ConfSetup=ROOT.std.string()
 
 f = ROOT.TFile( 'GIF_oct2016.root', 'RECREATE' )
 tree = ROOT.TTree( 'results', 'Run analysis tree' )
@@ -40,6 +41,7 @@ tree.Branch( 'Noise', Noise, 32000, 0 )
 tree.Branch( 'Efficiency', Eff, 32000, 0 )
 tree.Branch( 'FakeEfficiency', FakeEff, 32000, 0 )
 tree.Branch( 'hasConf', hasConfBranchObject, 'hasConf/i' )
+tree.Branch( 'ConfigName', ConfSetup )
 tree.Branch( 'ConfigInfo', ConfigInfo, 32000, 0 )
 tree.Branch( 'hasGIFCond', hasGIFCondBranchObject, 'hasGIFCond/i' )
 tree.Branch( 'GIFcond', GIFconditions)
@@ -50,6 +52,7 @@ for dir in resultsDirectory :
   runNumber=int(runNum)
   print runNumber
   runNumBranchObject[0]=runNumber
+  ConfSetup.replace(0, ROOT.std.string.npos, all.getConfigName(runNumber) )
   file=ROOT.std.ifstream(filename)
   Noise.ASCIIread(file)
   Eff.ASCIIread(file)
