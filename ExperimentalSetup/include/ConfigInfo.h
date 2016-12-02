@@ -85,6 +85,10 @@ class GIF_Conditions
   STATE getSourceStatus() const {return m_sourceState;}
   unsigned int getDownAtt() const {return m_sourceAttDown;}
   unsigned int getUpAtt() const {return m_sourceAttUp;}
+  float getDownAttValue() {return attenuatorFactor(m_sourceAttDown);}
+  float getDownAttValueApprox() {return attenuatorFactorApprox(m_sourceAttDown);}
+  float getUpAttValue() {return attenuatorFactor(m_sourceAttUp);}
+  float getUpAttValueApprox() {return attenuatorFactorApprox(m_sourceAttUp);}
   STATE getBeamStatus() const {return m_beamState;}
   std::string getScintillator() {return m_scintillator;}
   void clear();
@@ -95,6 +99,8 @@ class GIF_Conditions
   unsigned int m_sourceAttDown;
   unsigned int m_sourceAttUp;
   std::string m_scintillator;
+  float attenuatorFactorApprox(unsigned int att);
+  float attenuatorFactor(unsigned int att);
 };
 
 

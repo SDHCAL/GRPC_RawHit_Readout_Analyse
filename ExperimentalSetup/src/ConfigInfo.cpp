@@ -60,6 +60,24 @@ bool GIF_Conditions::setToRun(unsigned int run)
 }
 
 
+float GIF_Conditions::attenuatorFactorApprox(unsigned int att)
+{
+  static float plane1app[3]={1,10,100};
+  static float plane2app[3]={1,1.5,100};
+  static float plane3app[3]={1,2.2,4.6};
+  return plane1app[(att/100)%1000]*plane2app[(att/10)%100]*plane3app[att%10];
+}
+
+float GIF_Conditions::attenuatorFactor(unsigned int att)
+{
+  static float plane1[3]={1,10,100};
+  static float plane2[3]={1,1.468,100};
+  static float plane3[3]={1,2.154,4.642};
+  return plane1[(att/100)%1000]*plane2[(att/10)%100]*plane3[att%10];
+}
+
+
+
 std::string all_ConfigInfo::UnknownConfig=std::string("UnknownConfig");
 
 all_ConfigInfo* all_ConfigInfo::m_instance=NULL;
