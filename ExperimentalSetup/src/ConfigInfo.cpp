@@ -39,6 +39,7 @@ void GIF_Conditions::clear()
   m_beamState=m_sourceState=UNKNOWN;
   m_sourceAttDown=m_sourceAttUp=0;
   m_scintillator="Not Set";
+  m_Yuris_small_scintillator_in_BIF=false;
 }
 
 bool GIF_Conditions::setToRun(unsigned int run)
@@ -109,4 +110,10 @@ const GIF_Conditions& all_ConfigInfo::getGIFconditions(unsigned int run) const
   return it->second;
 }
 
+GIF_Conditions& all_ConfigInfo::changeGIFconditions(unsigned int run)
+{
+  std::map<unsigned int,GIF_Conditions>::iterator  it=m_runGIFconditionsMap.find(run);
+  if (it==m_runGIFconditionsMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::changeGIFconditions");
+  return it->second;
+}
 

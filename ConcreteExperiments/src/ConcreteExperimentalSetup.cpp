@@ -750,4 +750,12 @@ void GIF_oct2016_ExperimentalSetup::setGIFconditions()
   gif=GIF_Conditions();
   gif.setScintillator("Ours");
   all.addRun(733782,gif);
+
+  //config info added by hand
+  for (unsigned int run=733651; run<=733782; ++run)
+    {
+      if (run==733737 || run==733739 || run==733744) continue;
+      try { all.changeGIFconditions(run).setYuris_small_scintillator_in_BIF(); }
+      catch ( const RunNotFound_ConfigException& e) {}
+    }
 }

@@ -74,7 +74,7 @@ class GIF_Conditions
 {
  public:
   enum STATE {UNKNOWN,ON,OFF};
-  GIF_Conditions() : m_beamState(UNKNOWN), m_sourceState(UNKNOWN), m_sourceAttDown(0), m_sourceAttUp(0), m_scintillator("Not Set") {}
+ GIF_Conditions() : m_beamState(UNKNOWN), m_sourceState(UNKNOWN), m_sourceAttDown(0), m_sourceAttUp(0), m_scintillator("Not Set"),m_Yuris_small_scintillator_in_BIF(false) {}
   void setSourceOFF() {  m_sourceState=OFF; m_sourceAttDown=0; m_sourceAttUp=0;}
   void setSourceUnknown() { m_sourceState=UNKNOWN; m_sourceAttDown=0; m_sourceAttUp=0;}
   void setSourceON(unsigned int down, unsigned int up) {m_sourceState=ON; m_sourceAttDown=down; m_sourceAttUp=up;}
@@ -82,6 +82,7 @@ class GIF_Conditions
   void setBeamOFF() {m_beamState=OFF;}
   void setBeamUnknown() {m_beamState=UNKNOWN;}
   void setScintillator(std::string value) {m_scintillator=value;}
+  void setYuris_small_scintillator_in_BIF(bool value=true) {m_Yuris_small_scintillator_in_BIF=value;}
   STATE getSourceStatus() const {return m_sourceState;}
   unsigned int getDownAtt() const {return m_sourceAttDown;}
   unsigned int getUpAtt() const {return m_sourceAttUp;}
@@ -91,6 +92,7 @@ class GIF_Conditions
   float getUpAttValueApprox() {return attenuatorFactorApprox(m_sourceAttUp);}
   STATE getBeamStatus() const {return m_beamState;}
   std::string getScintillator() {return m_scintillator;}
+  bool getYuris_small_scintillator_in_BIF() const {return m_Yuris_small_scintillator_in_BIF;}
   void clear();
   bool setToRun(unsigned int run);
  private:
@@ -99,6 +101,7 @@ class GIF_Conditions
   unsigned int m_sourceAttDown;
   unsigned int m_sourceAttUp;
   std::string m_scintillator;
+  bool m_Yuris_small_scintillator_in_BIF;
   float attenuatorFactorApprox(unsigned int att);
   float attenuatorFactor(unsigned int att);
 };
@@ -126,5 +129,8 @@ class  all_ConfigInfo
   std::map<std::string,Setup_ConfigInfo> m_configs;
   std::map<unsigned int,std::string> m_runConfigMap;
   std::map<unsigned int,GIF_Conditions> m_runGIFconditionsMap;
+
+  friend class GIF_oct2016_ExperimentalSetup;
+  GIF_Conditions& changeGIFconditions(unsigned int run); // throw RunNotFound_ConfigException
 };
 #endif
