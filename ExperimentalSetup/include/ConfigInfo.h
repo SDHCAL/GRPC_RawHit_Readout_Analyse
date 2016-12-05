@@ -21,6 +21,9 @@ class ASIC_HR_ConfigInfo
   unsigned int get_first_threshold() const {return m_threshold[0];}
   unsigned int get_second_threshold() const {return m_threshold[1];}
   unsigned int get_third_threshold() const {return m_threshold[2];}
+  float get_first_threshold_charge()  const {return (m_threshold[0]-90)/0.7;}
+  float get_second_threshold_charge() const {return (m_threshold[1]-98)/0.08;}
+  float get_third_threshold_charge()  const {return (m_threshold[2]-98)/0.0163;}
   unsigned int getGain(unsigned int channel) const { return (m_gain.empty() ? m_default_gain : m_gain[channel]);}
   
  private:
@@ -62,6 +65,9 @@ class Setup_ConfigInfo
   unsigned int get_first_threshold(unsigned int DIF,unsigned int asic) const {return get_threshold(DIF,asic,1);}
   unsigned int get_second_threshold(unsigned int DIF,unsigned int asic) const {return get_threshold(DIF,asic,2);}
   unsigned int get_third_threshold(unsigned int DIF,unsigned int asic) const {return get_threshold(DIF,asic,3);}
+  float get_first_threshold_charge(unsigned int DIF,unsigned int asic) const  {return getConfig(DIF,asic).get_first_threshold_charge();}
+  float get_second_threshold_charge(unsigned int DIF,unsigned int asic) const {return getConfig(DIF,asic).get_second_threshold_charge();}
+  float get_third_threshold_charge(unsigned int DIF,unsigned int asic) const  {return getConfig(DIF,asic).get_third_threshold_charge();}
   unsigned int getGain(unsigned int DIF,unsigned int asic,unsigned int channel) const { return getConfig(DIF,asic).getGain(channel);}
   // end to ease interactive access
   void clear() {m_setup_ConfigInfo.clear();}
