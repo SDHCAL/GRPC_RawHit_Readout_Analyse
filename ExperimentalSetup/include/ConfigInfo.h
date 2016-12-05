@@ -68,6 +68,7 @@ class Setup_ConfigInfo
   float get_first_threshold_charge(unsigned int DIF,unsigned int asic) const  {return getConfig(DIF,asic).get_first_threshold_charge();}
   float get_second_threshold_charge(unsigned int DIF,unsigned int asic) const {return getConfig(DIF,asic).get_second_threshold_charge();}
   float get_third_threshold_charge(unsigned int DIF,unsigned int asic) const  {return getConfig(DIF,asic).get_third_threshold_charge();}
+  float get_threshold_charge(unsigned int threshold,unsigned int DIF,unsigned int asic) const;
   unsigned int getGain(unsigned int DIF,unsigned int asic,unsigned int channel) const { return getConfig(DIF,asic).getGain(channel);}
   // end to ease interactive access
   void clear() {m_setup_ConfigInfo.clear();}

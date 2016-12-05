@@ -16,6 +16,13 @@ std::vector<unsigned int> Setup_ConfigInfo::getKnownDIFnumbers() const
   return DIFnumbers;
 }
 
+float Setup_ConfigInfo::get_threshold_charge(unsigned int threshold,unsigned int DIF,unsigned int asic) const
+{
+  if (threshold<=1) return get_first_threshold_charge(DIF,asic);
+  if (threshold==2) return get_second_threshold_charge(DIF,asic);
+  return get_third_threshold_charge(DIF,asic);
+}
+
 bool Setup_ConfigInfo::setToRun(unsigned int run)
 {
   all_ConfigInfo &all=all_ConfigInfo::instance();
