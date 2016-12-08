@@ -94,7 +94,10 @@ public:
   }
 
   COUNTER& getCounter(unsigned int threshold) {return m_thresholdCounters.getCounter(threshold-1);}
-  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int level, unsigned int *keys) {return m_thresholdCounters.getCounterAtLevel(threshold-1,level,keys);}
+  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int level, unsigned int *keys) {
+    if (threshold==0) std::cerr << "ERROR : RunThresholdCounter::getCounterAtLevel : threshold given is 0, expecting 1 as minimum value" << std::endl;
+    return m_thresholdCounters.getCounterAtLevel(threshold-1,level,keys);
+  }
   SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/) 
     {  
       unsigned int level=0;
