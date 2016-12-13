@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 #use the tree produced by produce_run_tree_GIF.py
-       
+
+def functest(t):
+    t.SetMarkerColor(2)
 
 import os
 from array import array
@@ -74,11 +76,131 @@ runBIFeffLnAttVsLogThresh[0].SetTitle("log10(threshold (fC)) vs ln(source attenu
 runBIFeffLnAttVsLogThresh[0].GetXaxis().SetTitle("ln(source attenuation), 11.5=source OFF")
 runBIFeffLnAttVsLogThresh[0].GetYaxis().SetTitle("Bakelite strip log10(threshold (fC))")
 runBIFeffLnAttVsLogThresh[0].SetMarkerColor(0)
-runBIFeffLnAttVsLogThreshXvalue=array('f')
-runBIFeffLnAttVsLogThreshYvalue=[array('f'),array('f'),array('f')]
+runBIFeffLnAttVsLogThreshXvalue=[]
+runBIFeffLnAttVsLogThreshYvalue=[]
+for i in range(6):
+    runBIFeffLnAttVsLogThreshXvalue.append(array('f'))
+    runBIFeffLnAttVsLogThreshYvalue.append([array('f'),array('f'),array('f')])
 
 
-BIFefficiencyData=dict()
+
+#for strip chambers plot of scan efficiency versus threshold for source OFF and attenuator=333
+class StripGapEfficiencySet:
+    def __init__(self):
+        self.efficiency=[array('f'),array('f'),array('f')]  # 3 thresholds
+        self.fakeEfficiency=[array('f'),array('f'),array('f')]
+
+class StripChamberEfficiencySet:
+    def __init__(self):
+        self.x=[array('f'),array('f'),array('f')] # 3 thresholds
+        self.all=StripGapEfficiencySet()
+        self.gap=dict()
+        self.gap[1]=StripGapEfficiencySet()
+        self.gap[2]=StripGapEfficiencySet()
+
+
+    def fill(self,config,effData,fakeEffData,DIFnumber,planNumber):
+        thresh=[config.get_first_threshold_charge(DIFnumber,1),config.get_second_threshold_charge(DIFnumber,1),config.get_third_threshold_charge(DIFnumber,1)]
+        for i in range(3):
+            self.x[i].append(thresh[i])
+            self.all.efficiency[i].append(effData.flagcount(i+1,planNumber)*1.0/effData.n_event)
+            self.all.fakeEfficiency[i].append(fakeEffData.flagcount(i+1,planNumber)*1.0/fakeEffData.n_event)
+            for g,v in self.gap.iteritems():
+                v.efficiency[i].append(effData.flagcount(i+1,planNumber,g)*1.0/effData.n_event)
+                v.fakeEfficiency[i].append(fakeEffData.flagcount(i+1,planNumber,g)*1.0/fakeEffData.n_event)
+
+class thresholdScan:
+    def __init__(self):
+        self.numberOfBIF=array('I')
+        self.runNumbers=array('I')
+        self.glass=StripChamberEfficiencySet()
+        self.bakelite=StripChamberEfficiencySet()
+
+    def fill(self,runnumber,config,effData,fakeEffData):
+        self.numberOfBIF.append(effData.n_event)
+        self.runNumbers.append(runnumber)
+        self.glass.fill(config,effData,fakeEffData,26,4)
+        self.bakelite.fill(config,effData,fakeEffData,2,5)
+
+class effSetOneValue:
+    def __init__(self):
+        self.eff=array('f')
+        self.fakeEff=array('f')
+
+class attenuatorScan:
+    def __init__(self,numPlan,planType,runNumbersList,tL,DAC):
+        self.runNumbers=runNumbersList
+        self.runNumbersFillList=array('I')
+        self.numberOfBIF=array('I')
+        self.x=array('f')  #1/attenuator value
+        self.planeEff=effSetOneValue()
+        self.planNumber=numPlan
+        self.type=planType
+        if self.type=='strip':
+            self.gap=dict()
+            self.gap[1]=effSetOneValue()
+            self.gap[2]=effSetOneValue()
+        self.thresholdLevel=tL
+        self.thresholdValue=DAC
+
+    def fill(self,runnumber,effData,fakeEffData,cond):
+        if not runNumber in self.runNumbers:
+            return
+        self.runNumbersFillList.append(runnumber)
+        self.numberOfBIF.append(effData.n_event)
+        if (cond.getSourceStatus()==ROOT.GIF_Conditions.OFF):
+            self.x.append(0.0)
+        if (cond.getSourceStatus()==ROOT.GIF_Conditions.ON):
+            self.x.append(1/cond.getUpAttValue())
+        self.planeEff.eff.append(effData.flagcount(self.thresholdLevel,self.planNumber)*1.0/effData.n_event)
+        self.planeEff.fakeEff.append(fakeEffData.flagcount(self.thresholdLevel,self.planNumber)*1.0/fakeEffData.n_event)
+        if self.type=='strip':
+            for g,v in self.gap.iteritems():
+                v.eff.append(effData.flagcount(self.thresholdLevel,self.planNumber,g)*1.0/effData.n_event)
+                v.fakeEff.append(fakeEffData.flagcount(self.thresholdLevel,self.planNumber,g)*1.0/fakeEffData.n_event)
+          
+    def tupleIt(self):
+        ret=[]
+        for i in range(len(self.runNumbersFillList)):
+            ret.append((self.runNumbersFillList[i],self.numberOfBIF[i],self.x[i],self.planeEff.eff[i],self.planeEff.fakeEff[i]))
+        return ret
+    def tupleItsort(self,numcolonne):
+        return sorted(self.tupleIt(), key=lambda col: col[numcolonne])
+    def printItsort(self,numcolonne):
+        for what in self.tupleItsort(numcolonne):
+            print "run {:7} : nBIF={:6}, 1/att={:f}, eff={:f}, fakeEff={:f}".format(what[0],what[1],what[2],what[3],what[4])
+
+class ThreshAttSetupList:
+    def __init__(self):
+        self.attValues=set()
+        self.setupNames=set()
+        self.runNumbers=set()
+        self.attValuesRunList=dict()
+    def add(self,attvalue,setup,run):
+        self.attValues.add(attvalue)
+        self.setupNames.add(setup)
+        self.runNumbers.add(run)
+        if not self.attValuesRunList.get(attvalue):
+            self.attValuesRunList[attvalue]=[]
+        self.attValuesRunList[attvalue].append(run)
+
+        
+ThreshAttMap=[]
+for i in range(6):
+    ThreshAttMap.append(dict())
+        
+
+
+hAttScanThresholdPossibility=ROOT.TH1F("hAttScanThresholdPossibility","number of attenuator value in runs for (plan, threshold number, threshold value)",2,0,2)
+hAttScanThresholdPossibility.SetBit(ROOT.TH1.kCanRebin)
+hAttScanThresholdVsSetup=ROOT.TH2F("hAttScanThresholdVsSetup","Setup names vs threshold scans",2,0,2,2,0,2)
+hAttScanThresholdVsSetup.SetBit(ROOT.TH1.kCanRebin)
+hAttScanThresholdVsAtt=ROOT.TH2F("hAttScanThresholdVsAtt","Attenuator value vs threshold scans",2,0,2,2,0,2)
+hAttScanThresholdVsAtt.SetBit(ROOT.TH1.kCanRebin)
+hAttScanThresholdVsAttNrunWeight=ROOT.TH2F("hAttScanThresholdVsAttNrunWeight","Attenuator value vs threshold scans",2,0,2,2,0,2)
+hAttScanThresholdVsAttNrunWeight.SetBit(ROOT.TH1.kCanRebin)
+
+thrScans=thresholdScan()
 
 
 for ientry in xrange( entries ):
@@ -131,30 +253,34 @@ for ientry in xrange( entries ):
             hBeamStatusBIFYuri.Fill(statusLists[beamindex-1],1)
             runLists[1][statusLists[beamindex-1]].append(runNumber)
             config=all.getConfigInfo(runNumber)
-            thresh=[config.get_first_threshold_charge(2,1),config.get_second_threshold_charge(2,1),config.get_third_threshold_charge(2,1)]
+            DIFnumberByPlan=[125,32,28,6,26,2]
             if (sourceindex==1 or sourceindex==2):
                 attlog=11.5
-                attloginv=0
+                attString='OFF'
                 if (sourceindex==1):
                     attlog=ROOT.Math.log(cond.getUpAttValueApprox())
-                    attloginv=1/cond.getUpAttValue()
+                    attString="{:6.1f}".format(cond.getUpAttValueApprox())
                 print attlog
-                runBIFeffLnAttVsLogThreshXvalue.append(attlog)
-                for x in range(3):
-                    runBIFeffLnAttVsLogThreshYvalue[x].append(ROOT.Math.log10(thresh[x]))
-                for thresh in [1,2,3]:
-                    BIFefficiencyData[('PAD1',runNumber,attloginv,thresh,config.get_threshold_charge(thresh,125,1))]=(tree.Efficiency.n_event,tree.Efficiency.flagcount(thresh,0),tree.FakeEfficiency.flagcount(thresh,0))
-                    BIFefficiencyData[('PAD2',runNumber,attloginv,thresh,config.get_threshold_charge(thresh,32,1))]=(tree.Efficiency.n_event,tree.Efficiency.flagcount(thresh,1),tree.FakeEfficiency.flagcount(thresh,1))
-                    BIFefficiencyData[('PAD3',runNumber,attloginv,thresh,config.get_threshold_charge(thresh,28,1))]=(tree.Efficiency.n_event,tree.Efficiency.flagcount(thresh,2),tree.FakeEfficiency.flagcount(thresh,2))
-                    BIFefficiencyData[('PAD4',runNumber,attloginv,thresh,config.get_threshold_charge(thresh,6,1))]=(tree.Efficiency.n_event,tree.Efficiency.flagcount(thresh,3),tree.FakeEfficiency.flagcount(thresh,3))
-                    BIFefficiencyData[('STRIP_GLASS',runNumber,attloginv,thresh,config.get_threshold_charge(thresh,26,1))]=(tree.Efficiency.n_event,tree.Efficiency.flagcount(thresh,4),tree.FakeEfficiency.flagcount(thresh,4),tree.Efficiency.flagcount(thresh,4,1),tree.FakeEfficiency.flagcount(thresh,4,1),tree.Efficiency.flagcount(thresh,4,2),tree.FakeEfficiency.flagcount(thresh,4,2))
-                    BIFefficiencyData[('STRIP_BAKELITE',runNumber,attloginv,thresh,config.get_threshold_charge(thresh,2,1))]=(tree.Efficiency.n_event,tree.Efficiency.flagcount(thresh,5),tree.FakeEfficiency.flagcount(thresh,5),tree.Efficiency.flagcount(thresh,5,1),tree.FakeEfficiency.flagcount(thresh,5,1),tree.Efficiency.flagcount(thresh,5,2),tree.FakeEfficiency.flagcount(thresh,5,2))
-
-print "OOOOOPPPPPSSSS ",len(BIFefficiencyData)
-
+                for numplan in range(6): 
+                    DIF=DIFnumberByPlan[numplan]
+                    thresh=[config.get_first_threshold_charge(DIF,1),config.get_second_threshold_charge(DIF,1),config.get_third_threshold_charge(DIF,1)]
+                    runBIFeffLnAttVsLogThreshXvalue[numplan].append(attlog)
+                    for x in range(3):
+                        runBIFeffLnAttVsLogThreshYvalue[numplan][x].append(ROOT.Math.log10(thresh[x]))
+                        key=(x+1,config.get_threshold(DIF,1,x+1))
+                        #print numplan,key,setup
+                        if not ThreshAttMap[numplan].get(key):
+                            ThreshAttMap[numplan][key]=ThreshAttSetupList()
+                        ThreshAttMap[numplan][key].add(attString,setup,runNumber)
+                #if setup=='GIFPP_STRIP_22':
+                #    for i in range(6):
+                #        attScans[i].fill(runNumber,tree.Efficiency,tree.FakeEfficiency,cond)
+            if (sourceindex==2 or (sourceindex==1 and cond.getUpAtt()==333) ):
+                thrScans.fill(runNumber,config,tree.Efficiency,tree.FakeEfficiency)
+            
 
 for i in range(3):
-    runBIFeffLnAttVsLogThresh.append(ROOT.TGraph(len(runBIFeffLnAttVsLogThreshXvalue),runBIFeffLnAttVsLogThreshXvalue,runBIFeffLnAttVsLogThreshYvalue[i]))
+    runBIFeffLnAttVsLogThresh.append(ROOT.TGraph(len(runBIFeffLnAttVsLogThreshXvalue[5]),runBIFeffLnAttVsLogThreshXvalue[5],runBIFeffLnAttVsLogThreshYvalue[5][i]))
 grcolor=[4,1,2]
 for thresh in [1,2,3]:
     runBIFeffLnAttVsLogThresh[thresh].SetMarkerStyle(23)
@@ -172,6 +298,33 @@ for i in range(3):
 usedRunLists.sort()
 print "YEEEEEEEEEEEEEEEEE",len(usedRunLists),usedRunLists
 
+
+
+attScanList=[]
+attScanNeedsRuns=set()
+for i in range(6):
+    planType='pad'
+    if i>=4:
+        planType='strip'
+    for k,v in ThreshAttMap[i].iteritems():
+        if (len(v.attValues)>4):
+            attScanList.append(attenuatorScan(i,planType,v.runNumbers,k[0],k[1]))
+            attScanNeedsRuns=attScanNeedsRuns.union(v.runNumbers)
+            #print i,k
+
+for ientry in xrange( entries ):
+    nb=tree.GetEntry( ientry )
+    if nb <= 0:
+        continue
+    runNumber=tree.runNumber
+    if not runNumber in attScanNeedsRuns:
+        continue
+    cond=ROOT.GIF_Conditions()
+    if (cond.setToRun(runNumber)==True):
+        for attscan in attScanList:
+            attscan.fill(runNumber,tree.Efficiency,tree.FakeEfficiency,cond)
+    else:
+        print "Should Never print this line"
 
 
 
@@ -351,157 +504,289 @@ for thresh in [1,2,3]:
 legendWhat.Draw()
 cWhat.SaveAs(outputDirectory+"runBIFeffLnAttVsLogThresh.png")
 
+def makeTText(textlist,x,y,run,nbif,rotate,vtranslate):
+    letexte=" {0}".format(run)
+    if (nbif<10):
+        letexte=" {0} NBIF={1}".format(run,nbif)
+    count=0
+    if rotate:
+        for textes in textlist:
+            if (abs(x-textes.GetX())<50 and abs(y-textes.GetY())<0.2):
+                count=count+1
+    text=ROOT.TText(x,y,letexte)
+    text.SetTextAlign(11)
+    text.SetTextAngle(15+20*(count))
+    text.SetTextSize(0.03)
+    vcount=0
+    if vtranslate:
+        for textes in textlist:
+            if (abs(x-textes.GetX())<0.01 and abs(y-textes.GetY())<0.02):
+                text.SetTextColor(2+vcount)
+                text.SetTextAlign(13)
+                if vcount==1:
+                    text.SetTextAlign(33)
+                vcount=vcount+1
+    return text
 
 
-def graphBIFData(BIFdata,chambre,invatt,MarkerStyle):
-    subBIFdata=dict()
-    for k in BIFdata.keys():
-        if (k[0]==chambre and k[2]==invatt):
-            subBIFdata[k]=BIFdata[k]
-    #print len(subBIFdata.itervalues().next())
-    thresholds=[array('f'),array('f'),array('f')]
-    Yvalues=[]
-    for ngr in range(len(subBIFdata.itervalues().next())):
-        Yvalues.append([array('f'),array('f'),array('f')])
-    for k,v in subBIFdata.iteritems():
-        thresholds[k[3]-1].append(k[4])
-        Yvalues[0][k[3]-1].append(v[0])
-        for iy in xrange(1, len(subBIFdata.itervalues().next())):
-            Yvalues[iy][k[3]-1].append(v[iy]*1.0/v[0])
-        #print k,"########",v
-    outputGraphs=[]
-    for ngr in range(len(subBIFdata.itervalues().next())):
-        outputGraphs.append([ROOT.TGraph(len(thresholds[ithresh]),thresholds[ithresh],Yvalues[ngr][ithresh]) for ithresh in range(3)])
-        outputGraphs[ngr][0].SetMarkerColor(4)
-        outputGraphs[ngr][1].SetMarkerColor(1)
-        outputGraphs[ngr][2].SetMarkerColor(2)
-        for gr in outputGraphs[ngr]:
-            gr.SetMarkerStyle(MarkerStyle)
-        for thresh in range(3):
-            outputGraphs[ngr][thresh].SetMaximum(max(Yvalues[ngr][thresh]))
-            outputGraphs[ngr][thresh].SetMinimum(min(Yvalues[ngr][thresh]))
-    print [(min(i),max(i)) for i in thresholds]
-    XaxisRange=(min([min(i) for i in thresholds]),max([max(i) for i in thresholds]))
-    print XaxisRange
-    return (XaxisRange,outputGraphs)
-    
+threshColor=[4,1,2]
+strip=thrScans.glass
+cEff=ROOT.TCanvas()
+cEff.SetLogx()
+minv=min([min(v) for v in strip.x])
+maxv=max([max(v) for v in strip.x])
+dummygr=ROOT.TGraph(2)
+dummygr.SetPoint(0,minv*0.8,0)
+dummygr.SetPoint(1,maxv*1.2,1.2)
+dummygr.SetMarkerColor(0)
+dummygr.GetXaxis().SetTitle("Threshold (fC)")
+dummygr.GetYaxis().SetTitle("Efficiency")
+dummygr.SetTitle("Glass strip chamber")
+dummygr.Draw("AP")
+effGr=[]
+effText=[]
+for ithresh in range(3):
+    a=ROOT.TGraph(len(thrScans.runNumbers),strip.x[ithresh],strip.all.efficiency[ithresh])
+    a.SetMarkerStyle(23)
+    a.SetMarkerColor(threshColor[ithresh])
+    a.Draw("P")
+    effGr.append(a)
+    for ival in range(a.GetN()):
+        if (strip.all.efficiency[ithresh][ival]<0.6):
+            text=makeTText(effText,strip.x[ithresh][ival],strip.all.efficiency[ithresh][ival],thrScans.runNumbers[ival],thrScans.numberOfBIF[ival],True,False)
+            text.SetTextColor(a.GetMarkerColor())
+            text.Draw()
+            effText.append(text)
+ 
+cEff.SaveAs(outputDirectory+"threshScanGIFoct2016_text.png")
+del(effText[:])
+del(text)
+cEff.Update()
+cEff.SaveAs(outputDirectory+"threshScanGIFoct2016.png")
 
-def graphBIFDataAtt(BIFdata,chambre):
-    invattvalues=set()
-    for k in BIFdata.keys():
-        if (k[0]==chambre):
-            invattvalues.add(k[2])
-    print invattvalues
-    nattvalue=len(invattvalues)
-    retgr=dict()
-    for i in range(nattvalue):
-        a=invattvalues.pop()
-        retgr[a]=graphBIFData(BIFdata,chambre,a,20+i)
-    return retgr
+for ithresh in range(3):
+    a=ROOT.TGraph(len(thrScans.runNumbers),strip.x[ithresh],strip.gap[1].efficiency[ithresh])
+    a.SetMarkerStyle(24)
+    a.SetMarkerColor(threshColor[ithresh])
+    a.Draw("P")
+    effGr.append(a)
+cEff.Update()
+for ithresh in range(3):
+    a=ROOT.TGraph(len(thrScans.runNumbers),strip.x[ithresh],strip.gap[2].efficiency[ithresh])
+    a.SetMarkerStyle(25)
+    a.SetMarkerColor(threshColor[ithresh])
+    a.Draw("P")
+    effGr.append(a)
+cEff.Update()
+legendEff=ROOT.TLegend(0.15,0.15,0.45,0.45)
+legendEff.AddEntry(effGr[0],"Glass chamber ","p")
+legendEff.AddEntry(effGr[3],"Glass Gap 1 ","p")
+legendEff.AddEntry(effGr[6],"Glass Gap 2 ","p")
+legendEff.AddEntry(effGr[0],"HR2 Threshold 1 ","p")
+legendEff.AddEntry(effGr[1],"HR2 Threshold 2 ","p")
+legendEff.AddEntry(effGr[2],"HR2 Threshold 3 ","p")
+legendEff.Draw()
+cEff.Update()
+cEff.SaveAs(outputDirectory+"threshScanGIFoct2016_gap.png")
+#maintenant, les memes pour bakelite
+strip=thrScans.bakelite
+minv=min([min(v) for v in strip.x])
+maxv=max([max(v) for v in strip.x])
+dummygr.SetPoint(0,minv*0.8,0)
+dummygr.SetPoint(1,maxv*1.2,1.2)
+dummygr.GetXaxis().SetTitle("Threshold (fC)")
+dummygr.GetYaxis().SetTitle("Efficiency")
+dummygr.SetTitle("Bakelite strip chamber")
+dummygr.Draw("AP")
+for ithresh in range(3):
+    a=ROOT.TGraph(len(thrScans.runNumbers),strip.x[ithresh],strip.all.efficiency[ithresh])
+    a.SetMarkerStyle(23)
+    a.SetMarkerColor(threshColor[ithresh])
+    a.Draw("P")
+    effGr.append(a)
+cEff.Update()
+cEff.SaveAs(outputDirectory+"threshScanGIFoct2016_bakelite.png")
+for ithresh in range(3):
+    a=ROOT.TGraph(len(thrScans.runNumbers),strip.x[ithresh],strip.gap[1].efficiency[ithresh])
+    a.SetMarkerStyle(24)
+    a.SetMarkerColor(threshColor[ithresh])
+    a.Draw("P")
+    effGr.append(a)
+cEff.Update()
+for ithresh in range(3):
+    a=ROOT.TGraph(len(thrScans.runNumbers),strip.x[ithresh],strip.gap[2].efficiency[ithresh])
+    a.SetMarkerStyle(25)
+    a.SetMarkerColor(threshColor[ithresh])
+    a.Draw("P")
+    effGr.append(a)
+legendEffB=ROOT.TLegend(0.45,0.75,0.9,0.9)
+legendEffB.SetNColumns(2)
+legendEffB.AddEntry(effGr[0],"Bakelite chamber ","p")
+legendEffB.AddEntry(effGr[0],"HR2 Threshold 1 ","p")
+legendEffB.AddEntry(effGr[3],"Bakelite Gap 1 ","p")
+legendEffB.AddEntry(effGr[1],"HR2 Threshold 2 ","p")
+legendEffB.AddEntry(effGr[6],"Bakelite Gap 2 ","p")
+legendEffB.AddEntry(effGr[2],"HR2 Threshold 3 ","p")
+legendEffB.Draw()
+cEff.Update()
+cEff.SaveAs(outputDirectory+"threshScanGIFoct2016_bakelite_gap.png")
 
-def drawBIFDataAtt(BIFdata,chambre):
-    graphs=graphBIFDataAtt(BIFdata,chambre)
-    namePlots=['Nevents','efficicieny_plan','fake_efficiency_plan','efficicieny_plan_gap1','fake_efficiency_plan_gap1','efficicieny_plan_gap2','fake_efficiency_plan_gap2']
-    canvasName='c'+chambre+'att'
-    nplot=len(graphs.values()[0][1])
-    xmin=min([g[0][0] for g in graphs.values()])
-    xmax=max([g[0][1] for g in graphs.values()])
-    print [g[0] for g in graphs.values()], xmin, xmax 
-    for plot in range(nplot):
-        extrema=[]
-        for g in graphs.values():
-            for thresh in range(3):
-                extrema.append((g[1][plot][thresh].GetMinimum(),g[1][plot][thresh].GetMaximum()))
-        ymin=min([v[0] for v in extrema])
-        ymax=max([v[1] for v in extrema]) 
-        print ymin,ymax
-        if (ymax>0.10 and ymax <1): ymax=1 #efficiency plot max=1
-        if (ymax<2*ymin): ymax=2*ymin # make sure we have a non zero length yaxis
-        fakeGraph=ROOT.TGraph(2)
-        fakeGraph.SetPoint(0,xmin,ymin)
-        fakeGraph.SetPoint(1,xmax,ymax)
-        fakeGraph.SetMarkerColor(0)
-        fakeGraph.GetXaxis().SetTitle("threshold (fc)")
-        fakeGraph.GetYaxis().SetTitle(namePlots[plot])
-        for k,g in graphs.items():
-            mycanvas=ROOT.TCanvas()
-            if (xmax>100*xmin): mycanvas.SetLogx()
-            att='sourceOFF'
-            if (k!=0): att=1/k
-            fakeGraph.SetTitle(chambre+' attenuation='+str(att))
-            fakeGraph.Draw("AP")
-            for thresh in range(3):
-                g[1][plot][thresh].Draw("P")
-            mycanvas.SaveAs(outputDirectory+canvasName+'_'+chambre+'_att_'+str(att)+'_'+namePlots[plot]+'.png')
+for i in range(6):
+    for key in sorted(ThreshAttMap[i],key=lambda val: len(ThreshAttMap[i][val].attValues)):
+        print i,key,len(ThreshAttMap[i][key].attValues),sorted(ThreshAttMap[i][key].setupNames)
+
+planNames=['PAD1','PAD2','PAD3','PAD4','GLASS STRIP','BAK STRIP']
+nRunMax=0
+for l in ThreshAttMap:
+    for v in l.itervalues():
+        nrun=len(v.runNumbers)
+        if nrun>nRunMax:
+            nRunMax=nrun
+hAttScanThresholdVsNrun=ROOT.TH2F("hAttScanThresholdVsNrun","Number of runs vs threshold scans",2,0,2,nRunMax+1,0,nRunMax+1)
+hAttScanThresholdVsNrun.SetBit(ROOT.TH1.kCanRebin)
+
+f_francois=open(outputDirectory+'pourFrancois.txt','w')
+
+        
+for i in range(6):
+    for k,v in ThreshAttMap[i].iteritems():
+        if len(v.attValues)>1:
+                hAttScanThresholdPossibility.Fill(planNames[i]+str(k),len(v.attValues))
+                nrun=str(len(v.runNumbers))
+                if (len(v.runNumbers)<10):
+                    nrun=' '+nrun
+                hAttScanThresholdVsNrun.Fill(planNames[i]+str(k),nrun,len(v.attValues))
+                for setup in v.setupNames:
+                    hAttScanThresholdVsSetup.Fill(planNames[i]+str(k),setup,len(v.attValues))
+                for att in v.attValues:
+                    hAttScanThresholdVsAtt.Fill(planNames[i]+str(k),att,len(v.attValues))
+                    hAttScanThresholdVsAttNrunWeight.Fill(planNames[i]+str(k),att,len(v.attValuesRunList[att]))
+                for att in sorted(v.attValues):
+                    f_francois.write( "plan={0};threshold={1};attenuator={2}; {3} runs :".format(planNames[i],str(k),att,len(v.attValuesRunList[att])))
+                    for run in sorted(v.attValuesRunList[att]):
+                        f_francois.write(str(run)+' ')
+                    f_francois.write('\n')
+                                  
+f_francois.close()
+
+cThreshPossibility=ROOT.TCanvas()
+cThreshPossibility.SetBottomMargin(0.25)
+cThreshPossibility.SetGridx()
+hAttScanThresholdPossibility.LabelsDeflate()
+hAttScanThresholdPossibility.GetXaxis().LabelsOption(">v")
+hAttScanThresholdPossibility.GetYaxis().SetTitle("Number of attenuator values in runs")
+hAttScanThresholdPossibility.Draw("TEXT")
+hAttScanThresholdPossibility.Draw("SAME")
+cThreshPossibility.SaveAs(outputDirectory+"hAttScanThresholdPossibility.png")
+hAttScanThresholdPossibility.GetXaxis().LabelsOption("av")
+hAttScanThresholdPossibility.Draw("TEXT")
+hAttScanThresholdPossibility.Draw("SAME")
+cThreshPossibility.Update()
+cThreshPossibility.SaveAs(outputDirectory+"hAttScanThresholdPossibility_alpha.png")
+cThreshPossibility.SetGridy()
+cThreshPossibility.SetLeftMargin(0.15)
+hAttScanThresholdVsSetup.LabelsDeflate("X")
+hAttScanThresholdVsSetup.LabelsDeflate("Y")
+hAttScanThresholdVsSetup.GetXaxis().LabelsOption("av")
+hAttScanThresholdVsSetup.GetYaxis().LabelsOption("a")
+hAttScanThresholdVsSetup.Draw("COL")
+hAttScanThresholdVsSetup.Draw("TEXT SAME")
+cThreshPossibility.Update()
+cThreshPossibility.SaveAs(outputDirectory+"hAttScanThresholdVsSetup.png")
+hAttScanThresholdVsNrun.LabelsDeflate("X")
+hAttScanThresholdVsNrun.LabelsDeflate("Y")
+hAttScanThresholdVsNrun.GetXaxis().LabelsOption("av")
+hAttScanThresholdVsNrun.GetYaxis().LabelsOption("a")
+hAttScanThresholdVsNrun.GetYaxis().SetTitle("Number of runs")
+hAttScanThresholdVsNrun.Draw("COL")
+hAttScanThresholdVsNrun.Draw("TEXT SAME")
+cThreshPossibility.Update()
+cThreshPossibility.SaveAs(outputDirectory+"hAttScanThresholdVsNrun.png")
+hAttScanThresholdVsAtt.LabelsDeflate("X")
+hAttScanThresholdVsAtt.LabelsDeflate("Y")
+hAttScanThresholdVsAtt.GetXaxis().LabelsOption("av")
+hAttScanThresholdVsAtt.GetYaxis().LabelsOption("a")
+hAttScanThresholdVsAtt.Draw("COL")
+hAttScanThresholdVsAttNrunWeight.LabelsDeflate("X")
+hAttScanThresholdVsAttNrunWeight.LabelsDeflate("Y")
+hAttScanThresholdVsAttNrunWeight.GetXaxis().LabelsOption("av")
+hAttScanThresholdVsAttNrunWeight.GetYaxis().LabelsOption("a")
+hAttScanThresholdVsAttNrunWeight.Draw("TEXT SAME")
+cThreshPossibility.Update()
+cThreshPossibility.SaveAs(outputDirectory+"hAttScanThresholdVsAtt.png")
+
+keepItAroundForROOT=[]
+
+def drawAttScanPlot(att):
+    att.printItsort(2)
+    effgr=ROOT.TGraph( len(att.runNumbers), att.x, att.planeEff.eff)
+    fakeeffgr=ROOT.TGraph( len(att.runNumbers), att.x, att.planeEff.fakeEff)
+    effgr.SetMarkerStyle(23)
+    fakeeffgr.SetMarkerStyle(24)
+    effgr.SetMarkerColor(threshColor[att.thresholdLevel-1])
+    fakeeffgr.SetMarkerColor(threshColor[att.thresholdLevel-1])
+    dummygr=ROOT.TGraph(2)
+    dummygr.SetPoint(0,min(att.x),0)
+    #dummygr.SetPoint(0,1e-6,0)
+    dummygr.SetPoint(1,max(att.x),1)
+    dummygr.GetXaxis().SetTitle("1/attenuator")
+    dummygr.GetYaxis().SetTitle("efficiency")
+    dummygr.SetTitle("{} thresholdLevel={}, thresholdDAC={}".format(planNames[att.planNumber],att.thresholdLevel,att.thresholdValue))
+    dummygr.Draw("AP")
+    effgr.Draw("P")
+    fakeeffgr.Draw("P")
+    keepItAroundForROOT.append((dummygr,effgr,fakeeffgr))
+
+cAttScan=ROOT.TCanvas()
+drawAttScanPlot(attScanList[0])
+legendAtt=ROOT.TLegend(0.5,0.7,0.8,0.8)
+legendAtt.AddEntry(keepItAroundForROOT[0][1],"Raw efficiency","p")
+legendAtt.AddEntry(keepItAroundForROOT[0][2],"Fake efficiency","p")
+legendAtt.Draw()
+effText=[]
+a_effgr=keepItAroundForROOT[0][1]
+for ival in range(a_effgr.GetN()):
+    x=attScanList[0].x[ival]
+    y=attScanList[0].planeEff.eff[ival]
+    if x>0.21 and x<0.22 and y>0:
+        text=makeTText(effText,x,y,attScanList[0].runNumbersFillList[ival],attScanList[0].numberOfBIF[ival],False,False)
+        text.SetTextColor(a_effgr.GetMarkerColor())
+        text.Draw()
+        effText.append(text) 
+cAttScan.Update()
+cAttScan.SaveAs(outputDirectory+"AttScanPAD1_text.png")
+drawAttScanPlot(attScanList[13])
+legendAtt=ROOT.TLegend(0.15,0.5,0.45,0.6)
+legendAtt.AddEntry(keepItAroundForROOT[1][1],"Raw efficiency","p")
+legendAtt.AddEntry(keepItAroundForROOT[1][2],"Fake efficiency","p")
+legendAtt.Draw()
+effText=[]
+a_effgr=keepItAroundForROOT[1][1]
+for ival in range(a_effgr.GetN()):
+    x=attScanList[13].x[ival]
+    y=attScanList[13].planeEff.eff[ival]
+    if x>0.09:
+        text=makeTText(effText,x,y,attScanList[13].runNumbersFillList[ival],attScanList[13].numberOfBIF[ival],False,True)
+        #text.SetTextColor(a_effgr.GetMarkerColor())
+        text.Draw()
+        effText.append(text) 
+cAttScan.Update()
+cAttScan.SaveAs(outputDirectory+"AttScanGlassStrip_text.png")
+raw_input("\n\nPress the enter key to exit.")
+
+#cAttScan.SetLogy()
+#cAttScan.SetLogx()
+#for att in attScanList[0:1]:
+for att in attScanList:
+    drawAttScanPlot(att)
+    cAttScan.Update()
+    #raw_input("\n\nPress the enter key to exit.")
+
+#a.SetMarkerColor(4)
+#a.Draw("AP")
 
 
-drawBIFDataAtt(BIFefficiencyData,'PAD1')
-drawBIFDataAtt(BIFefficiencyData,'PAD2')
-drawBIFDataAtt(BIFefficiencyData,'PAD3')
-drawBIFDataAtt(BIFefficiencyData,'PAD4')
-drawBIFDataAtt(BIFefficiencyData,'STRIP_GLASS')
-drawBIFDataAtt(BIFefficiencyData,'STRIP_BAKELITE')
 
-
-def graphBIFDataThreshAddPoint(index,xvalue,yvalue,k,v):
-    xvalue[index].append(k[2])
-    if len(yvalue[index])==0:
-        yvalue[index]=[array('f') for i in v]
-    yvalue[index][0].append(v[0])
-    for i in xrange(1,len(v)):
-        yvalue[index][i].append(v[i]*1.0/v[0])
-    
-
-def graphBIFDataThresh(BIFdata,chambre,thresholds):
-    #refsetup=all.getConfigInfo(AsSetup)
-    xvalue=[array('f') for i in thresholds] #1/att
-    yvalue=[ [] for i in thresholds]
-    for k,v in BIFdata.items():
-        if k[0]!=chambre: continue
-        if k[3]==1 and k[4]==thresholds[0]:
-            graphBIFDataThreshAddPoint(0,xvalue,yvalue,k,v)
-        if k[3]==2 and k[4]==thresholds[1]:
-            graphBIFDataThreshAddPoint(1,xvalue,yvalue,k,v)
-    return (xvalue,yvalue)
-
-
-def drawgraphBIFDataThresh(BIFdata,chambre,thresholds):
-    namePlots=['Nevents','efficicieny_plan','fake_efficiency_plan','efficicieny_plan_gap1','fake_efficiency_plan_gap1','efficicieny_plan_gap2','fake_efficiency_plan_gap2']
-    graphArray=graphBIFDataThresh(BIFefficiencyData,chambre,thresholds)
-    xvalue=graphArray[0]
-    yvalue=graphArray[1]
-    cScanAtt=ROOT.TCanvas()
-    for ithresh in range(len(thresholds)):
-        grxvalue=xvalue[ithresh]
-        gryvalues=yvalue[ithresh]
-        for iplot in range(len(gryvalues)):
-            myGraph=ROOT.TGraph(len(grxvalue),grxvalue,gryvalues[iplot])
-            myGraph.GetXaxis().SetTitle("1/att")
-            myGraph.GetYaxis().SetTitle(namePlots[iplot])
-            myGraph.SetMarkerStyle(23)
-            canName=chambre+'_thresh_is_'+str(thresholds[ithresh])+'_fC'
-            if iplot>0:
-                fakeGraph=ROOT.TGraph(2)
-                fakeGraph.SetPoint(0,min(grxvalue),0)
-                fakeGraph.SetPoint(1,max(grxvalue),1)
-                fakeGraph.SetMarkerColor(0)
-                fakeGraph.SetTitle(canName)
-                fakeGraph.GetXaxis().SetTitle("1/att")
-                fakeGraph.GetYaxis().SetTitle(namePlots[iplot])
-                fakeGraph.Draw("AP")
-                myGraph.Draw("P")
-            else:
-                myGraph.SetTitle(canName)
-                myGraph.Draw("AP")
-            cScanAtt.SaveAs(outputDirectory+'attScan_'+canName+'_'+namePlots[iplot]+'.png')
-
-refsetup=all.getConfigInfo('GIFPP_STRIP_22')
-drawgraphBIFDataThresh(BIFefficiencyData,'PAD1',[refsetup.get_first_threshold_charge(125,1),refsetup.get_second_threshold_charge(125,1)])
-drawgraphBIFDataThresh(BIFefficiencyData,'PAD2',[refsetup.get_first_threshold_charge(32,1),refsetup.get_second_threshold_charge(32,1)])
-drawgraphBIFDataThresh(BIFefficiencyData,'PAD3',[refsetup.get_first_threshold_charge(28,1),refsetup.get_second_threshold_charge(28,1)])
-drawgraphBIFDataThresh(BIFefficiencyData,'PAD4',[refsetup.get_first_threshold_charge(6,1),refsetup.get_second_threshold_charge(6,1)])
-drawgraphBIFDataThresh(BIFefficiencyData,'STRIP_GLASS',[refsetup.get_first_threshold_charge(26,1),refsetup.get_second_threshold_charge(26,1)])
-drawgraphBIFDataThresh(BIFefficiencyData,'STRIP_BAKELITE',[refsetup.get_first_threshold_charge(2,1),refsetup.get_second_threshold_charge(2,1)])
 
 
 def writeframe(file,title,plotfile,scale,text):
@@ -574,6 +859,45 @@ mylatex.write('\end{frame}\n')
 
 writeframe(mylatex,"Threshold and attenuator scans","runBIFeffLnAttVsLogThresh.png",0.4,
 "The plot shows the thresholds and source attenuation for the runs with Yuri's trigger and recorded corresponding BIF events")
+
+writeframe(mylatex,"Threshold scans(source OFF or almost) glass chamber","threshScanGIFoct2016_text.png",0.35,
+"Efficiency as a function of threshold for strip Glass chamber for source OFF or source attenuation=46000. On the plot are printed the run number for which efficiency is below 60\%. 5 runs have a zero efficiency. In the elog, it is mentionned for 3 of them that HV was at 5~kV, it is likely that it was the same for the 2 other runs.")
+
+writeframe(mylatex,"Threshold scans(source OFF or almost) glass chamber","threshScanGIFoct2016.png",0.4,
+"Efficiency as a function of threshold for strip Glass chamber for source OFF or source attenuation=46000 without the text. Each marker corresponds to one run.")
+
+writeframe(mylatex,"Threshold scans(source OFF or almost) glass chamber","threshScanGIFoct2016_gap.png",0.4,
+"Efficiency as a function of threshold for strip Glass chamber for source OFF or source attenuation=46000. Each marker of one type corresponds to one run.")
+
+writeframe(mylatex,"Threshold scans(source OFF or almost) bakelite chamber","threshScanGIFoct2016_bakelite.png",0.4,
+"Efficiency as a function of threshold for strip Bakelite chamber for source OFF or source attenuation=46000. Each marker corresponds to one run. The third HR2 threshold was used in a non calibrated regime (true also for glass strip RPC).")
+
+writeframe(mylatex,"Threshold scans(source OFF or almost) bakelite chamber","threshScanGIFoct2016_bakelite_gap.png",0.4,
+"Efficiency as a function of threshold for strip Bakelite chamber for source OFF or source attenuation=46000. The third HR2 threshold was used in a non calibrated regime (true also for glass strip RPC).")
+
+writeframe(mylatex,"Source scan","hAttScanThresholdPossibility.png",0.4,
+"Number of attenuator values versus threshold ( chamber, comparator=1/2/3, comparator DAC value) for thresholds used for at least 2 attenuator values.")
+
+writeframe(mylatex,"Source scan","hAttScanThresholdPossibility_alpha.png",0.4,
+"Number of attenuator values versus threshold ( chamber, comparator=1/2/3, comparator DAC value) for thresholds used for at least 2 attenuator values. X axis in alphabetical order")
+
+writeframe(mylatex,"Source scan","hAttScanThresholdVsSetup.png",0.4,
+"Configuration setup name as a function of threshold ( chamber, comparator=1/2/3, comparator DAC value) for thresholds used for at least 2 attenuator values. Z axis is the number of attenuator values for the corresonding threshold.")
+
+writeframe(mylatex,"Source scan","hAttScanThresholdVsNrun.png",0.4,
+"Number of runs as a function of threshold ( chamber, comparator=1/2/3, comparator DAC value) for thresholds used for at least 2 attenuator values. Z axis is the number of attenuator values for the corresonding threshold.")
+
+writeframe(mylatex,"Source scan","hAttScanThresholdVsAtt.png",0.4,
+"Attenuator values as a function of threshold ( chamber, comparator=1/2/3, comparator DAC value) for thresholds used for at least 2 attenuator values. Z axis color (resp number) is number of attenuator values (resp number of runs taken with this attenuator value) for the corresonding threshold.")
+
+writeframe(mylatex,"Source scan","AttScanPAD1_text.png",0.35,
+"Efficiency as a function of inverse attenuator value for PAD chamber closest to the source. During runs 733717 and 733721 record, there have been GIF access (source OFF). Run 733726 is a short run with low statistics. Run 733753 is the only long run with source state unchanged during the run.")
+
+writeframe(mylatex,"Source scan","AttScanGlassStrip_text.png",0.4,
+"Efficiency as a function of inverse attenuator value for Glass strip chamber. Run numbers written for points with low attenuator value. A lot of run quality check is needed. Lots of runs have less than 10 BIF triggers recorded.")
+
+writeframe(mylatex,"Source scan","AttScanGlassStrip_text.png",0.3,
+"For attenuator 4.6, removing too short (low stat) runs and runs where source was OFF sometimes, only run 733753 is potentially good. For attenuator 3.3, no indication in the elog points to problem. For attenuator 10, no problem written in elog for run 733687 and run 733755 is the last run before SPS breaks. Its end is without beam and no source but the period with beam correspond to stable source condition and so should be OK.")
 
 
 mylatex.write('\end{document}')
