@@ -215,6 +215,7 @@ for ientry in xrange( entries ):
         cond=ROOT.GIF_Conditions()
         BIFstatus=0
         if (cond.setToRun(runNumber)==True):
+            sourceOK=False
             if (cond.getSourceStatus()==ROOT.GIF_Conditions.ON):
                 sourceindex=1
                 sourceOK=True
