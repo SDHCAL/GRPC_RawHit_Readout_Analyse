@@ -129,12 +129,14 @@ void  GIF_oct2016_ExperimentalSetup::setConfig()
   all.addConfigInfo("GIFPP_STRIP_28",s);
  }
 
-// here `ls ../../analysisResults/` allows to get the list of run numbers
+// From SourceDir
+// cd analysisResults/; tar xzvf GIF_october2016.tgz
+// here `ls GIF_october2016` allows to get the list of run numbers
 // runs without config info in elog
-// for run in `ls ../../analysisResults/`; do a=`cat ../loginfo/*/export.csv | grep $run -c`; echo $run,$a | awk -F, -v RUN=$run '{if ($2==0) print "  all.addRun("RUN");"}'; done
+// for run in `ls GIF_october2016`; do a=`cat ../ConcreteExperiments/ElogExtract/GIF_October2016/*.csv | grep $run -c`; echo $run,$a | awk -F, -v RUN=$run '{if ($2==0) print "  all.addRun("RUN");"}'; done
 // other runs from elog exports
-//for run in  `ls ../../analysisResults/`;do grep $run ../loginfo/GIFlogbook/export.csv | awk -F\; -v RUN=$run '{print "  all.addRun("RUN","$6");"}'; done 
-//for run in  `ls ../../analysisResults/`;do grep $run ../loginfo/M3logbook/export.csv | awk -F\; -v RUN=$run '{print "  all.addRun("RUN","$4");"}'; done
+//for run in  `ls GIF_october2016`;do grep $run ../ConcreteExperiments/ElogExtract/GIF_October2016/GIF_elog_export.csv | awk -F\; -v RUN=$run '{print "  all.addRun("RUN","$6");"}'; done 
+//for run in  `ls GIF_october2016`;do grep $run ../ConcreteExperiments/ElogExtract/GIF_October2016/M3_elog_export.csv | awk -F\; -v RUN=$run '{print "  all.addRun("RUN","$4");"}'; done
 // assuming all above commands have been redirecter in file tut then :
 // sort -n -t, -k2 tut 
 void  GIF_oct2016_ExperimentalSetup::setRunList()
@@ -325,8 +327,10 @@ void  GIF_oct2016_ExperimentalSetup::setRunList()
   all.addRun(733786);
 }
 
+// From SourceDir
+// cd analysisResults/; tar xzvf GIF_october2016.tgz
 // code generated with 
-//  for run in  `ls ../../analysisResults/`;do grep $run ../loginfo/GIFlogbook/export.csv | awk -F\; '{print "  gif=GIF_Conditions();"; if ($9=="\"ON\"") print "  gif.setBeamON();";  if ($9=="\"OFF\"") print "  gif.setBeamOFF();"; if ($14=="\"OFF\"") print "  gif.setSourceOFF();"; if ($14=="\"ON\"") print "  gif.setSourceON("substr($13,2,3)","substr($12,2,3)");"; if ($16!="\"Not Set\"") print "  gif.setScintillator("$16");"; print "  all.addRun("substr($5,2,length($5)-2)",gif);"; }'; done
+//  for run in  `ls GIF_october2016`;do grep $run ../ConcreteExperiments/ElogExtract/GIF_October2016/GIF_elog_export.csv | awk -F\; '{print "  gif=GIF_Conditions();"; if ($9=="\"ON\"") print "  gif.setBeamON();";  if ($9=="\"OFF\"") print "  gif.setBeamOFF();"; if ($14=="\"OFF\"") print "  gif.setSourceOFF();"; if ($14=="\"ON\"") print "  gif.setSourceON("substr($13,2,3)","substr($12,2,3)");"; if ($16!="\"Not Set\"") print "  gif.setScintillator("$16");"; print "  all.addRun("substr($5,2,length($5)-2)",gif);"; }'; done
 //
 void GIF_oct2016_ExperimentalSetup::setGIFconditions()
 {
