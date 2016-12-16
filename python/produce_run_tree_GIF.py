@@ -46,7 +46,11 @@ tree.Branch( 'ConfigInfo', ConfigInfo, 32000, 0 )
 tree.Branch( 'hasGIFCond', hasGIFCondBranchObject, 'hasGIFCond/i' )
 tree.Branch( 'GIFcond', GIFconditions)
 
-for dir in resultsDirectory :
+produceDebugFile=True
+if (produceDebugFile):
+  debugFile=ROOT.std.ofstream("debug_file.txt")
+
+for dir in sorted(resultsDirectory) :
   runNum=os.path.basename(dir)
   filename=dir+'/report_'+runNum+'.txt'
   runNumber=int(runNum)
@@ -57,6 +61,10 @@ for dir in resultsDirectory :
   Noise.ASCIIread(file)
   Eff.ASCIIread(file)
   FakeEff.ASCIIread(file)
+  if (produceDebugFile):
+    Noise.write(debugFile)
+    Eff.write(debugFile)
+    FakeEff.write(debugFile)
   hasConfBranchObject[0]=ConfigInfo.setToRun(runNumber)
   hasGIFCondBranchObject[0]=GIFconditions.setToRun(runNumber)
   tree.Fill()
