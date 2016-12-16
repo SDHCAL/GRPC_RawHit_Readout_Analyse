@@ -46,7 +46,7 @@ tree.Branch( 'ConfigInfo', ConfigInfo, 32000, 0 )
 tree.Branch( 'hasGIFCond', hasGIFCondBranchObject, 'hasGIFCond/i' )
 tree.Branch( 'GIFcond', GIFconditions)
 
-produceDebugFile=True
+produceDebugFile=False
 if (produceDebugFile):
   debugFile=ROOT.std.ofstream("debug_file.txt")
 
