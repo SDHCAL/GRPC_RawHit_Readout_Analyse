@@ -756,7 +756,7 @@ for ival in range(a_effgr.GetN()):
         effText.append(text) 
 cAttScan.Update()
 cAttScan.SaveAs(outputDirectory+"AttScanPAD1_text.png")
-drawAttScanPlot(attScanList[13])
+drawAttScanPlot(attScanList[14])
 legendAtt=ROOT.TLegend(0.15,0.5,0.45,0.6)
 legendAtt.AddEntry(keepItAroundForROOT[1][1],"Raw efficiency","p")
 legendAtt.AddEntry(keepItAroundForROOT[1][2],"Fake efficiency","p")
@@ -764,10 +764,10 @@ legendAtt.Draw()
 effText=[]
 a_effgr=keepItAroundForROOT[1][1]
 for ival in range(a_effgr.GetN()):
-    x=attScanList[13].x[ival]
-    y=attScanList[13].planeEff.eff[ival]
+    x=attScanList[14].x[ival]
+    y=attScanList[14].planeEff.eff[ival]
     if x>0.09:
-        text=makeTText(effText,x,y,attScanList[13].runNumbersFillList[ival],attScanList[13].numberOfBIF[ival],False,True)
+        text=makeTText(effText,x,y,attScanList[14].runNumbersFillList[ival],attScanList[14].numberOfBIF[ival],False,True)
         #text.SetTextColor(a_effgr.GetMarkerColor())
         text.Draw()
         effText.append(text) 
