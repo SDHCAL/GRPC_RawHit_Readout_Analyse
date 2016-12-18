@@ -22,6 +22,8 @@ scripts
 - produce_october2016_GIF_plot.py : produce plots and slides from output of  produce_run_tree_GIF.py 
 
 #interesting tag
+- GIF_oct2016_reportslides_v1.0
+
 
 #License
 Code licensed under the CeCILL 2.1 license :
