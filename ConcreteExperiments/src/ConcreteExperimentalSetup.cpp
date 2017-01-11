@@ -329,6 +329,214 @@ void  GIF_oct2016_ExperimentalSetup::setRunList()
 
 // From SourceDir
 // cd analysisResults/; tar xzvf GIF_october2016.tgz
+// here `ls GIF_october2016` allows to get the list of run numbers
+// runs without config info in elog
+// for run in `ls GIF_october2016`; do a=`cat ../ConcreteExperiments/ElogExtract/GIF_October2016/*.csv | grep $run -c`; echo $run,$a | awk -F, -v RUN=$run '{if ($2==0) print "  all.addRun("RUN",nPlans());"}'; done
+//
+// for run in M3 elog. 
+// Warning using the fact that the OK field has never been set for these runs to avoid processing between "", "good data" and "bad data"
+// for run in  `ls GIF_october2016`;do grep $run ../ConcreteExperiments/ElogExtract/GIF_October2016/M3_elog_export.csv | awk -F\; -v RUN=$run '{print "  all.addRun("RUN",nPlans(),RunQualityInfo::NOTSET);"}'; done
+//
+// for run in GIF elog
+//
+// for run in  `ls GIF_october2016`;do grep $run ../ConcreteExperiments/ElogExtract/GIF_October2016/GIF_elog_export.csv | awk -F\; -v RUN=$run '{s="RunQualityInfo::NOTSET"; if ($7=="\"Yes\"") s="RunQualityInfo::GOOD"; if ($7=="\"No\"") s="RunQualityInfo::BAD"; if (length($8)>0) s=s "," $8; print "  all.addRun("RUN",nPlans(),"s");"}'; done
+//
+// assuming all above commands have been redirecter in file tut then :
+// sort -n -t, -k2 tut 
+
+
+void GIF_oct2016_ExperimentalSetup::setRunQuality()
+{
+  all_ConfigInfo &all=all_ConfigInfo::instance();
+  all.addRun(733517,nPlans());
+  all.addRun(733518,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733519,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733520,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733521,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733522,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733523,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733524,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733525,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733526,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733527,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733528,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733529,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733530,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733531,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733532,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733535,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733536,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733537,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733538,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733539,nPlans());
+  all.addRun(733541,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733542,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733543,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733545,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733546,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733547,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733548,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733549,nPlans());
+  all.addRun(733551,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733552,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733553,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733554,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733555,nPlans());
+  all.addRun(733556,nPlans());
+  all.addRun(733557,nPlans());
+  all.addRun(733558,nPlans());
+  all.addRun(733559,nPlans());
+  all.addRun(733560,nPlans());
+  all.addRun(733561,nPlans());
+  all.addRun(733562,nPlans());
+  all.addRun(733563,nPlans());
+  all.addRun(733564,nPlans());
+  all.addRun(733565,nPlans());
+  all.addRun(733567,nPlans());
+  all.addRun(733568,nPlans());
+  all.addRun(733569,nPlans());
+  all.addRun(733570,nPlans());
+  all.addRun(733571,nPlans());
+  all.addRun(733572,nPlans());
+  all.addRun(733573,nPlans());
+  all.addRun(733574,nPlans());
+  all.addRun(733575,nPlans());
+  all.addRun(733576,nPlans());
+  all.addRun(733577,nPlans());
+  all.addRun(733578,nPlans());
+  all.addRun(733579,nPlans());
+  all.addRun(733585,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733586,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733587,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733588,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733589,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733590,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733591,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733592,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733593,nPlans());
+  all.addRun(733594,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733595,nPlans(),RunQualityInfo::GOOD);
+  all.addRun(733596,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733597,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733599,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733600,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733601,nPlans());
+  all.addRun(733602,nPlans());
+  all.addRun(733603,nPlans());
+  all.addRun(733604,nPlans());
+  all.addRun(733605,nPlans());
+  all.addRun(733606,nPlans());
+  all.addRun(733607,nPlans());
+  all.addRun(733608,nPlans());
+  all.addRun(733609,nPlans());
+  all.addRun(733610,nPlans());
+  all.addRun(733611,nPlans());
+  all.addRun(733612,nPlans());
+  all.addRun(733613,nPlans());
+  all.addRun(733614,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733616,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733617,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733618,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733619,nPlans());
+  all.addRun(733620,nPlans());
+  all.addRun(733621,nPlans());
+  all.addRun(733622,nPlans());
+  all.addRun(733623,nPlans());
+  all.addRun(733624,nPlans());
+  all.addRun(733625,nPlans());
+  all.addRun(733627,nPlans());
+  all.addRun(733629,nPlans());
+  all.addRun(733630,nPlans());
+  all.addRun(733634,nPlans());
+  all.addRun(733635,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733638,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733639,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733640,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733648,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733649,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733651,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733652,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733657,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733661,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733662,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733663,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733664,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733666,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733667,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733668,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733669,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733670,nPlans(),RunQualityInfo::BAD,"Test");
+  all.addRun(733671,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733672,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733673,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733674,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733676,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733677,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733681,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733682,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733684,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733685,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733687,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733690,nPlans(),RunQualityInfo::BAD,"Strip chamber behavior changed");
+  all.addRun(733691,nPlans(),RunQualityInfo::BAD,"Strip chamber behavior changed");
+  all.addRun(733694,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733695,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733697,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733703,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733704,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733706,nPlans(),RunQualityInfo::BAD,"HV");
+  all.addRun(733709,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733712,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733713,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733714,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733715,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733716,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733717,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733721,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733726,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733727,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733729,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733730,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733731,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733732,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733733,nPlans(),RunQualityInfo::BAD,"DAQ");
+  all.addRun(733734,nPlans(),RunQualityInfo::BAD,"DAQ");
+  all.addRun(733735,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733736,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733737,nPlans(),RunQualityInfo::BAD,"DAQ");
+  all.addRun(733739,nPlans(),RunQualityInfo::BAD,"BIF trigger unplugged");
+  all.addRun(733744,nPlans(),RunQualityInfo::BAD,"BIF trigger unplugged");
+  all.addRun(733745,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733746,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733747,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733749,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733751,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733752,nPlans(),RunQualityInfo::BAD,"HV");
+  all.addRun(733753,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733755,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733762,nPlans());
+  all.addRun(733771,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733772,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733773,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733774,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733775,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733776,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733777,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733778,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733779,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733780,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733781,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733782,nPlans(),RunQualityInfo::NOTSET);
+  all.addRun(733783,nPlans());
+  all.addRun(733784,nPlans());
+  all.addRun(733785,nPlans());
+  all.addRun(733786,nPlans());
+
+}
+
+
+// From SourceDir
+// cd analysisResults/; tar xzvf GIF_october2016.tgz
 // code generated with 
 //  for run in  `ls GIF_october2016`;do grep $run ../ConcreteExperiments/ElogExtract/GIF_October2016/GIF_elog_export.csv | awk -F\; '{print "  gif=GIF_Conditions();"; if ($9=="\"ON\"") print "  gif.setBeamON();";  if ($9=="\"OFF\"") print "  gif.setBeamOFF();"; if ($14=="\"OFF\"") print "  gif.setSourceOFF();"; if ($14=="\"ON\"") print "  gif.setSourceON("substr($13,2,3)","substr($12,2,3)");"; if ($16!="\"Not Set\"") print "  gif.setScintillator("$16");"; print "  all.addRun("substr($5,2,length($5)-2)",gif);"; }'; done
 //
