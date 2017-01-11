@@ -533,6 +533,42 @@ void GIF_oct2016_ExperimentalSetup::setRunQuality()
   all.addRun(733785,nPlans());
   all.addRun(733786,nPlans());
 
+  //set correction for goodness
+  try 
+    { 
+      //don't consider BIF unplugged as bad, just there should be no BIF trigger
+      for (unsigned int numplan=0;numplan<nPlans();++numplan)
+	{
+	  all.changeRunQualityInfo(733739).setPlanGoodness(numplan,true);
+	  all.changeRunQualityInfo(733744).setPlanGoodness(numplan,true);
+	}
+      //HV going to 5kV is a problem for strip chamber only
+      for (unsigned int numplan=0;numplan<4;++numplan)
+	{
+	  all.changeRunQualityInfo(733690).setPlanGoodness(numplan,true);
+	  all.changeRunQualityInfo(733691).setPlanGoodness(numplan,true);
+	  all.changeRunQualityInfo(733706).setPlanGoodness(numplan,true);
+	  all.changeRunQualityInfo(733752).setPlanGoodness(numplan,true);
+	}
+      //bakelite strip only going to 5kV during one run (manual intervantion by Salvadore)
+      all.changeRunQualityInfo(733667).setPlanGoodness(5,false);
+      //HV going to 5 kV deduced from analysis
+      for (unsigned int numplan=4; numplan<6; ++numplan)
+	{
+	  all.changeRunQualityInfo(733703).setPlanGoodness(numplan,false);
+	  all.changeRunQualityInfo(733704).setPlanGoodness(numplan,false);
+	}
+
+      // from text mention in elog
+      all.changeRunQualityInfo(733729).set_Status(RunQualityInfo::BAD,"Test");
+
+      //source status change during data taking (ON/OFF)
+      all.changeRunQualityInfo(733755).set_Status(RunQualityInfo::BAD,"Source"); //from text in the elog
+      all.changeRunQualityInfo(733717).set_Status(RunQualityInfo::BAD,"Source"); //from text in the elog and check in GIF source status elog
+      all.changeRunQualityInfo(733721).set_Status(RunQualityInfo::BAD,"Source"); //from check in GIF source status elog
+    }
+  catch ( const RunNotFound_ConfigException& e) {}
+
 }
 
 
