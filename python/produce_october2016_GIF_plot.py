@@ -718,14 +718,20 @@ cThreshPossibility.SaveAs(outputDirectory+"hAttScanThresholdVsAtt.png")
 
 keepItAroundForROOT=[]
 
-def drawAttScanPlot(att):
+def drawAttScanPlot(att,corr=False):
     att.printItsort(2)
     effgr=ROOT.TGraph( len(att.runNumbers), att.x, att.planeEff.eff)
     fakeeffgr=ROOT.TGraph( len(att.runNumbers), att.x, att.planeEff.fakeEff)
+    corrEff=array('f')
+    for i in range(len(att.runNumbers)):
+        corrEff.append((att.planeEff.eff[i]-att.planeEff.fakeEff[i])/(1-att.planeEff.fakeEff[i]))
+    correffgr=ROOT.TGraph( len(att.runNumbers), att.x, corrEff)
     effgr.SetMarkerStyle(23)
     fakeeffgr.SetMarkerStyle(24)
+    correffgr.SetMarkerStyle(25)
     effgr.SetMarkerColor(threshColor[att.thresholdLevel-1])
     fakeeffgr.SetMarkerColor(threshColor[att.thresholdLevel-1])
+    correffgr.SetMarkerColor(threshColor[att.thresholdLevel-1])
     dummygr=ROOT.TGraph(2)
     dummygr.SetPoint(0,min(att.x),0)
     #dummygr.SetPoint(0,1e-6,0)
@@ -736,7 +742,9 @@ def drawAttScanPlot(att):
     dummygr.Draw("AP")
     effgr.Draw("P")
     fakeeffgr.Draw("P")
-    keepItAroundForROOT.append((dummygr,effgr,fakeeffgr))
+    if (corr):
+        correffgr.Draw("P")
+    keepItAroundForROOT.append((dummygr,effgr,fakeeffgr,correffgr))
 
 cAttScan=ROOT.TCanvas()
 drawAttScanPlot(attScanList[0])
@@ -779,9 +787,11 @@ raw_input("\n\nPress the enter key to exit.")
 #cAttScan.SetLogx()
 #for att in attScanList[0:1]:
 for att in attScanList:
-    drawAttScanPlot(att)
+    drawAttScanPlot(att,True)
     cAttScan.Update()
-    #raw_input("\n\nPress the enter key to exit.")
+    attfile=outputDirectory+"AttScan_plan_{}_threshold_{}_DAC_{}.png".format(planNames[att.planNumber],att.thresholdLevel,att.thresholdValue)
+    cAttScan.SaveAs(attfile)
+    raw_input("\n\nPress the enter key to exit.")
 
 #a.SetMarkerColor(4)
 #a.Draw("AP")
