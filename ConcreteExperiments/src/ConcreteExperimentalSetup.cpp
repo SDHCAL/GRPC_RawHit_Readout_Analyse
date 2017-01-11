@@ -16,6 +16,7 @@ GIF_oct2016_ExperimentalSetup::GIF_oct2016_ExperimentalSetup()
   setConfig();
   setRunList();
   setGIFconditions();
+  setRunQuality();
 }
 
 void  GIF_oct2016_ExperimentalSetup::setConfig()
