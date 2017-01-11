@@ -85,6 +85,14 @@ float GIF_Conditions::attenuatorFactor(unsigned int att)
 }
 
 
+void RunQualityInfo::set_Status(STATUS s,std::string badcause)
+{
+  m_globalStatus=s;
+  m_badReason=badcause;
+  bool good=(s!=BAD);
+  m_qualityByPlan.assign(m_qualityByPlan.size(),good);
+}
+
 
 std::string all_ConfigInfo::UnknownConfig=std::string("UnknownConfig");
 
@@ -121,6 +129,20 @@ GIF_Conditions& all_ConfigInfo::changeGIFconditions(unsigned int run)
 {
   std::map<unsigned int,GIF_Conditions>::iterator  it=m_runGIFconditionsMap.find(run);
   if (it==m_runGIFconditionsMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::changeGIFconditions");
+  return it->second;
+}
+
+const RunQualityInfo& all_ConfigInfo::getRunQualityInfo(unsigned int run) const
+{
+  std::map<unsigned int,RunQualityInfo>::const_iterator  it=m_runQualityInfoMap.find(run);
+  if (it==m_runQualityInfoMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::getRunQualityInfo");
+  return it->second;
+}
+
+RunQualityInfo& all_ConfigInfo::changeRunQualityInfo(unsigned int run)
+{
+  std::map<unsigned int,RunQualityInfo>::iterator  it=m_runQualityInfoMap.find(run);
+  if (it==m_runQualityInfoMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::changeRunQualityInfo");
   return it->second;
 }
 

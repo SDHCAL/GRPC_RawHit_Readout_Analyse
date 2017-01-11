@@ -77,6 +77,25 @@ class Setup_ConfigInfo
   std::map<unsigned int,DIF_ASIC_HR_ConfigInfo> m_setup_ConfigInfo;
 };
 
+class RunQualityInfo
+{
+ public:
+  enum STATUS {NOINFO,NOTSET,GOOD,BAD};
+  STATUS get_globalStatus() const {return m_globalStatus;}
+  std::string get_badReason() const {return m_badReason;}
+  bool runIsGoodForPlan(unsigned int planNumber) const {return m_qualityByPlan[planNumber];}
+
+  RunQualityInfo(unsigned int NPlan=1) : m_globalStatus(NOINFO),m_badReason(""),m_qualityByPlan(NPlan,true) {}
+  void set_Status(STATUS s,std::string badcause="");
+  void setPlanGoodness(int planNumber,bool value) {m_qualityByPlan[planNumber]=value;}
+
+ private:
+  STATUS m_globalStatus;
+  std::string m_badReason; 
+  std::vector<bool> m_qualityByPlan;
+};
+
+
 class GIF_Conditions
 {
  public:
@@ -114,6 +133,7 @@ class GIF_Conditions
 };
 
 
+
 class  all_ConfigInfo
 {
   all_ConfigInfo() {}
@@ -131,13 +151,18 @@ class  all_ConfigInfo
 
   void addRun(unsigned int run,GIF_Conditions &cond) {m_runGIFconditionsMap[run]=cond;}
   const GIF_Conditions& getGIFconditions(unsigned int run) const; // throw RunNotFound_ConfigException
+
+  void addRun(unsigned int run,unsigned int Nplan, RunQualityInfo::STATUS s=RunQualityInfo::NOINFO,std::string badcause="") {m_runQualityInfoMap[run]=RunQualityInfo(Nplan); m_runQualityInfoMap[run].set_Status(s,badcause);}
+  const RunQualityInfo& getRunQualityInfo(unsigned int run) const; //throw RunNotFound_ConfigException
  private:
   static all_ConfigInfo* m_instance;
   std::map<std::string,Setup_ConfigInfo> m_configs;
   std::map<unsigned int,std::string> m_runConfigMap;
   std::map<unsigned int,GIF_Conditions> m_runGIFconditionsMap;
+  std::map<unsigned int,RunQualityInfo> m_runQualityInfoMap;
 
   friend class GIF_oct2016_ExperimentalSetup;
   GIF_Conditions& changeGIFconditions(unsigned int run); // throw RunNotFound_ConfigException
+  RunQualityInfo& changeRunQualityInfo(unsigned int run); // throw RunNotFound_ConfigException
 };
 #endif
