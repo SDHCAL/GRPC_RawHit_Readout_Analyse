@@ -123,6 +123,8 @@ for ar in allRunDataPoint:
     effSummary[key][3].append(ar.correctedEff)
     effSummary[key][4].append(ar)
 
+
+
 separator="#########################################################"
 separator=separator+'\n'+separator
 print separator
@@ -208,3 +210,76 @@ for pointval,pointgr in graphs.iteritems():
         cAttScan.SaveAs(outputDirectory+"AttScan_plan{}_threshold{}_atDAC{}_{}.png".format(pointval[0],pointval[1],pointval[2],graphis[i]))
         i=i+1
         #raw_input("\n\nPress the enter key to exit.")
+
+
+threshRanges=dict()
+threshRanges[1]=[10,300]
+threshRanges[2]=[70,2000]
+threshRanges[3]=[1000,15000]
+
+threshScanSummary=dict()
+maxThresh=0
+for ar in allRunDataPoint:
+    if ar.planNumber<4 :  #remove pad chamber
+        continue
+    if ar.invattenuator>1.1/46000.0 : #remove attenuator values below 46000
+        continue
+    #select roughly correct range for threshold
+    if ar.thresholdVal<threshRanges[ar.thresholdLevel][0] or ar.thresholdVal>threshRanges[ar.thresholdLevel][1]:
+        print "removing {} {}".format(ar.thresholdLevel,ar.thresholdVal)
+        continue
+    key=(ar.planNumber,ar.thresholdLevel)
+    if not threshScanSummary.has_key(key):
+        threshScanSummary[key]=[array('f'),array('f'),array('f'),array('f'),[]] #thresh,eff,fakeEff,correctedEff,allData
+    if ar.thresholdVal>maxThresh:
+        maxThresh=ar.thresholdVal
+    threshScanSummary[key][0].append(ar.thresholdVal)
+    threshScanSummary[key][1].append(ar.eff)
+    threshScanSummary[key][2].append(ar.fakeEff)
+    threshScanSummary[key][3].append(ar.correctedEff)
+    threshScanSummary[key][4].append(ar)
+
+
+    
+
+print separator
+print maxThresh
+
+
+for key,val in  threshScanSummary.iteritems():
+    val.append(ROOT.TGraph(len(val[0]),val[0],val[1]))
+    val[5].SetMarkerStyle(23)
+    val[5].SetMarkerColor(threshColor[key[1]-1])
+
+threshCanv=ROOT.TCanvas()
+threshCanv.SetLogx()
+
+dummygr=ROOT.TGraph(2)
+dummygr.SetPoint(0,0,0)
+dummygr.SetPoint(1,maxThresh*1.2,1.2)
+dummygr.SetMarkerColor(0)
+dummygr.GetXaxis().SetTitle("Threshold (fC)")
+dummygr.GetYaxis().SetTitle("Efficiency")
+
+legend=ROOT.TLegend(0.12,0.15,0.52,0.4)
+
+
+dummygr.SetTitle("Glass strip chamber")
+dummygr.Draw("AP")
+for i in [1,2,3]:
+    threshScanSummary[(4,i)][5].Draw("P")
+    legend.AddEntry(threshScanSummary[(4,i)][5],"threshold {} : range {} fC to {} fC".format(i,threshRanges[i][0],threshRanges[i][1]),"p")
+legend.Draw()
+threshCanv.SaveAs(outputDirectory+"thresh_scan_glass_clean.png")
+threshCanv.SaveAs(outputDirectory+"thresh_scan_glass_clean.root")
+raw_input("\n\nPress the enter key to exit.")
+
+dummygr.SetTitle("Bakelite strip chamber")
+dummygr.Draw("AP")
+for i in [1,2,3]:
+    threshScanSummary[(5,i)][5].Draw("P")
+legend.Draw()
+threshCanv.Update()
+threshCanv.SaveAs(outputDirectory+"thresh_scan_bakelite_clean.png")
+threshCanv.SaveAs(outputDirectory+"thresh_scan_bakelite_clean.root")
+raw_input("\n\nPress the enter key to exit.")
