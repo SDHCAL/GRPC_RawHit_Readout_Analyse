@@ -189,7 +189,7 @@ ThreshAttMap=[]
 for i in range(6):
     ThreshAttMap.append(dict())
         
-
+thrScansRunList=[]
 
 hAttScanThresholdPossibility=ROOT.TH1F("hAttScanThresholdPossibility","number of attenuator value in runs for (plan, threshold number, threshold value)",2,0,2)
 hAttScanThresholdPossibility.SetBit(ROOT.TH1.kCanRebin)
@@ -278,7 +278,7 @@ for ientry in xrange( entries ):
                 #        attScans[i].fill(runNumber,tree.Efficiency,tree.FakeEfficiency,cond)
             if (sourceindex==2 or (sourceindex==1 and cond.getUpAtt()==333) ):
                 thrScans.fill(runNumber,config,tree.Efficiency,tree.FakeEfficiency)
-            
+                thrScansRunList.append(runNumber)
 
 for i in range(3):
     runBIFeffLnAttVsLogThresh.append(ROOT.TGraph(len(runBIFeffLnAttVsLogThreshXvalue[5]),runBIFeffLnAttVsLogThreshXvalue[5],runBIFeffLnAttVsLogThreshYvalue[5][i]))
@@ -917,3 +917,8 @@ mylatex.close()
 
 os.system('cd {}; pdflatex {}'.format(outputDirectory,mylatexfilename))
 #raw_input("\n\nPress the enter key to exit.")
+
+runList=""
+for r in sorted(thrScansRunList):
+    runList=runList+" {}".format(r)
+print runList
