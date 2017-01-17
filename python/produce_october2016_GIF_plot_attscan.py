@@ -3,6 +3,7 @@
 #use the tree produced by produce_run_tree_GIF.py
 
 import os
+import math
 from array import array
 from operator import attrgetter
 import ROOT
@@ -42,6 +43,14 @@ class runDataPoint:
         self.eff=effVal
         self.fakeEff=fakeEffVal
         self.correctedEff=(self.eff-self.fakeEff)/(1-self.fakeEff)
+
+
+    def errthresholdVal(self):
+        thresholdDACScale=[1/0.7,1/0.08,1/0.0163]
+        return thresholdDACScale[self.thresholdLevel-1]
+
+    def errEff(self):
+        return self.eff/math.sqrt(self.numberOfBIF)
 
     def __repr__(self):
         return "plan={},thresh=({} at {} -> {}fC),attenuator={},nBIF={},run={},eff=({},{},{})".format(self.planNumber,self.thresholdLevel,self.thresholdDAC,self.thresholdVal,self.attenuatorText,self.numberOfBIF,self.runNumber,self.eff,self.fakeEff,self.correctedEff)
@@ -230,13 +239,13 @@ for ar in allRunDataPoint:
         continue
     key=(ar.planNumber,ar.thresholdLevel)
     if not threshScanSummary.has_key(key):
-        threshScanSummary[key]=[array('f'),array('f'),array('f'),array('f'),[]] #thresh,eff,fakeEff,correctedEff,allData
+        threshScanSummary[key]=[array('f'),array('f'),array('f'),array('f'),[]] #thresh,eff,errthresh,errEff,allData
     if ar.thresholdVal>maxThresh:
         maxThresh=ar.thresholdVal
     threshScanSummary[key][0].append(ar.thresholdVal)
     threshScanSummary[key][1].append(ar.eff)
-    threshScanSummary[key][2].append(ar.fakeEff)
-    threshScanSummary[key][3].append(ar.correctedEff)
+    threshScanSummary[key][2].append(ar.errthresholdVal())
+    threshScanSummary[key][3].append(ar.errEff())
     threshScanSummary[key][4].append(ar)
 
 
@@ -247,9 +256,11 @@ print maxThresh
 
 
 for key,val in  threshScanSummary.iteritems():
-    val.append(ROOT.TGraph(len(val[0]),val[0],val[1]))
+    #val.append(ROOT.TGraph(len(val[0]),val[0],val[1]))
+    val.append(ROOT.TGraphErrors(len(val[0]),val[0],val[1],val[2],val[3]))
     val[5].SetMarkerStyle(23)
     val[5].SetMarkerColor(threshColor[key[1]-1])
+    val[5].SetLineColor(threshColor[key[1]-1])
 
 threshCanv=ROOT.TCanvas()
 threshCanv.SetLogx()
