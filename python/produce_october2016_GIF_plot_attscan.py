@@ -254,6 +254,7 @@ for ar in allRunDataPoint:
 print separator
 print maxThresh
 
+filepourMax=ROOT.TFile(outputDirectory+"filePourMax.root","RECREATE")
 
 for key,val in  threshScanSummary.iteritems():
     #val.append(ROOT.TGraph(len(val[0]),val[0],val[1]))
@@ -261,6 +262,8 @@ for key,val in  threshScanSummary.iteritems():
     val[5].SetMarkerStyle(23)
     val[5].SetMarkerColor(threshColor[key[1]-1])
     val[5].SetLineColor(threshColor[key[1]-1])
+    val[5].SetName("plan_{}_threshold_{}".format(key[0],key[1]))
+    val[5].Write()
 
 threshCanv=ROOT.TCanvas()
 threshCanv.SetLogx()
@@ -294,3 +297,6 @@ threshCanv.Update()
 threshCanv.SaveAs(outputDirectory+"thresh_scan_bakelite_clean.png")
 threshCanv.SaveAs(outputDirectory+"thresh_scan_bakelite_clean.root")
 raw_input("\n\nPress the enter key to exit.")
+
+
+filepourMax.Close()
