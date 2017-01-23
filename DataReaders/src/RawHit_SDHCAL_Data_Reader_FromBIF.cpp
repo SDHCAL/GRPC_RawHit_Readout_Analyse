@@ -27,6 +27,7 @@ void RawHit_SDHCAL_Data_Reader_FromBIF::process(const RawHit_SDHCAL_Data& d)
       std::vector<RawCalorimeterHitPointer> BIFevent=extract(d.getHitVector(),timeWindow,rawHit_TimeStamp());
       if (!(contains<unsigned int>((*it)->getTimeStamp())(timeWindow) ) )  BIFevent.push_back(*it); //add BIF signal if not there
       dBIF.replaceVec(BIFevent);
+      dBIF.setFrameSubSet_intervalle_startTime(timeWindow.first);
       notifyListeners(dBIF);
       ++m_nBIFseen;
     }

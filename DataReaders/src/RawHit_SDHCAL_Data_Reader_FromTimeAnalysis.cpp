@@ -83,6 +83,7 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
 	  }
 	++m_nEventSeen;
 	RawHit_SDHCAL_Data eventData(eventHits,d);
+	eventData.setFrameSubSet_intervalle_startTime(intervalleLowerBound);
 	notifyListeners(eventData);
       } 
   else
@@ -93,6 +94,8 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
       std::vector<RawCalorimeterHitPointer> eventHits=extract(d.getHitVector(),timeDomains,rawHit_TimeStamp());
       m_nEventSeen+=eventTimes.size();
       RawHit_SDHCAL_Data eventData(eventHits,d,eventTimes.size());
+      if (! eventTimes.empty())
+	eventData.setFrameSubSet_intervalle_startTime(m_SelectEventTimeWindow.first+(*eventTimes.begin()));
       notifyListeners(eventData);
     }    
 }

@@ -8,7 +8,8 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, 
   : m_runNumber(runNumber),
     m_eventNumber(eventNumber),
     m_numberOfEventInThisData(1),
-    m_eventTimeStamp(eventTimeStamp)
+    m_eventTimeStamp(eventTimeStamp),
+    m_frameSubSet_intervalle_startTime(0)
 {
   m_originalCollectionParameters=&col.getParameters();
   FillTimeInfo(col.getParameters());
@@ -25,6 +26,7 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointe
    m_eventNumber(eventNumber),
    m_numberOfEventInThisData(numberOfEventInThisData),
    m_eventTimeStamp(eventTimeStamp),
+   m_frameSubSet_intervalle_startTime(0),
    m_hitvec(vec),
    m_DIFtimeInfo(),
    m_originalCollectionParameters(NULL)
@@ -35,6 +37,7 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointe
     m_eventNumber(d.getEventNumber()),
     m_numberOfEventInThisData(numberOfEventInThisData),
     m_eventTimeStamp(d.getEventTimeStamp()),
+    m_frameSubSet_intervalle_startTime(d.m_frameSubSet_intervalle_startTime),
     m_hitvec(vec),
     m_DIFtimeInfo(d.DIFtimeInfo()),
     m_originalCollectionParameters(d.getCollectionParameters())
