@@ -26,7 +26,7 @@ class RawHit_SDHCAL_Data_Reader_Noise : public RawHit_SDHCAL_Data_Reader_FromTim
 
   virtual void translateToEventTimeIntervalle(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data& d);
   bool veto(UI_intervalle timeWin, const RawHit_SDHCAL_Data& d) {return vetoHits(timeWin,d) && vetoPlans(timeWin,d);}
-  bool vetoHits(UI_intervalle timeWin, const RawHit_SDHCAL_Data& d) {return m_maxNumberOfHits<NO_CUTVALUE && std::count_if(d.getHitVector().begin(), d.getHitVector().end(), rawHit_IsInIntervalle<rawHit_TimeStamp>(timeWin))>0;}
+  bool vetoHits(UI_intervalle timeWin, const RawHit_SDHCAL_Data& d) {return m_maxNumberOfHits<NO_CUTVALUE && std::count_if(d.getHitVector().begin(), d.getHitVector().end(), rawHit_IsInIntervalle<rawHit_TimeStamp>(timeWin))>m_maxNumberOfHits;}
   bool vetoPlans(UI_intervalle timeWin, const RawHit_SDHCAL_Data& d);
 };
 

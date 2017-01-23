@@ -6,7 +6,7 @@
 const unsigned int RawHit_SDHCAL_Data_Reader_Noise::NO_CUTVALUE=10000000;
 
 RawHit_SDHCAL_Data_Reader_Noise::RawHit_SDHCAL_Data_Reader_Noise(ExperimentalSetup& setup, unsigned int noiseWindowLength) 
-  : RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle(0,m_noiseWindowLength-1)),
+  : RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle(0,noiseWindowLength-1)),
     m_setup(setup), m_noiseWindowLength(noiseWindowLength), m_maxTouchedPlans(NO_CUTVALUE), m_maxNumberOfHits(NO_CUTVALUE) 
 {
   if (m_setup.hasBIF()) setBIFparameters(m_setup.getBIF(),intervalle<int>(-8,-6)); //default interval corresponds to october 2016 GIF++ test beam
