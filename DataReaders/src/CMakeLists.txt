@@ -12,6 +12,7 @@ set (${PROJECT_NAME}_sources
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Noise.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Trivent.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Threshold_Filter.cpp
+ ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_TriggeredMode.cpp
 PARENT_SCOPE)
 
 

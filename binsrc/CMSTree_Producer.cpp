@@ -11,6 +11,7 @@
 
 #include "RawHit_SDHCAL_Data_Reader_Noise.h"
 #include "CMSTree_Writer_NoBIF.h"
+#include "RawHit_SDHCAL_Data_Reader_TriggeredMode.h"
 
 
 #include "TFile.h"
@@ -40,7 +41,7 @@ void usage(char *argv[])
   std::cout << "mode description " << std::endl;
   std::cout << "       BIF     : use BIF data to generate entries in the tree, centering BIF time at 50" << std::endl;
   std::cout << "       NOISE   : generate up to 100000 entries with first readout intervals, removing intervals containing BIF data" << std::endl;
-  std::cout << "       TRIGGED : generate one entry per readout containing only 500 clock tick before the readout (NOT YET IMPLEMENTED)" << std::endl;
+  std::cout << "       TRIGGED : generate one entry per readout containing only 500 clock tick before the readout" << std::endl;
 }
 
 int main(int argc, char *argv[])
@@ -57,7 +58,6 @@ int main(int argc, char *argv[])
   if (mode != "BIF" && mode != "NOISE" && mode !="TRIGGED") {usage(argv); return 1;}
   argc-=1; argv[1]=argv[0]; argv+=1;
 
-  if (mode =="TRIGGED") { std::cout << "mode " << mode << " not yet implemented" << std::endl; return 2;}
   
   std::vector<std::string> inputFileNames;
   for (int i=1; i<argc; ++i) 
@@ -94,7 +94,8 @@ int main(int argc, char *argv[])
   Noise_splitter.setMaxEventsToSend(100000);
   if (mode=="NOISE") masterReader.registerDataListener(Noise_splitter);
 
-  
+  RawHit_SDHCAL_Data_Reader_TriggeredMode trig_reader(15);
+  if (mode=="TRIGGED") masterReader.registerDataListener(trig_reader);
   
   CMSTree_Writer treeWriterBIF(experience,abs(BIFtriggerWindow.first));
   CMSTree_Writer_NoBIF treeWriterNoBIF(experience,0);
@@ -102,7 +103,8 @@ int main(int argc, char *argv[])
   CMSTree_Writer &treeWriter=(mode=="BIF" ? treeWriterBIF : treeWriterNoBIF);
   if (mode=="BIF") BIF_splitter.registerDataListener(treeWriter);
   if (mode=="NOISE") Noise_splitter.registerDataListener(treeWriter);
-
+  if (mode=="TRIGGED") trig_reader.registerDataListener(treeWriter);
+  
   //open file and event loop
   lcReader->open( inputFileNames ) ;
 
