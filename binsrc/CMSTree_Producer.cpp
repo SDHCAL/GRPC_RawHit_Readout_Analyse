@@ -9,6 +9,10 @@
 #include "CMSTree_Writer.h"
 #include "ConcreteExperimentalSetup.h"
 
+#include "RawHit_SDHCAL_Data_Reader_Noise.h"
+#include "CMSTree_Writer_NoBIF.h"
+
+
 #include "TFile.h"
 #include "TTree.h"
 
@@ -28,10 +32,15 @@ std::string SplitFilenameSDHCAL (const std::string& str)
 void usage(char *argv[])
 {
   std::cout << "Usage :" << std::endl;
-  std::cout << argv[0] << " <-n XXX> list_of_inpuFiles" << std::endl;
+  std::cout << argv[0] << " <-n XXX> mode list_of_inpuFiles" << std::endl;
   std::cout << "You should provide at least one input file" << std::endl;
+  std::cout << "mode should be set to either BIF, NOISE or TRIGGED" << std::endl;
   std::cout << "Option -n allows to specify the number of LCIO record to read (i.e LCRun and LCEvent)" << std::endl;
   std::cout << "          For standard single lcio files form small setup DAQ, it corresponds to numberOfEvents+1" << std::endl;
+  std::cout << "mode description " << std::endl;
+  std::cout << "       BIF     : use BIF data to generate entries in the tree, centering BIF time at 50" << std::endl;
+  std::cout << "       NOISE   : generate up to 100000 entries with first readout intervals, removing intervals containing BIF data" << std::endl;
+  std::cout << "       TRIGGED : generate one entry per readout containing only 500 clock tick before the readout (NOT YET IMPLEMENTED)" << std::endl;
 }
 
 int main(int argc, char *argv[])
@@ -43,8 +52,13 @@ int main(int argc, char *argv[])
   //parameters
   int maxEvt=-1;
   if (std::string(argv[1])=="-n") {maxEvt=atoi(argv[2]); argc-=2; argv[2]=argv[0]; argv+=2;}
-  if (argc==1) {usage(argv); return 1;}
+  if (argc==1 || argc==2) {usage(argv); return 1;}
+  std::string mode=argv[1];
+  if (mode != "BIF" && mode != "NOISE" && mode !="TRIGGED") {usage(argv); return 1;}
+  argc-=1; argv[1]=argv[0]; argv+=1;
 
+  if (mode =="TRIGGED") { std::cout << "mode " << mode << " not yet implemented" << std::endl; return 2;}
+  
   std::vector<std::string> inputFileNames;
   for (int i=1; i<argc; ++i) 
     {
@@ -71,12 +85,23 @@ int main(int argc, char *argv[])
   //create architecture of listeners
   RawHit_SDHCAL_Data_Reader_From_LCEvent masterReader; 
   lcReader->registerLCEventListener(&masterReader);
-
+    
   RawHit_SDHCAL_Data_Reader_FromBIF BIF_splitter(numeroBIF,BIFtriggerWindow);
-  masterReader.registerDataListener(BIF_splitter);
- 
-  CMSTree_Writer treeWriter(experience,abs(BIFtriggerWindow.first));
-  BIF_splitter.registerDataListener(treeWriter);
+  if (mode=="BIF") masterReader.registerDataListener(BIF_splitter);
+
+  RawHit_SDHCAL_Data_Reader_Noise Noise_splitter(experience,500);
+  Noise_splitter.setSplitEventForListeners(true);
+  Noise_splitter.setMaxEventsToSend(100000);
+  if (mode=="NOISE") masterReader.registerDataListener(Noise_splitter);
+
+  
+  
+  CMSTree_Writer treeWriterBIF(experience,abs(BIFtriggerWindow.first));
+  CMSTree_Writer_NoBIF treeWriterNoBIF(experience,0);
+  treeWriterNoBIF.setAddEntryForEventsWithNoHits(true);
+  CMSTree_Writer &treeWriter=(mode=="BIF" ? treeWriterBIF : treeWriterNoBIF);
+  if (mode=="BIF") BIF_splitter.registerDataListener(treeWriter);
+  if (mode=="NOISE") Noise_splitter.registerDataListener(treeWriter);
 
   //open file and event loop
   lcReader->open( inputFileNames ) ;
@@ -84,7 +109,6 @@ int main(int argc, char *argv[])
   //create root file
   TFile* file = new TFile( ("Scan"+runNumberFromFile+"_HV1_DAQ.root").c_str()  , "RECREATE");    
   treeWriter.createTree();
-
 
   //----------- the event loop -----------
   if (maxEvt>0) lcReader->readStream(maxEvt);

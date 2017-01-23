@@ -24,7 +24,9 @@ class CMSTree_Writer : public RawHit_SDHCAL_Data_Listener
  private:
   void clearDataTree() {HITch.clear(); HITts.clear();HITthreshold.clear();}
   void addHit(int channel,const RawCalorimeterHitPointer& r); 
+ protected:
   void processHits(const std::vector<RawCalorimeterHitPointer>&);
+ private:
   void appendPadHit( std::map<unsigned int, std::map<unsigned int, const RawCalorimeterHitPointer*> >& PadHits, unsigned int channel, const RawCalorimeterHitPointer& hit);
   void addHit(std::map<unsigned int, std::map<unsigned int, const RawCalorimeterHitPointer*> >& PadHits);
 
@@ -35,9 +37,11 @@ class CMSTree_Writer : public RawHit_SDHCAL_Data_Listener
   bool m_allowsDuplicate;
 
   //Data for tree
+ protected:
   unsigned int BIFHITGTC;  //GTC of the Readout (not in official CMS tree)
   unsigned int BIFHITts;   //timestamp of the BIF hit used to create the Event (not in official CMS tree)
   int EventCount;          //Event Tag
+ private:
   int nHits;               //Number of fired channels in event (and in vectors)
   std::vector<int>  HITch; //List of fired channels in Event
   std::vector<float> HITts;//List of fired channels timestamp

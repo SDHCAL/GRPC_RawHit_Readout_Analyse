@@ -89,4 +89,6 @@ void CMSTree_Writer::addHit(int channel,const RawCalorimeterHitPointer& r)
   HITch.push_back(channel); 
   HITts.push_back(int(r->getTimeStamp())-BIFHITts+m_decalage);
   HITthreshold.push_back(r->getAmplitude());
+  //if (float(int(r->getTimeStamp())-BIFHITts+m_decalage)>4e9)
+  //  std::cout << "hits " << BIFHITts << " " << r->getTimeStamp() << " gives " <<  int(r->getTimeStamp())-BIFHITts+m_decalage << " au lieu de - " << BIFHITts-r->getTimeStamp() << std::endl;
 }
