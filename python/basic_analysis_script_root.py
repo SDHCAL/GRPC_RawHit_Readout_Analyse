@@ -13,6 +13,11 @@ ROOT.gSystem.Load('liblcio')
 #ROOT.gSystem.Load('liblcioDict')
 ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser')
 ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
+if ROOT.gROOT.GetVersion()[0]=='6':
+  #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
+  dummy=ROOT.intervalle('unsigned int')()
+
+
 
 directory=sys.argv[1]
 runNumbers=sys.argv[2:]

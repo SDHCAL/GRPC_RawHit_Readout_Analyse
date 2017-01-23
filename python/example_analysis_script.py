@@ -6,6 +6,9 @@ import grpc
 import sys
 import ROOT
 ROOT.gROOT.Reset()
+if ROOT.gROOT.GetVersion()[0]=='6':
+  #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
+  dummy=ROOT.intervalle('unsigned int')()
 
 inputFileNames=grpc.std_string_vec()
 for f in sys.argv[1:]:

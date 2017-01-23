@@ -13,8 +13,17 @@ ROOT.gROOT.Reset()
 ROOT.gSystem.Load('liblcio')
 ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser')
 ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
+if ROOT.gROOT.GetVersion()[0]=='6':
+    #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
+    dummy=ROOT.intervalle('unsigned int')()
 
 
+def canExtendHistoAxis(histo):
+    if int(ROOT.gROOT.GetVersion()[0])>=6:
+        histo.SetCanExtend(ROOT.TH1.kAllAxes)
+    else:
+        histo.SetBit(ROOT.TH1.kCanRebin)
+    
 experience=ROOT.GIF_oct2016_ExperimentalSetup()
 all=ROOT.all_ConfigInfo.instance()
 
@@ -28,38 +37,38 @@ maxrun=tree.GetMaximum('runNumber')
 print minrun,maxrun
 
 hSetupName=ROOT.TH1F("hSetupName","Config Setup Used",2,0,2)
-hSetupName.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hSetupName)
 hSetupVsRun=ROOT.TH2F("hSetupVsRun","Config vs run number",int(maxrun-minrun+1),minrun,maxrun+1,2,0,2)
-hSetupVsRun.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hSetupVsRun)
 
 hSourceStatus=ROOT.TH1F("hSourceStatus","Source Status",2,0,2)
-hSourceStatus.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hSourceStatus)
 hSetupVsRunSourceStatusWeight=ROOT.TH2F("hSetupVsRunSourceStatusWeight","Config vs run number",int(maxrun-minrun+1),minrun,maxrun+1,2,0,2)
-hSetupVsRunSourceStatusWeight.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hSetupVsRunSourceStatusWeight)
 hBeamStatus=ROOT.TH1F("hBeamStatus","Beam Status",2,0,2)
-hBeamStatus.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hBeamStatus)
 hSetupVsRunBeamStatusWeight=ROOT.TH2F("hSetupVsRunBeamStatusWeight","Config vs run number",int(maxrun-minrun+1),minrun,maxrun+1,2,0,2)
-hSetupVsRunBeamStatusWeight.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hSetupVsRunBeamStatusWeight)
 hSetupVsRunBeamBIFWeight=ROOT.TH2F("hSetupVsRunBeamBIFWeight","Config vs run number",int(maxrun-minrun+1),minrun,maxrun+1,2,0,2)
-hSetupVsRunBeamBIFWeight.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hSetupVsRunBeamBIFWeight)
 
 hStatusBeamVsSource=ROOT.TH2F("hStatusBeamVsSource","GIF Beam status Vs Source",2,0,2,2,0,2)
-hStatusBeamVsSource.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hStatusBeamVsSource)
 
 hGIFSourceAttenuator=ROOT.TH1F("hGIFSourceAttenuator","GIF++ source attenuation",2,0,2)
-hGIFSourceAttenuator.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hGIFSourceAttenuator)
 
 hNBIFeventsBeamON=ROOT.TH1F("hNBIFeventsBeamON","Number of Yuri's trigger event in BIF when GIF beam status is ON", 100, 0,100)
-hNBIFeventsBeamON.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hNBIFeventsBeamON)
 hNBIFeventsBeamOFF=ROOT.TH1F("hNBIFeventsBeamOFF","Number of Yuri's trigger event in BIF when GIF beam status is OFF", 100, 0,100)
-hNBIFeventsBeamOFF.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hNBIFeventsBeamOFF)
 hNBIFeventsBeamUNKNOWN=ROOT.TH1F("hNBIFeventsBeamUNKNOWN","Number of Yuri's trigger event in BIF when GIF beam status is Unknown", 100, 0,100)
-hNBIFeventsBeamUNKNOWN.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hNBIFeventsBeamUNKNOWN)
 hNBIF=[hNBIFeventsBeamON,hNBIFeventsBeamOFF,hNBIFeventsBeamUNKNOWN]
 hBeamStatusNoBIFYuri=ROOT.TH1F("hBeamStatusNoBIFYuri","Beam Status with Yuri's trigger in BIF and without recorded trigger",2,0,2)
-hBeamStatusNoBIFYuri.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hBeamStatusNoBIFYuri)
 hBeamStatusBIFYuri=ROOT.TH1F("hBeamStatusBIFYuri","Beam Status with Yuri's trigger in BIF and with recorded trigger",2,0,2)
-hBeamStatusBIFYuri.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hBeamStatusBIFYuri)
 hBeamStatusBIF=[hBeamStatusNoBIFYuri,hBeamStatusBIFYuri]
 
 statusLists = ['ON', 'OFF', 'Unknown from GIF elog', 'Unknown from M3 elog']
@@ -192,13 +201,13 @@ for i in range(6):
 thrScansRunList=[]
 
 hAttScanThresholdPossibility=ROOT.TH1F("hAttScanThresholdPossibility","number of attenuator value in runs for (plan, threshold number, threshold value)",2,0,2)
-hAttScanThresholdPossibility.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hAttScanThresholdPossibility)
 hAttScanThresholdVsSetup=ROOT.TH2F("hAttScanThresholdVsSetup","Setup names vs threshold scans",2,0,2,2,0,2)
-hAttScanThresholdVsSetup.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hAttScanThresholdVsSetup)
 hAttScanThresholdVsAtt=ROOT.TH2F("hAttScanThresholdVsAtt","Attenuator value vs threshold scans",2,0,2,2,0,2)
-hAttScanThresholdVsAtt.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hAttScanThresholdVsAtt)
 hAttScanThresholdVsAttNrunWeight=ROOT.TH2F("hAttScanThresholdVsAttNrunWeight","Attenuator value vs threshold scans",2,0,2,2,0,2)
-hAttScanThresholdVsAttNrunWeight.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hAttScanThresholdVsAttNrunWeight)
 
 thrScans=thresholdScan()
 
@@ -259,7 +268,7 @@ for ientry in xrange( entries ):
                 attlog=11.5
                 attString='OFF'
                 if (sourceindex==1):
-                    attlog=ROOT.Math.log(cond.getUpAttValueApprox())
+                    attlog=ROOT.TMath.Log(cond.getUpAttValueApprox())
                     attString="{:6.1f}".format(cond.getUpAttValueApprox())
                 print attlog
                 for numplan in range(6): 
@@ -267,7 +276,7 @@ for ientry in xrange( entries ):
                     thresh=[config.get_first_threshold_charge(DIF,1),config.get_second_threshold_charge(DIF,1),config.get_third_threshold_charge(DIF,1)]
                     runBIFeffLnAttVsLogThreshXvalue[numplan].append(attlog)
                     for x in range(3):
-                        runBIFeffLnAttVsLogThreshYvalue[numplan][x].append(ROOT.Math.log10(thresh[x]))
+                        runBIFeffLnAttVsLogThreshYvalue[numplan][x].append(ROOT.TMath.Log10(thresh[x]))
                         key=(x+1,config.get_threshold(DIF,1,x+1))
                         #print numplan,key,setup
                         if not ThreshAttMap[numplan].get(key):
@@ -328,14 +337,18 @@ for ientry in xrange( entries ):
         print "Should Never print this line"
 
 
-
 outputDirectory='october2016_GIF_plots'
 if not os.path.isdir(outputDirectory):
    os.mkdir(outputDirectory)
 outputDirectory=outputDirectory+'/'
 
 cSetupName1=ROOT.TCanvas()
-ROOT.gStyle.SetOptStat("e")
+if ROOT.gROOT.GetVersion()[0]=='6':
+    ROOT.gROOT.SetStyle('Default')
+    style=ROOT.gROOT.GetStyle('Default')
+    style.SetOptStat("e")
+else:
+    ROOT.gStyle.SetOptStat("e")
 hSetupName.LabelsDeflate()
 hSetupName.SetFillColor(38);
 hSetupName.GetXaxis().LabelsOption("a")
@@ -644,7 +657,7 @@ for l in ThreshAttMap:
         if nrun>nRunMax:
             nRunMax=nrun
 hAttScanThresholdVsNrun=ROOT.TH2F("hAttScanThresholdVsNrun","Number of runs vs threshold scans",2,0,2,nRunMax+1,0,nRunMax+1)
-hAttScanThresholdVsNrun.SetBit(ROOT.TH1.kCanRebin)
+canExtendHistoAxis(hAttScanThresholdVsNrun)
 
 f_francois=open(outputDirectory+'pourFrancois.txt','w')
 

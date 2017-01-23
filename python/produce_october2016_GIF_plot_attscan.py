@@ -12,6 +12,9 @@ ROOT.gROOT.Reset()
 ROOT.gSystem.Load('liblcio')
 ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser')
 ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
+if ROOT.gROOT.GetVersion()[0]=='6':
+    #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
+    dummy=ROOT.intervalle('unsigned int')()
 
 
 experience=ROOT.GIF_oct2016_ExperimentalSetup()

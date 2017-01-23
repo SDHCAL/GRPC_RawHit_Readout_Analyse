@@ -16,3 +16,10 @@ ROOT_GENERATE_DICTIONARY(my_dict ${dict_headers}  LINKDEF Linkdef.h)
 
 add_library( ${PROJECT_NAME}_dict SHARED my_dict.cxx)
 install (TARGETS ${PROJECT_NAME}_dict DESTINATION lib)
+
+  
+if (NOT ${ROOT_VERSION} VERSION_LESS 6) 
+  message ( "ROOT 6 needs extra stuff" )
+  install (FILES ${CMAKE_CURRENT_BINARY_DIR}/libmy_dict_rdict.pcm DESTINATION lib)
+endif()
+
