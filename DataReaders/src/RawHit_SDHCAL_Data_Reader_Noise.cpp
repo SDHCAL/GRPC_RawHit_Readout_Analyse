@@ -17,7 +17,8 @@ RawHit_SDHCAL_Data_Reader_Noise::RawHit_SDHCAL_Data_Reader_Noise(ExperimentalSet
 void RawHit_SDHCAL_Data_Reader_Noise::translateToEventTimeIntervalle(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data& d)
 {
   if (m_readoutTimeDistribution.empty()) return;
-  unsigned int startTime=m_readoutTimeDistribution.begin()->first;
+  //unsigned int startTime=m_readoutTimeDistribution.begin()->first;
+  unsigned int startTime=0;  
   unsigned int endTime=m_readoutTimeDistribution.rbegin()->first;
   do
     {
