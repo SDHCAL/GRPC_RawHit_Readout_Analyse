@@ -19,6 +19,9 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::FillReadoutTimeDistribution(con
       if ((*itHit)->getTimeStamp()<0) {++m_nHitWithNegativeTimeStampSeen; if (m_discardNegativeTimeStamp) continue;}
       ++m_readoutTimeDistribution[(unsigned int)(*itHit)->getTimeStamp()];
     }
+  //for (std::map<unsigned int,unsigned int>::iterator it=m_readoutTimeDistribution.begin(); it !=m_readoutTimeDistribution.end(); ++it)
+  //  std::cout << "("<<it->first<<":"<<it->second<<") ";
+  //std::cout << std::endl;
 }
 
 
