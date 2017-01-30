@@ -44,10 +44,12 @@ for file in inputFileNames:
     print file
 
 experience=ROOT.ExperimentalSetup()
-experience.addCMSstrip(142,26); #glass
-experience.addCMSstrip(23,69); #bakelite
+experience.addCMSstrip(66,69); #glass
+experience.addCMSstrip(26,23); #bakelite
 
-triggerWindowDataLength=15
+triggerStartWindow=12
+triggerWindowDataLength=6
+
 
 maxEvt=-1
 
@@ -59,7 +61,7 @@ lcReader=ROOT.IOIMPL.LCFactory.getInstance().createLCReader()
 masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
 lcReader.registerLCEventListener(masterReader)
 
-trig_reader=ROOT.RawHit_SDHCAL_Data_Reader_TriggeredMode(triggerWindowDataLength)
+trig_reader=ROOT.RawHit_SDHCAL_Data_Reader_TriggeredMode(triggerWindowDataLength,triggerStartWindow)
 masterReader.registerDataListener(trig_reader);
 
 treeWriter=ROOT.CMSTree_Writer_NoBIF(experience,0)
