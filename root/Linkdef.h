@@ -48,6 +48,11 @@
 
 #pragma link C++ class GG_messageCounter;
 
+#pragma link C++ class SDHCAL::Cluster<RawCalorimeterHitPointer>+;
+#pragma link C++ defined in "RawCalorimeterHitClustering.h";
+#pragma link C++ class RawHit_standard_merge_predicate;
+
+
 #pragma link C++ class RawHit_SDHCAL_Data_Listener;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader;
 
