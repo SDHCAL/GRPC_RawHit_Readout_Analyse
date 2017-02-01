@@ -15,5 +15,15 @@ class GIF_oct2016_ExperimentalSetup : public ExperimentalSetup
 };
 
 
+class CERN_904_CosmicTestBench_Early2017_ExperimentalSetup : public ExperimentalSetup
+{
+ public:
+  CERN_904_CosmicTestBench_Early2017_ExperimentalSetup()
+    {
+      addCMSstrip(66,69); //verre
+      addCMSstrip(26,23); //bakelite
+    }
+};
+
 
 #endif
