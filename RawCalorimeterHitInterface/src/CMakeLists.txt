@@ -15,6 +15,7 @@ add_test(test_RawSDHCALData_runs test_RawSDHCALData)
 set (${PROJECT_NAME}_sources  
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data.cpp 
  ${CMAKE_CURRENT_SOURCE_DIR}/RawCalorimeterHitUtilities.cpp 
+ ${CMAKE_CURRENT_SOURCE_DIR}/RawCalorimeterHitClustering.cpp
 PARENT_SCOPE)
 
 
