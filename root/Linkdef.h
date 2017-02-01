@@ -75,4 +75,8 @@
 #pragma link C++ class RawHit_SDHCAL_Data_LCWriter_RawCalorimeterHit;
 #pragma link C++ class RawHit_SDHCAL_Data_LCWriter_CalorimeterHit;
 
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<defaultRawHitMerge>+;
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<defaultRawHitStripMerge>+;
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<RawHit_standard_merge_predicate>+;
+
 #endif

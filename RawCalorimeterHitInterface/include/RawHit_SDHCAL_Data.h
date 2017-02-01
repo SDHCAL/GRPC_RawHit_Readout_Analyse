@@ -54,7 +54,7 @@ class RawHit_SDHCAL_Data
       SDHCAL::convertToClusterList(m_hitvec.begin(),m_hitvec.end(),m_clusters);
       SDHCAL::clusterize(m_clusters,f);
     }
-  void clusterizeDefault() {clusterize(defaultRawHitMerge);}
+  void clusterizeDefault() {clusterize(defaultRawHitMerge());}
  private:
   int m_runNumber;
   int m_eventNumber;

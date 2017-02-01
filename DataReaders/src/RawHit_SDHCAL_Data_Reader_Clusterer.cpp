@@ -1,0 +1,9 @@
+#include "RawHit_SDHCAL_Data_Reader_Clusterer.h"
+
+#include "RawCalorimeterHitClustering.h"
+#include "RawHit_standard_merge_predicate.h"
+
+template class RawHit_SDHCAL_Data_Reader_Clusterer<defaultRawHitMerge>;
+template class RawHit_SDHCAL_Data_Reader_Clusterer<defaultRawHitStripMerge>;
+template class RawHit_SDHCAL_Data_Reader_Clusterer<RawHit_standard_merge_predicate>;
+template class RawHit_SDHCAL_Data_Reader_Clusterer<RawHitMergeFunction>;
