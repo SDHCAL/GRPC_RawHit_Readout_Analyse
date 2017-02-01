@@ -6,8 +6,11 @@
 #include <map>
 #include "EVENT/LCCollection.h"
 #include "EVENT/LCParameters.h"
+#include "RawCalorimeterHitClustering.h"
+
 
 #include <stdint.h>
+
 
 //Should we add Temperature info ?
 
@@ -25,6 +28,7 @@ class RawHit_SDHCAL_Data
   RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, int eventNumber, int64_t eventTimeStamp);
   RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, int runNumber, int eventNumber, int64_t eventTimeStamp, int numberOfEventInThisData=1);
   RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData=1);
+  RawHit_SDHCAL_Data(const RawHitClustersList &clusters, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData=1);
   
   void FillTimeInfo(const EVENT::LCParameters&);
   void replaceVec(const std::vector<RawCalorimeterHitPointer>&vec, int numberOfEventInThisData=1) {m_hitvec=vec; m_numberOfEventInThisData=numberOfEventInThisData;}
@@ -40,6 +44,17 @@ class RawHit_SDHCAL_Data
   std::map<unsigned int,DIF_timeInfo> DIFtimeInfo() const {return m_DIFtimeInfo;}
   const EVENT::LCParameters* getCollectionParameters() const {return m_originalCollectionParameters;}
 
+
+  //cluster stuff
+  bool hasCluster() const {return m_clusters.empty();}
+  const RawHitClustersList& getClusters() const {return m_clusters;}
+  template <class mergePred>
+    void clusterize(mergePred f)
+    {
+      SDHCAL::convertToClusterList(m_hitvec.begin(),m_hitvec.end(),m_clusters);
+      SDHCAL::clusterize(m_clusters,f);
+    }
+  void clusterizeDefault() {clusterize(defaultRawHitMerge);}
  private:
   int m_runNumber;
   int m_eventNumber;
@@ -49,6 +64,7 @@ class RawHit_SDHCAL_Data
   std::vector<RawCalorimeterHitPointer> m_hitvec;
   std::map<unsigned int,DIF_timeInfo> m_DIFtimeInfo;
   const EVENT::LCParameters *m_originalCollectionParameters;
+  RawHitClustersList m_clusters;
 };
 
 #endif
