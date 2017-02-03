@@ -46,17 +46,21 @@ namespace SDHCAL
       {
 	typename std::list<Cluster<T> >::iterator itOtherCluster=itCurrentClusterBuild;
 	++itOtherCluster;
+
+	bool currentClusterIsStable=true;
 	while (itOtherCluster != cl.end())
 	  {
 	    if (merge(*itCurrentClusterBuild,*itOtherCluster,pred))
 	      {
 		itCurrentClusterBuild->merge(*itOtherCluster);
 		itOtherCluster=cl.erase(itOtherCluster);
+		if (std::distance(itCurrentClusterBuild,itOtherCluster)>1)
+		  currentClusterIsStable=false;
 	      }
 	    else
 	      ++itOtherCluster;
 	  }
-	++itCurrentClusterBuild;
+	if (currentClusterIsStable) ++itCurrentClusterBuild;
       }
   }
 }
