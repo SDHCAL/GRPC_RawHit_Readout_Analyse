@@ -1,5 +1,7 @@
 #include "RawHit_standard_merge_predicate.h"
 
+#include <iostream>
+
 bool RawHit_standard_merge_predicate::operator()(const RawCalorimeterHitPointer &A,const RawCalorimeterHitPointer &B)
 {
   if (abs(A->getTimeStamp()-B->getTimeStamp())>m_neighbourTimeDistance) return false;
@@ -11,6 +13,7 @@ bool RawHit_standard_merge_predicate::operator()(const RawCalorimeterHitPointer 
       unsigned int I1,I2,J1,J2,K;
       m_setup.getCoord3D(A.dif(),A.asic(),A.channel(),I1,J1,K);
       m_setup.getCoord3D(B.dif(),B.asic(),B.channel(),I2,J2,K);
+      //std::cout << m_padJunctionByCorner << " : " << "I1=" << I1 << " J1="<<J1 << " I2=" << I2 << " J2=" << J2 << " result=" << IJ_connect(I1,J1,I2,J2) << std::endl;
       return IJ_connect(I1,J1,I2,J2);
     }
   if (m_setup.DIFnumberIsStrip(A.dif()))
@@ -18,7 +21,7 @@ bool RawHit_standard_merge_predicate::operator()(const RawCalorimeterHitPointer 
       if (A.asic() != B.asic()) return false;
       unsigned int strip1, strip2, gap, K;
       m_setup.getCoord3D(A.dif(),A.asic(),A.channel(),strip1,gap,K);
-      m_setup.getCoord3D(B.dif(),A.asic(),A.channel(),strip2,gap,K);
+      m_setup.getCoord3D(B.dif(),B.asic(),B.channel(),strip2,gap,K);
       return abs(int(strip1)-int(strip2)) <= m_neighbourStripDistance;
     }
   return A.dif()==B.dif() && A.asic()==B.asic() && A.channel()==B.channel();
