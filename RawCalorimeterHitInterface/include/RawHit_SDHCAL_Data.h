@@ -46,11 +46,12 @@ class RawHit_SDHCAL_Data
 
 
   //cluster stuff
-  bool hasCluster() const {return m_clusters.empty();}
+  bool hasCluster() const {return not m_clusters.empty();}
   const RawHitClustersList& getClusters() const {return m_clusters;}
   template <class mergePred>
     void clusterize(mergePred f)
     {
+      m_clusters.clear();
       SDHCAL::convertToClusterList(m_hitvec.begin(),m_hitvec.end(),m_clusters);
       SDHCAL::clusterize(m_clusters,f);
     }

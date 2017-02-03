@@ -10,6 +10,22 @@
 typedef SDHCAL::Cluster<RawCalorimeterHitPointer> RawHitCluster;
 typedef std::list<RawHitCluster> RawHitClustersList; 
 
+//print functions
+
+inline std::ostream& operator<<(std::ostream& outFlux, const RawHitCluster& cluster)
+{
+  for (std::set<const RawCalorimeterHitPointer*>::const_iterator it=cluster.begin(); it!= cluster.end(); ++it)
+    outFlux << (**it) << "---";
+  return outFlux;
+}
+
+inline std::ostream& operator<<(std::ostream& outFlux, const RawHitClustersList& clusterlist)
+{
+  for (std::list<RawHitCluster>::const_iterator it=clusterlist.begin(); it!=clusterlist.end(); ++it)
+    outFlux << "{{{" <<  *it << "}}}";
+  return outFlux;
+}
+
 //function pointer typedef
 typedef bool (*RawHitMergeFunction)(const RawCalorimeterHitPointer&,const RawCalorimeterHitPointer&);
 
