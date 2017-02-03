@@ -31,6 +31,9 @@ private:
   unsigned int m_val;
 };
 
+
+bool operator<(const RawCalorimeterHitPointer &A,const RawCalorimeterHitPointer &B) {return A.channel()<B.channel();}
+
 int main()
 {
     std::vector<RawCalorimeterHitPointer> hitvec;
@@ -134,6 +137,19 @@ int main()
 
 
   std::cout << d.getClusters()  << std::endl;
-	       
+
+
+  hitvec.clear();
+  for (int i=0; i<6; ++i)
+    hitvec.push_back(createRawHit(        1,         5,  55,    1,      i));
+  do {
+    //print(hitvec,std::cout);
+    d.replaceVec(hitvec);
+    d.clusterize(channelClose(1));
+    std::cout << d.getClusters() << std::endl;
+    assert(d.getClusters().size()==1);
+  } while ( std::next_permutation(hitvec.begin(),hitvec.end()) );
+
+
   return 0;
 }
