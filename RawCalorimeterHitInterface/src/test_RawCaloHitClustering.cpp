@@ -151,5 +151,17 @@ int main()
   } while ( std::next_permutation(hitvec.begin(),hitvec.end()) );
 
 
+  hitvec.clear();
+  for (int i=0; i<5; ++i)
+    hitvec.push_back(createRawHit(        1,         5,  55,    1,      i));
+  hitvec.push_back(createRawHit(        1,         5,  55,    1,     33));
+   do {
+    //print(hitvec,std::cout);
+    d.replaceVec(hitvec);
+    d.clusterize(channelClose(1));
+    std::cout << d.getClusters() << std::endl;
+    assert(d.getClusters().size()==2);
+  } while ( std::next_permutation(hitvec.begin(),hitvec.end()) );
+ 
   return 0;
 }
