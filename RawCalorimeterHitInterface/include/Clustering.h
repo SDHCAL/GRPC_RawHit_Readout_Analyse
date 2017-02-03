@@ -38,32 +38,47 @@ namespace SDHCAL
   //this function is intended to take as input a list of cluster with each cluster made
   // of one element
   template <class T,class mergePred>
-    void clusterize(std::list<Cluster<T> >& cl, mergePred pred)
+    void clusterize(std::list<Cluster<T> >& cl, typename std::list<Cluster<T> >::iterator start, mergePred pred)
   {
-    typename std::list<Cluster<T> >::iterator itCurrentClusterBuild=cl.begin();
+    typename std::list<Cluster<T> >::iterator itCurrentClusterBuild=start;
     
     while (itCurrentClusterBuild != cl.end())
       {
 	typename std::list<Cluster<T> >::iterator itOtherCluster=itCurrentClusterBuild;
 	++itOtherCluster;
 
-	bool currentClusterIsStable=true;
 	while (itOtherCluster != cl.end())
 	  {
 	    if (merge(*itCurrentClusterBuild,*itOtherCluster,pred))
 	      {
+		if (std::distance(itCurrentClusterBuild,itOtherCluster)>1)
+		  {
+		    typename std::list<Cluster<T> >::iterator itInsert=itCurrentClusterBuild;
+		    ++itInsert;
+		    itInsert=cl.insert(itInsert,*itOtherCluster);
+		    cl.erase(itOtherCluster);
+		    itOtherCluster=itInsert;
+		    clusterize(cl,itOtherCluster,pred);
+		  }  
 		itCurrentClusterBuild->merge(*itOtherCluster);
 		itOtherCluster=cl.erase(itOtherCluster);
-		if (std::distance(itCurrentClusterBuild,itOtherCluster)>1)
-		  currentClusterIsStable=false;
 	      }
 	    else
 	      ++itOtherCluster;
 	  }
-	if (currentClusterIsStable) ++itCurrentClusterBuild;
+	++itCurrentClusterBuild;
       }
   }
+
+  template <class T,class mergePred>
+    void clusterize(std::list<Cluster<T> >& cl, mergePred pred)
+  {
+    clusterize(cl,cl.begin(),pred);
+  }
+
 }
+
+
 //
 //  Example of usage :
 //  assuming f is a function bool f(const int &,const int &);
