@@ -164,5 +164,14 @@ int main()
   assert(clusters.back().size()==2);
 
   std::cout << hitvec.size() << std::endl;
+
+  for (int i=0; i<1000; ++i)
+    {
+      std::random_shuffle(hitvec.begin(),hitvec.end());
+      d.replaceVec(hitvec);
+      d.clusterize(pred);
+      assert(d.getClusters().size()==9);
+    }
+  
   return 0;
 }
