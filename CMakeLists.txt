@@ -6,7 +6,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "$ENV{ROOTSYS}/etc/cmake")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_definitions("-std=c++11")
 
-option(GENERATE_SWIG "Flag to toggle python module generation" ON)
 option(GENERATE_ROOT_DICT "Flag to toggle ROOT dictionnary genaration" ON)
 option(BUILD_AGAINST_CONFDB "If ON, include code depending on configuration database code" ON)
 
@@ -63,9 +62,6 @@ add_library( ${PROJECT_NAME} SHARED ${RawCalorimeterHitInterface_sources} ${Expe
 
 add_subdirectory(binsrc)
 
-if (GENERATE_SWIG)
- add_subdirectory(swig)
-endif()
 
 if (GENERATE_ROOT_DICT)
   add_subdirectory(root)
