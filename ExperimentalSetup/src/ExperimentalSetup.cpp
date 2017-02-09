@@ -90,3 +90,11 @@ void ExperimentalSetup::getCoord3D(unsigned int dif,unsigned int asic, unsigned 
   K=device.getK();
 }
 
+void ExperimentalSetup::getDAQ_ID(unsigned int I, unsigned int J, unsigned int K, unsigned int &dif,unsigned int &asic, unsigned int &channel)
+{
+  if (K>=m_plans.size()) return;
+  DIFdrivenDevice::dif_asic_channel DAQ_ID=m_plans[K]->getDifAsicChannel(I,J);
+  dif=DAQ_ID.dif;
+  asic=DAQ_ID.asic;
+  channel=DAQ_ID.channel;
+}

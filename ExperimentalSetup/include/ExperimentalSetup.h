@@ -46,7 +46,8 @@ class ExperimentalSetup
   DIFdrivenDevice& getOrAddDevice(DIFNUMBER dif);  //Warning : will crash if dif is a BIF
 
   void getCoord3D(unsigned int dif,unsigned int asic, unsigned int channel, unsigned int& I, unsigned int& J, unsigned int & K); 
-
+  void getDAQ_ID(unsigned int I, unsigned int J, unsigned int K, unsigned int &dif,unsigned int &asic, unsigned int &channel);
+  
   unsigned int nPlans() const {return m_plans.size();}
   unsigned int getPlanNumber(unsigned int dif) {return getOrAddDevice(dif).getK();}
  private:
