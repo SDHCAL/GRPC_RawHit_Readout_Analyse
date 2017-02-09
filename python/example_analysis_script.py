@@ -2,47 +2,50 @@
 
 #to be executed in the lib directory where all the needed libraries are installed 
 # usage python <name>.py  list_of_slcio_files
-import grpc
+
 import sys
 import ROOT
 ROOT.gROOT.Reset()
+ROOT.gSystem.Load('liblcio')
+ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser')
+ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
 if ROOT.gROOT.GetVersion()[0]=='6':
   #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
   dummy=ROOT.intervalle('unsigned int')()
 
-inputFileNames=grpc.std_string_vec()
+inputFileNames=ROOT.vector("string")()
 for f in sys.argv[1:]:
     inputFileNames.push_back(f);
 
 for file in inputFileNames:
     print file
 
-experience=grpc.GIF_oct2016_ExperimentalSetup()
+experience=ROOT.GIF_oct2016_ExperimentalSetup()
 numeroBIF=experience.getBIF();
 
 print numeroBIF
 
-BIFtriggerWindow=grpc.uint_intervalle(6,8)
+BIFtriggerWindow=ROOT.intervalle('unsigned int')(6,8)
 
 
 #start LCIO reader
-lcReader=grpc.LCFactory_getInstance().createLCReader()
+lcReader=ROOT.IOIMPL.LCFactory.getInstance().createLCReader()
 
 #create architecture of listeners
-masterReader=grpc.RawHit_SDHCAL_Data_Reader_From_LCEvent()
+masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
 lcReader.registerLCEventListener(masterReader)
 
-allHitOccupancy=grpc.RawHit_Occupancy_Listener()
+allHitOccupancy=ROOT.RawHit_Occupancy_Listener()
 masterReader.registerDataListener(allHitOccupancy)
-BIF_splitter=grpc.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWindow)
+BIF_splitter=ROOT.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWindow)
 masterReader.registerDataListener(BIF_splitter)
-triggeredHitOccupancy=grpc.RawHit_Occupancy_Listener()
+triggeredHitOccupancy=ROOT.RawHit_Occupancy_Listener()
 BIF_splitter.registerDataListener(triggeredHitOccupancy)
-BIFtrigger_subdata=grpc.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
+BIFtrigger_subdata=ROOT.RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016()
 BIF_splitter.registerDataListener(BIFtrigger_subdata)
-triggeredHitOccupancyForGIFoct2016efficiency=grpc.RawHit_Occupancy_Listener()
+triggeredHitOccupancyForGIFoct2016efficiency=ROOT.RawHit_Occupancy_Listener()
 BIFtrigger_subdata.registerDataListener(triggeredHitOccupancyForGIFoct2016efficiency)
-effPlanOccupancy=grpc.RawHit_Plan_Occupancy_Listener(experience)
+effPlanOccupancy=ROOT.RawHit_Plan_Occupancy_Listener(experience)
 BIFtrigger_subdata.registerDataListener(effPlanOccupancy)
 
 
@@ -53,11 +56,13 @@ lcReader.readStream()
 
 #end of event loop
 rootFile=ROOT.TFile("test.root"  , "RECREATE")
+#load ROOT library missing
+ROOT.TH1F
 d=rootFile.mkdir("AllData")
-allHitOccupancy.saveTo_wrap(ROOT.AsCObject(d),experience)
-triggeredHitOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedData")),experience)
-triggeredHitOccupancyForGIFoct2016efficiency.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("BIFtriggedDataTimeAndSpace")),experience)
-effPlanOccupancy.saveTo_wrap(ROOT.AsCObject(rootFile.mkdir("GapPlaneEfficiencies")))
+allHitOccupancy.saveTo(d,experience)
+triggeredHitOccupancy.saveTo(rootFile.mkdir("BIFtriggedData"),experience)
+triggeredHitOccupancyForGIFoct2016efficiency.saveTo(rootFile.mkdir("BIFtriggedDataTimeAndSpace"),experience)
+effPlanOccupancy.saveTo(rootFile.mkdir("GapPlaneEfficiencies"))
 effPlanOccupancy.efficiencyReport()
 
 rootFile.Close()

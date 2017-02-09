@@ -2,43 +2,46 @@
 
 #to be executed in the lib directory where all the needed libraries are installed 
 # usage python <name>.py  list_of_slcio_files
-import grpc
+
 import sys
 import ROOT
 ROOT.gROOT.Reset()
+ROOT.gSystem.Load('liblcio')
+ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser')
+ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
 if ROOT.gROOT.GetVersion()[0]=='6':
   #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
   dummy=ROOT.intervalle('unsigned int')()
 
-inputFileNames=grpc.std_string_vec()
+inputFileNames=ROOT.vector("string")()
 for f in sys.argv[1:]:
     inputFileNames.push_back(f);
 
 for file in inputFileNames:
     print file
 
-experience=grpc.GIF_oct2016_ExperimentalSetup()
+experience=ROOT.GIF_oct2016_ExperimentalSetup()
 numeroBIF=experience.getBIF();
 
 print numeroBIF
 
-BIFtriggerWindow=grpc.int_intervalle(-8,-6)
+BIFtriggerWindow=ROOT.intervalle('int')(-8,-6)
 NoiseWindowLength=50; #10 microsecond
 
 #start LCIO reader
-lcReader=grpc.LCFactory_getInstance().createLCReader()
+lcReader=ROOT.IOIMPL.LCFactory.getInstance().createLCReader()
 
 #create architecture of listeners
-masterReader=grpc.RawHit_SDHCAL_Data_Reader_From_LCEvent()
+masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
 lcReader.registerLCEventListener(masterReader)
 
-noiseReader=grpc.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
+noiseReader=ROOT.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
 noiseReader.setVetoOnBIF()
 noiseReader.setBIFtimeWindow(BIFtriggerWindow)
 masterReader.registerDataListener(noiseReader)
 
 
-hitOccupancy=grpc.RawHit_Occupancy_Listener()
+hitOccupancy=ROOT.RawHit_Occupancy_Listener()
 noiseReader.registerDataListener(hitOccupancy)
 
 
@@ -49,8 +52,10 @@ lcReader.readStream(1000)
 
 #end of event loop
 rootFile=ROOT.TFile("noise.root"  , "RECREATE")
+#load ROOT library missing
+ROOT.TH1F
 d=rootFile.mkdir("Noise_10microsec")
-hitOccupancy.saveTo_wrap(ROOT.AsCObject(d),experience)
+hitOccupancy.saveTo(d,experience)
 
 rootFile.Close()
 
