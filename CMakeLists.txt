@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "$ENV{ROOTSYS}/etc/cmake")
 add_definitions("-std=c++11")
 
 option(GENERATE_ROOT_DICT "Flag to toggle ROOT dictionnary genaration" ON)
-option(BUILD_AGAINST_CONFDB "If ON, include code depending on configuration database code" ON)
+option(BUILD_AGAINST_CONFDB "If ON, include code depending on configuration database code" OFF)
 
 enable_testing()
 

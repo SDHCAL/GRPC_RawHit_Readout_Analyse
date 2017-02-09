@@ -9,7 +9,7 @@ For october 2016 GIF, the configuration setup has been included in the soft : yo
 
 - mkdir build
 - cd build 
-- cmake -DBUILD_AGAINST_CONFDB=OFF ..
+- cmake ..
 - make install
 
 #python script
