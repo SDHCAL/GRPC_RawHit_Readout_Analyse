@@ -35,28 +35,29 @@ class SingleCounter : public ASCIIpersistance
   bool m_flag;
 };
 
-template <class COUNTER>
-class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCounter
+//COUNTER should derive form COUNTERBASE
+template <class COUNTER, class COUNTERBASE=SingleCounter>
+class MappedCounters : public std::map<unsigned int,COUNTER>, public COUNTERBASE
 {
  public:
-  void add(unsigned int val, unsigned int *keys) {SingleCounter::add(val); (*this)[keys[0]].add(val,keys+1); }
-  void newSet() {SingleCounter::newSet(); for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) it->second.newSet();}
+  void add(unsigned int val, unsigned int *keys) {COUNTERBASE::add(val); (*this)[keys[0]].add(val,keys+1); }
+  void newSet() {COUNTERBASE::newSet(); for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) it->second.newSet();}
  
-  SingleCounter& counterAtLevel(unsigned int level, unsigned int *keys) 
+  COUNTERBASE& counterAtLevel(unsigned int level, unsigned int *keys) 
     {
-      if (level>=printIndentLevel) return SingleCounter::counterAtLevel(level,keys);
+      if (level>=printIndentLevel) return COUNTERBASE::counterAtLevel(level,keys);
       return (*this)[keys[0]].counterAtLevel(level,keys+1);
     }
 
   void write(std::string* labels,std::ostream& oflux=std::cout) 
   {
-    SingleCounter::write(labels,oflux); 
+    COUNTERBASE::write(labels,oflux); 
     for (typename std::map<unsigned int,COUNTER>::iterator it=this->begin(); it!= this->end(); ++it) {printIndent(oflux); oflux << it->first << " "; it->second.write(labels+1,oflux);}
   }
 
   bool ASCIIwrite(std::ostream& oflux=std::cout) const
   { 
-    SingleCounter::ASCIIwrite(oflux);  
+    COUNTERBASE::ASCIIwrite(oflux);  
     oflux << this->size() << " ";
     for (typename std::map<unsigned int,COUNTER>::const_iterator it=this->begin(); it!= this->end(); ++it) 
       { oflux << it->first << " "; it->second.ASCIIwrite(oflux); }
@@ -65,7 +66,7 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
   bool ASCIIread(std::istream& iflux=std::cin)
   {
     this->clear();
-    SingleCounter::ASCIIread(iflux);
+    COUNTERBASE::ASCIIread(iflux);
     unsigned int mapsize;
     iflux >> mapsize;
     for (unsigned int i=0; i<mapsize; ++i)
@@ -74,7 +75,7 @@ class MappedCounters : public std::map<unsigned int,COUNTER>, public SingleCount
   }
 
   const std::map<unsigned int,COUNTER>& the_map() const {return *this;}
-  bool operator==(const MappedCounters<COUNTER>& other) const {return  SingleCounter::operator==(other) && the_map()==other.the_map();}
+  bool operator==(const MappedCounters<COUNTER>& other) const {return  COUNTERBASE::operator==(other) && the_map()==other.the_map();}
   bool operator!=(const MappedCounters<COUNTER>& other) const {return ! ((*this)==other);}
 
   static const unsigned int printIndentLevel=COUNTER::printIndentLevel+1;
