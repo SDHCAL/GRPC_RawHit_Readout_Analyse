@@ -63,6 +63,7 @@
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_Trivent;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_Threshold_Filter;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_TriggeredMode;
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_FromClusters;
 
 #pragma link C++ class CMSTree_Writer+;
 #pragma link C++ class CMSTree_Writer_NoBIF+;
