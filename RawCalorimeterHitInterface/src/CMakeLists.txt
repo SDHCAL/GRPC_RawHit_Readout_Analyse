@@ -7,7 +7,7 @@ add_executable(test_RawCaloHitTools test_RawCaloHitTools.cpp RawCalorimeterHitUt
 target_link_libraries(test_RawCaloHitTools ${LCIO_LIBRARIES})
 add_executable(test_RawSDHCALData test_RawSDHCALData.cpp RawCalorimeterHitUtilities.cpp RawHit_SDHCAL_Data.cpp)
 target_link_libraries(test_RawSDHCALData ${LCIO_LIBRARIES})
-add_executable(test_RawCaloHitClustering test_RawCaloHitClustering.cpp RawCalorimeterHitUtilities.cpp RawHit_SDHCAL_Data.cpp RawCalorimeterHitClustering.cpp)
+add_executable(test_RawCaloHitClustering test_RawCaloHitClustering.cpp RawCalorimeterHitUtilities.cpp RawHit_SDHCAL_Data.cpp RawCalorimeterHitClustering.cpp TimeCounter.cpp)
 target_link_libraries(test_RawCaloHitClustering ${LCIO_LIBRARIES})
 add_executable(test_ASIC_Coordinate_Translator test_ASIC_Coordinate_Translator.cpp)
 
@@ -22,6 +22,7 @@ set (${PROJECT_NAME}_sources
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data.cpp 
  ${CMAKE_CURRENT_SOURCE_DIR}/RawCalorimeterHitUtilities.cpp 
  ${CMAKE_CURRENT_SOURCE_DIR}/RawCalorimeterHitClustering.cpp
+ ${CMAKE_CURRENT_SOURCE_DIR}/TimeCounter.cpp
 PARENT_SCOPE)
 
 

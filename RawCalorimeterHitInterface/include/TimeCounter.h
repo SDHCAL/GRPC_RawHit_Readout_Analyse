@@ -21,11 +21,7 @@ class TimeCounter
   unsigned int m_NumberOfCall;
 };
 
-std::ostream& operator<<(std::ostream& flux, const TimeCounter& t)
-{
-  flux << t.elapsedTimePerCall() << " s (total=" << t.elapsedTime() << " s)";
-  return flux;
-}
+std::ostream& operator<<(std::ostream& flux, const TimeCounter& t);
 
 class TimeCounterMap : public std::map<std::string,TimeCounter>
 {
@@ -37,6 +33,6 @@ class TimeCounterMap : public std::map<std::string,TimeCounter>
     }
 };
 
-TimeCounterMap TimeCounters;
+extern TimeCounterMap TimeCounters;
 
 #endif
