@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+#include "TimeCounter.h"
+
 bool sameDifAsic(const RawCalorimeterHitPointer &A,const RawCalorimeterHitPointer &B)
 {
   return A.dif() == B.dif() and A.asic() == B.asic();
@@ -33,6 +35,8 @@ private:
 
 
 bool operator<(const RawCalorimeterHitPointer &A,const RawCalorimeterHitPointer &B) {return A.channel()<B.channel();}
+
+bool mergeInt(const int& A, const int &B) {return abs(A-B)<=5;}
 
 int main()
 {
@@ -162,6 +166,22 @@ int main()
     std::cout << d.getClusters() << std::endl;
     assert(d.getClusters().size()==2);
   } while ( std::next_permutation(hitvec.begin(),hitvec.end()) );
- 
+
+
+   unsigned int toClusterSize=2000;
+   std::vector<int> toCluster;
+   for (int i=0; i<toClusterSize; ++i) toCluster.push_back(std::rand());
+   for (int i=0; i<10; ++i)
+     {
+       TimeCounters["all"].start();
+       std::random_shuffle(toCluster.begin(),toCluster.end());
+       std::list<SDHCAL::Cluster<int> > clusters;
+       SDHCAL::convertToClusterList(toCluster.begin(),toCluster.end(),clusters);
+       TimeCounters["clus"].start();
+       SDHCAL::clusterize(clusters,mergeInt);
+       TimeCounters["clus"].stop();
+       TimeCounters["all"].stop();
+     }
+   
   return 0;
 }
