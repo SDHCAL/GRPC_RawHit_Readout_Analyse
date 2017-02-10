@@ -51,34 +51,49 @@ class defaultRawHitStripMerge
 
 //template function using functors defined in RawCalorimeterHitPointerTools.h
 template <class RawHitGetter>
-float mean(const RawHitCluster& cluster)
+float mean(const RawHitCluster& cluster, RawHitGetter f)
 {
   if (cluster.empty()) return 0;
   float sum=0;
-  RawHitGetter f;
   for (std::set<const RawCalorimeterHitPointer*>::const_iterator it=cluster.begin(); it != cluster.end(); ++it)
     sum+=float(f.get(**it));
   return sum/cluster.size();
 }
+template <class RawHitGetter>
+float mean(const RawHitCluster& cluster)
+{
+  return mean(cluster,RawHitGetter());
+}
+
 
 template <class RawHitGetter>
-std::map<unsigned int, unsigned int> distribution(const RawHitCluster& cluster)
+std::map<unsigned int, unsigned int> distribution(const RawHitCluster& cluster,RawHitGetter f)
 {
   std::map<unsigned int, unsigned int> m;
-  RawHitGetter f;
   for (std::set<const RawCalorimeterHitPointer*>::const_iterator it=cluster.begin(); it != cluster.end(); ++it)
     m[f.get(**it)]++;
   return m;
 }
+template <class RawHitGetter>
+std::map<unsigned int, unsigned int> distribution(const RawHitCluster& cluster)
+{
+  return distribution(cluster,RawHitGetter());
+}
+
 
 unsigned int mostFrequentValue(std::map<unsigned int, unsigned int> &m);
 
 
 template <class RawHitGetter>
+unsigned int mostFrequentValue(const RawHitCluster& cluster,RawHitGetter f)
+{
+  std::map<unsigned int, unsigned int> m=distribution(cluster,f);
+  return mostFrequentValue(m);
+}
+template <class RawHitGetter>
 unsigned int mostFrequentValue(const RawHitCluster& cluster)
 {
-  std::map<unsigned int, unsigned int> m=distribution<RawHitGetter>(cluster);
-  return mostFrequentValue(m);
+  return distribution(cluster,RawHitGetter());
 }
 
 #endif
