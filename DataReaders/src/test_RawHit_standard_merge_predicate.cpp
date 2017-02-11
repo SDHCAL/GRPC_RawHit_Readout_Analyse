@@ -95,7 +95,7 @@ int main()
   //last cluster should have 5 hits with last one being I,J=20,11 
   assert(clusters.back().size()==5);
   assert((*clusters.back().rbegin())->dif()==12);
-  assert((*clusters.back().rbegin())->I_local()==20);
+  assert((*clusters.back().rbegin())->I_local()==19); //clusteringBis change order of initial vector
   assert((*clusters.back().rbegin())->J_local()==11);
   
   pred.setNeighbourTimeDistance(1);

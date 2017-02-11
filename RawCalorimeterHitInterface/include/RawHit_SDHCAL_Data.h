@@ -8,6 +8,7 @@
 #include "EVENT/LCParameters.h"
 #include "RawCalorimeterHitClustering.h"
 
+#include "Clustering_bis.h" //test
 
 #include <stdint.h>
 
@@ -52,8 +53,9 @@ class RawHit_SDHCAL_Data
     void clusterize(mergePred f)
     {
       m_clusters.clear();
-      SDHCAL::convertToClusterList(m_hitvec.begin(),m_hitvec.end(),m_clusters);
-      SDHCAL::clusterize(m_clusters,f);
+      //SDHCAL::convertToClusterList(m_hitvec.begin(),m_hitvec.end(),m_clusters);
+      //SDHCAL::clusterize(m_clusters,f);
+      SDHCAL::clusterize(m_hitvec.begin(),m_hitvec.end(),m_clusters,f);
     }
   void clusterizeDefault() {clusterize(defaultRawHitMerge());}
  private:

@@ -182,6 +182,15 @@ int main()
        TimeCounters["clus"].stop();
        TimeCounters["all"].stop();
      }
+   for (int i=0; i<10; ++i)
+     {
+       std::random_shuffle(toCluster.begin(),toCluster.end());
+       //std::vector<std::vector<int>::iterator> clusters;
+       std::list<SDHCAL::Cluster<int> > clusters;
+       TimeCounters["clusbis"].start();
+       SDHCAL::clusterize(toCluster.begin(),toCluster.end(),clusters,mergeInt);
+       TimeCounters["clusbis"].stop();
+     }
    
   return 0;
 }
