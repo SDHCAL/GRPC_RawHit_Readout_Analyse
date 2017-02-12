@@ -8,7 +8,7 @@
 #include "EVENT/LCParameters.h"
 #include "RawCalorimeterHitClustering.h"
 
-#include "Clustering_bis.h" //test
+#include "Clustering.h" 
 
 #include <stdint.h>
 

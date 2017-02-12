@@ -173,23 +173,12 @@ int main()
    for (int i=0; i<toClusterSize; ++i) toCluster.push_back(std::rand());
    for (int i=0; i<10; ++i)
      {
-       TimeCounters["all"].start();
-       std::random_shuffle(toCluster.begin(),toCluster.end());
-       std::list<SDHCAL::Cluster<int> > clusters;
-       SDHCAL::convertToClusterList(toCluster.begin(),toCluster.end(),clusters);
-       TimeCounters["clus"].start();
-       SDHCAL::clusterize(clusters,mergeInt);
-       TimeCounters["clus"].stop();
-       TimeCounters["all"].stop();
-     }
-   for (int i=0; i<10; ++i)
-     {
        std::random_shuffle(toCluster.begin(),toCluster.end());
        //std::vector<std::vector<int>::iterator> clusters;
        std::list<SDHCAL::Cluster<int> > clusters;
-       TimeCounters["clusbis"].start();
+       TimeCounters["clus"].start();
        SDHCAL::clusterize(toCluster.begin(),toCluster.end(),clusters,mergeInt);
-       TimeCounters["clusbis"].stop();
+       TimeCounters["clus"].stop();
      }
    
   return 0;
