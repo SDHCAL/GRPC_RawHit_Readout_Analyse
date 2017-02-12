@@ -1,22 +1,10 @@
-#ifndef SDHCAL_Clustering_HH
-#define SDHCAL_Clustering_HH
+#ifndef SDHCAL_Clustering_old_HH
+#define SDHCAL_Clustering_old_HH
 
-#include <set>
-#include <list>
+#include "Clustering_bis.h"
 
 namespace SDHCAL
 {
-  template <class T> 
-    class Cluster : public std::set<const T*>
-    {
-    public:
-    Cluster() : std::set<const T*>() {}
-    Cluster(const T& obj) : std::set<const T*>() {add(obj);}
-      void add(const T& obj) {this->insert(&obj);}
-      void merge(const Cluster<T>& cl) {this->insert(cl.begin(),cl.end());}
-    private:
-    };
-  
   
   template <class T,class iterT>
     void convertToClusterList(iterT inputFirst, iterT inputLast, std::list<Cluster<T> >& output)

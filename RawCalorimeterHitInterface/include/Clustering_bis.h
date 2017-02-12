@@ -1,9 +1,13 @@
-#ifndef SDHCAL_Clustering_bis_HH
-#define SDHCAL_Clustering_bis_HH
+#ifndef SDHCAL_Clustering_HH
+#define SDHCAL_Clustering_HH
 
-#include "Clustering.h"
 
 #include <algorithm>
+
+
+#include <set>
+#include <list>
+
 
 namespace SDHCAL
 {
@@ -42,6 +46,19 @@ namespace SDHCAL
     if (first != last) clusterize(buildOneCluster(first,last,pred),last,clusterBounds,pred);
   }
 
+
+  template <class T> 
+    class Cluster : public std::set<const T*>
+    {
+    public:
+    Cluster() : std::set<const T*>() {}
+    Cluster(const T& obj) : std::set<const T*>() {add(obj);}
+      void add(const T& obj) {this->insert(&obj);}
+      void merge(const Cluster<T>& cl) {this->insert(cl.begin(),cl.end());}
+    private:
+    };
+
+  
   template <class T, class iterT, class mergePred>
     void clusterize(iterT first, iterT last,std::list<Cluster<T> >& cl, mergePred pred)
   {
