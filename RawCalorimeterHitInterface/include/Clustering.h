@@ -58,19 +58,25 @@ namespace SDHCAL
     private:
     };
 
-  
-  template <class T, class iterT, class mergePred>
-    void clusterize(iterT first, iterT last,std::list<Cluster<T> >& cl, mergePred pred)
+
+  template <class T, class iterT>
+    void Convert(std::vector<iterT> &clusterBounds,std::list<Cluster<T> >& cl)
   {
-    std::vector<iterT> clusterBounds;
-    clusterize(first,last,clusterBounds,pred);
     for (int i=0; i<clusterBounds.size()-1; ++i)
       {
 	Cluster<T> C;
 	for (iterT itHits=clusterBounds[i]; itHits!=clusterBounds[i+1]; ++itHits)
 	  C.add(*itHits);
 	cl.push_back(C);
-      }
+      }    
+  }
+    
+  template <class T, class iterT, class mergePred>
+    void clusterize(iterT first, iterT last,std::list<Cluster<T> >& cl, mergePred pred)
+  {
+    std::vector<iterT> clusterBounds;
+    clusterize(first,last,clusterBounds,pred);
+    Convert(clusterBounds,cl);
   }
   
 }

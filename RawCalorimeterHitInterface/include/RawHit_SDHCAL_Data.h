@@ -47,15 +47,16 @@ class RawHit_SDHCAL_Data
 
 
   //cluster stuff
-  bool hasCluster() const {return not m_clusters.empty();}
+  bool hasCluster() const {return not m_clusterBounds.empty();}
   const RawHitClustersList& getClusters() const {return m_clusters;}
+  const std::vector<std::vector<RawCalorimeterHitPointer>::iterator>& getClusterBounds() const {return m_clusterBounds;}
   template <class mergePred>
     void clusterize(mergePred f)
     {
       m_clusters.clear();
-      //SDHCAL::convertToClusterList(m_hitvec.begin(),m_hitvec.end(),m_clusters);
-      //SDHCAL::clusterize(m_clusters,f);
-      SDHCAL::clusterize(m_hitvec.begin(),m_hitvec.end(),m_clusters,f);
+      m_clusterBounds.clear();
+      SDHCAL::clusterize(m_hitvec.begin(),m_hitvec.end(),m_clusterBounds,f);
+      Convert(m_clusterBounds,m_clusters);
     }
   void clusterizeDefault() {clusterize(defaultRawHitMerge());}
  private:
@@ -68,6 +69,7 @@ class RawHit_SDHCAL_Data
   std::map<unsigned int,DIF_timeInfo> m_DIFtimeInfo;
   const EVENT::LCParameters *m_originalCollectionParameters;
   RawHitClustersList m_clusters;
+  std::vector<std::vector<RawCalorimeterHitPointer>::iterator> m_clusterBounds;
 };
 
 #endif
