@@ -5,6 +5,7 @@
 #include "Clustering.h" 
 
 #include <map>
+#include <iterator>
 
 //Cluster of Raw hits
 typedef SDHCAL::Cluster<RawCalorimeterHitPointer> RawHitCluster;
@@ -25,6 +26,8 @@ inline std::ostream& operator<<(std::ostream& outFlux, const RawHitClustersVec& 
     outFlux << "{{{" <<  *it << "}}}";
   return outFlux;
 }
+
+std::ostream& operator<<(std::ostream& outFlux, const std::vector<std::vector<RawCalorimeterHitPointer>::iterator>& clusterBounds);
 
 //function pointer typedef
 typedef bool (*RawHitMergeFunction)(const RawCalorimeterHitPointer&,const RawCalorimeterHitPointer&);
@@ -64,7 +67,14 @@ float mean(const RawHitCluster& cluster)
 {
   return mean(cluster,RawHitGetter());
 }
-
+template <class RawHitGetter>
+float mean(const std::vector<RawCalorimeterHitPointer>::iterator& begin, const std::vector<RawCalorimeterHitPointer>::iterator& end, RawHitGetter f)
+{
+  float sum=0;
+  for (std::vector<RawCalorimeterHitPointer>::iterator it=begin; it != end; ++it)
+    sum+=float(f.get(*it));
+  return sum/std::distance(begin,end);
+}
 
 template <class RawHitGetter>
 std::map<unsigned int, unsigned int> distribution(const RawHitCluster& cluster,RawHitGetter f)
@@ -80,6 +90,14 @@ std::map<unsigned int, unsigned int> distribution(const RawHitCluster& cluster)
   return distribution(cluster,RawHitGetter());
 }
 
+template <class RawHitGetter>
+std::map<unsigned int, unsigned int> distribution(const std::vector<RawCalorimeterHitPointer>::iterator& begin, const std::vector<RawCalorimeterHitPointer>::iterator& end, RawHitGetter f)
+{
+  std::map<unsigned int, unsigned int> m;
+  for (std::vector<RawCalorimeterHitPointer>::iterator it=begin; it != end; ++it)
+    m[f.get(*it)]++;
+  return m;
+}
 
 unsigned int mostFrequentValue(std::map<unsigned int, unsigned int> &m);
 
@@ -94,6 +112,12 @@ template <class RawHitGetter>
 unsigned int mostFrequentValue(const RawHitCluster& cluster)
 {
   return distribution(cluster,RawHitGetter());
+}
+template <class RawHitGetter>
+unsigned int mostFrequentValue(const std::vector<RawCalorimeterHitPointer>::iterator& begin, const std::vector<RawCalorimeterHitPointer>::iterator& end, RawHitGetter f)
+{
+  std::map<unsigned int, unsigned int> m=distribution(begin,end,f);
+  return mostFrequentValue(m);
 }
 
 #endif

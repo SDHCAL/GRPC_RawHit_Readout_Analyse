@@ -8,6 +8,7 @@
 #include "RawCalorimeterHitPointerTools.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "TimeCounter.h"
 
@@ -78,13 +79,16 @@ int main()
   assert(mean<rawHit_ASIC>(*first)==1);
   assert(mean<rawHit_Channel>(*first)==13.5);
   assert(mean<rawHit_TimeStamp>(*first)==6);
-
+  assert(mean<rawHit_Channel>(*first)==mean(d.getClusterBounds()[0],d.getClusterBounds()[1],rawHit_Channel()));
+  
   std::map<unsigned int, unsigned int> m=distribution<rawHit_DIF>(*first);
   assert(m.size()==1);
   assert(m.begin()->first==7);
   assert(m.begin()->second==4);
   assert(mostFrequentValue(m)==7);
-
+  std::map<unsigned int, unsigned int> mcb=distribution(d.getClusterBounds()[0],d.getClusterBounds()[1],rawHit_DIF());
+  assert(m==mcb);
+  
   m=distribution<rawHit_Channel>(*first);
   assert(m.size()==2);
   assert(m.begin()->first==13);
@@ -92,7 +96,8 @@ int main()
   assert(m.rbegin()->first==14);
   assert(m.rbegin()->second==2);
   assert(mostFrequentValue(m)==13);
-  
+  assert(mostFrequentValue(d.getClusterBounds()[0],d.getClusterBounds()[1],rawHit_Channel())==mostFrequentValue(*d.getClusters().begin(),rawHit_Channel()));
+
   m=distribution<rawHit_TimeStamp>(*first);
   assert(m.size()==3);
   assert(m.begin()->first==5);
@@ -168,6 +173,17 @@ int main()
   } while ( std::next_permutation(hitvec.begin(),hitvec.end()) );
 
 
+   //check outputs are identical
+   std::cout << "Comparing outputs" << std::endl;
+   std::stringstream outputCluster;
+   outputCluster << d.getClusters() << std::endl;
+   std::stringstream outputClusterBounds;
+   outputClusterBounds << d.getClusterBounds() << std::endl;
+   std::string sc=outputCluster.str();
+   std::string scb=outputClusterBounds.str();
+   std::cout << sc << scb;
+   assert( sc==scb );
+   
    unsigned int toClusterSize=2000;
    std::vector<int> toCluster;
    for (int i=0; i<toClusterSize; ++i) toCluster.push_back(std::rand());
