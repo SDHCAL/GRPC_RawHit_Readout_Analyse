@@ -9,7 +9,8 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, 
     m_eventNumber(eventNumber),
     m_numberOfEventInThisData(1),
     m_eventTimeStamp(eventTimeStamp),
-    m_frameSubSet_intervalle_startTime(0)
+    m_frameSubSet_intervalle_startTime(0),
+    m_buildClusterVec(false)
 {
   m_originalCollectionParameters=&col.getParameters();
   FillTimeInfo(col.getParameters());
@@ -29,7 +30,8 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointe
    m_frameSubSet_intervalle_startTime(0),
    m_hitvec(vec),
    m_DIFtimeInfo(),
-   m_originalCollectionParameters(NULL)
+   m_originalCollectionParameters(NULL),
+   m_buildClusterVec(false)
 {}
 
 RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointer>&vec, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData) 
@@ -40,19 +42,21 @@ RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const std::vector<RawCalorimeterHitPointe
     m_frameSubSet_intervalle_startTime(d.m_frameSubSet_intervalle_startTime),
     m_hitvec(vec),
     m_DIFtimeInfo(d.DIFtimeInfo()),
-    m_originalCollectionParameters(d.getCollectionParameters())
+    m_originalCollectionParameters(d.getCollectionParameters()),
+    m_buildClusterVec(false)
 {}
 
-RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const RawHitClustersList &clusters, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData) 
+RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(const RawHitClustersVec &clusters, const RawHit_SDHCAL_Data &d, int numberOfEventInThisData) 
   : m_runNumber(d.getRunNumber()),
     m_eventNumber(d.getEventNumber()),
     m_numberOfEventInThisData(numberOfEventInThisData),
     m_eventTimeStamp(d.getEventTimeStamp()),
     m_frameSubSet_intervalle_startTime(d.m_frameSubSet_intervalle_startTime),
     m_DIFtimeInfo(d.DIFtimeInfo()),
-    m_originalCollectionParameters(d.getCollectionParameters())
+    m_originalCollectionParameters(d.getCollectionParameters()),
+    m_buildClusterVec(false)
 {
-  for (RawHitClustersList::const_iterator itcluster=clusters.begin(); itcluster!=clusters.end(); ++itcluster)
+  for (RawHitClustersVec::const_iterator itcluster=clusters.begin(); itcluster!=clusters.end(); ++itcluster)
     {
       RawHitCluster cl;
       for (std::set<const RawCalorimeterHitPointer*>::const_iterator ithit=itcluster->begin(); ithit!=itcluster->end(); ++ithit)

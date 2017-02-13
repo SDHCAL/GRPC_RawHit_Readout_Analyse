@@ -3,14 +3,26 @@
 
 
 #include <algorithm>
+#include <ostream>
 
 
 #include <set>
-#include <list>
-
+#include <vector>
 
 namespace SDHCAL
 {
+  template <class T> 
+    class Cluster : public std::set<const T*>
+    {
+    public:
+    Cluster() : std::set<const T*>() {}
+    Cluster(const T& obj) : std::set<const T*>() {add(obj);}
+      void add(const T& obj) {this->insert(&obj);}
+      void merge(const Cluster<T>& cl) {this->insert(cl.begin(),cl.end());}
+    private:
+    };
+
+
   template <class iterT,class mergePred>
     iterT buildOneCluster(iterT first, iterT last,  mergePred pred)
   {
@@ -45,22 +57,10 @@ namespace SDHCAL
     clusterBounds.push_back(first);
     if (first != last) clusterize(buildOneCluster(first,last,pred),last,clusterBounds,pred);
   }
-
-
-  template <class T> 
-    class Cluster : public std::set<const T*>
-    {
-    public:
-    Cluster() : std::set<const T*>() {}
-    Cluster(const T& obj) : std::set<const T*>() {add(obj);}
-      void add(const T& obj) {this->insert(&obj);}
-      void merge(const Cluster<T>& cl) {this->insert(cl.begin(),cl.end());}
-    private:
-    };
-
+  
 
   template <class T, class iterT>
-    void Convert(std::vector<iterT> &clusterBounds,std::list<Cluster<T> >& cl)
+    void Convert(const std::vector<iterT> &clusterBounds,std::vector<Cluster<T> >& cl)
   {
     for (int i=0; i<clusterBounds.size()-1; ++i)
       {
@@ -72,7 +72,7 @@ namespace SDHCAL
   }
     
   template <class T, class iterT, class mergePred>
-    void clusterize(iterT first, iterT last,std::list<Cluster<T> >& cl, mergePred pred)
+    void clusterize(iterT first, iterT last,std::vector<Cluster<T> >& cl, mergePred pred)
   {
     std::vector<iterT> clusterBounds;
     clusterize(first,last,clusterBounds,pred);
@@ -80,6 +80,7 @@ namespace SDHCAL
   }
   
 }
+
 
 
 //

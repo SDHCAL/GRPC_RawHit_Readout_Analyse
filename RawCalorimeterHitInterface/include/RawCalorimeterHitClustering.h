@@ -8,7 +8,7 @@
 
 //Cluster of Raw hits
 typedef SDHCAL::Cluster<RawCalorimeterHitPointer> RawHitCluster;
-typedef std::list<RawHitCluster> RawHitClustersList; 
+typedef std::vector<RawHitCluster> RawHitClustersVec; 
 
 //print functions
 
@@ -19,9 +19,9 @@ inline std::ostream& operator<<(std::ostream& outFlux, const RawHitCluster& clus
   return outFlux;
 }
 
-inline std::ostream& operator<<(std::ostream& outFlux, const RawHitClustersList& clusterlist)
+inline std::ostream& operator<<(std::ostream& outFlux, const RawHitClustersVec& clustervec)
 {
-  for (std::list<RawHitCluster>::const_iterator it=clusterlist.begin(); it!=clusterlist.end(); ++it)
+  for (std::vector<RawHitCluster>::const_iterator it=clustervec.begin(); it!=clustervec.end(); ++it)
     outFlux << "{{{" <<  *it << "}}}";
   return outFlux;
 }

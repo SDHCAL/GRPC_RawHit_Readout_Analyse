@@ -9,11 +9,12 @@
 void RawHit_SDHCAL_Data_Reader_FromClusters::process(const RawHit_SDHCAL_Data &d)
 {
   //check if clusters have been computed
-  if (not d.getHitVector().empty() && d.getClusters().empty())
+  if (not d.getHitVector().empty() && d.getClusterBounds().empty())
     return;
   std::vector<IMPL::RawCalorimeterHitImpl*> rawHitVector;
   std::vector<RawCalorimeterHitPointer> rawHitPointerVec;
-  for (std::list<RawHitCluster>::const_iterator itcl=d.getClusters().begin(); itcl != d.getClusters().end(); ++itcl)
+  const RawHitClustersVec& clusters=d.getClusters();
+  for (RawHitClustersVec::const_iterator itcl=clusters.begin(); itcl != clusters.end(); ++itcl)
     {
       if (itcl->empty()) continue;
       std::map<unsigned int, unsigned int> planList=distribution(*itcl,rawHit_PlanNumber(m_setup));

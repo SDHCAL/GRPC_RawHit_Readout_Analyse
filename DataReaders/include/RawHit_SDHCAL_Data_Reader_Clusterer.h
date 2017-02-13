@@ -16,7 +16,7 @@ class RawHit_SDHCAL_Data_Reader_Clusterer : public RawHit_SDHCAL_Data_Listener, 
   {
     TimeCounters["CopyVec"].start(); RawHit_SDHCAL_Data newd(d.getHitVector(), d, d.getNumberOfEventInThisData()); TimeCounters["CopyVec"].stop();//not terrific in terms of copy
     TimeCounters["Clus"].start(); newd.clusterize(m_f); TimeCounters["Clus"].stop(); 
-    if (m_verbose) std::cout << ++m_nevent << " : " << newd.getHitVector().size() << " hits clustered in " << newd.getClusters().size() << " clusters.\r"; std::cout.flush();
+    if (m_verbose) std::cout << ++m_nevent << " : " << newd.getHitVector().size() << " hits clustered in " << newd.getClusterBounds().size()-1 << " clusters.\r"; std::cout.flush();
     TimeCounters["Listen"].start(); notifyListeners(newd); TimeCounters["Listen"].stop();
   }
  private:

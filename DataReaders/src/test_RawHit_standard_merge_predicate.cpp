@@ -10,6 +10,7 @@
 #include "ExperimentalSetup.h"
 
 #include <iostream>
+#include <iterator>
 
 
 int main()
@@ -37,36 +38,33 @@ int main()
   RawHit_SDHCAL_Data d(hitvec,111,12,357698);
   d.clusterize(pred);
   
-  RawHitClustersList clusters=d.getClusters();
+  RawHitClustersVec clusters=d.getClusters();
   std::cout << clusters << std::endl;
   assert(clusters.size()==4);
   
   //first cluster should be BIF one
-  assert(clusters.front().size()==1);
-  assert((*clusters.front().begin())->dif()==3);
+  assert(clusters[0].size()==1);
+  assert((*clusters[0].begin())->dif()==3);
 
- //second cluster should be PAD one with 3 hits
-  clusters.pop_front(); 
-  assert(clusters.front().size()==3);
-  assert((*clusters.front().begin())->dif()==12);
-  assert((*clusters.front().begin())->I_local()==20);
-  assert((*clusters.front().begin())->J_local()==12);
-  assert((*clusters.front().rbegin())->I_local()==21);
-  assert((*clusters.front().rbegin())->J_local()==12);
+ //second cluster should be PAD one with 3 hits 
+  assert(clusters[1].size()==3);
+  assert((*clusters[1].begin())->dif()==12);
+  assert((*clusters[1].begin())->I_local()==20);
+  assert((*clusters[1].begin())->J_local()==12);
+  assert((*clusters[1].rbegin())->I_local()==21);
+  assert((*clusters[1].rbegin())->J_local()==12);
 
- //third cluster should be PAD one with 1 hit
-  clusters.pop_front(); 
-  assert(clusters.front().size()==1);
-  assert((*clusters.front().begin())->dif()==12);
-  assert((*clusters.front().begin())->I_local()==19);
-  assert((*clusters.front().begin())->J_local()==11);
+ //third cluster should be PAD one with 1 hit 
+  assert(clusters[2].size()==1);
+  assert((*clusters[2].begin())->dif()==12);
+  assert((*clusters[2].begin())->I_local()==19);
+  assert((*clusters[2].begin())->J_local()==11);
 
  //fourth cluster should be PAD one with 1 hit
-  clusters.pop_front(); 
-  assert(clusters.front().size()==1);
-  assert((*clusters.front().begin())->dif()==12);
-  assert((*clusters.front().begin())->I_local()==20);
-  assert((*clusters.front().begin())->J_local()==11);
+  assert(clusters[3].size()==1);
+  assert((*clusters[3].begin())->dif()==12);
+  assert((*clusters[3].begin())->I_local()==20);
+  assert((*clusters[3].begin())->J_local()==11);
 
   pred.setPadJunctionByCorner(true);
   d.clusterize(pred);
@@ -74,17 +72,15 @@ int main()
   std::cout << clusters << std::endl;
   assert(clusters.size()==3);
   //second clusters should have 4 hits with last one being I,J=19,11
-  clusters.pop_front(); 
-  assert(clusters.front().size()==4);
-  assert((*clusters.front().begin())->dif()==12);
-  assert((*clusters.front().rbegin())->I_local()==19);
-  assert((*clusters.front().rbegin())->J_local()==11);
- //last cluster should be the same as in previous case
-  clusters.pop_front(); 
-  assert(clusters.front().size()==1);
-  assert((*clusters.front().begin())->dif()==12);
-  assert((*clusters.front().begin())->I_local()==20);
-  assert((*clusters.front().begin())->J_local()==11);
+  assert(clusters[1].size()==4);
+  assert((*clusters[1].begin())->dif()==12);
+  assert((*clusters[1].rbegin())->I_local()==19);
+  assert((*clusters[1].rbegin())->J_local()==11);
+ //last cluster should be the same as in previous case 
+  assert(clusters[2].size()==1);
+  assert((*clusters[2].begin())->dif()==12);
+  assert((*clusters[2].begin())->I_local()==20);
+  assert((*clusters[2].begin())->J_local()==11);
 
   pred.setPadJunctionByCorner(false);
   pred.setNeighbourTimeDistance(10);
@@ -92,11 +88,11 @@ int main()
   clusters=d.getClusters();
   std::cout << clusters << std::endl;
   assert(clusters.size()==2);
-  //last cluster should have 5 hits with last one being I,J=20,11 
-  assert(clusters.back().size()==5);
-  assert((*clusters.back().rbegin())->dif()==12);
-  assert((*clusters.back().rbegin())->I_local()==19); //clusteringBis change order of initial vector
-  assert((*clusters.back().rbegin())->J_local()==11);
+  //last cluster should have 5 hits with the one before the last one being I,J=20,11 
+  assert(clusters[1].size()==5);
+  assert((*std::next(clusters[1].rbegin()))->dif()==12);
+  assert((*std::next(clusters[1].rbegin()))->I_local()==20); 
+  assert((*std::next(clusters[1].rbegin()))->J_local()==11);
   
   pred.setNeighbourTimeDistance(1);
   d.clusterize(pred);
@@ -121,8 +117,8 @@ int main()
   clusters=d.getClusters();
   std::cout << clusters << std::endl;
   assert(clusters.size()==6);
-  assert(clusters.back().size()==1);
-  assert((*clusters.back().rbegin())->dif()==13);
+  assert(clusters[5].size()==1);
+  assert((*clusters[5].rbegin())->dif()==13);
   
   //ASU separation
   hitvec.push_back(createRawHit(        1,         8,  36,   8,      18)); //PAD I=10, J=32
@@ -133,8 +129,8 @@ int main()
   clusters=d.getClusters();
   std::cout << clusters << std::endl;
   assert(clusters.size()==7);
-  assert(clusters.back().size()==3);
-  std::map<unsigned int, unsigned int> m=distribution<rawHit_DIF>(clusters.back());
+  assert(clusters[6].size()==3);
+  std::map<unsigned int, unsigned int> m=distribution<rawHit_DIF>(clusters[6]);
   assert(m.size()==2);
   assert(m[36]==2);
   assert(m[37]==1);
@@ -150,7 +146,7 @@ int main()
   clusters=d.getClusters();
   std::cout << clusters << std::endl;
   assert(clusters.size()==8);
-  assert(clusters.back().size()==3);
+  assert(clusters[7].size()==3);
 
   //different gap makes different clusters
   pred.setNeighbourStripDistance(2);
@@ -161,7 +157,7 @@ int main()
   clusters=d.getClusters();
   std::cout << clusters << std::endl;
   assert(clusters.size()==9);
-  assert(clusters.back().size()==2);
+  assert(clusters[8].size()==2);
 
   std::cout << hitvec.size() << std::endl;
 

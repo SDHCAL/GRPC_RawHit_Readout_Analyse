@@ -68,11 +68,11 @@ int main()
   d.clusterize(defaultRawHitStripMerge());
   assert(d.hasCluster());
     
-  RawHitClustersList clusters=d.getClusters();
+  RawHitClustersVec clusters=d.getClusters();
   std::cout << clusters << std::endl;
   
   assert(clusters.size()==6);
-  RawHitClustersList::iterator first=clusters.begin();
+  RawHitClustersVec::iterator first=clusters.begin();
   assert(first->size()==4); 
   assert(mean<rawHit_DIF>(*first)==7);
   assert(mean<rawHit_ASIC>(*first)==1);
@@ -175,7 +175,7 @@ int main()
      {
        std::random_shuffle(toCluster.begin(),toCluster.end());
        //std::vector<std::vector<int>::iterator> clusters;
-       std::list<SDHCAL::Cluster<int> > clusters;
+       std::vector<SDHCAL::Cluster<int> > clusters;
        TimeCounters["clus"].start();
        SDHCAL::clusterize(toCluster.begin(),toCluster.end(),clusters,mergeInt);
        TimeCounters["clus"].stop();
