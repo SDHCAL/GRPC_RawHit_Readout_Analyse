@@ -381,6 +381,15 @@ int main()
   blevel3.add(8,keys);
   blevel3.add(9,keys);
   blevel3.write(blabels);
-  
+
+  ArrayCounter<SingleMapCounter,SingleMapCounter> aa(3);
+  ArrayCounter<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter> aa2(3);
+  ArrayCounter<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter> aa3(3);
+  ArrayCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter> aa4(3);
+
+  ArrayUpToCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter> aaup4(3);
+
+  RunThresholdCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter> rcmap;
+  assert (rcmap.nLevels()==5);
   return 0;
 }

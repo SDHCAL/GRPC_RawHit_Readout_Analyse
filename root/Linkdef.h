@@ -39,16 +39,28 @@
 #pragma link C++ class ArrayCounter<MappedCounters<SingleCounter> >+;
 #pragma link C++ class ArrayCounter<MappedCounters<MappedCounters<SingleCounter> > >+;
 #pragma link C++ class ArrayCounter<MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > >+;
+#pragma link C++ class ArrayCounter<SingleMapCounter,SingleMapCounter>+;
+#pragma link C++ class ArrayCounter<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class ArrayCounter<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class ArrayCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
 
 #pragma link C++ class ArrayUpToCounter<SingleCounter>+;
 #pragma link C++ class ArrayUpToCounter<MappedCounters<SingleCounter> >+;
 #pragma link C++ class ArrayUpToCounter<MappedCounters<MappedCounters<SingleCounter> > >+;
 #pragma link C++ class ArrayUpToCounter<MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > >+;
+#pragma link C++ class ArrayUpToCounter<SingleMapCounter,SingleMapCounter>+;
+#pragma link C++ class ArrayUpToCounter<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class ArrayUpToCounter<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class ArrayUpToCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
 
 #pragma link C++ class RunThresholdCounter<SingleCounter>+;
 #pragma link C++ class RunThresholdCounter<MappedCounters<SingleCounter> >+;
 #pragma link C++ class RunThresholdCounter<MappedCounters<MappedCounters<SingleCounter> > >+;
 #pragma link C++ class RunThresholdCounter<MappedCounters<MappedCounters<MappedCounters<SingleCounter> > > >+;
+#pragma link C++ class RunThresholdCounter<SingleMapCounter,SingleMapCounter>+;
+#pragma link C++ class RunThresholdCounter<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class RunThresholdCounter<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class RunThresholdCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
 
 #pragma link C++ class GG_messageCounter;
 
