@@ -322,5 +322,65 @@ int main()
   bob_readback.write();
   testRunPlaneGap(bob_readback);
 
+
+  //SingleMapCounter test
+  SingleMapCounter b;
+  b.add(2);
+  b.newSet(); //does nothing
+  b.add(4);
+  b.add(325);
+  b.add(4);
+  assert(b.distribution().size()==3);
+  std::map<unsigned int,unsigned int> bget=b.distribution();
+  assert(bget[2]==1);
+  assert(bget[4]==2);
+  assert(bget[325]==1);
+  assert(bget.size()==3);
+
+  assert(b.ASCIIfilewrite("bmap.txt"));
+  SingleMapCounter bback;
+  assert(bback.ASCIIfileread("bmap.txt"));
+  assert(b==bback);
+
+  MappedCounters<SingleMapCounter,SingleMapCounter> blevel1;
+  unsigned int key1=5;
+  blevel1.add(155,&key1);
+  blevel1.add(143,&key1);
+  key1=7;
+  blevel1.add(155,&key1);
+  bget=blevel1.distribution();
+  assert (bget.size()==2);
+  assert (bget[143]==1);
+  assert (bget[155]==2);
+  assert (bget.size()==2);
+  std::map<unsigned int,unsigned int> bgetbis=blevel1.counterAtLevel(2,&key1).distribution();
+  assert (bget==bgetbis);
+  bgetbis=blevel1.counterAtLevel(1,&key1).distribution();
+  assert (bget==bgetbis);
+  bgetbis=blevel1.counterAtLevel(0,&key1).distribution();
+  assert (bgetbis.size()==1);
+  assert (bgetbis[155]==1);
+  assert (bgetbis.size()==1);
+  key1=5;
+  bgetbis=blevel1.counterAtLevel(0,&key1).distribution();
+  assert (bgetbis.size()==2);
+  assert (bgetbis[155]==1);
+  assert (bgetbis[143]==1);
+  assert (bgetbis.size()==2);
+
+  //check everything is compiling
+  std::cout << "SingleMapCounter print" << std::endl;
+  unsigned int keys[3]={4,5,6};
+  std::string blabels[4]={"highest","top","middle","bottom"};
+  MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter> blevel2;
+  blevel2.add(3,keys);
+  blevel2.write(blabels);
+  MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter> blevel3;
+  blevel3.add(8,keys);
+  keys[2]=7;
+  blevel3.add(8,keys);
+  blevel3.add(9,keys);
+  blevel3.write(blabels);
+  
   return 0;
 }

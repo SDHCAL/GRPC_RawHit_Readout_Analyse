@@ -17,7 +17,7 @@ class SingleCounter : public ASCIIpersistance
   unsigned int sumcount() const {return m_count;}
   unsigned int flagcount() const {return m_flagcount;}
 
-  void write(std::string* labels=NULL,std::ostream& oflux=std::cout) { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
+  void write(std::string* labels=NULL,std::ostream& oflux=std::cout) const { oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : " <<  m_count << " for " << m_flagcount << std::endl;}
 
   bool ASCIIwrite(std::ostream& oflux=std::cout) const { oflux << m_count << " " << m_flagcount<< " " ; return oflux.good();}
   bool ASCIIread(std::istream& iflux=std::cin) {iflux >> m_count >> m_flagcount; return iflux.good();}
@@ -34,6 +34,52 @@ class SingleCounter : public ASCIIpersistance
   unsigned int m_flagcount;
   bool m_flag;
 };
+
+
+class SingleMapCounter : public ASCIIpersistance
+{
+ public:
+ SingleMapCounter() : m_valdistribution() {}
+
+  void add(unsigned int val=1, unsigned int *unused=NULL) {++m_valdistribution[val];}
+  void newSet() {;}
+
+  const std::map<unsigned int,unsigned int>& distribution() const {return m_valdistribution;}
+
+  void write(std::string* labels=NULL,std::ostream& oflux=std::cout) const
+  {
+    oflux <<  (labels==NULL ? std::string("") : (*labels))  << " : ";
+    for (std::map<unsigned int,unsigned int>::const_iterator it=m_valdistribution.begin(); it != m_valdistribution.end(); ++it) oflux << " " << it->first << "::" << it->second;
+    oflux << std::endl;
+  }
+
+  bool ASCIIwrite(std::ostream& oflux=std::cout) const
+  {
+    oflux <<  m_valdistribution.size() << " ";
+    for (std::map<unsigned int,unsigned int>::const_iterator it=m_valdistribution.begin(); it != m_valdistribution.end(); ++it)
+      oflux << it->first << " " << it->second << " ";
+    return oflux.good();
+  }
+  bool ASCIIread(std::istream& iflux=std::cin)
+  {
+    m_valdistribution.clear();
+    unsigned int mapsize,key,val;
+    iflux >> mapsize;
+    for (unsigned int i=0; i<mapsize; ++i) {iflux >> key >> val; m_valdistribution[key]=val;} 
+    return iflux.good();
+  }
+  
+  bool operator==(const SingleMapCounter& other) const {return m_valdistribution==other.distribution();}
+  bool operator!=(const SingleMapCounter& other) const {return ! ((*this)==other);}
+
+  static const unsigned int printIndentLevel=0;
+
+  SingleMapCounter& counterAtLevel(unsigned int level, unsigned int *) {return *this;} 
+
+ private:
+  std::map<unsigned int,unsigned int> m_valdistribution;
+};
+
 
 //COUNTER should derive form COUNTERBASE
 template <class COUNTER, class COUNTERBASE=SingleCounter>

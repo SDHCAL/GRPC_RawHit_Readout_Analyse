@@ -28,6 +28,10 @@
 #pragma link C++ class MappedCounters<SingleCounter>+;
 #pragma link C++ class MappedCounters<MappedCounters<SingleCounter> >+;
 #pragma link C++ class MappedCounters<MappedCounters<MappedCounters<SingleCounter> > >+;
+#pragma link C++ class SingleMapCounter+;
+#pragma link C++ class MappedCounters<SingleMapCounter,SingleMapCounter>+;
+#pragma link C++ class MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>+;
+#pragma link C++ class MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
 
 #pragma link C++ defined_in "GG_counter_histos.h";
 
