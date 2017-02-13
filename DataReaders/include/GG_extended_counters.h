@@ -5,7 +5,8 @@
 #include <vector>
 #include <algorithm>
 
-template <class COUNTER>
+//COUNTER should derive form COUNTERBASE
+template <class COUNTER, class COUNTERBASE=SingleCounter>
 class ArrayCounter : public ASCIIpersistance
 {
 public:
@@ -35,14 +36,14 @@ public:
   unsigned int size() {return m_counters.size();}
   COUNTER& getCounter(unsigned int i) {return m_counters[i];}
 
-  SingleCounter& getCounterAtLevel(unsigned int i, unsigned int level, unsigned int *keys) {return m_counters[i].counterAtLevel(level,keys);}
+  COUNTERBASE& getCounterAtLevel(unsigned int i, unsigned int level, unsigned int *keys) {return m_counters[i].counterAtLevel(level,keys);}
 
 private:
   std::vector<COUNTER> m_counters;
 };
 
 
-template <class COUNTER>
+template <class COUNTER, class COUNTERBASE=SingleCounter>
 class ArrayUpToCounter : public  ArrayCounter<COUNTER>
 {
 public:
@@ -52,7 +53,7 @@ public:
 };
 
 
-template <class COUNTER>
+template <class COUNTER, class COUNTERBASE=SingleCounter>
 class RunThresholdCounter : public ASCIIpersistance
 {
 public:
@@ -94,24 +95,24 @@ public:
   }
 
   COUNTER& getCounter(unsigned int threshold) {return m_thresholdCounters.getCounter(threshold-1);}
-  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int level, unsigned int *keys) {
+  COUNTERBASE& getCounterAtLevel(unsigned int threshold, unsigned int level, unsigned int *keys) {
     if (threshold==0) std::cerr << "ERROR : RunThresholdCounter::getCounterAtLevel : threshold given is 0, expecting 1 as minimum value" << std::endl;
     return m_thresholdCounters.getCounterAtLevel(threshold-1,level,keys);
   }
-  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/) 
+  COUNTERBASE& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/) 
     {  
       unsigned int level=0;
       if (COUNTER::printIndentLevel>0) level=COUNTER::printIndentLevel-1;
       return getCounterAtLevel(threshold,level,&subLevelKey);
     }
-  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/, unsigned int subsubLevelKey /*asic or gap*/)
+  COUNTERBASE& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif or plan*/, unsigned int subsubLevelKey /*asic or gap*/)
     { 
       unsigned int keys[2]={subLevelKey,subsubLevelKey};
       unsigned int level=0;
       if (COUNTER::printIndentLevel>1) level=COUNTER::printIndentLevel-2;
       return getCounterAtLevel(threshold,level,keys);
     }
-  SingleCounter& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif*/, unsigned int subsubLevelKey /*asic*/,unsigned int subsubsubLevelKey /*channel*/)
+  COUNTERBASE& getCounterAtLevel(unsigned int threshold, unsigned int subLevelKey /*dif*/, unsigned int subsubLevelKey /*asic*/,unsigned int subsubsubLevelKey /*channel*/)
     { 
       unsigned int keys[3]={subLevelKey,subsubLevelKey,subsubsubLevelKey};
       unsigned int level=0;
