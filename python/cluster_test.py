@@ -83,8 +83,11 @@ masterReader.registerDataListener(WrapTime)
 clusterReader=ROOT.RawHit_SDHCAL_Data_Reader_FromClusters(experience)
 allClusterer.registerDataListener(clusterReader)
 
-allClusterOccupancy=ROOT.RawHit_Occupancy_Listener()
-clusterReader.registerDataListener(allClusterOccupancy)
+allOccupancy=ROOT.RawHit_Occupancy_Listener()
+clusterReader.registerDataListener(allOccupancy)
+
+allClusterOccupancy=ROOT.RawHit_Plan_Cluster_Occupancy_Listener(experience)
+allClusterer.registerDataListener(allClusterOccupancy)
 
 #open file and event loop
 lcReader.open( inputFileNames )
@@ -102,7 +105,8 @@ rootFile=ROOT.TFile(rootFileName  , "RECREATE")
 #load ROOT library missing
 ROOT.TH1F
 allHitOccupancy.saveTo(rootFile.mkdir("AllData"),experience)
-allClusterOccupancy.saveTo(rootFile.mkdir("AllCluster"),experience)
+allOccupancy.saveTo(rootFile.mkdir("AllCluster"),experience)
+allClusterOccupancy.saveTo(rootFile.mkdir("AllClusterSize"))
 
 rootFile.Close()
 

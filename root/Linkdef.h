@@ -86,6 +86,7 @@
 #pragma link C++ class CMSTree_Writer_NoBIF+;
 #pragma link C++ class RawHit_Occupancy_Listener;
 #pragma link C++ class RawHit_Plan_Occupancy_Listener;
+#pragma link C++ class RawHit_Plan_Cluster_Occupancy_Listener;
 
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016;
 
