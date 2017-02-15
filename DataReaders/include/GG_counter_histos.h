@@ -90,11 +90,6 @@ struct OneLevelMappedSingleMapCounterHistos
   TProfile* BottomLevelDistributionProfile;
 };
 
-struct ThreeLevelMappedSingleMapCounterHistos
-{
-  TProfile2D** BottomLevels2DDistributionProfile;
-  OneLevelMappedSingleMapCounterHistos oneLevel;
-};
 
 template <class valueType>
 TH1F* convert(const std::map<unsigned int,valueType>& my_map,std::string hName, std::string hTitle, std::string NameX, std::string NameY, bool minPositiveIsZero=true)
@@ -135,6 +130,38 @@ OneLevelMappedSingleMapCounterHistos convert(MappedCounters<T,SingleMapCounter> 
       for ( std::map<unsigned int,unsigned int>::const_iterator itdistri=it->second.distribution().begin(); itdistri != it->second.distribution().end(); ++itdistri)
 	for (unsigned int i=0; i<itdistri->second;++i)
 	  toReturn.BottomLevelDistributionProfile->Fill(it->first,itdistri->first);
+    }
+  return toReturn;
+}
+
+template <class T>
+TProfile2D** convert2D(MappedCounters<MappedCounters<MappedCounters<T,SingleMapCounter>,SingleMapCounter>,SingleMapCounter> &allPlanDistr,std::string hNameBase, std::string hTitleBase,std::string arrayBaseName, std::string XaxisName, std::string YaxisName)
+{
+  TProfile2D** toReturn=new TProfile2D*[allPlanDistr.size()];
+  unsigned int i=0;
+  for (typename MappedCounters<MappedCounters<MappedCounters<T,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>::iterator it=allPlanDistr.begin(); it != allPlanDistr.end(); ++it)
+    {
+      std::string arrayname=arrayBaseName;
+      std::replace(arrayname.begin(),arrayname.end(),' ','_');
+      std::stringstream ssName;
+      ssName << hNameBase << "_" << arrayname << "_" << it->first;
+      std::stringstream ssTitle;
+      ssTitle << hTitleBase << " : " << arrayBaseName << "_" << it->first; 
+      MappedCounters<MappedCounters<T,SingleMapCounter>,SingleMapCounter>& YX_map=it->second;
+      intervalle<unsigned int> Yrange(YX_map.begin()->first,YX_map.rbegin()->first);
+      intervalle<unsigned int> Xrange(YX_map.begin()->second.begin()->first,YX_map.begin()->second.rbegin()->first);
+      for (typename MappedCounters<MappedCounters<T,SingleMapCounter>,SingleMapCounter>::iterator itY=YX_map.begin(); itY!=YX_map.end(); ++itY)
+	Xrange.expand(itY->second.begin()->first,itY->second.rbegin()->first);
+      toReturn[i]=new TProfile2D(ssName.str().c_str(),ssTitle.str().c_str(),Xrange.length()+1,Xrange.first,Xrange.second+1,Yrange.length()+1,Yrange.first,Yrange.second+1);
+      toReturn[i]->GetXaxis()->SetTitle(XaxisName.c_str());
+      toReturn[i]->GetYaxis()->SetTitle(YaxisName.c_str());
+      toReturn[i]->GetZaxis()->SetTitle(hTitleBase.c_str());
+      for (typename MappedCounters<MappedCounters<T,SingleMapCounter>,SingleMapCounter>::iterator itY=YX_map.begin(); itY!=YX_map.end(); ++itY)
+	for (typename MappedCounters<T,SingleMapCounter>::iterator itX=itY->second.begin(); itX!=itY->second.end(); ++itX)
+	  for (std::map<unsigned int,unsigned int>::const_iterator itdistri=itX->second.distribution().begin(); itdistri != itX->second.distribution().end(); ++itdistri)
+	    for (unsigned int n=0; n<itdistri->second; ++n)
+	      toReturn[i]->Fill(itX->first,itY->first,itdistri->first);
+      ++i;
     }
   return toReturn;
 }

@@ -43,4 +43,7 @@ void RawHit_Plan_Cluster_Occupancy_Listener::saveTo(TDirectory* ROOTdir)
     histos.BottomLevelDistribution[i]->Write();
   histos.BottomLevelDistributionProfile->Write();
 
+  TProfile2D** prof2D=convert2D(m_setupCounter,"Cluster_2D", "Cluster size","Plane number", "I or strip", "J or gap");
+  for (unsigned int i=0; i<m_setupCounter.size(); ++i)
+    prof2D[i]->Write();
 }
