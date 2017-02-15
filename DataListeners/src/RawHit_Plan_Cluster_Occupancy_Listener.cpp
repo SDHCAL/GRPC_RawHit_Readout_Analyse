@@ -34,6 +34,7 @@ void RawHit_Plan_Cluster_Occupancy_Listener::process(const RawHit_SDHCAL_Data& d
 void RawHit_Plan_Cluster_Occupancy_Listener::saveTo(TDirectory* ROOTdir)
 {
   //std::string labels[4]={"Setup","Plan","JorGap","IorStrip"}; m_setupCounter.write(labels);
+  std::cout << "Saving Cluster histos : "; std::cout.flush();
   if (m_setupCounter.empty()) return;
   if (NULL==ROOTdir) return;
   ROOTdir->cd();
@@ -42,8 +43,26 @@ void RawHit_Plan_Cluster_Occupancy_Listener::saveTo(TDirectory* ROOTdir)
   for (unsigned int i=0; i<m_setupCounter.size(); ++i)
     histos.BottomLevelDistribution[i]->Write();
   histos.BottomLevelDistributionProfile->Write();
+  std::cout << "Cluster plan histos"; std::cout.flush();
 
+  
   TProfile2D** prof2D=convert2D(m_setupCounter,"Cluster_2D", "Cluster size","Plane number", "I or strip", "J or gap");
   for (unsigned int i=0; i<m_setupCounter.size(); ++i)
     prof2D[i]->Write();
+  std::cout << ", TProfile2D histos"; std::cout.flush();
+
+  for (unsigned int iplan=0;iplan<m_setup.nPlans(); ++iplan)
+    if (m_setup.PlanIsStrip(iplan))
+      {
+	std::cout << ", gap histos for plan " << iplan; std::cout.flush();
+	std::stringstream ssName;
+	ssName << "Cluster_strip_plan_" << iplan;
+	std::stringstream ssTitle;
+	ssTitle << "Cluster size strip plan " << iplan;
+	histos=convert(m_setupCounter[iplan],ssName.str(),ssTitle.str(),"Gap number","Cluster size");
+	for (unsigned int i=0; i<m_setupCounter[iplan].size(); ++i)
+	  histos.BottomLevelDistribution[i]->Write();
+	histos.BottomLevelDistributionProfile->Write();	
+      }
+  std::cout << std::endl;
 }

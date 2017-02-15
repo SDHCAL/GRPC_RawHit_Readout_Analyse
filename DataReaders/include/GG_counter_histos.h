@@ -107,13 +107,14 @@ TH1F* convert(const std::map<unsigned int,valueType>& my_map,std::string hName, 
 }
 
 template <class T>
-OneLevelMappedSingleMapCounterHistos convert(MappedCounters<T,SingleMapCounter> &allPlanDistr,std::string hNameBase, std::string hTitleBase,std::string NameX, std::string NameY)
+OneLevelMappedSingleMapCounterHistos convert(MappedCounters<T,SingleMapCounter> &allPlanDistr,std::string hNameBase, std::string hTitleBase,std::string NameX, std::string NameY, bool minPositiveIsZero=true)
 {
   OneLevelMappedSingleMapCounterHistos toReturn;
-  toReturn.UpperLevelDistribution = convert(allPlanDistr.distribution(),hNameBase,hTitleBase,NameY,"Number of entries");
+  toReturn.UpperLevelDistribution = convert(allPlanDistr.distribution(),hNameBase,hTitleBase,NameY,"Number of entries",minPositiveIsZero);
   toReturn.BottomLevelDistribution = new TH1F*[allPlanDistr.size()];
   unsigned int maxXval=allPlanDistr.rbegin()->first+1;
-  toReturn.BottomLevelDistributionProfile = new TProfile((hNameBase+"_prof1D").c_str(),(hTitleBase+" vs "+NameX).c_str(),maxXval,0,maxXval);
+  unsigned int minXval=allPlanDistr.begin()->first;
+  toReturn.BottomLevelDistributionProfile = new TProfile((hNameBase+"_prof1D").c_str(),(hTitleBase+" vs "+NameX).c_str(),maxXval-minXval,minXval,maxXval);
   toReturn.BottomLevelDistributionProfile->GetXaxis()->SetTitle(NameX.c_str());
   toReturn.BottomLevelDistributionProfile->GetYaxis()->SetTitle(NameY.c_str());
   unsigned int i=0;
@@ -124,8 +125,8 @@ OneLevelMappedSingleMapCounterHistos convert(MappedCounters<T,SingleMapCounter> 
       std::stringstream ssName;
       ssName << hNameBase << "_" << Xname << "_" << it->first;
       std::stringstream ssTitle;
-      ssTitle << hTitleBase << " : " << NameX; 
-      toReturn.BottomLevelDistribution[i]=convert(it->second.distribution(),ssName.str(),ssTitle.str(),NameY,"Number of entries");
+      ssTitle << hTitleBase << " : " << NameX << " "<< it->first; 
+      toReturn.BottomLevelDistribution[i]=convert(it->second.distribution(),ssName.str(),ssTitle.str(),NameY,"Number of entries",minPositiveIsZero);
       ++i;
       for ( std::map<unsigned int,unsigned int>::const_iterator itdistri=it->second.distribution().begin(); itdistri != it->second.distribution().end(); ++itdistri)
 	for (unsigned int i=0; i<itdistri->second;++i)
