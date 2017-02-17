@@ -67,6 +67,7 @@
 #pragma link C++ class SDHCAL::Cluster<RawCalorimeterHitPointer>+;
 #pragma link C++ defined in "RawCalorimeterHitClustering.h";
 #pragma link C++ class RawHit_standard_merge_predicate;
+#pragma link C++ class RawHit_horizontal_track_predicate;
 
 
 #pragma link C++ class RawHit_SDHCAL_Data_Listener;
@@ -97,5 +98,6 @@
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<defaultRawHitMerge>+;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<defaultRawHitStripMerge>+;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<RawHit_standard_merge_predicate>+;
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_Clusterer<RawHit_horizontal_track_predicate>+;
 
 #endif

@@ -16,6 +16,7 @@ set (${PROJECT_NAME}_sources
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Threshold_Filter.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_TriggeredMode.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_standard_merge_predicate.cpp
+ ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_horizontal_track_predicate.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Clusterer.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_FromClusters.cpp
 PARENT_SCOPE)
