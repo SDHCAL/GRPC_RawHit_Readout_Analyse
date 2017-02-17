@@ -19,6 +19,7 @@ set (${PROJECT_NAME}_sources
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_horizontal_track_predicate.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Clusterer.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_FromClusters.cpp
+ ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_HorizontalTrack.cpp
 PARENT_SCOPE)
 
 
