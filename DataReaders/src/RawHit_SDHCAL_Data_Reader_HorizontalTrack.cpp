@@ -35,6 +35,7 @@ void RawHit_SDHCAL_Data_Reader_HorizontalTrack::process(const RawHit_SDHCAL_Data
 	addBIFhit(toCluster,trackEvent,clusterTimeSpan);
 	RawHit_SDHCAL_Data newd(trackEvent,d);
 	newd.setFrameSubSet_intervalle_startTime(clusterTimeSpan.first);
+	newd.clusterize(RawHit_horizontal_track_predicate(m_setup));
 	notifyListeners(newd);
 	++ntracks;
       }
