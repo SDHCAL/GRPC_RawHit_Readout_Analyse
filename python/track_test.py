@@ -70,6 +70,9 @@ trackReader.setBIFtimeWindow(BIFtriggerWindow)
 WrapTime=ROOT.Wrap_TimeCount_RawHit_SDHCAL_Data_Listener(trackReader,"tracker")
 masterReader.registerDataListener(WrapTime)
 
+trackReaderGIF2016=ROOT.RawHit_SDHCAL_Data_Reader_tracker_GIFoct2016()
+trackReader.registerDataListener(trackReaderGIF2016)
+
 Occupancy=ROOT.RawHit_Occupancy_Listener()
 WrapTimeB=ROOT.Wrap_TimeCount_RawHit_SDHCAL_Data_Listener(Occupancy,"occupancy")
 trackReader.registerDataListener(WrapTimeB)
@@ -77,6 +80,8 @@ trackReader.registerDataListener(WrapTimeB)
 effPlanOccupancy=ROOT.RawHit_Plan_Occupancy_Listener(experience)
 WrapTimeC=ROOT.Wrap_TimeCount_RawHit_SDHCAL_Data_Listener(effPlanOccupancy,"planOccupancy")
 trackReader.registerDataListener(WrapTimeC)
+effPlanOccupancyGIF2016=ROOT.RawHit_Plan_Occupancy_Listener(experience)
+trackReaderGIF2016.registerDataListener(effPlanOccupancyGIF2016)
 
 #open file and event loop
 lcReader.open( inputFileNames )
@@ -95,6 +100,10 @@ rootFile=ROOT.TFile(rootFileName  , "RECREATE")
 ROOT.TH1F
 Occupancy.saveTo(rootFile.mkdir("DIF"),experience)
 effPlanOccupancy.saveTo(rootFile.mkdir("effPlan"))
+effPlanOccupancyGIF2016.saveTo(rootFile.mkdir("effPlanGIF"))
+
+effPlanOccupancy.efficiencyReport()
+effPlanOccupancyGIF2016.efficiencyReport()
 
 rootFile.Close()
 

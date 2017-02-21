@@ -91,6 +91,7 @@
 #pragma link C++ class RawHit_Plan_Cluster_Occupancy_Listener;
 
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016;
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_tracker_GIFoct2016;
 
 #pragma link C++ class RawHit_SDHCAL_Data_LCWriter;
 #pragma link C++ class RawHit_SDHCAL_Data_LCWriter_RawCalorimeterHit;
