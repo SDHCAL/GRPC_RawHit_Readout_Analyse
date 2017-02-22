@@ -45,14 +45,13 @@ void RawHit_SDHCAL_Data_Reader_tracker_GIFoct2016::process(const RawHit_SDHCAL_D
 	}
     }
 
-  if (Itrack.second==9999) return;
+  if (Itrack.second==9999) {noTrack.print(); return;}
   
   std::vector<RawCalorimeterHitPointer> padData=extract(d.getHitVector(),m_padDIFs,rawHit_DIF());
   padData=extract(padData,Itrack,rawHit_Ilocal());
   padData=extract(padData,Jtrack,rawHit_Jlocal());
 
-  float matchfactor=11.0/3;
-  UI_intervalle stripIntervalle((unsigned int) floor(Jtrack.first*matchfactor),(unsigned int) ceil(Jtrack.second*matchfactor));
+  UI_intervalle stripIntervalle((unsigned int) floor(128-4*Jtrack.second-3),(unsigned int) ceil(128-4*Jtrack.first+3));
   
   std::vector<RawCalorimeterHitPointer> stripEvenData=extract(d.getHitVector(),m_stripEvenDifs,rawHit_DIF());
   stripEvenData=extract(stripEvenData,stripIntervalle,rawHit_EvenStrip());
