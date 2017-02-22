@@ -82,6 +82,10 @@ WrapTimeC=ROOT.Wrap_TimeCount_RawHit_SDHCAL_Data_Listener(effPlanOccupancy,"plan
 trackReader.registerDataListener(WrapTimeC)
 effPlanOccupancyGIF2016=ROOT.RawHit_Plan_Occupancy_Listener(experience)
 trackReaderGIF2016.registerDataListener(effPlanOccupancyGIF2016)
+OccupancyGIF2016=ROOT.RawHit_Occupancy_Listener()
+trackReaderGIF2016.registerDataListener(OccupancyGIF2016)
+
+
 
 #open file and event loop
 lcReader.open( inputFileNames )
@@ -101,6 +105,7 @@ ROOT.TH1F
 Occupancy.saveTo(rootFile.mkdir("DIF"),experience)
 effPlanOccupancy.saveTo(rootFile.mkdir("effPlan"))
 effPlanOccupancyGIF2016.saveTo(rootFile.mkdir("effPlanGIF"))
+OccupancyGIF2016.saveTo(rootFile.mkdir("DIFiftracks"),experience)
 
 effPlanOccupancy.efficiencyReport()
 effPlanOccupancyGIF2016.efficiencyReport()
