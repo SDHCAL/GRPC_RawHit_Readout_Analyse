@@ -1008,3 +1008,61 @@ void GIF_oct2016_ExperimentalSetup::setGIFconditions()
       catch ( const RunNotFound_ConfigException& e) {}
     }
 }
+
+
+
+CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+{
+  //counting from beam upstream
+  addBIF(3);
+  addSDHCALPlan( 30, 94,181); //slot  0
+  addSDHCALPlan(100, 97, 92); //slot  1
+  addSDHCALPlan( 40, 93, 98); //slot  2
+  addSDHCALPlan(119,118,129); //slot  3
+  addSDHCALPlan(151,152,164); //slot  4
+  addSDHCALPlan( 75, 61, 74); //slot  5
+  addSDHCALPlan(110,111,156); //slot  6
+  addSDHCALPlan(103,177,102); //slot  7
+  addSDHCALPlan(176,175,174); //slot  8
+  addSDHCALPlan(121,120,128); //slot  9
+  addSDHCALPlan( 58, 64, 65); //slot 10
+  addSDHCALPlan( 73, 72,148); //slot 11
+  addSDHCALPlan( 60, 79, 78); //slot 12
+  addSDHCALPlan(113, 43, 44); //slot 13
+  addSDHCALPlan(243,242,241); //slot 14
+  addSDHCALPlan(186,127,154); //slot 15
+  addSDHCALPlan( 71, 70,147); //slot 16
+  addSDHCALPlan(140,139, 47); //slot 17
+  addSDHCALPlan( 76, 77,143); //slot 18
+  addSDHCALPlan( 36, 91,159); //slot 19
+  addSDHCALPlan(183,178,179); //slot 20
+  addSDHCALPlan( 67, 41, 41); //slot 21
+  addSDHCALPlan(138, 46,137); //slot 22
+  addSDHCALPlan(144,173,131); //slot 23
+  addSDHCALPlan(160,184,189); //slot 24
+  addSDHCALPlan(171,167,172); //slot 25
+  addSDHCALPlan(145,135,146); //slot 26
+  addSDHCALPlan(180,170,185); //slot 27
+  addSDHCALPlan(190,188,187); //slot 28
+  addSDHCALPlan(166,165,169); //slot 29
+  addSDHCALPlan( 50, 57,155); //slot 30
+  addSDHCALPlan(153,108, 25); //slot 31
+  addSDHCALPlan(109, 56, 51); //slot 32
+  addSDHCALPlan(107,150,116); //slot 33
+  addSDHCALPlan( 49,124,126); //slot 34
+  addSDHCALPlan(115,149,117); //slot 35
+  addSDHCALPlan(114, 45, 48); //slot 36
+
+  //5 tricots to be implemented
+  //For the moment, it is a oneDIFPadDevice
+  addOneDIFPadDevice(80);
+  addOneDIFPadDevice(182);
+  addOneDIFPadDevice(105);
+  addOneDIFPadDevice(63);
+  addOneDIFPadDevice(87);
+
+  //AEGIS single PAD
+  addOneDIFPadDevice(18);
+  addOneDIFPadDevice(5);
+  addOneDIFPadDevice(8);
+}

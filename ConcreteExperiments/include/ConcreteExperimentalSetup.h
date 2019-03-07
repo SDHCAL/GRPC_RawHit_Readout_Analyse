@@ -25,5 +25,10 @@ class CERN_904_CosmicTestBench_Early2017_ExperimentalSetup : public Experimental
     }
 };
 
+class CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup  : public ExperimentalSetup
+{
+ public:
+  CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup();
+};
 
 #endif
