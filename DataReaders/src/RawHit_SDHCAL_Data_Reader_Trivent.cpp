@@ -1,13 +1,16 @@
 #include "RawHit_SDHCAL_Data_Reader_Trivent.h"
 
 #include <stdlib.h>
+#include <iterator>     // std::distance
 
 void RawHit_SDHCAL_Data_Reader_Trivent::translateToEventTimeIntervalle(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data&)
 {
+  if (m_ultraVerboseDebugOutput) printData("TRIVENT DEBUG : received ");
   bool eraseFirst=false;
   bool nextHasBeenErased=false;
   for (std::map<unsigned int,unsigned int>::iterator it=m_readoutTimeDistribution.begin(); it!= m_readoutTimeDistribution.end(); ++it) 
     {
+      if (m_ultraVerboseDebugOutput) std::cout << std::distance(m_readoutTimeDistribution.begin(),it) << "/" << m_readoutTimeDistribution.size() << "(" << int(nextHasBeenErased) << ")" << std::endl; 
       if (nextHasBeenErased) --it;
       nextHasBeenErased=false;
       bool eraseIt=(it->second<m_noiseCut);
@@ -15,7 +18,7 @@ void RawHit_SDHCAL_Data_Reader_Trivent::translateToEventTimeIntervalle(std::list
 	{
 	  std::map<unsigned int,unsigned int>::iterator itnext=it;
 	  ++itnext;
-	  if (itnext->first<it->first) {std::cout<< "TRIVENT GOT LOST" << std::endl; abort();}
+	  if (itnext->first<it->first) {std::cout<< "TRIVENT GOT LOST : " << itnext->first << " at " << &(*itnext) << " and " << it->first << " at " << &(*it) << std::endl; printData("TRIVENT DEBUG : time distribution current status "); abort();}
 	  if (itnext->first-it->first<=m_timeWin)
 	    {
 	      if (itnext->second >= it->second) eraseIt=true;
@@ -40,4 +43,12 @@ void RawHit_SDHCAL_Data_Reader_Trivent::translateToEventTimeIntervalle(std::list
   eventsTimes.push_back(m_readoutTimeDistribution.begin()->first);
   for (std::map<unsigned int,unsigned int>::iterator it=m_readoutTimeDistribution.begin(); it!= m_readoutTimeDistribution.end(); ++it) 
     if (it->first>(*eventsTimes.rbegin()+2*m_timeWin)) eventsTimes.push_back(it->first);
+}
+
+
+void RawHit_SDHCAL_Data_Reader_Trivent::printData(const char* message)
+{
+  std::cout << message;
+  for (auto &m : m_readoutTimeDistribution) std::cout << " (" << m.first << ":"<<m.second<<") ";
+  std::cout << std::endl;
 }
