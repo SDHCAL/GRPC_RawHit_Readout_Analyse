@@ -18,6 +18,7 @@ void RawHit_SDHCAL_Data_Reader_Trivent::translateToEventTimeIntervalle(std::list
 	{
 	  std::map<unsigned int,unsigned int>::iterator itnext=it;
 	  ++itnext;
+	  if (itnext==m_readoutTimeDistribution.end()) continue;
 	  if (itnext->first<it->first) {std::cout<< "TRIVENT GOT LOST : " << itnext->first << " at " << &(*itnext) << " and " << it->first << " at " << &(*it) << std::endl; printData("TRIVENT DEBUG : time distribution current status "); abort();}
 	  if (itnext->first-it->first<=m_timeWin)
 	    {
