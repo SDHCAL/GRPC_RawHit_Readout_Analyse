@@ -20,6 +20,7 @@ set (${PROJECT_NAME}_sources
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_Clusterer.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_FromClusters.cpp
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_HorizontalTrack.cpp
+ ${CMAKE_CURRENT_SOURCE_DIR}/Time_Decorator_For_RawHit_SDHCAL_Data_Listener.cpp
 PARENT_SCOPE)
 
 

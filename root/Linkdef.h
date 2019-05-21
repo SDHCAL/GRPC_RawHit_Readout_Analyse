@@ -72,6 +72,7 @@
 
 #pragma link C++ class RawHit_SDHCAL_Data_Listener;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader;
+#pragma link C++ class Time_Decorator_For_RawHit_SDHCAL_Data_Listener.h;
 
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_From_LCEvent;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_FromBIF;
