@@ -43,23 +43,25 @@ masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
 lcReader.registerLCEventListener(masterReader)
 
 BIFListener=ROOT.BIF_Data_Listener(numeroBIF)
-masterReader.registerDataListener(BIFListener)
+BIFListener_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener,"BIFListener")
+masterReader.registerDataListener(BIFListener_timer)
 
 trivent=ROOT.RawHit_SDHCAL_Data_Reader_Trivent(2,7) # 2=event windows half size, 7=threshold number for hits
 trivent.setSkipIfBIFisOutsideReadout(False)
 trivent.setBIFparameters(numeroBIF,BIFtriggerWindow) # event window = [-2,2] so BIF window = [-9,-4]
 #trivent.setUltraVerboseDebugOutput(True)
-masterReader.registerDataListener(trivent)
+trivent_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(trivent,"trivent")
+masterReader.registerDataListener(trivent_timer)
 
-hitOccupancy=ROOT.RawHit_Occupancy_Listener()
-trivent.registerDataListener(hitOccupancy)
 
 BIFListener_check=ROOT.BIF_Data_Listener(numeroBIF)
-trivent.registerDataListener(BIFListener_check)
+BIFListener_check_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener_check,"BIFListener_check")
+trivent.registerDataListener(BIFListener_check_timer)
 
 LCIOoutputWriter=ROOT.RawHit_SDHCAL_Data_LCWriter_RawCalorimeterHit()
 LCIOoutputWriter.open(outputFileName)
-trivent.registerDataListener(LCIOoutputWriter)
+LCIOoutputWriter_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(LCIOoutputWriter,"LCIOoutputWriter")
+trivent.registerDataListener(LCIOoutputWriter_timer)
 
 #open file and event loop
 lcReader.open( inputFileNames )
@@ -73,11 +75,9 @@ BIFListener_check.printMaxDelay()
 rootFile=ROOT.TFile("noisetrivent_check.root"  , "RECREATE")
 #load ROOT library missing
 ROOT.TH1F
-d=rootFile.mkdir("RawHits")
-hitOccupancy.saveTo(d,experience)
 
-dbis=rootFile.mkdir("BIFDelay")
-BIFListener.saveTo(dbis)
+d=rootFile.mkdir("BIFDelay")
+BIFListener.saveTo(d)
 
 dd=rootFile.mkdir("BIFDelay_check")
 BIFListener_check.saveTo(dd)
