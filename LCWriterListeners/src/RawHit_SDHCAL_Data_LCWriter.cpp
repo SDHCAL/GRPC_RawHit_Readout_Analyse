@@ -22,12 +22,14 @@ void RawHit_SDHCAL_Data_LCWriter::process(const RawHit_SDHCAL_Data& d)
 
   IMPL::LCCollectionVec* col=createAndFillCollection(d);
   setCollectionParameters(col,d);
+  finalizeCollection(col);
   evt->addCollection(col,m_collectionName);
 
   for (auto lcw : m_otherLCWriters)
     {
        col=lcw->createAndFillCollection(d);
        setCollectionParameters(col,d);
+       lcw->finalizeCollection(col);
        evt->addCollection(col,lcw->getCollectionName());
     }
   
@@ -39,7 +41,6 @@ void RawHit_SDHCAL_Data_LCWriter::setCollectionParameters(IMPL::LCCollectionVec*
 {
   copyLCParameters(*(d.getCollectionParameters()),col->parameters());
   setEventtNumbersHistoryKey(col,d.getEventNumber());
-  finalizeCollection(col);
 }
 
 void RawHit_SDHCAL_Data_LCWriter::setEventtNumbersHistoryKey(IMPL::LCCollectionVec* col,int eventNumber)
