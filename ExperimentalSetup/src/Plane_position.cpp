@@ -2,8 +2,8 @@
 
 void Plane_position::normalize_directions()
 {
-  double normeI=norme(direction_I);
-  double normeJ=norme(direction_J);
+  float normeI=norme(direction_I);
+  float normeJ=norme(direction_J);
   for (int i=0; i<3; ++i)
     {
       direction_I[i]/=normeI;
