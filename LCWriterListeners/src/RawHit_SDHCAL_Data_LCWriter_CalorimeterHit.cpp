@@ -20,7 +20,8 @@ RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_Calorime
       std::vector<int> DIFs;
       for (std::vector<unsigned int>::iterator itdif=uDIFs.begin(); itdif != uDIFs.end(); ++itdif) DIFs.push_back(*itdif);
       if (m_setup->DIFnumberIsStrip(DIFs[0])) ss << "strip";
-      if (m_setup->DIFnumberIsPad(DIFs[0])) ss << "pad";
+      else if (m_setup->DIFnumberIsPad(DIFs[0])) ss << "pad";
+      else  ss << "NotFullyImplementedType";
       m_parametersFromSetup[ss.str()]=DIFs;
     }
 }
