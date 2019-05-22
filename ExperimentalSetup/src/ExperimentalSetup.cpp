@@ -61,19 +61,18 @@ void ExperimentalSetup::addTricot(DIFNUMBER dif, unsigned int nAngles)
 
 }
 
-std::vector<unsigned int > ExperimentalSetup::getStripDevice_DIFnumber()
+template <class DEVICE>
+std::vector<ExperimentalSetup::DIFNUMBER> ExperimentalSetup::getDIFnumber(const std::map<DIFNUMBER, DEVICE*>& m) const
 {
   std::vector<DIFNUMBER> vec;
-  for ( std::map<DIFNUMBER, BifaceStripDevice*>::iterator it=m_stripDeviceDIFMap.begin(); it != m_stripDeviceDIFMap.end(); ++it) vec.push_back(it->first);
+  for (auto pm : m) vec.push_back(pm.first);
   return vec;
 }
 
-std::vector<unsigned int> ExperimentalSetup::getPadDevice_DIFnumber()
-{
-  std::vector<DIFNUMBER> vec;
-  for ( std::map<DIFNUMBER, PadDevice*> ::iterator it=m_padDeviceDIFMap.begin(); it!=m_padDeviceDIFMap.end(); ++it) vec.push_back(it->first);
-  return vec;
-}
+
+std::vector<ExperimentalSetup::DIFNUMBER> ExperimentalSetup::getStripDevice_DIFnumber() const { return getDIFnumber(m_stripDeviceDIFMap);}
+std::vector<ExperimentalSetup::DIFNUMBER> ExperimentalSetup::getPadDevice_DIFnumber() const {return getDIFnumber(m_padDeviceDIFMap);}
+std::vector<ExperimentalSetup::DIFNUMBER> ExperimentalSetup::getTricotDevice_DIFnumber() const {return getDIFnumber(m_tricotDeviceDIFMap);}
 
 
 DIFdrivenDevice& ExperimentalSetup::getOrAddDevice(DIFNUMBER dif)

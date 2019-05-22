@@ -42,12 +42,14 @@ class ExperimentalSetup
   void addCMSstrip(DIFNUMBER EvenStripDIF, DIFNUMBER OddStripDIF);
   void addTricot(DIFNUMBER dif, unsigned int nAngles=3);
   
-  std::vector<DIFNUMBER> getStripDevice_DIFnumber();
-  std::vector<DIFNUMBER> getPadDevice_DIFnumber();
-  std::vector<DIFdrivenDevice*> getPlans() {return m_plans;}
+  std::vector<DIFNUMBER> getStripDevice_DIFnumber() const;
+  std::vector<DIFNUMBER> getPadDevice_DIFnumber() const;
+  std::vector<DIFNUMBER> getTricotDevice_DIFnumber() const;
+  std::vector<DIFdrivenDevice*> getPlans() const {return m_plans;}
 
   PadDevice* getPadDevice(DIFNUMBER dif) { return (DIFnumberIsPad(dif) ? m_padDeviceDIFMap[dif] : NULL);}
   BifaceStripDevice* getStripDevice(DIFNUMBER dif) { return (DIFnumberIsStrip(dif) ? m_stripDeviceDIFMap[dif] : NULL);}
+  TricotDevice* getTricotDevice(DIFNUMBER dif) { return (DIFnumberIsStrip(dif) ? m_tricotDeviceDIFMap[dif] : NULL);}
   DIFdrivenDevice& getOrAddDevice(DIFNUMBER dif);  //Warning : will crash if dif is a BIF
 
   void getCoord3D(unsigned int dif,unsigned int asic, unsigned int channel, unsigned int& I, unsigned int& J, unsigned int & K); 
@@ -65,6 +67,8 @@ class ExperimentalSetup
   void message(DIFNUMBER dif) {std::cout << "WARNING : DIF number " << dif << " allready used " << std::endl;}
   template <class DEVICE>
     bool PlanIsDevice(unsigned int planNumber, const std::map<DIFNUMBER, DEVICE*>& m) const;
+  template <class DEVICE>
+    std::vector<DIFNUMBER> getDIFnumber(const std::map<DIFNUMBER, DEVICE*>& m) const;
 };
 
 
