@@ -10,3 +10,4 @@ void Plane_position::normalize_directions()
       direction_J[i]/=normeJ;
     }
 }
+
