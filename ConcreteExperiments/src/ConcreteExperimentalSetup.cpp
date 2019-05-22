@@ -1015,53 +1015,63 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
 {
   //counting from beam upstream
   addBIF(3);
-  addSDHCALPlan( 30, 94,181); //slot  0
-  addSDHCALPlan(100, 97, 92); //slot  1
-  addSDHCALPlan( 40, 93, 98); //slot  2
-  addSDHCALPlan(119,118,129); //slot  3
-  addSDHCALPlan(151,152,164); //slot  4
-  addSDHCALPlan( 75, 61, 74); //slot  5
-  addSDHCALPlan(110,111,156); //slot  6
-  addSDHCALPlan(103,177,102); //slot  7
-  addSDHCALPlan(176,175,174); //slot  8
-  addSDHCALPlan(121,120,128); //slot  9
-  addSDHCALPlan( 58, 64, 65); //slot 10
-  addSDHCALPlan( 73, 72,148); //slot 11
-  addSDHCALPlan( 60, 79, 78); //slot 12
-  addSDHCALPlan(113, 43, 44); //slot 13
-  addSDHCALPlan(243,242,241); //slot 14
-  addSDHCALPlan(186,127,154); //slot 15
-  addSDHCALPlan( 71, 70,147); //slot 16
-  addSDHCALPlan(140,139, 47); //slot 17
-  addSDHCALPlan( 76, 77,143); //slot 18
-  addSDHCALPlan( 36, 91,159); //slot 19
-  addSDHCALPlan(183,178,179); //slot 20
-  addSDHCALPlan( 67, 41, 41); //slot 21
-  addSDHCALPlan(138, 46,137); //slot 22
-  addSDHCALPlan(144,173,131); //slot 23
-  addSDHCALPlan(160,184,189); //slot 24
-  addSDHCALPlan(171,167,172); //slot 25
-  addSDHCALPlan(145,135,146); //slot 26
-  addSDHCALPlan(180,170,185); //slot 27
-  addSDHCALPlan(190,188,187); //slot 28
-  addSDHCALPlan(166,165,169); //slot 29
-  addSDHCALPlan( 50, 57,155); //slot 30
-  addSDHCALPlan(153,108, 25); //slot 31
-  addSDHCALPlan(109, 56, 51); //slot 32
-  addSDHCALPlan(107,150,116); //slot 33
-  addSDHCALPlan( 49,124,126); //slot 34
-  addSDHCALPlan(115,149,117); //slot 35
-  addSDHCALPlan(114, 45, 48); //slot 36
+  Plane_position SDHCALPos({0,0,0},{0,-1,0},{1,0,0});
+  float SDHCAL_layer_width=26.131f;
+  /*                                      */ addSDHCALPlan( 30, 94,181, SDHCALPos); //slot  0
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(100, 97, 92, SDHCALPos); //slot  1
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 40, 93, 98, SDHCALPos); //slot  2
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(119,118,129, SDHCALPos); //slot  3
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(151,152,164, SDHCALPos); //slot  4
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 75, 61, 74, SDHCALPos); //slot  5
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(110,111,156, SDHCALPos); //slot  6
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(103,177,102, SDHCALPos); //slot  7
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(176,175,174, SDHCALPos); //slot  8
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(121,120,128, SDHCALPos); //slot  9
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 58, 64, 65, SDHCALPos); //slot 10
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 73, 72,148, SDHCALPos); //slot 11
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 60, 79, 78, SDHCALPos); //slot 12
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(113, 43, 44, SDHCALPos); //slot 13
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(243,242,241, SDHCALPos); //slot 14
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(186,127,154, SDHCALPos); //slot 15
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 71, 70,147, SDHCALPos); //slot 16
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(140,139, 47, SDHCALPos); //slot 17
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 76, 77,143, SDHCALPos); //slot 18
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 36, 91,159, SDHCALPos); //slot 19
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(183,178,179, SDHCALPos); //slot 20
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 67, 41, 41, SDHCALPos); //slot 21
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(138, 46,137, SDHCALPos); //slot 22
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(144,173,131, SDHCALPos); //slot 23
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(160,184,189, SDHCALPos); //slot 24
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(171,167,172, SDHCALPos); //slot 25
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(145,135,146, SDHCALPos); //slot 26
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(180,170,185, SDHCALPos); //slot 27
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(190,188,187, SDHCALPos); //slot 28
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(166,165,169, SDHCALPos); //slot 29
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 50, 57,155, SDHCALPos); //slot 30
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(153,108, 25, SDHCALPos); //slot 31
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(109, 56, 51, SDHCALPos); //slot 32
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(107,150,116, SDHCALPos); //slot 33
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 49,124,126, SDHCALPos); //slot 34
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(115,149,117, SDHCALPos); //slot 35
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(114, 45, 48, SDHCALPos); //slot 36
 
-  //5 tricots 
-  addTricot(80);
-  addTricot(182);
-  addTricot(105);
-  addTricot(63);
-  addTricot(87);
+  //5 tricots
+  //FIXME, don't know exactly the positions, and what should be the direction ?
+  Plane_position tricotPos;
+  tricotPos.setPosition({0,0,37*SDHCAL_layer_width+100});
+  float tricot_layer_width=25.0f;
+  /*                                       */ addTricot(80,tricotPos);
+  tricotPos.translate(2, tricot_layer_width); addTricot(182,tricotPos);
+  tricotPos.translate(2, tricot_layer_width); addTricot(105,tricotPos);
+  tricotPos.translate(2, tricot_layer_width); addTricot(63,tricotPos);
+  tricotPos.translate(2, tricot_layer_width); addTricot(87,tricotPos);
 
   //AEGIS single PAD
-  addOneDIFPadDevice(18);
-  addOneDIFPadDevice(5);
-  addOneDIFPadDevice(8);
+  //FIXME don't know exactly the positions.
+  Plane_position aegisPos=tricotPos;
+  aegisPos.translate(2, 150.0f);
+  float aegis_layer_width=25.0f;
+  /*                                     */ addOneDIFPadDevice(18,aegisPos);
+  aegisPos.translate(2, aegis_layer_width); addOneDIFPadDevice(5,aegisPos);
+  aegisPos.translate(2, aegis_layer_width); addOneDIFPadDevice(8,aegisPos);
 }
