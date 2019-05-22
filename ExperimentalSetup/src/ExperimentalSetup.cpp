@@ -80,6 +80,7 @@ DIFdrivenDevice& ExperimentalSetup::getOrAddDevice(DIFNUMBER dif)
   if (DIFnumberIsBIF(dif)) {abort();}
   if (!DIFnumberIsKnown(dif)) {addOneDIFPadDevice(dif); return *(m_plans[m_plans.size()-1]);}
   if (DIFnumberIsPad(dif)) return *(m_padDeviceDIFMap[dif]);
+  if (DIFnumberIsTricot(dif)) return *(m_tricotDeviceDIFMap[dif]);
   return *(m_stripDeviceDIFMap[dif]);
 }
 
