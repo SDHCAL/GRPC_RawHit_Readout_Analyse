@@ -51,8 +51,8 @@ class DIFdrivenDevice
 
   void setPlanePosition(const Plane_position& plan) {m_ouSuisJe=plan;}
   virtual bool planPositionIsImplemented() const {return false;}
-  virtual std::pair<float,float> getPositionInPlanIn_mm(unsigned int I, unsigned int J, std::vector<RawCalorimeterHitPointer>& hits) const {return std::make_pair(0.0,0.0);}
-  void getAbsolutePositionIn_mm(unsigned int I, unsigned int J, std::vector<RawCalorimeterHitPointer>& hits, float* pos) const
+  virtual std::pair<float,float> getPositionInPlanIn_mm(unsigned int I, unsigned int J, const std::vector<RawCalorimeterHitPointer>& hits) const {return std::make_pair(0.0,0.0);}
+  void getAbsolutePositionIn_mm(unsigned int I, unsigned int J, const std::vector<RawCalorimeterHitPointer>& hits, float* pos) const
   {auto xIJ=getPositionInPlanIn_mm(I,J,hits); m_ouSuisJe.getPosition(xIJ.first,xIJ.second,pos);}
  protected:
   unsigned int m_layerNumber;

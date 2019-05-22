@@ -33,14 +33,22 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
   IMPL::LCCollectionVec *col=new IMPL::LCCollectionVec(EVENT::LCIO::CALORIMETERHIT);
   //Prepare a flag to tag data type in  col (precise ce qu'on va enregistrer)
   IMPL::LCFlagImpl chFlag(0) ;
-  //chFlag.setBit(EVENT::LCIO::RCHBIT_LONG ) ;                  // To be set when position will be provided
+  chFlag.setBit(EVENT::LCIO::RCHBIT_LONG ) ;                  // To be set when position will be provided
   chFlag.setBit(EVENT::LCIO::RCHBIT_BARREL ) ;                  // barrel
   chFlag.setBit(EVENT::LCIO::RCHBIT_ID1 ) ;                     // cell ID1 set (ID0 du raw calorimeter hit )
   chFlag.setBit(EVENT::LCIO::RCHBIT_TIME ) ;                    // timestamp set
   col->setFlag( chFlag.getFlag() ) ; 
 
+  float pos[3];
+  EVENT::IntVec BIFvaluesFound;
+  
   for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=d.getHitVector().begin(); itHit!=d.getHitVector().end(); ++itHit)
     {
+      if (m_setup->DIFnumberIsBIF(itHit->dif()))
+	{
+	  BIFvaluesFound.push_back((*itHit)->getAmplitude());
+	  continue;
+	}
       unsigned int I,J,K;
       m_setup->getCoord3D(itHit->dif(), itHit->asic(), itHit->channel(), I, J, K);
       unsigned int ID0=((K&0xFF)<<16)+((J&0xFF)<<8)+(I&0xFF);
@@ -50,9 +58,11 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
       newHit->setCellID1((*itHit)->getCellID0());
       newHit->setEnergy((*itHit)->getAmplitude());
       newHit->setTime((*itHit)->getTimeStamp());
-      //newHit->setPosition(const float pos[3])  ; //a mettre plus tard
+      m_setup->getOrAddDevice(itHit->dif()).getAbsolutePositionIn_mm(I,J,d.getHitVector(),pos); //could try to optimise this
+      newHit->setPosition(pos)  ; //FIXME : Write a WARNING when not implemented
       col->addElement(newHit);
     }
+  col->parameters().setValues("BIF_amplitudes",BIFvaluesFound);
   return col;
 }
 
