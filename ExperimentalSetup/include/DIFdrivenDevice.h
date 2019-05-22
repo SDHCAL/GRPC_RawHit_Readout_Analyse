@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 
+class RawCalorimeterHitPointer;
+
 class DIFdrivenDevice
 {
  public:
@@ -46,6 +48,8 @@ class DIFdrivenDevice
 
   std::vector<unsigned int> DIFnumbers() {return m_DIFnumbers;}
 
+  virtual bool planPositionIsImplemented() const {return false;}
+  virtual std::pair<double,double> getPositionInPlanIn_mm(unsigned int I, unsigned int J, std::vector<RawCalorimeterHitPointer>& hits) const {return std::make_pair(0.0,0.0);}
  protected:
   unsigned int m_layerNumber;
   std::vector<unsigned int> m_DIFnumbers; 
