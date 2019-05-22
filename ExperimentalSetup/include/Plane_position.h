@@ -13,6 +13,7 @@ class Plane_position
   void setDirections(std::array<float,3> I,std::array<float,3> J) {direction_I=I;direction_J=J;normalize_directions();}
   void getPosition(float xI, float xJ, float* pos) const { for (int i=0; i<3; ++i) pos[i]=position_origin[i]+xI*direction_I[i]+xJ*direction_J[i];}
   void getPosition(float xI, float xJ, std::array<float,3>& pos) const { getPosition(xI,xJ,pos.data());}
+  void translate(unsigned int indexDirection, float value) { position_origin[indexDirection]+=value;}
  private:
   std::array<float,3> position_origin;
   std::array<float,3> direction_I;

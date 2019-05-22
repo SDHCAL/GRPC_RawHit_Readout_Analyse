@@ -37,10 +37,10 @@ class ExperimentalSetup
   bool PlanIsTricot(unsigned int planNumber) const;
   
 
-  void addOneDIFPadDevice(DIFNUMBER dif);
-  void addSDHCALPlan(DIFNUMBER dif_J0, DIFNUMBER dif_J32, DIFNUMBER dif_J64);
-  void addCMSstrip(DIFNUMBER EvenStripDIF, DIFNUMBER OddStripDIF);
-  void addTricot(DIFNUMBER dif, unsigned int nAngles=3);
+  void addOneDIFPadDevice(DIFNUMBER dif,Plane_position plan=Plane_position());
+  void addSDHCALPlan(DIFNUMBER dif_J0, DIFNUMBER dif_J32, DIFNUMBER dif_J64,Plane_position plan=Plane_position());
+  void addCMSstrip(DIFNUMBER EvenStripDIF, DIFNUMBER OddStripDIF,Plane_position plan=Plane_position());
+  void addTricot(DIFNUMBER dif, Plane_position plan=Plane_position(), unsigned int nAngles=3);
   
   std::vector<DIFNUMBER> getStripDevice_DIFnumber() const;
   std::vector<DIFNUMBER> getPadDevice_DIFnumber() const;
