@@ -5,6 +5,7 @@
 
 #include "PadDevice.h"
 #include "BifaceStripDevice.h"
+#include "TricotDevice.h"
 
 void testDevice(DIFdrivenDevice &device)
 {
@@ -32,6 +33,8 @@ int main()
   std::cout << "testing CMS strip" << std::endl;
   BifaceStripDevice CMS(69,37,9);
   testDevice(CMS);
+  TricotDevice tricot(356);
+  testDevice(tricot);
   return 0;
 }
 
