@@ -20,6 +20,7 @@
 #pragma link C++ class DIFdrivenDevice+;
 #pragma link C++ class BifaceStripDevice+;
 #pragma link C++ class TricotDevice+;
+#pragma link C++ class Plane_position+;
 #pragma link C++ class ExperimentalSetup+;
 #pragma link C++ defined_in "ConfigInfoExceptions.h";
 #pragma link C++ defined_in "ConfigInfo.h";

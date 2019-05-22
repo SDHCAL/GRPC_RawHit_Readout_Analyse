@@ -11,6 +11,7 @@ set (${PROJECT_NAME}_sources
   ${CMAKE_CURRENT_SOURCE_DIR}/ExperimentalSetup.cpp 
   ${CMAKE_CURRENT_SOURCE_DIR}/ConfigInfoExceptions.cpp 
   ${CMAKE_CURRENT_SOURCE_DIR}/ConfigInfo.cpp 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Plane_position.cpp 
 PARENT_SCOPE)
 
 
