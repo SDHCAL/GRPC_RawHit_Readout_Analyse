@@ -21,6 +21,7 @@ RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_Calorime
       for (std::vector<unsigned int>::iterator itdif=uDIFs.begin(); itdif != uDIFs.end(); ++itdif) DIFs.push_back(*itdif);
       if (m_setup->DIFnumberIsStrip(DIFs[0])) ss << "strip";
       else if (m_setup->DIFnumberIsPad(DIFs[0])) ss << "pad";
+      else if (m_setup->DIFnumberIsTricot(DIFs[0])) ss << "tricot";
       else  ss << "NotFullyImplementedType";
       m_parametersFromSetup[ss.str()]=DIFs;
     }
