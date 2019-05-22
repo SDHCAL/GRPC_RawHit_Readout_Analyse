@@ -23,6 +23,13 @@ void RawHit_SDHCAL_Data_LCWriter::process(const RawHit_SDHCAL_Data& d)
   IMPL::LCCollectionVec* col=createAndFillCollection(d);
   setCollectionParameters(col,d);
   evt->addCollection(col,m_collectionName);
+
+  for (auto lcw : m_otherLCWriters)
+    {
+       col=lcw->createAndFillCollection(d);
+       setCollectionParameters(col,d);
+       evt->addCollection(col,lcw->getCollectionName());
+    }
   
   m_lcWriter->writeEvent( evt ) ;
   delete evt;
