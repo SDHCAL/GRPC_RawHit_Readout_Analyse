@@ -28,7 +28,7 @@ RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_Calorime
 
 IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFillCollection(const RawHit_SDHCAL_Data& d)
 {
-  IMPL::LCCollectionVec *col=new IMPL::LCCollectionVec(EVENT::LCIO::RAWCALORIMETERHIT);
+  IMPL::LCCollectionVec *col=new IMPL::LCCollectionVec(EVENT::LCIO::CALORIMETERHIT);
   //Prepare a flag to tag data type in  col (precise ce qu'on va enregistrer)
   IMPL::LCFlagImpl chFlag(0) ;
   //chFlag.setBit(EVENT::LCIO::RCHBIT_LONG ) ;                  // To be set when position will be provided
