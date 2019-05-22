@@ -8,8 +8,9 @@
 class DIFdrivenDevice
 {
  public:
-  typedef std::pair<unsigned int, unsigned int> I_J;
-  typedef std::pair<unsigned int, unsigned int> strip_gap;
+  typedef std::pair<unsigned int, unsigned int> I_J;  //standard pad
+  typedef std::pair<unsigned int, unsigned int> strip_gap; //CMS strip
+  typedef strip_gap strip_angle; // Tricot
   struct dif_asic_channel
   {
     unsigned int dif;
@@ -34,9 +35,10 @@ class DIFdrivenDevice
 
   //strip electronics
   strip_gap getStripnumberGapnumber(unsigned int dif, unsigned int asic, unsigned int channel) const {return getIJ(dif,asic,channel);}
+  strip_angle getStripnumberAnglenumber(unsigned int dif, unsigned int asic, unsigned int channel) const {return getIJ(dif,asic,channel);}
 
   //reverse translation
-  virtual dif_asic_channel getDifAsicChannel(unsigned int IorStrip, unsigned int JorGap) const=0; 
+  virtual dif_asic_channel getDifAsicChannel(unsigned int IorStrip, unsigned int JorGaporAngle) const=0; 
   
   //layer number
   unsigned int getK() const {return m_layerNumber;}
