@@ -9,6 +9,7 @@
 #include "DIFdrivenDevice.h"
 #include "PadDevice.h"
 #include "BifaceStripDevice.h"
+#include "TricotDevice.h"
 
 class ExperimentalSetup
 {
@@ -17,7 +18,7 @@ class ExperimentalSetup
   void operator=(const ExperimentalSetup&) {;}
  public:
   typedef unsigned int DIFNUMBER;
- ExperimentalSetup() : m_BIFs(), m_plans(), m_padDeviceDIFMap(), m_stripDeviceDIFMap() {;}
+ ExperimentalSetup() : m_BIFs(), m_plans(), m_padDeviceDIFMap(), m_stripDeviceDIFMap(), m_tricotDeviceDIFMap()  {;}
 
   ~ExperimentalSetup();
 
@@ -28,14 +29,18 @@ class ExperimentalSetup
   bool DIFnumberIsBIF(DIFNUMBER dif) const {return (! m_BIFs.empty()) && m_BIFs.find(dif)!=m_BIFs.end();}
   bool DIFnumberIsStrip(DIFNUMBER dif) const {return (! m_stripDeviceDIFMap.empty()) && m_stripDeviceDIFMap.find(dif) != m_stripDeviceDIFMap.end();}
   bool DIFnumberIsPad(DIFNUMBER dif) const {return (! m_padDeviceDIFMap.empty()) && m_padDeviceDIFMap.find(dif) != m_padDeviceDIFMap.end();}
-  bool DIFnumberIsKnown(DIFNUMBER dif) const {return (DIFnumberIsBIF(dif) || DIFnumberIsStrip(dif) || DIFnumberIsPad(dif) );}
+  bool DIFnumberIsTricot(DIFNUMBER dif) const {return (! m_tricotDeviceDIFMap.empty()) && m_tricotDeviceDIFMap.find(dif) != m_tricotDeviceDIFMap.end();}
+  bool DIFnumberIsKnown(DIFNUMBER dif) const {return (DIFnumberIsBIF(dif) || DIFnumberIsStrip(dif) || DIFnumberIsPad(dif) || DIFnumberIsTricot(dif) );}
 
   bool PlanIsStrip(unsigned int planNumber) const;
   bool PlanIsPad(unsigned int planNumber) const;
+  bool PlanIsTricot(unsigned int planNumber) const;
+  
 
   void addOneDIFPadDevice(DIFNUMBER dif);
   void addSDHCALPlan(DIFNUMBER dif_J0, DIFNUMBER dif_J32, DIFNUMBER dif_J64);
   void addCMSstrip(DIFNUMBER EvenStripDIF, DIFNUMBER OddStripDIF);
+  void addTricot(DIFNUMBER dif, unsigned int nAngles=3);
   
   std::vector<DIFNUMBER> getStripDevice_DIFnumber();
   std::vector<DIFNUMBER> getPadDevice_DIFnumber();
@@ -55,8 +60,11 @@ class ExperimentalSetup
   std::vector<DIFdrivenDevice*> m_plans;
   std::map<DIFNUMBER, PadDevice*> m_padDeviceDIFMap;
   std::map<DIFNUMBER, BifaceStripDevice*> m_stripDeviceDIFMap;
+  std::map<DIFNUMBER, TricotDevice*> m_tricotDeviceDIFMap;
 
   void message(DIFNUMBER dif) {std::cout << "WARNING : DIF number " << dif << " allready used " << std::endl;}
+  template <class DEVICE>
+    bool PlanIsDevice(unsigned int planNumber, const std::map<DIFNUMBER, DEVICE*>& m) const;
 };
 
 

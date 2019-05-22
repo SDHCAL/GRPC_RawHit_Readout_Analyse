@@ -7,23 +7,19 @@ ExperimentalSetup::~ExperimentalSetup()
     delete (*it);
 }
 
-bool ExperimentalSetup::PlanIsStrip(unsigned int planNumber) const
+template <class DEVICE>
+bool ExperimentalSetup::PlanIsDevice(unsigned int planNumber, const std::map<DIFNUMBER, DEVICE*>& m) const
 {
   if (planNumber>= m_plans.size()) return false;
   DIFdrivenDevice* searched=m_plans[planNumber];
-  for (std::map<DIFNUMBER, BifaceStripDevice*>::const_iterator itmap=m_stripDeviceDIFMap.begin(); itmap!=m_stripDeviceDIFMap.end(); ++itmap)
-    if (itmap->second==searched) return true;
+  for (auto pm : m)
+    if (pm.second==searched) return true;
   return false;
 }
 
-bool ExperimentalSetup::PlanIsPad(unsigned int planNumber) const
-{
-  if (planNumber>= m_plans.size()) return false;
-  DIFdrivenDevice* searched=m_plans[planNumber];
-  for (std::map<DIFNUMBER, PadDevice*>::const_iterator itmap=m_padDeviceDIFMap.begin(); itmap!=m_padDeviceDIFMap.end(); ++itmap)
-    if (itmap->second==searched) return true;
-  return false;
-}
+bool ExperimentalSetup::PlanIsStrip(unsigned int planNumber) const {return PlanIsDevice(planNumber,m_stripDeviceDIFMap);}
+bool ExperimentalSetup::PlanIsPad(unsigned int planNumber) const {return PlanIsDevice(planNumber,m_padDeviceDIFMap);}
+bool ExperimentalSetup::PlanIsTricot(unsigned int planNumber) const {return PlanIsDevice(planNumber,m_tricotDeviceDIFMap);}
 
 
 void ExperimentalSetup::addOneDIFPadDevice(DIFNUMBER dif)  
@@ -54,6 +50,15 @@ void ExperimentalSetup::addCMSstrip(DIFNUMBER EvenStripDIF, DIFNUMBER OddStripDI
   m_plans.push_back(p);
   m_stripDeviceDIFMap[EvenStripDIF]=p;
   m_stripDeviceDIFMap[OddStripDIF]=p;
+}
+
+void ExperimentalSetup::addTricot(DIFNUMBER dif, unsigned int nAngles)
+{
+  if (DIFnumberIsKnown(dif)) {message(dif); return;}
+  TricotDevice* p = new TricotDevice(dif, m_plans.size(), nAngles);
+  m_plans.push_back(p);
+  m_tricotDeviceDIFMap[dif]=p;
+
 }
 
 std::vector<unsigned int > ExperimentalSetup::getStripDevice_DIFnumber()

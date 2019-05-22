@@ -6,7 +6,7 @@
 class TricotDevice : public DIFdrivenDevice
 {
  public:
-  TricotDevice(unsigned int layer=0, unsigned int nAngles=3) : DIFdrivenDevice(layer), m_numberOfStripAngles(nAngles) {;}
+  TricotDevice(unsigned int layer=0) : DIFdrivenDevice(layer), m_numberOfStripAngles(3) {;}
   TricotDevice(unsigned int DIFnumber,unsigned int layer, unsigned int nAngles=3) : DIFdrivenDevice(layer), m_numberOfStripAngles(nAngles)
   {addDIF(DIFnumber);}
   unsigned int maxNumberOfASICs() const {return m_numberOfStripAngles;}
