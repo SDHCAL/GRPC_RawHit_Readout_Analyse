@@ -63,11 +63,16 @@ LCIOoutputWriter.open(outputFileName)
 LCIOoutputWriter_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(LCIOoutputWriter,"LCIOoutputWriter")
 trivent.registerDataListener(LCIOoutputWriter_timer)
 
+
+
+LCIOoutputWriter_extra=ROOT.RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(experience)
+LCIOoutputWriter.addLCWriter(LCIOoutputWriter_extra)
+
 #open file and event loop
 lcReader.open( inputFileNames )
 #lcReader.skipNEvents(63)
-#lcReader.readStream(2)
-lcReader.readStream()
+lcReader.readStream(2)
+#lcReader.readStream()
 
 #end of event loop
 BIFListener_check.printMaxDelay()
