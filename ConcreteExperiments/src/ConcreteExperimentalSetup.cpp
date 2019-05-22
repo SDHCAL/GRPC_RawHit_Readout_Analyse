@@ -1053,13 +1053,12 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
   addSDHCALPlan(115,149,117); //slot 35
   addSDHCALPlan(114, 45, 48); //slot 36
 
-  //5 tricots to be implemented
-  //For the moment, it is a oneDIFPadDevice
-  addOneDIFPadDevice(80);
-  addOneDIFPadDevice(182);
-  addOneDIFPadDevice(105);
-  addOneDIFPadDevice(63);
-  addOneDIFPadDevice(87);
+  //5 tricots 
+  addTricot(80);
+  addTricot(182);
+  addTricot(105);
+  addTricot(63);
+  addTricot(87);
 
   //AEGIS single PAD
   addOneDIFPadDevice(18);
