@@ -21,22 +21,30 @@ void RawHit_SDHCAL_Data_LCWriter::process(const RawHit_SDHCAL_Data& d)
   evt->setTimeStamp(d.getEventTimeStamp());
 
   IMPL::LCCollectionVec* col=createAndFillCollection(d);
-  copyLCParameters(*(d.getCollectionParameters()),col->parameters());
+  setCollectionParameters(col,d);
+  evt->addCollection(col,m_collectionName);
+  
+  m_lcWriter->writeEvent( evt ) ;
+  delete evt;
+}
 
+void RawHit_SDHCAL_Data_LCWriter::setCollectionParameters(IMPL::LCCollectionVec* col,const RawHit_SDHCAL_Data& d)
+{
+  copyLCParameters(*(d.getCollectionParameters()),col->parameters());
+  setEventtNumbersHistoryKey(col,d.getEventNumber());
+  finalizeCollection(col);
+}
+
+void RawHit_SDHCAL_Data_LCWriter::setEventtNumbersHistoryKey(IMPL::LCCollectionVec* col,int eventNumber)
+{
   EVENT::IntVec EventNumbersHistory;
   std::string EventNumbersHistoryKey="Readout_Event_Number_History";
   EVENT::StringVec intKeys;
   col->parameters().getIntKeys( intKeys );
   if ( std::find(intKeys.begin(), intKeys.end(), EventNumbersHistoryKey) !=  intKeys.end()) col->parameters().getIntVals(EventNumbersHistoryKey, EventNumbersHistory);
-  EventNumbersHistory.push_back(d.getEventNumber());
+  EventNumbersHistory.push_back(eventNumber);
   col->parameters().setValues(EventNumbersHistoryKey,EventNumbersHistory);
-  finalizeCollection(col);
-  evt->addCollection(col,m_collectionName);
-  m_lcWriter->writeEvent( evt ) ;
-  delete evt;
 }
-
-
 
 void RawHit_SDHCAL_Data_LCWriter::copyLCParameters( const EVENT::LCParameters &inputParameters , EVENT::LCParameters &targetParameters )
 {

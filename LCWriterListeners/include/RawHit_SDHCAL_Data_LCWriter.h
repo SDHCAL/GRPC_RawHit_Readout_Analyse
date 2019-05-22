@@ -23,6 +23,8 @@ class RawHit_SDHCAL_Data_LCWriter : public RawHit_SDHCAL_Data_Listener
   void copyLCParameters( const EVENT::LCParameters &inputParameters , EVENT::LCParameters &targetParameters ); //copied from Remi's Trivent
   unsigned int m_eventCount;
   std::string m_collectionName;
+  void setEventtNumbersHistoryKey(IMPL::LCCollectionVec* col,int eventNumber);
+  void setCollectionParameters(IMPL::LCCollectionVec* col,const RawHit_SDHCAL_Data&);
   
   virtual IMPL::LCCollectionVec* createAndFillCollection(const RawHit_SDHCAL_Data&)=0;
   virtual void finalizeCollection(IMPL::LCCollectionVec*)=0;
