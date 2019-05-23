@@ -52,6 +52,24 @@ void testExperimentalSetup()
   vec=aSetup.getTricotDevice_DIFnumber();
   assert(vec.size()==1);
   assert(vec[0]==888); 
+
+  assert (aSetup.getPadDevice(1) == NULL);
+  assert (aSetup.getPadDevice(14) != NULL);
+  assert (aSetup.getPadDevice(300) != NULL);
+  assert (aSetup.getPadDevice(215) == NULL);
+  assert (aSetup.getPadDevice(888) == NULL);
+  assert (aSetup.getStripDevice(1) == NULL);
+  assert (aSetup.getStripDevice(14) == NULL);
+  assert (aSetup.getStripDevice(300) == NULL);
+  assert (aSetup.getStripDevice(215) != NULL);
+  assert (aSetup.getStripDevice(888) == NULL);
+  assert (aSetup.getTricotDevice(1) == NULL);
+  assert (aSetup.getTricotDevice(14) == NULL);
+  assert (aSetup.getTricotDevice(300) == NULL);
+  assert (aSetup.getTricotDevice(215) == NULL);
+  assert (aSetup.getTricotDevice(888) != NULL);
+
+  
 }
 
 

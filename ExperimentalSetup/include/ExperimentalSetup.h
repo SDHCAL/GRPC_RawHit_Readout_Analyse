@@ -49,7 +49,7 @@ class ExperimentalSetup
 
   PadDevice* getPadDevice(DIFNUMBER dif) { return (DIFnumberIsPad(dif) ? m_padDeviceDIFMap[dif] : NULL);}
   BifaceStripDevice* getStripDevice(DIFNUMBER dif) { return (DIFnumberIsStrip(dif) ? m_stripDeviceDIFMap[dif] : NULL);}
-  TricotDevice* getTricotDevice(DIFNUMBER dif) { return (DIFnumberIsStrip(dif) ? m_tricotDeviceDIFMap[dif] : NULL);}
+  TricotDevice* getTricotDevice(DIFNUMBER dif) { return (DIFnumberIsTricot(dif) ? m_tricotDeviceDIFMap[dif] : NULL);}
   DIFdrivenDevice& getOrAddDevice(DIFNUMBER dif);  //Warning : will crash if dif is a BIF
 
   void getCoord3D(unsigned int dif,unsigned int asic, unsigned int channel, unsigned int& I, unsigned int& J, unsigned int & K); 

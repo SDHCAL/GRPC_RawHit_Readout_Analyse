@@ -45,17 +45,17 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
   EVENT::IntVec BIFvaluesFound;
 
   
-  std::vector<RawCalorimeterHitPointer> tricot_RawHits;
-  std::vector<RawCalorimeterHitPointer> other_RawHits;
-  const std::vector<RawCalorimeterHitPointer> *defaultHits=&(d.getHitVector());
   if (! m_tricot_DIFs.empty())
     {
-      tricot_RawHits=extract(d.getHitVector(),domain<unsigned int>(m_tricot_DIFs),rawHit_DIF());
-      other_RawHits =extract(d.getHitVector(),domain<unsigned int>(m_tricot_DIFs),rawHit_DIF(),false);
-      defaultHits=&other_RawHits;
+      std::vector<RawCalorimeterHitPointer> tricot_RawHits=extract(d.getHitVector(),domain<unsigned int>(m_tricot_DIFs),rawHit_DIF());
+      for (auto DIFnum : m_tricot_DIFs)
+	{
+	  std::vector<RawCalorimeterHitPointer> OneDIF_RawHit=extract(tricot_RawHits,domain<unsigned int>(DIFnum),rawHit_DIF());
+	  m_setup->getTricotDevice(DIFnum)->computeHitPosition(OneDIF_RawHit);
+	}
     }
   
-  for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=defaultHits->begin(); itHit!=defaultHits->end(); ++itHit)
+  for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=d.getHitVector().begin(); itHit!=d.getHitVector().end(); ++itHit)
     {
       if (m_setup->DIFnumberIsBIF(itHit->dif()))
 	{
