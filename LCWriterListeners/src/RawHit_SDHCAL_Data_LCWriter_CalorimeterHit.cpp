@@ -1,6 +1,7 @@
 #include "RawHit_SDHCAL_Data_LCWriter_CalorimeterHit.h"
 
 #include "RawHit_SDHCAL_Data.h"
+#include "RawCalorimeterHitPointerTools.h"
 #include "IMPL/LCCollectionVec.h"
 #include "IMPL/LCFlagImpl.h"
 #include "IMPL/CalorimeterHitImpl.h"
@@ -25,6 +26,9 @@ RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_Calorime
       else  ss << "NotFullyImplementedType";
       m_parametersFromSetup[ss.str()]=DIFs;
     }
+  std::vector<unsigned int> tricot_DIFs=m_setup->getTricotDevice_DIFnumber();
+  m_setupHasTricot= ! tricot_DIFs.empty();
+  if (m_setupHasTricot) m_difTricotDomain=domain<unsigned int>(tricot_DIFs);
 }
 
 
@@ -41,8 +45,19 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
 
   float pos[3];
   EVENT::IntVec BIFvaluesFound;
+
   
-  for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=d.getHitVector().begin(); itHit!=d.getHitVector().end(); ++itHit)
+  std::vector<RawCalorimeterHitPointer> tricot_RawHits;
+  std::vector<RawCalorimeterHitPointer> other_RawHits;
+  const std::vector<RawCalorimeterHitPointer> *defaultHits=&(d.getHitVector());
+  if (m_setupHasTricot)
+    {
+      tricot_RawHits=extract(d.getHitVector(),m_difTricotDomain,rawHit_DIF());
+      other_RawHits=extract(d.getHitVector(),m_difTricotDomain,rawHit_DIF(),false);
+      defaultHits=&other_RawHits;
+    }
+  
+  for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=defaultHits->begin(); itHit!=defaultHits->end(); ++itHit)
     {
       if (m_setup->DIFnumberIsBIF(itHit->dif()))
 	{
