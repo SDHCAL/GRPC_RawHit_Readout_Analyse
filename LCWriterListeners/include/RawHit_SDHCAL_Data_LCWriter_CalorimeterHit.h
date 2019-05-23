@@ -3,7 +3,6 @@
 
 #include "RawHit_SDHCAL_Data_LCWriter.h"
 #include "ExperimentalSetup.h"
-#include "domain.h"
 #include <map>
 #include <vector>
 #include <string>
@@ -18,9 +17,7 @@ class RawHit_SDHCAL_Data_LCWriter_CalorimeterHit : public RawHit_SDHCAL_Data_LCW
 
   ExperimentalSetup *m_setup;
   std::map<std::string, std::vector<int> > m_parametersFromSetup;
-
-  bool m_setupHasTricot;
-  domain<unsigned int> m_difTricotDomain;
+  std::vector<unsigned int> m_tricot_DIFs;
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "RawHit_SDHCAL_Data_LCWriter_CalorimeterHit.h"
 
+#include "domain.h"
 #include "RawHit_SDHCAL_Data.h"
 #include "RawCalorimeterHitPointerTools.h"
 #include "IMPL/LCCollectionVec.h"
@@ -9,7 +10,7 @@
 
 #include <sstream>
 
-RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName) : RawHit_SDHCAL_Data_LCWriter(collectionName), m_setup(&setup) 
+RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName) : RawHit_SDHCAL_Data_LCWriter(collectionName), m_setup(&setup), m_tricot_DIFs(m_setup->getTricotDevice_DIFnumber())
 {
   if (m_setup->hasBIF()) m_parametersFromSetup["BIF"]=std::vector<int>(1,m_setup->getBIF());
   std::vector<DIFdrivenDevice*> plans=m_setup->getPlans();
@@ -26,9 +27,6 @@ RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_Calorime
       else  ss << "NotFullyImplementedType";
       m_parametersFromSetup[ss.str()]=DIFs;
     }
-  std::vector<unsigned int> tricot_DIFs=m_setup->getTricotDevice_DIFnumber();
-  m_setupHasTricot= ! tricot_DIFs.empty();
-  if (m_setupHasTricot) m_difTricotDomain=domain<unsigned int>(tricot_DIFs);
 }
 
 
@@ -50,10 +48,10 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
   std::vector<RawCalorimeterHitPointer> tricot_RawHits;
   std::vector<RawCalorimeterHitPointer> other_RawHits;
   const std::vector<RawCalorimeterHitPointer> *defaultHits=&(d.getHitVector());
-  if (m_setupHasTricot)
+  if (! m_tricot_DIFs.empty())
     {
-      tricot_RawHits=extract(d.getHitVector(),m_difTricotDomain,rawHit_DIF());
-      other_RawHits=extract(d.getHitVector(),m_difTricotDomain,rawHit_DIF(),false);
+      tricot_RawHits=extract(d.getHitVector(),domain<unsigned int>(m_tricot_DIFs),rawHit_DIF());
+      other_RawHits =extract(d.getHitVector(),domain<unsigned int>(m_tricot_DIFs),rawHit_DIF(),false);
       defaultHits=&other_RawHits;
     }
   
