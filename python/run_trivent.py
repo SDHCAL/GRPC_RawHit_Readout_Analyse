@@ -70,8 +70,11 @@ LCIOoutputWriter.addLCWriter(LCIOoutputWriter_extra)
 
 #open file and event loop
 lcReader.open( inputFileNames )
-#lcReader.skipNEvents(63)
-lcReader.readStream(2)
+#File DHCAL_744193_I0_0.slcio has Tricot data at least in readout 130 / 179 / 214 / 446 / 45223 / 525 / 575 / 678 / 749 / 778 / 793 / 
+#Only one hit per trivent event
+#For readout 130, the corresponding event is at event 28 (over 87)
+lcReader.skipNEvents(129)
+lcReader.readStream(1)
 #lcReader.readStream()
 
 #end of event loop
