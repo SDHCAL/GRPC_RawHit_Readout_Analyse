@@ -58,7 +58,7 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
       newHit->setCellID1((*itHit)->getCellID0());
       newHit->setEnergy((*itHit)->getAmplitude());
       newHit->setTime((*itHit)->getTimeStamp());
-      m_setup->getOrAddDevice(itHit->dif()).getAbsolutePositionIn_mm(I,J,d.getHitVector(),pos); //could try to optimise this
+      m_setup->getOrAddDevice(itHit->dif()).getAbsolutePositionIn_mm(I,J,pos); //could try to optimise this
       newHit->setPosition(pos)  ; //FIXME : Write a WARNING when not implemented
       col->addElement(newHit);
     }

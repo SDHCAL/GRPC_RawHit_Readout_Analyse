@@ -14,7 +14,7 @@ class PadDevice : public DIFdrivenDevice
   std::pair<unsigned int, unsigned int> getIJ(unsigned int dif, unsigned int asic, unsigned int channel) const;
   dif_asic_channel getDifAsicChannel(unsigned int I, unsigned int J) const;
   bool planPositionIsImplemented() const {return true;}
-  std::pair<float,float> getPositionInPlanIn_mm(unsigned int I, unsigned int J, const std::vector<RawCalorimeterHitPointer>& hits) const  {return std::make_pair(I*10.408f,J*10.408f);}
+  std::pair<float,float> getPositionInPlanIn_mm(unsigned int I, unsigned int J) const  {return std::make_pair(I*10.408f,J*10.408f);}
 };
 
 #endif
