@@ -99,13 +99,18 @@ void RawHit_SDHCAL_Data_LCWriter::setLCEventTimeParameter(IMPL::LCEventImpl* evt
 	bcid.insert(m.second.BCID);
 	absbcid.insert(m.second.AbsBCID);
       }
-    EVENT::IntVec dtc_vec, gtc_vec, bcid_vec, absbcid_vec;
+    EVENT::IntVec dtc_vec, gtc_vec, bcid_vec, absbcid_low_vec, absbcid_up_vec;
     for (auto &m : dtc) dtc_vec.push_back(m);
     for (auto &m : gtc) gtc_vec.push_back(m);
     for (auto &m : bcid) bcid_vec.push_back(m);
-    for (auto &m : absbcid) absbcid_vec.push_back(m);
+    for (auto &m : absbcid)
+      {
+	absbcid_low_vec.push_back(m&0xffffffff);
+	absbcid_up_vec.push_back(m>>32);
+      }
     evt->parameters().setValues("DTC" , dtc_vec);
     evt->parameters().setValues("GTC" , gtc_vec);
     evt->parameters().setValues("BCID" , bcid_vec);
-    evt->parameters().setValues("Absolute_BCID" , absbcid_vec);
+    evt->parameters().setValues("Absolute_BCID_lower_bits" , absbcid_low_vec);
+    evt->parameters().setValues("Absolute_BCID_upper_bits" , absbcid_up_vec);
 }
