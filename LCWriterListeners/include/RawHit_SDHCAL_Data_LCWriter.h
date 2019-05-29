@@ -9,6 +9,9 @@
 #include "IMPL/LCCollectionVec.h"
 #include <string>
 #include <vector>
+#include <set>
+
+//class IMPL::LCEventImpl;
 
 class RawHit_SDHCAL_Data_LCWriter : public RawHit_SDHCAL_Data_Listener
 {
@@ -32,6 +35,7 @@ class RawHit_SDHCAL_Data_LCWriter : public RawHit_SDHCAL_Data_Listener
   
   virtual IMPL::LCCollectionVec* createAndFillCollection(const RawHit_SDHCAL_Data&)=0;
   virtual void finalizeCollection(IMPL::LCCollectionVec*)=0;
+  void setLCEventTimeParameter(IMPL::LCEventImpl*,const RawHit_SDHCAL_Data&);
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include "RawHit_SDHCAL_Data.h"
 #include "RawHit_SDHCAL_Data.h"
 #include <algorithm>
+#include <set>
 
 RawHit_SDHCAL_Data_LCWriter::RawHit_SDHCAL_Data_LCWriter(std::string collectionName) : m_eventCount(0), m_collectionName(collectionName)
 {
@@ -20,6 +21,9 @@ void RawHit_SDHCAL_Data_LCWriter::process(const RawHit_SDHCAL_Data& d)
   evt->setEventNumber(m_eventCount);
   evt->setTimeStamp(d.getEventTimeStamp()*1e9); //SDHCAL timestamp is in second, LCevents expects it in nanoseconds
 
+  evt->parameters().setValue("trigger" , d.getEventNumber());
+  setLCEventTimeParameter(evt,d);
+  
   IMPL::LCCollectionVec* col=createAndFillCollection(d);
   setCollectionParameters(col,d);
   finalizeCollection(col);
@@ -82,3 +86,26 @@ void RawHit_SDHCAL_Data_LCWriter::copyLCParameters( const EVENT::LCParameters &i
 
 }
 
+
+void RawHit_SDHCAL_Data_LCWriter::setLCEventTimeParameter(IMPL::LCEventImpl* evt,const RawHit_SDHCAL_Data &d)
+{
+    std::map<unsigned int,DIF_timeInfo> timeInfo=d.DIFtimeInfo();
+    std::set<unsigned int> dtc,gtc,bcid;
+    std::set<uint64_t> absbcid;
+    for (auto &m : timeInfo)
+      {
+	dtc.insert(m.second.DTC);
+	gtc.insert(m.second.GTC);
+	bcid.insert(m.second.BCID);
+	absbcid.insert(m.second.AbsBCID);
+      }
+    EVENT::IntVec dtc_vec, gtc_vec, bcid_vec, absbcid_vec;
+    for (auto &m : dtc) dtc_vec.push_back(m);
+    for (auto &m : gtc) gtc_vec.push_back(m);
+    for (auto &m : bcid) bcid_vec.push_back(m);
+    for (auto &m : absbcid) absbcid_vec.push_back(m);
+    evt->parameters().setValues("DTC" , dtc_vec);
+    evt->parameters().setValues("GTC" , gtc_vec);
+    evt->parameters().setValues("BCID" , bcid_vec);
+    evt->parameters().setValues("Absolute_BCID" , absbcid_vec);
+}
