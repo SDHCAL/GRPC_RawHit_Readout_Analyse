@@ -10,7 +10,7 @@
 class RawHit_SDHCAL_Data_LCWriter_CalorimeterHit : public RawHit_SDHCAL_Data_LCWriter
 {
  public:
-  RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName="DHCAL_Hits");
+  RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName="SDHCAL_HIT");
  private:
   virtual IMPL::LCCollectionVec* createAndFillCollection(const RawHit_SDHCAL_Data&);
   virtual void finalizeCollection(IMPL::LCCollectionVec*);

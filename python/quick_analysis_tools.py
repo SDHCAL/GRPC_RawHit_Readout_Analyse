@@ -13,7 +13,7 @@ def getEventNumberWithNHitsGreaterThan(Nmin,lciofileName):
     lcReader.open( lciofileName )
     a=[]
     for ev in lcReader:
-        lcCol=ev.getCollection("DHCAL_Hits")
+        lcCol=ev.getCollection("SDHCAL_HIT")
         if lcCol.size()>Nmin:
             a.append(ev.getEventNumber())
     lcReader.close()
@@ -24,18 +24,18 @@ def histoNhit(lciofileName):
     lcReader.open( lciofileName )
     a=ROOT.TH1F("Nhits","Nhits",1500,0,1500)
     for ev in lcReader:
-        lcCol=ev.getCollection("DHCAL_Hits")
+        lcCol=ev.getCollection("SDHCAL_HIT")
         a.Fill(lcCol.size())
     lcReader.close()
     return a
 
-def Graph3DNhit(lciofileName,numeroEvent):
+def Graph3DNhit(lciofileName,numeroEvent,layerCode="K"):
     experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
     lcReader.skipNEvents(numeroEvent-1)
     ev=lcReader.readNextEvent()
-    lcCol=ev.getCollection("DHCAL_Hits")
+    lcCol=ev.getCollection("SDHCAL_HIT")
     q=pyLCIO.UTIL.CellIDDecoder('EVENT::CalorimeterHit')(lcCol)
     a=[]
     a.append(ROOT.TCanvas())
@@ -47,7 +47,7 @@ def Graph3DNhit(lciofileName,numeroEvent):
         pos=hit.getPosition()
         gr.SetPoint(indice,pos[0],pos[2],pos[1])
         indice=indice+1
-        numeroplan=q(hit)['K'].value()
+        numeroplan=q(hit)[layerCode].value()
         if experience.PlanIsTricot(numeroplan):
             grTricot.SetPoint(indiceTricot,pos[0],pos[2],pos[1])
             indiceTricot=indiceTricot+1
@@ -75,7 +75,7 @@ def getEventNumberWithNTricotHits(lciofileName):
     experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
     a=dict()
     for ev in lcReader:
-        lcCol=ev.getCollection("DHCAL_Hits")
+        lcCol=ev.getCollection("SDHCAL_HIT")
         q=pyLCIO.UTIL.CellIDDecoder('EVENT::CalorimeterHit')(lcCol)
         nhit=0
         for hit in lcCol:
