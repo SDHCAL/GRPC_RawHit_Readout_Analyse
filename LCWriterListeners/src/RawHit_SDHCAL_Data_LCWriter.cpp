@@ -113,6 +113,8 @@ void RawHit_SDHCAL_Data_LCWriter::setLCEventTimeParameter(IMPL::LCEventImpl* evt
     evt->parameters().setValues("BCID" , bcid_vec);
     evt->parameters().setValues("Absolute_BCID_lower_bits" , absbcid_low_vec);
     evt->parameters().setValues("Absolute_BCID_upper_bits" , absbcid_up_vec);
+    evt->parameters().setValue("Sub_Readout_Frame_start_time_in_trigger", int(d.getFrameSubSet_intervalle_startTime()));
+    evt->parameters().setValue("Sub_Readout_Frame_start_time_in_trigger_Notice","For Trivent Sub_Readout_Frame_start_time_in_trigger is peak time minus interval half width"); 
     // put time information in Guillaume's Trivent way
     if (absbcid_up_vec.empty()) return;
     evt->parameters().setValue("bcid1", absbcid_up_vec[0]);
