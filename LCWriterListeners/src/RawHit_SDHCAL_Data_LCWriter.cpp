@@ -18,7 +18,7 @@ void RawHit_SDHCAL_Data_LCWriter::process(const RawHit_SDHCAL_Data& d)
   IMPL::LCEventImpl*  evt = new IMPL::LCEventImpl() ;
   evt->setRunNumber(d.getRunNumber());
   evt->setEventNumber(m_eventCount);
-  evt->setTimeStamp(d.getEventTimeStamp());
+  evt->setTimeStamp(d.getEventTimeStamp()*1e9); //SDHCAL timestamp is in second, LCevents expects it in nanoseconds
 
   IMPL::LCCollectionVec* col=createAndFillCollection(d);
   setCollectionParameters(col,d);
