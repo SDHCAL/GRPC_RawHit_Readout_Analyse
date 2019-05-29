@@ -113,4 +113,8 @@ void RawHit_SDHCAL_Data_LCWriter::setLCEventTimeParameter(IMPL::LCEventImpl* evt
     evt->parameters().setValues("BCID" , bcid_vec);
     evt->parameters().setValues("Absolute_BCID_lower_bits" , absbcid_low_vec);
     evt->parameters().setValues("Absolute_BCID_upper_bits" , absbcid_up_vec);
+    // put time information in Guillaume's Trivent way
+    if (absbcid_up_vec.empty()) return;
+    evt->parameters().setValue("bcid1", absbcid_up_vec[0]);
+    evt->parameters().setValue("bcid2", absbcid_low_vec[0]);
 }
