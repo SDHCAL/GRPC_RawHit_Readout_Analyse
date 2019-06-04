@@ -89,3 +89,73 @@ def getEventNumberWithNTricotHits(lciofileName):
 
 #import quick_analysis_tools as qat
 #qat.getEventNumberWithNTricotHits("DHCAL_744193_I0_0_TriventSplit_all.slcio")
+
+
+def bcidup(lciofileName,index=4,shift=0):
+    lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
+    lcReader.open( lciofileName )
+    a=set()
+    for ev in lcReader:
+        lcCol=ev.getCollection("DHCALRawHits")
+        ke=ROOT.vector('string')()
+        lcCol.parameters().getIntKeys(ke)
+        for i in ke:
+            if i.startswith("DIF") and i.endswith("Triggers"):
+                t=ROOT.vector('int')()
+                tr=lcCol.parameters().getIntVals(i,t)
+                bcidupper=tr[index];
+                a.add(bcidupper>>shift)
+                break
+    return a
+#import quick_analysis_tools as qat
+#d=qat.bcidup("DHCAL_744193_I0_0_TriventSplit_all.slcio")
+
+def graphTime(lciofileName):
+    lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
+    lcReader.open( lciofileName )
+    r=[]
+    r.append(ROOT.TCanvas())
+    a=dict()
+    nbit=2
+    for ev in lcReader:
+        lcCol=ev.getCollection("DHCALRawHits")
+        ke=ROOT.vector('string')()
+        lcCol.parameters().getIntKeys(ke)
+        for i in ke:
+            if i.startswith("DIF") and i.endswith("Triggers"):
+                t=ROOT.vector('int')()
+                tr=lcCol.parameters().getIntVals(i,t)
+                absbcid=(tr[4]<<24)+tr[3]
+                break
+        #print "absolute bcid is {0}.".format(absbcid)
+        if absbcid % nbit == 0:
+            nbit=nbit<<1
+            print "{1} : absolute bcid is {0}.".format(absbcid,nbit)
+        for hit in lcCol:
+            #hitTime=hit.getCellID1()  #the frame bcid = time of the hit since start acq
+            hitTime=absbcid-hit.getTimeStamp()
+            a[hitTime]=a.get(hitTime,0)+1
+    b=a.keys()
+    b.sort()
+    tmin=b[0]
+    tmax=b[-1]
+    print "time interval is [{0},{1}] clock tick".format(tmin,tmax)
+    clockTick=200e-9
+    tmin=tmin*clockTick
+    tmax=tmax*clockTick
+    print "time interval is [{0},{1}] second".format(tmin,tmax)
+    if tmax>300:
+        tmax=300
+    if (tmin>0):
+        tmin=0
+    h=ROOT.TH1F("timeDisplay","event time",int((tmax-tmin)/1e-3),tmin,tmax)
+    h.GetXaxis().SetTitle("time in second")
+    for x,y in a.items():
+        h.Fill(x*clockTick,y)
+    h.Draw()
+    r.append(h)
+    r.append(a)
+    print "tmin={0} et tmax={1}".format(tmin,tmax)
+    return r
+#import quick_analysis_tools as qat
+#d=qat.graphTime("DHCAL_744193_I0_0_TriventSplit_all.slcio")
