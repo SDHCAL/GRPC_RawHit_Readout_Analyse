@@ -87,7 +87,7 @@ void RawHit_SDHCAL_Data::FillTimeInfo(const EVENT::LCParameters& param)
       m_DIFtimeInfo[dif].GTC=values[1];
       m_DIFtimeInfo[dif].BCID=values[2];
       m_DIFtimeInfo[dif].AbsBCID = values[4];
-      m_DIFtimeInfo[dif].AbsBCID = (m_DIFtimeInfo[dif].AbsBCID << 32) + values[3];
+      m_DIFtimeInfo[dif].AbsBCID = (m_DIFtimeInfo[dif].AbsBCID << 24) + (values[3]&0xFFFFFF);
     }
 }
 

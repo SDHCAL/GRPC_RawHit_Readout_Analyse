@@ -65,8 +65,8 @@ void testDataContent(const RawHit_SDHCAL_Data& d)
       assert(it->second.DTC==10*it->first+1);
       assert(it->second.GTC==10);
       assert(it->second.BCID==133);
-      assert( (it->second.AbsBCID&0xFFFFFFFF)==444 );
-      assert( (it->second.AbsBCID>>32)==1 );
+      assert( (it->second.AbsBCID&0xFFFFFF)==444 );
+      assert( (it->second.AbsBCID>>24)==1 );
     }
 }
 
@@ -110,8 +110,8 @@ int main()
   assert(di.DTC==4);
   assert(di.GTC==4);
   assert(di.BCID==4);
-  assert( (di.AbsBCID&0xFFFFFFFF)==4 );
-  assert( (di.AbsBCID>>32)==4 );
+  assert( (di.AbsBCID&0xFFFFFF)==4 );
+  assert( (di.AbsBCID>>24)==4 );
 
   
 
