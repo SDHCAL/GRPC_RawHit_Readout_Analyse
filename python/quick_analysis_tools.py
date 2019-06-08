@@ -61,7 +61,8 @@ def Graph3DNhit(lciofileName,numeroEvent,layerCode="K"):
     grTricot.SetMarkerStyle(20)
     grTricot.SetMarkerSize(1)
     grTricot.SetMarkerColor(2)
-    grTricot.Draw("P SAME")
+    if grTricot.GetN() >0:
+       grTricot.Draw("P SAME")
     a.append(grTricot)
     lcReader.close()
     return a
