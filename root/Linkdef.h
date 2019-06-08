@@ -86,6 +86,9 @@
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_TriggeredMode;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_FromClusters;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_HorizontalTrack;
+#pragma link C++ defined in "RawHit_SDHCAL_Data_Event_Filter.h";
+#pragma link C++ class RawHit_SDHCAL_Data_Reader_Event_Filter+;
+#pragma link C++ class RawHit_SDHCAL_Data_Concrete_Event_Filter+;
 
 #pragma link C++ class Wrap_TimeCount_RawHit_SDHCAL_Data_Listener+;
 #pragma link C++ defined in "BIF_Data_Listener.h";

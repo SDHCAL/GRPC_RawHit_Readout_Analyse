@@ -58,10 +58,15 @@ BIFListener_check=ROOT.BIF_Data_Listener(numeroBIF)
 BIFListener_check_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener_check,"BIFListener_check")
 trivent.registerDataListener(BIFListener_check_timer)
 
+RamfullFilter=ROOT.RamFull_Filter(36,0.8)
+filter=ROOT.RawHit_SDHCAL_Data_Reader_Event_Filter()
+filter.addRejectConditions(RamfullFilter)
+trivent.registerDataListener(filter)
+
 LCIOoutputWriter=ROOT.RawHit_SDHCAL_Data_LCWriter_RawCalorimeterHit()
 LCIOoutputWriter.open(outputFileName)
 LCIOoutputWriter_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(LCIOoutputWriter,"LCIOoutputWriter")
-trivent.registerDataListener(LCIOoutputWriter_timer)
+filter.registerDataListener(LCIOoutputWriter_timer)
 
 
 
