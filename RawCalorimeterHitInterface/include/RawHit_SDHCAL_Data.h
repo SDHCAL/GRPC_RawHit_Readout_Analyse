@@ -69,7 +69,7 @@ class RawHit_SDHCAL_Data
 
     }
   void clusterizeDefault() {clusterize(defaultRawHitMerge());}
-  const Spill_Info& getSpill_Info() {return m_spill;}
+  const Spill_Info& getSpill_Info() const {return m_spill;}
  private:
   void buildClusterVec() const { m_clusters.clear(); Convert(m_clusterBounds,m_clusters); m_buildClusterVec=false;}
 
