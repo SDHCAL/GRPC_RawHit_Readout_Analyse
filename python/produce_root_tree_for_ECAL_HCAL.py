@@ -18,7 +18,6 @@ int     BCID;\
 int     AbsBCIDup;\
 int     AbsBCIDlow;\
 int     EventClockStamp;\
-int     clockCountsFromPreviousEvent;\
 int     spillNumber;\
 int     clockCountInSpill;\
 };" );
@@ -32,6 +31,52 @@ def makeTree(lciofileName):
     Gerald=2
     mode=Unset
 
+
+    #get the min,max of hit time for each readout
+    triggerdict=dict()
+    lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
+    lcReader.open( lciofileName )
+    triggerNumber=-1
+    for ev in lcReader:
+        evparam=ev.parameters()
+        triggerCounter=evparam.getIntVal('trigger')
+        if triggerCounter != triggerNumber:
+            #new readout
+            triggerNumber=triggerCounter
+            AbsBCIDup=evparam.getIntVal('bcid1')
+            AbsBCIDlow=evparam.getIntVal('bcid2')
+            absBCIDtrigger=(AbsBCIDup<<24)+AbsBCIDlow
+            triggerdict[triggerCounter]=[absBCIDtrigger,0]
+        lcCol=ev.getCollection("SDHCAL_HIT")
+        for hit in lcCol:
+            hit_ts=int(hit.getTime())
+            if triggerdict[triggerCounter][1] < hit_ts:
+                triggerdict[triggerCounter][1]=hit_ts
+    lcReader.close()
+    firstReadout=min(triggerdict)
+    lastReadout=max(triggerdict)
+    spillNumber=0
+    startspill=triggerdict[firstReadout][0]-triggerdict[firstReadout][1]
+    spills=[]
+    spills.append([startspill,[firstReadout] ])
+    ireadout = firstReadout+1
+    while ireadout <= lastReadout:
+        if triggerdict.has_key(ireadout):
+            if (triggerdict[ireadout][0]-triggerdict[spills[spillNumber][1][0]][0])*2e-7>10:
+                #more than XX seconds between 2 readouts, consider it is from different spills
+                spillNumber=spillNumber+1
+                startspill=triggerdict[ireadout][0]-triggerdict[ireadout][1]
+                spills.append([startspill,[ireadout] ])
+            else:
+                spills[spillNumber][1].append(ireadout)
+        ireadout=ireadout+1
+    # spills is a list with elements containing spillstart and a list of readout that are part of this spill
+    # repackage stuff to have spill number and startspill per trigger readout
+    triggerSpillDict=dict()
+    for i in range(len(spills)):
+        for triggers in spills[i][1]:
+            triggerSpillDict[triggers]=[i+1,spills[i][0]]
+    
     rootfileName=os.path.basename(lciofileName).split('.')[0]+'.root'
     f=ROOT.TFile(rootfileName,"recreate")
     t=ROOT.TTree('SDHCAL','SDHCAL events')
@@ -51,7 +96,7 @@ def makeTree(lciofileName):
     y = array( 'f', maxnhits*[0.] )
     z = array( 'f', maxnhits*[0.] )
 
-    t.Branch( 'EventTime', mytime, 'triggerCounter/I:BCID:AbsBCIDup:AbsBCIDlow:EventClockStamp:clockCountsFromPreviousEvent:spillNumber:clockCountInSpill')
+    t.Branch( 'EventTime', mytime, 'triggerCounter/I:BCID:AbsBCIDup:AbsBCIDlow:EventClockStamp:spillNumber:clockCountInSpill')
     t.Branch( 'cerenkovFlag', cerenkovFlag, 'cerenkov/I' )
     t.Branch( 'nHits', nHits, 'nHits/I' )
     t.Branch( 'plan', plan, 'plan[nHits]/I' )
@@ -65,7 +110,6 @@ def makeTree(lciofileName):
     
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
-    first=True
     for ev in lcReader:
         if mode==Unset:
             ke=ROOT.vector('string')()
@@ -81,6 +125,7 @@ def makeTree(lciofileName):
         mytime.readoutCounter=evparam.getIntVal('trigger')
         mytime.AbsBCIDup=evparam.getIntVal('bcid1')
         mytime.AbsBCIDlow=evparam.getIntVal('bcid2')
+        absoluteBCID=((mytime.AbsBCIDup)<<24)+mytime.AbsBCIDlow
         if mode==Gerald:
             mytime.BCID=evparam.getIntVal('BCID')
             mytime.EventClockStamp=evparam.getIntVal('Sub_Readout_Frame_start_time_in_trigger')
@@ -89,12 +134,8 @@ def makeTree(lciofileName):
             mytime.EventClockStamp=evparam.getIntVal('eventTimeInTrigger')
             cerenkovFlag[0]=evparam.getIntVal('cerenkovTag')
             
-        if first:
-            first=False
-            #to implement
-            mytime.spillNumber=-1
-            mytime.clockCountsFromPreviousEvent=-1
-            mytime.clockCountInSpill=-1 
+        mytime.spillNumber=triggerSpillDict[mytime.readoutCounter][0]
+        mytime.clockCountInSpill=(absoluteBCID-mytime.EventClockStamp)-triggerSpillDict[mytime.readoutCounter][1]
 
         lcCol=ev.getCollection("SDHCAL_HIT")
         if mode==Gerald:
@@ -114,7 +155,6 @@ def makeTree(lciofileName):
                 plan[ihit]=q(hit)['K-1'].value()
             threshold[ihit]=int(hit.getEnergy())
             timestamp[ihit]=int(hit.getTime())
-            absoluteBCID=((mytime.AbsBCIDup)<<24)+mytime.AbsBCIDlow
             
             timeSinceRunStart_s[ihit]=(absoluteBCID-timestamp[ihit])*2e-7
             timeSinceResumeAcq_s[ihit]=-1
@@ -130,5 +170,9 @@ def makeTree(lciofileName):
             
     f.Write()
     f.Close()
-
+    lcReader.close()
     
+    
+#import produce_root_tree_for_ECAL_HCAL
+#produce_root_tree_for_ECAL_HCAL.makeTree("DHCAL_744193_I0_0_TriventSplit.slcio")
+#produce_root_tree_for_ECAL_HCAL.makeTree("/data/software/binaries/SDHCAL/ggarillot/Trivent/script/TDHCAL.slcio")
