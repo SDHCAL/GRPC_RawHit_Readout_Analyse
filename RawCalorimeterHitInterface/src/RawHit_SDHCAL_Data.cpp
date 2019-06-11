@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 
+Spill_Info RawHit_SDHCAL_Data::m_spill=Spill_Info();
+
 
 RawHit_SDHCAL_Data::RawHit_SDHCAL_Data(EVENT::LCCollection& col, int runNumber, int eventNumber, int64_t eventTimeStamp) 
   : m_runNumber(runNumber),

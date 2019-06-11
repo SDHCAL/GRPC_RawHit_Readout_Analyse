@@ -15,13 +15,33 @@ void RawHit_SDHCAL_Data_Reader_From_LCEvent::processEvent(EVENT::LCEvent * evt)
     {
       IMPL::LCCollectionVec* col = (IMPL::LCCollectionVec*) evt->getCollection(m_collectionName);
       if (NULL==col) std::cout << "ERROR collection " << m_collectionName << " not found" << std::endl; //should never happened
-      RawHit_SDHCAL_Data d(*col, evt->getRunNumber(), evt->getEventNumber(), evt->getTimeStamp());
+      RawHit_SDHCAL_Data d(*col, evt->getRunNumber(), evt->getEventNumber(), evt->getTimeStamp()); //this constructor fills the RawHit_SDHCAL_Data DIFtimeInfo
+      if (m_fillSpillInfo) fillSpillInfo(d);
       notifyListeners(d);
     }
   catch(EVENT::DataNotAvailableException &e)
     {
       ++m_nMissingCollectionEvent;
     }     
+}
+
+void RawHit_SDHCAL_Data_Reader_From_LCEvent::fillSpillInfo(const RawHit_SDHCAL_Data& d)
+{
+  std::map<unsigned int,DIF_timeInfo> diftime=d.DIFtimeInfo();
+  if (diftime.empty()) return;
+  uint64_t AbsoluteBCID=diftime.begin()->second.AbsBCID;
+  bool keepSpillInfo=RawHit_SDHCAL_Data::m_spill.filled() && (AbsoluteBCID-RawHit_SDHCAL_Data::m_spill.ref_absBCID)*200e-9<m_interSpillInSeconds;
+  if (keepSpillInfo) return;
+  ++RawHit_SDHCAL_Data::m_spill.spillNumber;
+  RawHit_SDHCAL_Data::m_spill.ref_absBCID=AbsoluteBCID;
+  unsigned int maxTimeStamp=0;
+  for (auto hitPtr : d.getHitVector())
+    {
+      unsigned int ts=hitPtr->getTimeStamp();
+      if (ts>maxTimeStamp) maxTimeStamp=ts;
+    }
+  RawHit_SDHCAL_Data::m_spill.startSpill_BCID=AbsoluteBCID-maxTimeStamp;
+  //std::cout << " New spill info filled " << std::endl;
 }
 
 RawHit_SDHCAL_Data_Reader_From_LCEvent::~RawHit_SDHCAL_Data_Reader_From_LCEvent()

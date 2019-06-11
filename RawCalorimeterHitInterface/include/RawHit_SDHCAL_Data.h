@@ -23,6 +23,16 @@ struct DIF_timeInfo
   uint64_t AbsBCID;
 };
 
+struct Spill_Info
+{
+  unsigned int spillNumber;
+  uint64_t ref_absBCID;
+  uint64_t startSpill_BCID;
+  Spill_Info() : spillNumber(0), ref_absBCID(0), startSpill_BCID(0) {;}
+  bool filled() {return spillNumber>0;}
+};
+
+
 class RawHit_SDHCAL_Data
 {
  public:
@@ -59,6 +69,7 @@ class RawHit_SDHCAL_Data
 
     }
   void clusterizeDefault() {clusterize(defaultRawHitMerge());}
+  const Spill_Info& getSpill_Info() {return m_spill;}
  private:
   void buildClusterVec() const { m_clusters.clear(); Convert(m_clusterBounds,m_clusters); m_buildClusterVec=false;}
 
@@ -73,6 +84,8 @@ class RawHit_SDHCAL_Data
   mutable bool m_buildClusterVec;
   mutable RawHitClustersVec m_clusters;
   std::vector<std::vector<RawCalorimeterHitPointer>::iterator> m_clusterBounds;
+  static Spill_Info m_spill;
+  friend class RawHit_SDHCAL_Data_Reader_From_LCEvent;
 };
 
 #endif

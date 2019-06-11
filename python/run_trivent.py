@@ -39,7 +39,7 @@ BIFtriggerWindow=ROOT.intervalle('int')(-7,-6)
 lcReader=ROOT.IOIMPL.LCFactory.getInstance().createLCReader()
 
 #create architecture of listeners
-masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
+masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent("DHCALRawHits",True,10)
 lcReader.registerLCEventListener(masterReader)
 
 BIFListener=ROOT.BIF_Data_Listener(numeroBIF)
