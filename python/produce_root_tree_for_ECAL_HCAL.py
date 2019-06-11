@@ -31,51 +31,65 @@ def makeTree(lciofileName):
     Gerald=2
     mode=Unset
 
-    #fixme, do it only in guillaume mode
-    #get the min,max of hit time for each readout
-    triggerdict=dict()
+    #determine mode
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
-    triggerNumber=-1
-    for ev in lcReader:
-        evparam=ev.parameters()
-        triggerCounter=evparam.getIntVal('trigger')
-        if triggerCounter != triggerNumber:
-            #new readout
-            triggerNumber=triggerCounter
-            AbsBCIDup=evparam.getIntVal('bcid1')
-            AbsBCIDlow=evparam.getIntVal('bcid2')
-            absBCIDtrigger=(AbsBCIDup<<24)+AbsBCIDlow
-            triggerdict[triggerCounter]=[absBCIDtrigger,0]
-        lcCol=ev.getCollection("SDHCAL_HIT")
-        for hit in lcCol:
-            hit_ts=int(hit.getTime())
-            if triggerdict[triggerCounter][1] < hit_ts:
-                triggerdict[triggerCounter][1]=hit_ts
+    ev=lcReader.readNextEvent()
+    ke=ROOT.vector('string')()
+    ev.parameters().getIntKeys(ke)
+    if 'Sub_Readout_Frame_start_time_in_trigger' in ke:
+        mode=Gerald
+    if 'eventTimeInTrigger' in ke:
+        mode=Guillaume
+    print " mode is set to value = {0}".format(mode)
     lcReader.close()
-    firstReadout=min(triggerdict)
-    lastReadout=max(triggerdict)
-    spillNumber=0
-    startspill=triggerdict[firstReadout][0]-triggerdict[firstReadout][1]
-    spills=[]
-    spills.append([startspill,[firstReadout] ])
-    ireadout = firstReadout+1
-    while ireadout <= lastReadout:
-        if triggerdict.has_key(ireadout):
-            if (triggerdict[ireadout][0]-triggerdict[spills[spillNumber][1][0]][0])*2e-7>10:
-                #more than XX seconds between 2 readouts, consider it is from different spills
-                spillNumber=spillNumber+1
-                startspill=triggerdict[ireadout][0]-triggerdict[ireadout][1]
-                spills.append([startspill,[ireadout] ])
-            else:
-                spills[spillNumber][1].append(ireadout)
-        ireadout=ireadout+1
-    # spills is a list with elements containing spillstart and a list of readout that are part of this spill
-    # repackage stuff to have spill number and startspill per trigger readout
-    triggerSpillDict=dict()
-    for i in range(len(spills)):
-        for triggers in spills[i][1]:
-            triggerSpillDict[triggers]=[i+1,spills[i][0]]
+
+    if mode==Guillaume:
+        #get the min,max of hit time for each readout
+        triggerdict=dict()
+        lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
+        lcReader.open( lciofileName )
+        triggerNumber=-1
+        for ev in lcReader:
+            evparam=ev.parameters()
+            triggerCounter=evparam.getIntVal('trigger')
+            if triggerCounter != triggerNumber:
+                #new readout
+                triggerNumber=triggerCounter
+                AbsBCIDup=evparam.getIntVal('bcid1')
+                AbsBCIDlow=evparam.getIntVal('bcid2')
+                absBCIDtrigger=(AbsBCIDup<<24)+AbsBCIDlow
+                triggerdict[triggerCounter]=[absBCIDtrigger,0]
+            lcCol=ev.getCollection("SDHCAL_HIT")
+            for hit in lcCol:
+                hit_ts=int(hit.getTime())
+                if triggerdict[triggerCounter][1] < hit_ts:
+                    triggerdict[triggerCounter][1]=hit_ts
+        lcReader.close()
+        firstReadout=min(triggerdict)
+        lastReadout=max(triggerdict)
+        spillNumber=0
+        startspill=triggerdict[firstReadout][0]-triggerdict[firstReadout][1]
+        spills=[]
+        spills.append([startspill,[firstReadout] ])
+        ireadout = firstReadout+1
+        while ireadout <= lastReadout:
+            if triggerdict.has_key(ireadout):
+                if (triggerdict[ireadout][0]-triggerdict[spills[spillNumber][1][0]][0])*2e-7>10:
+                    #more than XX seconds between 2 readouts, consider it is from different spills
+                    spillNumber=spillNumber+1
+                    startspill=triggerdict[ireadout][0]-triggerdict[ireadout][1]
+                    spills.append([startspill,[ireadout] ])
+                else:
+                    spills[spillNumber][1].append(ireadout)
+            ireadout=ireadout+1
+        # spills is a list with elements containing spillstart and a list of readout that are part of this spill
+        # repackage stuff to have spill number and startspill per trigger readout
+        triggerSpillDict=dict()
+        for i in range(len(spills)):
+            for triggers in spills[i][1]:
+                triggerSpillDict[triggers]=[i+1,spills[i][0]]
+        print "Guillaume mode spill analysis finished"
     
     rootfileName=os.path.basename(lciofileName).split('.')[0]+'.root'
     f=ROOT.TFile(rootfileName,"recreate")
@@ -108,19 +122,9 @@ def makeTree(lciofileName):
     t.Branch( 'y', y, 'y[nHits]/F' )
     t.Branch( 'z', z, 'z[nHits]/F' )
     
-    lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
+    #lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
-    for ev in lcReader:
-        if mode==Unset:
-            ke=ROOT.vector('string')()
-            ev.parameters().getIntKeys(ke)
-            if 'Sub_Readout_Frame_start_time_in_trigger' in ke:
-
-                mode=Gerald
-            if 'eventTimeInTrigger' in ke:
-                mode=Guillaume
-            print " mode is set to value = {0}".format(mode)
-            
+    for ev in lcReader:            
         evparam=ev.parameters()
         mytime.readoutCounter=evparam.getIntVal('trigger')
         mytime.AbsBCIDup=evparam.getIntVal('bcid1')
@@ -143,6 +147,9 @@ def makeTree(lciofileName):
             mytime.clockCountInSpill=(absoluteBCID-mytime.EventClockStamp)-spilltime
             
         lcCol=ev.getCollection("SDHCAL_HIT")
+        if lcCol.getNumberOfElements()>=maxnhits:
+            print "WARNING, skipping event {1}, collection has {0} hits".format(lcCol.getNumberOfElements(),ev.getEventNumber())
+            continue
         if mode==Gerald:
             vecint=ROOT.vector('int')()
             lcCol.parameters().getIntVals('BIF_amplitudes',vecint)
