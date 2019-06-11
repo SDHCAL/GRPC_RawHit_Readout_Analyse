@@ -31,7 +31,7 @@ def makeTree(lciofileName):
     Gerald=2
     mode=Unset
 
-
+    #fixme, do it only in guillaume mode
     #get the min,max of hit time for each readout
     triggerdict=dict()
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
@@ -133,10 +133,15 @@ def makeTree(lciofileName):
             mytime.BCID=-1
             mytime.EventClockStamp=evparam.getIntVal('eventTimeInTrigger')
             cerenkovFlag[0]=evparam.getIntVal('cerenkovTag')
-            
-        mytime.spillNumber=triggerSpillDict[mytime.readoutCounter][0]
-        mytime.clockCountInSpill=(absoluteBCID-mytime.EventClockStamp)-triggerSpillDict[mytime.readoutCounter][1]
 
+        if  mode==Guillaume:
+            mytime.spillNumber=triggerSpillDict[mytime.readoutCounter][0]
+            mytime.clockCountInSpill=(absoluteBCID-mytime.EventClockStamp)-triggerSpillDict[mytime.readoutCounter][1]
+        if mode==Gerald:
+            mytime.spillNumber=evparam.getIntVal('spillNumber')
+            spilltime=(evparam.getIntVal('startSpill_BCID_up')<<24)+evparam.getIntVal('startSpill_BCID_low')
+            mytime.clockCountInSpill=(absoluteBCID-mytime.EventClockStamp)-spilltime
+            
         lcCol=ev.getCollection("SDHCAL_HIT")
         if mode==Gerald:
             vecint=ROOT.vector('int')()
