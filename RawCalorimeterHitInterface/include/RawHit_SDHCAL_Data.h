@@ -29,7 +29,7 @@ struct Spill_Info
   uint64_t ref_absBCID;
   uint64_t startSpill_BCID;
   Spill_Info() : spillNumber(0), ref_absBCID(0), startSpill_BCID(0) {;}
-  bool filled() {return spillNumber>0;}
+  bool filled() const {return spillNumber>0;}
 };
 
 
