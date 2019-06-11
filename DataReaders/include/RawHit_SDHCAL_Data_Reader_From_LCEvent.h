@@ -5,6 +5,8 @@
 #include "IO/LCEventListener.h"
 #include <string>
 
+#include "GG_messageCounter.h"
+
 class RawHit_SDHCAL_Data;
 
 
@@ -16,6 +18,9 @@ class RawHit_SDHCAL_Data_Reader_From_LCEvent : public RawHit_SDHCAL_Data_Reader,
   ~RawHit_SDHCAL_Data_Reader_From_LCEvent();
   void processEvent(EVENT::LCEvent * evt);
   void modifyEvent(EVENT::LCEvent * evt) {;}
+
+  GG_messageCounter negativeTimeStamp=GG_messageCounter("Warning RawHit_SDHCAL_Data_Reader_From_LCEvent negative time stamp seen in event");
+  GG_messageCounter highValueTimeStamp=GG_messageCounter("Warning RawHit_SDHCAL_Data_Reader_From_LCEvent time stamp greater than absoluteBCID seen in event");
  private:
   unsigned int m_nProcessedEvent; 
   unsigned int m_nMissingCollectionEvent; 

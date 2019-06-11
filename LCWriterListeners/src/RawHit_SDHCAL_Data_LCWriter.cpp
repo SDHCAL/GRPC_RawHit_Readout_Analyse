@@ -21,6 +21,14 @@ void RawHit_SDHCAL_Data_LCWriter::process(const RawHit_SDHCAL_Data& d)
   evt->setEventNumber(m_eventCount);
   evt->setTimeStamp(d.getEventTimeStamp()*1e9); //SDHCAL timestamp is in second, LCevents expects it in nanoseconds
 
+  if (d.getSpill_Info().filled())
+    {
+      evt->parameters().setValue("spillNumber",int(d.getSpill_Info().spillNumber));
+      evt->parameters().setValue("startSpill_BCID_low",int((d.getSpill_Info().startSpill_BCID)&0xffffff));
+      evt->parameters().setValue("startSpill_BCID_up",int((d.getSpill_Info().startSpill_BCID)>>24));
+      //std::cout << "DEBUG " << (d.getSpill_Info().ref_absBCID) << " et "
+      //	<< (d.getSpill_Info().max_readoutTimeStamp) << " to diff= " << (d.getSpill_Info().startSpill_BCID) << std::endl;
+    }
   evt->parameters().setValue("trigger" , d.getEventNumber());
   setLCEventTimeParameter(evt,d);
   
@@ -105,8 +113,8 @@ void RawHit_SDHCAL_Data_LCWriter::setLCEventTimeParameter(IMPL::LCEventImpl* evt
     for (auto &m : bcid) bcid_vec.push_back(m);
     for (auto &m : absbcid)
       {
-	absbcid_low_vec.push_back(m&0xffffffff);
-	absbcid_up_vec.push_back(m>>32);
+	absbcid_low_vec.push_back(m&0xffffff);
+	absbcid_up_vec.push_back(m>>24);
       }
     evt->parameters().setValues("DTC" , dtc_vec);
     evt->parameters().setValues("GTC" , gtc_vec);

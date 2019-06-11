@@ -34,12 +34,16 @@ void RawHit_SDHCAL_Data_Reader_From_LCEvent::fillSpillInfo(const RawHit_SDHCAL_D
   if (keepSpillInfo) return;
   ++RawHit_SDHCAL_Data::m_spill.spillNumber;
   RawHit_SDHCAL_Data::m_spill.ref_absBCID=AbsoluteBCID;
-  unsigned int maxTimeStamp=0;
-  for (auto hitPtr : d.getHitVector())
+  uint64_t maxTimeStamp=0;
+  for (std::vector<RawCalorimeterHitPointer>::const_iterator it=d.getHitVector().begin(); it != d.getHitVector().end(); ++it)
     {
-      unsigned int ts=hitPtr->getTimeStamp();
+      int timeStamp=(*it)->getTimeStamp();
+      if (timeStamp<0) {negativeTimeStamp.print();continue;}
+      unsigned int ts=timeStamp;
+      if (ts>AbsoluteBCID) {highValueTimeStamp.print();continue;}
       if (ts>maxTimeStamp) maxTimeStamp=ts;
     }
+  RawHit_SDHCAL_Data::m_spill.max_readoutTimeStamp=maxTimeStamp;
   RawHit_SDHCAL_Data::m_spill.startSpill_BCID=AbsoluteBCID-maxTimeStamp;
   //std::cout << " New spill info filled " << std::endl;
 }

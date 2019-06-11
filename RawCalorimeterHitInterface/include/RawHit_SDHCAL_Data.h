@@ -12,7 +12,6 @@
 
 #include <stdint.h>
 
-
 //Should we add Temperature info ?
 
 struct DIF_timeInfo
@@ -27,8 +26,9 @@ struct Spill_Info
 {
   unsigned int spillNumber;
   uint64_t ref_absBCID;
+  uint64_t max_readoutTimeStamp;
   uint64_t startSpill_BCID;
-  Spill_Info() : spillNumber(0), ref_absBCID(0), startSpill_BCID(0) {;}
+  Spill_Info() : spillNumber(0), ref_absBCID(0), max_readoutTimeStamp(0), startSpill_BCID(0) {;}
   bool filled() const {return spillNumber>0;}
 };
 
