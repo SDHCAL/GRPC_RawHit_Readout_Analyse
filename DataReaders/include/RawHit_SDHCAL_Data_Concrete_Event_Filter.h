@@ -2,6 +2,24 @@
 #define RawHit_SDHCAL_Data_Concrete_Event_Filter_HH
 
 #include "RawHit_SDHCAL_Data_Event_Filter.h"
+#include "domain.h"
+
+
+
+
+class Both_Reject_Filter : public RawHit_SDHCAL_Data_Event_Filter
+{
+ public:
+ Both_Reject_Filter(RawHit_SDHCAL_Data_Event_Filter& filterOne, RawHit_SDHCAL_Data_Event_Filter& filter2)
+   : m_filterOne(filterOne), m_filterTwo(filter2) {;}
+  
+  bool reject(const RawHit_SDHCAL_Data& d);
+  std::string name();
+ private:
+  RawHit_SDHCAL_Data_Event_Filter& m_filterOne;
+  RawHit_SDHCAL_Data_Event_Filter& m_filterTwo;
+};
+
 
 class RamFull_Filter : public RawHit_SDHCAL_Data_Event_Filter
 {
@@ -14,5 +32,29 @@ class RamFull_Filter : public RawHit_SDHCAL_Data_Event_Filter
   unsigned int m_MinNumberOfRamFullHitToReject;
   float m_minRamFullHitFractionToReject;
 };
+
+
+class NoHitInLayers_Filter : public RawHit_SDHCAL_Data_Event_Filter_Using_ExperimantalSetup
+{
+ public:
+ NoHitInLayers_Filter(UI_domain layers,ExperimentalSetup& setup)
+   : RawHit_SDHCAL_Data_Event_Filter_Using_ExperimantalSetup(setup), m_layersToCheck(layers) {;}
+  bool reject(const RawHit_SDHCAL_Data& d);
+  std::string name();
+ private:
+  UI_domain m_layersToCheck;
+};
+
+/*
+class ConsecutiveLayers_Filter : public RawHit_SDHCAL_Data_Event_Filter_Using_ExperimantalSetup
+{
+ public:
+  bool reject(const RawHit_SDHCAL_Data& d);
+  std::string name();
+ private:
+  unsigned int m_minNumberOfPlanToKeep;
+  unsigned int m_authorisedNumberOfHoles;
+};
+*/
 
 #endif

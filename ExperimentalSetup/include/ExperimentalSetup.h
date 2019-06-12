@@ -56,7 +56,8 @@ class ExperimentalSetup
   void getDAQ_ID(unsigned int I, unsigned int J, unsigned int K, unsigned int &dif,unsigned int &asic, unsigned int &channel);
   
   unsigned int nPlans() const {return m_plans.size();}
-  unsigned int getPlanNumber(unsigned int dif) {return getOrAddDevice(dif).getK();}
+  unsigned int getPlanNumber(unsigned int dif) {return getOrAddDevice(dif).getK();} //Warning : will crash if dif is a BIF
+  unsigned int getPlanNumberSafe(unsigned int dif) {return (DIFnumberIsKnown(dif) and not DIFnumberIsBIF(dif)) ? getOrAddDevice(dif).getK() : 1000000;}
  private:
   std::set<DIFNUMBER> m_BIFs;
   std::vector<DIFdrivenDevice*> m_plans;
