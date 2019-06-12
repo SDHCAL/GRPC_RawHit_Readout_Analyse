@@ -7,6 +7,7 @@
 
 from array import array
 import os.path
+import itertools
 import pyLCIO
 import ROOT
 ROOT.gROOT.Reset()
@@ -24,7 +25,52 @@ int     clockCountInSpill;\
 
 from ROOT import MyEventTime
 
-def makeTree(lciofileName):
+
+#
+#  NB : Guillaume Trivent's cut
+#
+# min number of consecutive layers with hits = 6
+# no plan with more than 400 hits
+# absence of ASIC with 64 hits in the event
+# no DIF with more than 70 hits in channels 29 and 31 (RamFull Events)
+# 
+ROOT.gROOT.ProcessLine(
+"struct GuillaumeVariables {\
+int     RamFullCount;\
+int     NFullAsic;\
+int     MaxHitInPlan;\
+int     MaxNConsecutiveLayers;\
+int     MaxNConsecutiveLayersWithOneHole;\
+};" );
+
+from ROOT import GuillaumeVariables
+
+
+def computeMaxNumberOfConsecutivePlan(orderedListOfFiredPlans):
+    if len(orderedListOfFiredPlans)==1:
+        return 1
+    pp=[orderedListOfFiredPlans[i]-orderedListOfFiredPlans[i-1]  for i in range(1,len(orderedListOfFiredPlans))]  #pp is difference list of orderedListOfFiredPlans, consecutive plans correspond to 1
+    consecutiveSize=[len(list(group))+1 for key,group in itertools.groupby(pp) if key==1] #group pp by consecutive value, keep ajacent group for wich pp[i]==1, list the group size (NB : +1 because list of difference (pp) has element less than original list of plan number (PlancOccupancyList) )
+    if len(consecutiveSize):
+        return max(consecutiveSize)
+    else:
+        return 1
+
+
+def computeMaxNumberOfConsecutivePlanWithOneHole(orderedListOfFiredPlans):
+    HolePlans=[orderedListOfFiredPlans[i] for i in range(1,len(orderedListOfFiredPlans)) if orderedListOfFiredPlans[i]-orderedListOfFiredPlans[i-1]==2]
+    if len(HolePlans)==0:
+        return computeMaxNumberOfConsecutivePlan(orderedListOfFiredPlans)
+    else:
+        listOfMax=[]
+        for holes in HolePlans:
+            copylistplan=[i for i in orderedListOfFiredPlans]
+            copylistplan.append(holes-1)
+            copylistplan.sort()
+            listOfMax.append(computeMaxNumberOfConsecutivePlan(copylistplan))
+        return max(listOfMax)
+
+def makeTree(lciofileName,guillaumeCutVar=True):
 
     Unset=0
     Guillaume=1
@@ -121,6 +167,10 @@ def makeTree(lciofileName):
     t.Branch( 'x', x, 'x[nHits]/F' )
     t.Branch( 'y', y, 'y[nHits]/F' )
     t.Branch( 'z', z, 'z[nHits]/F' )
+
+    if guillaumeCutVar:
+        myGCutVar = GuillaumeVariables()
+        t.Branch( 'GuillaumeCutVariables', myGCutVar, 'MaxRamFullCount/I:NFullASIC:MaxNHitsInLayer:MaxNConsecutiveLayers:MaxNConsecutiveLayersWithOneHole')
     
     #lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
@@ -157,6 +207,19 @@ def makeTree(lciofileName):
                 cerenkovFlag[0]=0
             else:
                 cerenkovFlag[0]=vecint[0]
+
+        if guillaumeCutVar:
+            if mode==Gerald:
+                difID='DIF'
+                asicID='ASIC'
+                channelID='Channel'
+            if mode==Guillaume:
+                difID='Dif_id'
+                asicID='Asic_id'
+                channelID='Chan_id'
+            RamFullCount=dict()
+            AsicFillCount=dict()
+            LayerFillCount=dict()
         nHits[0]=lcCol.size()
         q=pyLCIO.UTIL.CellIDDecoder('EVENT::CalorimeterHit')(lcCol)
         ihit=0
@@ -177,7 +240,35 @@ def makeTree(lciofileName):
             x[ihit]=position[0]
             y[ihit]=position[1]
             z[ihit]=position[2]
+
+            if guillaumeCutVar:
+                DIF=q(hit)[difID].value()
+                ASIC=q(hit)[asicID].value()
+                CHANNEL=q(hit)[channelID].value()
+                if CHANNEL in [29,31]:
+                    RamFullCount[DIF]=RamFullCount.get(DIF,0)+1
+                AsicFillCount[DIF*1000+ASIC]=AsicFillCount.get(DIF*1000+ASIC,0)+1
+                LayerFillCount[plan[ihit]]=LayerFillCount.get(plan[ihit],0)+1
+            
             ihit=ihit+1
+
+        #now fill Guillaume's cut variables
+        if guillaumeCutVar:
+            myGCutVar.RamFullCount=0
+            if len(RamFullCount):
+                myGCutVar.RamFullCount=max(RamFullCount.itervalues())
+            myGCutVar.MaxHitInPlan=0
+            if len(LayerFillCount):
+                myGCutVar.MaxHitInPlan=max(LayerFillCount.itervalues())
+            AsicOccupancyList=[val for val in AsicFillCount.itervalues() if val>63]
+            myGCutVar.NFullAsic=len(AsicOccupancyList)
+            PlancOccupancyList=[val for val in LayerFillCount.iterkeys()]
+            myGCutVar.MaxNConsecutiveLayers=1
+            myGCutVar.MaxNConsecutiveLayersWithOneHole=1
+            if len(PlancOccupancyList)>1:
+                PlancOccupancyList.sort() #list plan number for plan with hits in order
+                myGCutVar.MaxNConsecutiveLayers=computeMaxNumberOfConsecutivePlan(PlancOccupancyList)
+                myGCutVar.MaxNConsecutiveLayersWithOneHole=computeMaxNumberOfConsecutivePlanWithOneHole(PlancOccupancyList)
         t.Fill() 
             
     f.Write()
