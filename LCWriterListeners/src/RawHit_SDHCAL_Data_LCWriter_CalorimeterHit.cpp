@@ -82,7 +82,7 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
 void RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::finalizeCollection(IMPL::LCCollectionVec* col)
 {
   //Fixme, should recopy value if it exists
-  col->parameters().setValue( "CellID0Encoding", "DIF:8,ASIC:8,Channel:6" );
+  col->parameters().setValue( "CellID1Encoding", "DIF:8,ASIC:8,Channel:6" );
 
   col->parameters().setValue( EVENT::LCIO::CellIDEncoding, "I:8,J:8,K:8,DIF:32:8,ASIC:8,Channel:6" );
   
