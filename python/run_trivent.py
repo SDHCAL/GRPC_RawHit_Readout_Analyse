@@ -58,10 +58,19 @@ BIFListener_check=ROOT.BIF_Data_Listener(numeroBIF)
 BIFListener_check_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener_check,"BIFListener_check")
 trivent.registerDataListener(BIFListener_check_timer)
 
-RamfullFilter=ROOT.RamFull_Filter(36,0.8)
+#Filters
 filter=ROOT.RawHit_SDHCAL_Data_Reader_Event_Filter()
+planDomain=ROOT.UI_domain(ROOT.UI_intervalle(0,2))
+planFilter=ROOT.NoHitInLayers_Filter(planDomain,experience)
+CL_Filter=ROOT.ConsecutiveLayers_Filter(6,experience)
+doubleFilter=ROOT.Both_Reject_Filter(planFilter,CL_Filter)
+filter.addRejectConditions(doubleFilter)
+
+RamfullFilter=ROOT.RamFull_Filter(36,0.8)
 filter.addRejectConditions(RamfullFilter)
+
 trivent.registerDataListener(filter)
+
 
 LCIOoutputWriter=ROOT.RawHit_SDHCAL_Data_LCWriter_RawCalorimeterHit()
 LCIOoutputWriter.open(outputFileName)
@@ -78,9 +87,9 @@ lcReader.open( inputFileNames )
 #File DHCAL_744193_I0_0.slcio has Tricot data at least in readout 130 / 179 / 214 / 446 / 45223 / 525 / 575 / 678 / 749 / 778 / 793 / 
 #Only one hit per trivent event
 #For readout 130, the corresponding event is at event 28 (over 87)
-lcReader.skipNEvents(129)
-lcReader.readStream(1)
-#lcReader.readStream()
+#lcReader.skipNEvents(129)
+#lcReader.readStream(1)
+lcReader.readStream()
 
 #end of event loop
 BIFListener_check.printMaxDelay()
