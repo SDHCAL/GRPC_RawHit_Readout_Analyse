@@ -1015,7 +1015,7 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
 {
   //counting from beam upstream
   addBIF(3);
-  Plane_position SDHCALPos({0,0,0},{0,-1,0},{1,0,0});
+  Plane_position SDHCALPos({0,0,0},{0,1,0},{1,0,0});
   float SDHCAL_layer_width=26.131f;
   /*                                      */ addSDHCALPlan( 30, 94,181, SDHCALPos); //slot  0
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(100, 97, 92, SDHCALPos); //slot  1
