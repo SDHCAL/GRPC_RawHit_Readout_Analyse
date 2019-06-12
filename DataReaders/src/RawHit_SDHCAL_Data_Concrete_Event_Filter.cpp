@@ -55,9 +55,53 @@ bool NoHitInLayers_Filter::reject(const RawHit_SDHCAL_Data& d)
   return true;
 }
 
-/*
+
+std::string ConsecutiveLayers_Filter::name()
+{
+  std::stringstream ss;
+  ss << "Reject events with max number of consecutive fired plans less or equal than ";
+  ss << m_minNumberOfPlanToKeep <<".";
+  return ss.str();
+}
+
 bool ConsecutiveLayers_Filter::reject(const RawHit_SDHCAL_Data& d)
 {
-  for 
+  std::set<int> firedPlan;
+  for (auto hit : d.getHitVector())
+    {
+      unsigned int dif=hit.dif();
+      if (m_setup.DIFnumberIsBIF(dif)) continue;
+      firedPlan.insert(m_setup.getPlanNumber(dif));
+    }
+  int maxConsecutiveLayers = 0 ;
+  int currentCtr = 1 ;
+  int previousOk = std::numeric_limits<int>::min() ;
+  bool bonusAllowed = false ;
+  for ( std::set<int>::iterator it = firedPlan.begin() ; it != firedPlan.end() ; ++it )
+    {
+      if ( *it == previousOk + 1 )
+	{
+	  ++currentCtr ;
+	  if ( currentCtr > maxConsecutiveLayers )
+	    maxConsecutiveLayers = currentCtr ;
+	}
+      else if ( *it == previousOk + 2 && !bonusAllowed )
+	{
+	  bonusAllowed = true ;
+	  ++currentCtr ;
+	  if ( currentCtr > maxConsecutiveLayers )
+	    maxConsecutiveLayers = currentCtr ;
+	}
+      else
+	{
+	  currentCtr = 1 ;
+	  bonusAllowed = false ;
+	}
+      
+      previousOk = *it ;
+      if ( maxConsecutiveLayers > m_minNumberOfPlanToKeep )
+	 return false;
+    }
+  return true;
 }
-*/
+

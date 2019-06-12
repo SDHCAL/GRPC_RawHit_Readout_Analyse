@@ -45,16 +45,17 @@ class NoHitInLayers_Filter : public RawHit_SDHCAL_Data_Event_Filter_Using_Experi
   UI_domain m_layersToCheck;
 };
 
-/*
+
 class ConsecutiveLayers_Filter : public RawHit_SDHCAL_Data_Event_Filter_Using_ExperimantalSetup
 {
  public:
+  ConsecutiveLayers_Filter(unsigned int nPlan,ExperimentalSetup& setup)
+    : RawHit_SDHCAL_Data_Event_Filter_Using_ExperimantalSetup(setup),m_minNumberOfPlanToKeep(nPlan){;}
   bool reject(const RawHit_SDHCAL_Data& d);
   std::string name();
  private:
   unsigned int m_minNumberOfPlanToKeep;
-  unsigned int m_authorisedNumberOfHoles;
 };
-*/
+
 
 #endif
