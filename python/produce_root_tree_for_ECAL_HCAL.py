@@ -50,7 +50,7 @@ def computeMaxNumberOfConsecutivePlan(orderedListOfFiredPlans):
     if len(orderedListOfFiredPlans)==1:
         return 1
     pp=[orderedListOfFiredPlans[i]-orderedListOfFiredPlans[i-1]  for i in range(1,len(orderedListOfFiredPlans))]  #pp is difference list of orderedListOfFiredPlans, consecutive plans correspond to 1
-    consecutiveSize=[len(list(group))+1 for key,group in itertools.groupby(pp) if key==1] #group pp by consecutive value, keep ajacent group for wich pp[i]==1, list the group size (NB : +1 because list of difference (pp) has element less than original list of plan number (PlancOccupancyList) )
+    consecutiveSize=[len(list(group))+1 for key,group in itertools.groupby(pp) if key==1] #group pp by consecutive value, keep ajacent group for wich pp[i]==1, list the group size (NB : +1 because list of difference (pp) has one element less than original list of plan number (orderedListOfFiredPlans) )
     if len(consecutiveSize):
         return max(consecutiveSize)
     else:
