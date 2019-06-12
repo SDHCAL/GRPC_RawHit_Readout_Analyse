@@ -285,11 +285,15 @@ def drawComparison(rootFileName1,rootFileName2,variable,condition="",first=1):
         file1=ROOT.TFile(rootFileName1)
         file2=ROOT.TFile(rootFileName2)
         file2.SDHCAL.SetLineColor(2)
+        file2.SDHCAL.SetMarkerColor(2)
     else:
         file2=ROOT.TFile(rootFileName1)
         file1=ROOT.TFile(rootFileName2)
         file1.SDHCAL.SetLineColor(2)
-        
+        file1.SDHCAL.SetMarkerColor(2)
+
+    file1.SDHCAL.SetMarkerStyle(20)
+    file2.SDHCAL.SetMarkerStyle(20)
     c=ROOT.TCanvas()
     file1.SDHCAL.Draw(variable,condition)
     file2.SDHCAL.Draw(variable,condition,"SAME")
