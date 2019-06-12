@@ -279,3 +279,18 @@ def makeTree(lciofileName,guillaumeCutVar=True):
 #import produce_root_tree_for_ECAL_HCAL
 #produce_root_tree_for_ECAL_HCAL.makeTree("DHCAL_744193_I0_0_TriventSplit.slcio")
 #produce_root_tree_for_ECAL_HCAL.makeTree("/data/software/binaries/SDHCAL/ggarillot/Trivent/script/TDHCAL.slcio")
+
+def drawComparison(rootFileName1,rootFileName2,variable,condition="",first=1):
+    if first==1:
+        file1=ROOT.TFile(rootFileName1)
+        file2=ROOT.TFile(rootFileName2)
+        file2.SDHCAL.SetLineColor(2)
+    else:
+        file2=ROOT.TFile(rootFileName1)
+        file1=ROOT.TFile(rootFileName2)
+        file1.SDHCAL.SetLineColor(2)
+        
+    c=ROOT.TCanvas()
+    file1.SDHCAL.Draw(variable,condition)
+    file2.SDHCAL.Draw(variable,condition,"SAME")
+    return c
