@@ -84,7 +84,7 @@ void RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::finalizeCollection(IMPL::LCColl
   //Fixme, should recopy value if it exists
   col->parameters().setValue( "CellID0Encoding", "DIF:8,ASIC:8,Channel:6" );
 
-  col->parameters().setValue( EVENT::LCIO::CellIDEncoding, "I:8,J:8,K:8" );
+  col->parameters().setValue( EVENT::LCIO::CellIDEncoding, "I:8,J:8,K:8,DIF:32:8,ASIC:8,Channel:6" );
   
   for (std::map<std::string, std::vector<int> >::iterator it=m_parametersFromSetup.begin(); it != m_parametersFromSetup.end(); ++it)
     col->parameters().setValues(it->first,it->second);
