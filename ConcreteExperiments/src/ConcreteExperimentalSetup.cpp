@@ -1034,7 +1034,7 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(243,242,241, SDHCALPos); //slot 14
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(186,127,154, SDHCALPos); //slot 15
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 71, 70,147, SDHCALPos); //slot 16
-  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(140,139, 47, SDHCALPos); //slot 17
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(139,140, 47, SDHCALPos); //slot 17
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 76, 77,143, SDHCALPos); //slot 18
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 36, 91,159, SDHCALPos); //slot 19
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(183,178,179, SDHCALPos); //slot 20
