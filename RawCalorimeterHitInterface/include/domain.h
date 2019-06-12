@@ -45,10 +45,19 @@ class domain
  void addValue(T value) {m_singleValues.push_back(value);}
  void addIntervalle(intervalle<T> I) {m_intervals.push_back(I);}
 
+ void print(std::ostream& flux) const { printIntervalles(flux);flux<<"{";for (auto &m : m_singleValues) flux <<m<<";";flux<<"}";}
  private:
+ void printIntervalles(std::ostream& flux) const { if (not m_intervals.empty()) for (auto &m : m_intervals) flux << m <<"U";} 
+ 
   std::vector<intervalle<T> > m_intervals;  
   std::vector<T> m_singleValues;
 };
+
+template <class NOMBRE>
+inline std::ostream& operator<<(std::ostream& flux, const domain<NOMBRE>& d)
+{
+  d.print(flux); return flux;
+}
 
 typedef domain<unsigned int> UI_domain;
 typedef domain<float> F_domain;

@@ -43,7 +43,7 @@ std::string NoHitInLayers_Filter::name()
 {
   std::stringstream ss;
   ss << "Reject events with no hits in the following layers :";
-  ss << "DOMAIN HAS NO STREAM FACILITY";
+  ss << m_layersToCheck;
   return ss.str();
 }
 
