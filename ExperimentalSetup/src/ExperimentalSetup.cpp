@@ -1,5 +1,5 @@
 #include "ExperimentalSetup.h"
-
+#include <stdexcept>
 
 ExperimentalSetup::~ExperimentalSetup()
 {
@@ -81,7 +81,7 @@ std::vector<ExperimentalSetup::DIFNUMBER> ExperimentalSetup::getTricotDevice_DIF
 
 DIFdrivenDevice& ExperimentalSetup::getOrAddDevice(DIFNUMBER dif)
 {
-  if (DIFnumberIsBIF(dif)) {abort();}
+  if (DIFnumberIsBIF(dif)) {throw std::domain_error("Called ExperimentalSetup::getOrAddDevice for the BIF");}
   if (!DIFnumberIsKnown(dif))
     {
       std::cout << "WARNING : Adding in a new layer an unexpected DIF number : " << dif << std::endl;
