@@ -1,0 +1,1271 @@
+"Message ID";"Date";"Auteur";"Detecteur";"Run";"Faisceau";"Energie";"Seuil0";"Seuil1";"Evenements";"Absorbeur";"HV";"Gaz";"PositionX";"OK";"Text"
+25563;Wed  10 Oct 2018 06:09:54 +0200;"SPS_ZOZO10_2018";"tricot + aegis";"744385";"Muons";;;;"9648";"beam dump";"7.6";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+aegis + tricot at 7.6kV
+          P          T  
+     964.41     294.55 "
+25562;Wed  10 Oct 2018 06:00:48 +0200;"SPS_ZOZO10_2018";;"744384";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25561;Wed  10 Oct 2018 05:21:22 +0200;"SPS_ZOZO10_2018";"m3";"744381";"Pi-";"5GeV";"uniform";;"144";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+Mostly e- in the beams....stopping and moving to muons for the tricot/cms/aegis
+XCET1 (N2) : 1.3bar (e-)
+XCET2 (He) : 3bar (some e-)"
+25560;Wed  10 Oct 2018 05:11:58 +0200;"SPS_ZOZO10_2018";"m3";"744380";"Pi-";"5GeV";"uniform";;"232";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+DIF 129 stopped at 232 with a lot of bad global header
+          P          T  
+     964.76     294.75 
+
+Beam seems to be mostly e- (>75%) according to Cerenkov info,
+XCET1 (N2) : 1.3bar (e-)
+XCET2 (He) : 3bar (some e-)"
+25559;Wed  10 Oct 2018 04:50:23 +0200;"SPS_ZOZO10_2018";"m3";"744379";"Pi-";"30 GeV";"uniform";;"528";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     965.05     294.85 "
+25558;Wed  10 Oct 2018 04:09:16 +0200;"SPS_ZOZO10_2018";"m3";"744377";"Pi-";"30 GeV";"uniform";;"987";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+Stuck at 987, Spill/Busy1 number at 1615 though..."
+25557;Wed  10 Oct 2018 03:43:25 +0200;"SPS_ZOZO10_2018";"m3";"744376";"Pi-";"30 GeV";"uniform";;"626";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 "
+25556;Wed  10 Oct 2018 03:37:59 +0200;"SPS_ZOZO10_2018";"m3";"744374";"Pi-";"30 GeV";"uniform";;"130";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 "
+25555;Wed  10 Oct 2018 02:11:13 +0200;"SPS_ZOZO10_2018";"m3";"744373";"Pi-";"30 GeV";"uniform";;"2380";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+DIF110 stop acq at 2380trig
+
+          P          T  
+     965.93     295.15
+XCET1 (N2): 1.3bar
+XCET2 (He): 3bar"
+25554;Wed  10 Oct 2018 01:43:54 +0200;"SPS_ZOZO10_2018";"m3";"744372";"Pi-";"10GeV";"uniform";;"798";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     966.12     295.25 "
+25553;Wed  10 Oct 2018 00:25:12 +0200;"SPS_ZOZO10_2018";"m3";"744371";"Pi-";"10GeV";"uniform";;"2520";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+DIF110 stopped daq at 2520
+          P          T  
+     966.14     295.25 
+
+XCET1 (N2) : scan from 1.5->0.3bar (scan on Pions efficiency)
+XCET2 (He) : 3bar (tagging only e-) "
+25552;Tue  09 Oct 2018 22:29:09 +0200;"SPS_ZOZO10_2018";"m3";"744369";"Pi-";"10GeV";"uniform";;"1457";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     966.43     295.85 
+DIF110 stopped acq"
+25551;Tue  09 Oct 2018 18:30:25 +0200;"SPS_ZOZO10_2018";"m3";"744367";"Pi-";"20 GeV";"uniform";;"5331";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 "
+25550;Tue  09 Oct 2018 18:03:43 +0200;"SPS_ZOZO10_2018";"m3";"744366";"Pi-";"20 GeV";"uniform";;"started";"lead 5 mm";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+lead 5mm instead of 18mm suggested by Bastien for 20 GeV (try to increase a bit the pion rate which is very low)
+Beam tuning by Nikos beam rate fluctuating"
+25549;Tue  09 Oct 2018 17:32:26 +0200;"SPS_ZOZO10_2018";"m3";"744364";"Pi-";"20 GeV";"uniform";;"358";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+
+Very low intensity / noisy chambers"
+25548;Tue  09 Oct 2018 17:28:06 +0200;"SPS_ZOZO10_2018";"m3";"744363";"Pi-";"20 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+collimators moving"
+25547;Tue  09 Oct 2018 16:42:06 +0200;"SPS_ZOZO10_2018";"m3";"744362";"Pi-";"20 GeV";"uniform";;"498";"None";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     965.52     296.45 
+
+tricots and aegis at 7.6 kV at the beginning of the run and at 5 kV after.
+
+Run stopped due to raspberry 06 and 07 with DIF blocke at 498 events. Got error message about problems with eth0.0"
+25546;Tue  09 Oct 2018 15:22:32 +0200;"SPS_ZOZO10_2018";;"744357";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 
+DIF 164 faulty"
+25545;Tue  09 Oct 2018 14:26:58 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744354";"Muons";;"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+All detectors in
+Beginning of run with pion contamination : In fact this is mostly high rate pion run im the beginning and some more pure muon in the end but can't use it due to radiation alarm. Bastien wiil look at muon file later in the afternoon."
+25544;Tue  09 Oct 2018 13:44:59 +0200;"SPS_ZOZO10_2018";"m3ecal+tricot+aegis";"744353";"Pi-";"5GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+small run to check 5 GeV pion and give feedback to Bastien "
+25543;Tue  09 Oct 2018 13:19:03 +0200;"Gerald";;;;;;;;;;;;;"<p>I&#39;ve corrected the ELOG to be more precise : the ECAL DAQ was not started due to shifters miscommunication. The beam was centerd on ECAL.</p>
+
+<table align=""center"" cellspacing=""1"" style=""border:1px solid #486090; width:98%"">
+	<tbody>
+		<tr>
+			<td style=""background-color:#486090"">Imad Laktineh wrote:</td>
+		</tr>
+		<tr>
+			<td style=""background-color:#FFFFB0"">
+			<p>When you take muons you should&nbsp; gave the beam in the center so in the ECAL otherwise the Trioct and AEGIS will not takemuons</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>"
+25542;Tue  09 Oct 2018 12:48:17 +0200;"Imad Laktineh";;;;;;;;;;;;;"<p>When you take muons you should&nbsp; gave the beam in the center so in the ECAL otherwise the Trioct and AEGIS will not takemuons</p>"
+25541;Tue  09 Oct 2018 11:56:37 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744347";"Muons";;"uniform";;"2371";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Tricots at 7.6 kV"
+25540;Tue  09 Oct 2018 11:34:31 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744345";"Muons";;"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Tricots at 7.6 kV
+ECAL DAQ not started"
+25539;Tue  09 Oct 2018 10:54:31 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744344";"Pi+";"40 GeV";"uniform";;"53";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+tricots at 5 kV
+Cerenkov XCET1 = 0.926 XCET2 = 2.177
+
+
+          P          T  
+     968.28     295.05 
+stopped due to DIF 110 (again)"
+25538;Tue  09 Oct 2018 10:42:23 +0200;"Mary Cruz and Camilo";"m3+ ecal + tricot + aegis";"744341";"Pi+";"40 GeV";"uniform";;"37";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"<p>DB=Dome_42chambres_Reference_v4_280<br />
+tricots at 5 kV<br />
+Cerenkov XCET1 = 0.926 XCET2 = 2.177<br />
+<br />
+P T</p>
+
+<p>968.30&nbsp;&nbsp;&nbsp;&nbsp; 294.75</p>
+
+<p>Again problems with DIF 110, only 37 events taken<br />
+&nbsp;</p>"
+25536;Tue  09 Oct 2018 09:38:52 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744340";"Pi+";"40 GeV";"uniform";;"485";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+tricots at 5 kV
+Cerenkov          XCET1 = 0.926         XCET2 = 2.177
+  
+          P          T  
+     968.13     294.45 
+run stopped due to DIF 110 problem"
+25535;Tue  09 Oct 2018 08:51:04 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744339";"Pi+";"40 GeV";"uniform";;"776";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+tricots at 7.6 kV
+          P          T  
+     967.97     294.25 
+WARNING Cerenkov value set for 50 GeV instead of 40 GeV (i.e 3 bars for both cerenkov)"
+25534;Tue  09 Oct 2018 06:07:45 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744337";"e-";"-150 GeV";"uniform";;"8623";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     967.42     294.25 
+tricot at 7.6kV
+XCET1 (N2) = 3
+XCET2 (He) = 0.6"
+25533;Tue  09 Oct 2018 05:26:30 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744334";"Muons";"50 GeV";"Cerenkov";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Cerenkov Scan. Beam of pions with beamDump in = Muons. (TDV not in place for the the first 5 minutes)
+Tricot were left at 5kV...
+          P          T  
+     967.50     294.25 "
+25532;Tue  09 Oct 2018 04:58:24 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744332";"Pi+";"50 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Run tricot+aegis at 7.6kV"
+25531;Tue  09 Oct 2018 04:33:11 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744331";"Pi+";"50 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     967.42     294.25 "
+25530;Tue  09 Oct 2018 04:30:12 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744330";"Pi+";"50 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25529;Tue  09 Oct 2018 03:54:12 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744328";"Pi+";"50 GeV";"uniform";;"781";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+DIF110 at it again..."
+25528;Tue  09 Oct 2018 03:38:50 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744327";"Pi+";"50 GeV";"uniform";;"286";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+DIF110 stopped daq
+
+          P          T  
+     967.52     294.35 
+
+XCET1 (N2) : 3bar
+XCET2 (He) : 3bar"
+25527;Tue  09 Oct 2018 03:15:13 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744326";"Pi+";"50 GeV";"uniform";;"531";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+DIF110 stopped the DAQ at 531triggers."
+25526;Tue  09 Oct 2018 03:01:24 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744325";"Pi+";"60GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Run tricot+aegis at 7.6kV"
+25525;Tue  09 Oct 2018 02:12:21 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744323";"Pi+";"60GeV";"uniform";;"1380";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 "
+25524;Tue  09 Oct 2018 00:56:49 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744322";"Pi+";"60GeV";"uniform";;"1024";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+DIF110 stopped the DAQ at 1024triggers. ISEG process died during the run too.
+Aegis 7.6kV - Tricot 5kV
+
+          P          T  
+     967.29     294.85 
+XCET1 (N2) : 3bar
+XCET2 (He) : 3bar"
+25523;Tue  09 Oct 2018 00:34:37 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744321";"Pi+";"70 GeV";"uniform";;"884";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Run tricot+aegis at 7.6kV"
+25522;Tue  09 Oct 2018 00:29:54 +0200;"Acquisition ";;;;;;;;;;;;;"<p>moved tricot: tricot center = ecal center</p>"
+25521;Tue  09 Oct 2018 00:26:46 +0200;"Antoine Pingault";;;;;;;;;;;;;"<p>Lauda was off, explaining the overall increase in current in all chambers...I also increased gas flow in chambers 4&amp;6.</p>
+
+<p>&nbsp; Chan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VSET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ISET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IOUT&nbsp;&nbsp;&nbsp;&nbsp; RAMPUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; STATUS<br />
+#0000&nbsp;&nbsp;&nbsp; 6700.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6701.02&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16) &nbsp;<br />
+#0001&nbsp;&nbsp;&nbsp; 6700.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6701.05&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16) &nbsp;<br />
+#0002&nbsp;&nbsp;&nbsp; 6700.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6701.12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -1.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16) &nbsp;<br />
+#0003&nbsp;&nbsp;&nbsp; 6700.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6700.96&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -6.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16) &nbsp;<br />
+#0004&nbsp;&nbsp;&nbsp; 6700.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6"
+25520;Mon  08 Oct 2018 22:10:26 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744318";"Pi+";"70 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+tricot at 5 kV"
+25518;Mon  08 Oct 2018 20:37:34 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744317";"Pi+";"80 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     967.20     295.55"
+25517;Mon  08 Oct 2018 18:47:34 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744316";"Pi+";"80 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     966.05     296.15
+
+No beam again, stop this run."
+25516;Mon  08 Oct 2018 17:25:53 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744315";"Pi+";"80 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     965.62     296.15 
+
+
+No beam, so stop this run."
+25515;Mon  08 Oct 2018 17:22:55 +0200;"SPS_ZOZO10_2018";;"744314";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25514;Mon  08 Oct 2018 17:20:57 +0200;"SPS_ZOZO10_2018";;"744313";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25513;Mon  08 Oct 2018 16:41:04 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744312";"Pi+";"80 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"<p>DB=Dome_42chambres_Reference_v4_280</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>"
+25511;Mon  08 Oct 2018 15:58:38 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744310";"Pi+";"80 GeV";"uniform";;"884";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+tricot at 5kV
+Cerenkov pressure OK from readout 80
+
+ "
+25510;Mon  08 Oct 2018 14:19:58 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744308";"e-";"40 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+Remove tricot after 778 triggers.
+ "
+25509;Mon  08 Oct 2018 13:46:25 +0200;"SPS_ZOZO10_2018";"m3+ ecal + tricot + aegis";"744307";"e-";"40 GeV";"uniform";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 "
+25508;Mon  08 Oct 2018 09:56:39 +0200;"SPS_ZOZO10_2018";"m3";"744299";"Pi-";"40 GeV";"uniform";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+          P          T  
+     965.73     294.65 "
+25507;Mon  08 Oct 2018 08:45:49 +0200;"SPS_ZOZO10_2018";"m3";"744297";"Pi-";"60GeV";"uniform";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP RIGHT";;"DB=Dome_42chambres_Reference_v4_280
+           P          T  
+     965.13     294.65 "
+25506;Mon  08 Oct 2018 07:07:08 +0200;"yvan";;"744283";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_293 
+threshold aegis:170 tricot:120
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+          P          T  
+     964.03     294.65 "
+25505;Mon  08 Oct 2018 06:41:54 +0200;"yvan";;"744278";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_292 
+threshold aegis:180 tricot:130
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.71 294.65 "
+25504;Mon  08 Oct 2018 06:18:41 +0200;"yvan";;"744273";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_291 
+threshold aegis:190 tricot:140
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+          P          T  
+     963.71     294.65 "
+25503;Mon  08 Oct 2018 05:53:28 +0200;"yvan";;"744269";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_290 
+threshold aegis:200 tricot:150
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.79 294.65 "
+25502;Mon  08 Oct 2018 05:23:55 +0200;"yvan";;"744263";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_289 
+threshold aegis:210 tricot:160
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.79 294.65 "
+25501;Mon  08 Oct 2018 05:03:04 +0200;"yvan";;"744258";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_288 
+threshold aegis:220 tricot:170
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.79 294.65 "
+25500;Mon  08 Oct 2018 04:39:29 +0200;"yvan";;"744254";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_287 
+threshold aegis:230 tricot:180
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+          P          T  
+     963.79     294.65 "
+25499;Mon  08 Oct 2018 04:12:35 +0200;"yvan";;"744249";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_286 
+threshold aegis:240 tricot:190
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.48 294.65 "
+25498;Mon  08 Oct 2018 03:45:56 +0200;"yvan";;"744246";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_285 
+threshold aegis:250 tricot:200
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.48 294.65 "
+25497;Mon  08 Oct 2018 03:20:48 +0200;"yvan";;"744242";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_284 
+threshold aegis:260 tricot:210
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.48 294.65 "
+25496;Mon  08 Oct 2018 02:58:40 +0200;"yvan";;"744237";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_283 
+threshold aegis:270 tricot:220
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42 : 7300)
+m3+tricot+ecal+aegis
+P T
+963.48 294.65 "
+25495;Mon  08 Oct 2018 02:54:48 +0200;"yvan";;"744236";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";"Bad data";"DB=Dome_42chambres_Reference_v4_283 
+threshold aegis:270 tricot:220
+200GeV
+HV aegis + tricot = 7600V except 1 chamber (slot42)
+m3+tricot+ecal+aegis
+          P          T  
+     963.48     294.65 "
+25494;Mon  08 Oct 2018 02:24:23 +0200;"yvan";;"744233";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_281 
+200GeV
+HV aegis + tricot = 6600V
+m3+tricot+ecal+aegis
+          P          T  
+     963.62     294.75 "
+25493;Mon  08 Oct 2018 01:56:17 +0200;"yvan";;"744230";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_281
+200GeV
+HV aegis + tricot = 6800V
+m3+tricot+ecal+aegis
+P T
+963.49 294.75 "
+25492;Mon  08 Oct 2018 01:29:22 +0200;"yvan";;"744226";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_281 
+200GeV
+HV aegis + tricot = 7000V
+m3+tricot+ecal+aegis
+          P          T  
+     963.49     294.75 "
+25491;Mon  08 Oct 2018 01:06:51 +0200;"yvan";;"744221";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_281 
+200GeV
+HV aegis + tricot = 7200V
+m3+tricot+ecal+aegis
+          P          T  
+     963.48     294.85 "
+25490;Mon  08 Oct 2018 00:45:18 +0200;"yvan";;"744218";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_281 
+200GeV
+HV aegis + tricot = 7400V
+m3+tricot+ecal+aegis
+P T
+963.36 294.95"
+25489;Mon  08 Oct 2018 00:24:45 +0200;"yvan";;"744214";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"DB=Dome_42chambres_Reference_v4_281 
+200GeV
+HV aegis + tricot = 7600V
+m3+tricot+ecal+aegis
+
+          P          T  
+     963.36     294.95"
+25488;Mon  08 Oct 2018 00:09:35 +0200;"yvan";;"744211";"Muons";;;;;;"6.7";"2 % SF6 5% CO2 93% TFE";"CENTER";;"<p>Dome_42chambres_Reference_v4_280</p>
+
+<p>200GeV</p>
+
+<p>HV aegis + tricot = 7600V</p>
+
+<p>m3+tricot+ecal+aegis</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; T &nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 963.36&nbsp;&nbsp;&nbsp;&nbsp; 294.95</p>
+
+<p>&nbsp;</p>"
+25486;Sun  07 Oct 2018 21:47:19 +0200;"SPS_ZOZO10_2018";;"744206";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_280 "
+25485;Sun  07 Oct 2018 19:20:26 +0200;"Antoine Pingault";;;;;;;;;;;;;"<p>No beam since 7pm, current run in pause (744205) : kicker issue, might take a while....</p>
+
+<p>EDIT at 8pm: Called CCC they have now two big issues, they are not confident they can fix anything in the coming 30min to 1h so we are all going for lunch!</p>"
+25484;Sun  07 Oct 2018 17:48:29 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744205";"Pi-";"60GeV";"200";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"Top right";;"DB=Dome_42chambres_Reference_v4_279 
+          P          T  
+     962.58     295.05"
+25483;Sun  07 Oct 2018 16:12:03 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744204";"Pi-";"80 GeV";"200";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"Top Right";;"DB=Dome_42chambres_Reference_v4_279 "
+25482;Sun  07 Oct 2018 14:18:38 +0200;"SPS_ZOZO10_2018";;"744202";"Pi-";"80 GeV";"uniform";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP RIGHT";;"DB=Dome_42chambres_Reference_v4_280 
+
+We changed the beam configuration. We select the most recent one made for the present wobbling
+  P          T  
+     961.22     294.85 
+
+XCET1(N2) = 3bar
+XCET2(N2) = 2ba"
+25481;Sun  07 Oct 2018 12:47:25 +0200;"I.L";;"744200";"Pi+";"80 GeV";"uniform";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP RIGHT";;"DB=Dome_42chambres_Reference_v4_280 
+
+  P          T  
+     961.95     294.75 
+
+
+XCET1(N2) = 3bar
+XCET2(N2) = 2ba"
+25480;Sun  07 Oct 2018 12:33:17 +0200;"I.L";;"744199";"no beam";;"uniform";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP RIGHT";;"DB=Dome_42chambres_Reference_v4_280 
+
+Muons
+
+ P          T  
+     961.95     294.75 
+
+XCET1(N2) = 3bar
+XCET2(N2) = 2ba"
+25479;Sun  07 Oct 2018 10:38:37 +0200;"I.L";;"744197";"Pi+";"80";"200";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP RIGHT";;"DB=Dome_42chambres_Reference_v4_279 
+
+first 50 events without the leqd in front
+
+     P          T  
+     961.59     294.65 
+
+XCET1(N2) = 3bar
+XCET2(N2) = 2bar "
+25478;Sun  07 Oct 2018 08:28:49 +0200;"I.L";;"744195";"Pi+";"80 GeV";"200";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"Center Middle behind ECAL 24X0";;"DB=Dome_42chambres_Reference_v4_279 
+
+       P          T  
+     960.46     294.75 
+
+
+XCET1(N2) = 3bar
+XCET2(N2) = 2bar "
+25477;Sun  07 Oct 2018 06:56:30 +0200;"SPS_ZOZO10_2018";"m3";"744193";"Pi+";"80 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"center";;"DB=Dome_42chambres_Reference_v4_280 
+        P          T  
+     959.07     294.75 "
+25476;Sun  07 Oct 2018 05:43:16 +0200;"SPS_ZOZO10_2018";"m3";"744191";"Pi+";"70 GeV";"uniform";;"started";"Lead 8mm + some W";"6.7";"2 % SF6 5% CO2 93% TFE";"top";;"DB=Dome_42chambres_Reference_v4_280 
+ P          T  
+     958.83     294.75 
+
+last ~ 300 triggers were done with 7.3 kV for tricot and aegis chambers "
+25475;Sun  07 Oct 2018 04:40:01 +0200;"SPS_ZOZO10_2018";"m3";"744190";"Pi+";"70 GeV";"200";;"started";"Lead 8mm + some W";"6.7";"2 % SF6 5% CO2 93% TFE";"top";;"DB=Dome_42chambres_Reference_v4_279 
+P          T  
+     959.13     294.75
+
+last ~ 300 triggers were done with 7.3 kV for tricot and aegis chambers "
+25474;Sun  07 Oct 2018 03:40:46 +0200;"SPS_ZOZO10_2018";"m3";"744188";"Pi+";"70 GeV";"uniform";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_280 
+P          T  
+     959.12     294.75
+
+last ~ 300 triggers were done with 7.3 kV for tricot and aegis chambers "
+25473;Sun  07 Oct 2018 02:31:33 +0200;"SPS_ZOZO10_2018";"m3";"744185";"Pi+";"70 GeV";"200";;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";;"DB=Dome_42chambres_Reference_v4_279 
+P          T  
+     959.12     294.95
+
+last ~ 300 triggers were done with 7.3 kV for tricot and aegis chambers "
+25472;Sat  06 Oct 2018 22:45:27 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744168";"Muons";;"200";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_279 "
+25471;Sat  06 Oct 2018 20:46:03 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744164";"Pi+";"70 GeV";"200";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"center";;"DB=Dome_42chambres_Reference_v4_279 
+          P          T  
+     958.71     295.75 
+
+
+
+Tricot+Aegis at 7kV and then Tricot at 6.8 kV"
+25470;Sat  06 Oct 2018 18:04:09 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744160";"Pi+";"70 GeV";"uniform";;"started";"ECAL 24X0";"6.9";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_280 
+
+          P          T  
+     958.04     296.05 
+
+small chambers at 6.7 kV"
+25469;Sat  06 Oct 2018 17:33:17 +0200;"SPS_ZOZO10_2018";;"744153";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 
+
+Found the problem with spill measurement of <1s : Culprit is the cable which delivers the SDHCAL clock from he MDCC to the ECAL.
+Ecal side was disconnected but not the SDHCAL. Disconecting the cable on the MDCC solves the problem........................... "
+25468;Sat  06 Oct 2018 17:13:57 +0200;"SPS_ZOZO10_2018";;"744152";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25467;Sat  06 Oct 2018 17:11:09 +0200;"SPS_ZOZO10_2018";;"744151";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25466;Sat  06 Oct 2018 16:52:08 +0200;"SPS_ZOZO10_2018";;"744148";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25465;Sat  06 Oct 2018 15:19:59 +0200;"I.L";;"744145";"Pi+";"70 GeV";;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_280   this is 266 with Tricot at 6.7kv and 140 threshold"
+25464;Sat  06 Oct 2018 15:17:34 +0200;"SPS_ZOZO10_2018";;"744144";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25463;Sat  06 Oct 2018 14:58:37 +0200;"SPS_ZOZO10_2018";;"744143";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25462;Sat  06 Oct 2018 14:57:22 +0200;"SPS_ZOZO10_2018";;"744142";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_280 "
+25461;Sat  06 Oct 2018 14:14:23 +0200;"SPS_ZOZO10_2018";;"744141";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_278 "
+25460;Sat  06 Oct 2018 14:09:45 +0200;"SPS_ZOZO10_2018";;"744140";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_278 "
+25459;Sat  06 Oct 2018 12:24:02 +0200;"SPS_ZOZO10_2018";;"744135";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_278 "
+25458;Sat  06 Oct 2018 11:45:06 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744133";"Pi+";"70 GeV";;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_278 
+mostly muons"
+25457;Sat  06 Oct 2018 11:09:58 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744132";"Pi+";"70 GeV";;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_278 
+mostly muons"
+25456;Sat  06 Oct 2018 10:52:58 +0200;"SPS_ZOZO10_2018";;"744131";"no beam";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_277 
+This is muons taken while the area is open"
+25455;Sat  06 Oct 2018 06:40:16 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744129";"Pi+";"70 GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"center";;"DB=Dome_42chambres_Reference_v4_277 
+P          T  
+     963.00     294.05
+mostly muons"
+25454;Sat  06 Oct 2018 06:26:07 +0200;"SPS_ZOZO10_2018";"m3";"744128";"Pi+";"70 GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"center";;"DB=Dome_42chambres_Reference_v4_277 
+  P          T  
+     963.13     294.05 "
+25453;Sat  06 Oct 2018 06:00:36 +0200;"SPS_ZOZO10_2018";"m3";"744127";"Pi+";"40 GeV";;;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"top right";"Bad data";"DB=Dome_42chambres_Reference_v4_277 
+          P          T  
+     963.34     294.05 
+Position: X = -502; Y = 477
+
+too small rate with all collimators wide open (because of 18mm lead ?)"
+25452;Sat  06 Oct 2018 03:55:08 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744126";"Pi+";"40 GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_278 
+          P          T  
+     964.03     294.45 "
+25451;Sat  06 Oct 2018 03:26:32 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744125";"Pi+";"40 GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_277 
+          P          T  
+     964.20     294.45 
+Continuation"
+25450;Sat  06 Oct 2018 01:54:11 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744124";"Pi+";"40 GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_277 
+         P          T  
+     964.23     294.75 "
+25449;Sat  06 Oct 2018 01:52:28 +0200;"SPS_ZOZO10_2018";;"744123";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_277 "
+25448;Sat  06 Oct 2018 01:47:37 +0200;"SPS_ZOZO10_2018";;"744122";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_277 "
+25447;Sat  06 Oct 2018 01:30:01 +0200;"SPS_ZOZO10_2018";;"744121";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_277 "
+25446;Sat  06 Oct 2018 00:01:31 +0200;"SPS_ZOZO10_2018";;"744120";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_277 
+
+Test tricot + aegis"
+25445;Fri  05 Oct 2018 21:57:51 +0200;"Imad Laktineh";;;;;;;;;;;;;"<p>I created two new database states</p>
+
+<p>Dome_42chambres_Reference_v4_277&nbsp;&nbsp;&nbsp;&nbsp; from _266 (uniform)<br />
+Dome_42chambres_Reference_v4_278&nbsp;&nbsp;&nbsp;&nbsp; from _268 (non uniform)</p>
+
+<p>They include the 5 Tricot chambers (difs: 80, 182, 105, 63, 87) and AEGIS ones with the dead ASICS (18, 5, 8)</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>"
+25444;Fri  05 Oct 2018 21:38:34 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744119";"Pi+";"60GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 "
+25443;Fri  05 Oct 2018 21:34:55 +0200;"SPS_ZOZO10_2018";;"744118";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25442;Fri  05 Oct 2018 20:42:54 +0200;"SPS_ZOZO10_2018";;"744117";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25441;Fri  05 Oct 2018 20:40:19 +0200;"SPS_ZOZO10_2018";;"744116";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25440;Fri  05 Oct 2018 20:32:34 +0200;"SPS_ZOZO10_2018";;"744115";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25439;Fri  05 Oct 2018 20:06:51 +0200;"SPS_ZOZO10_2018";;"744114";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25438;Fri  05 Oct 2018 20:05:16 +0200;"SPS_ZOZO10_2018";;"744114";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25437;Fri  05 Oct 2018 17:34:12 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744113";"Pi+";"60GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+Run stopped due to stuck diff (#128) at event
+337 over 338"
+25436;Fri  05 Oct 2018 16:53:05 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744112";"Pi+";"60GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+Run stopped due to stuck diff (#128) at event
+379 over 381"
+25435;Fri  05 Oct 2018 16:16:32 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744111";"Pi+";"60GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+Run stopped due to stuck diff (#128) at event 295 over 297"
+25434;Fri  05 Oct 2018 15:26:57 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744110";"Muons";;;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25433;Fri  05 Oct 2018 12:12:21 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744109";"Pi+";"60GeV";;;"started";"ECAL 24X0";;"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+
+
+Gas weight: 78.0 kg"
+25432;Fri  05 Oct 2018 11:17:36 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744108";"Pi+";"60 GeV";;;"started";"ECAL 24X0";;"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25431;Fri  05 Oct 2018 10:50:16 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744107";"Pi+";"60GeV";;;"started";;;"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25430;Fri  05 Oct 2018 08:35:50 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744102";"Pi+";"60GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25429;Fri  05 Oct 2018 08:23:38 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744101";"no beam";"60GeV";;;"started";;;"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25428;Fri  05 Oct 2018 08:19:46 +0200;"SPS_ZOZO10_2018";;"744100";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25427;Fri  05 Oct 2018 08:14:06 +0200;"SPS_ZOZO10_2018";;"744099";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25426;Fri  05 Oct 2018 05:58:46 +0200;"yvan";"m3";"744098";"Pi+";"50 GeV";;;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP RIGHT";;"DB=Dome_42chambres_Reference_v4_268 
+  table position : x=-504; y=477;  
+          P          T  
+     969.12     293.55"
+25425;Fri  05 Oct 2018 04:28:19 +0200;"yvan";"m3";"744097";"Pi+";"50 GeV";;;"started";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP";;"DB=Dome_42chambres_Reference_v4_268 
+ table position : x=-108; y=477; 
+          P          T  
+     969.61     293.75"
+25424;Fri  05 Oct 2018 03:23:37 +0200;"yvan";"m3";"744096";"Pi+";"50 GeV";;;"started";"lead8mm";"6.7";"2 % SF6 5% CO2 93% TFE";"TOP";;"DB=Dome_42chambres_Reference_v4_266 
+table position : x=-108; y=477;
+          P          T  
+     970.11     293.95 "
+25423;Fri  05 Oct 2018 00:13:14 +0200;"yvan";"m3";"744095";"Pi+";"50 GeV";;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+          P          T  
+     970.26     294.55 "
+25422;Thu  04 Oct 2018 23:54:00 +0200;"yvan";"m3";"744094";"Muons";;;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+          P          T  
+     970.26     294.55 "
+25421;Thu  04 Oct 2018 22:55:27 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744093";"Pi-";"50 GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25420;Thu  04 Oct 2018 22:09:17 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744092";"Pi-";"50 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+       P          T  
+     969.84     294.95 
+XCET1(N2) = 3bar
+XCET2(He) = 3bar "
+25419;Thu  04 Oct 2018 20:40:56 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744091";"Pi-";"50 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+Slots 17-18 (repaired yesterday) have rising current. now at 7/5ua respectively. Gas flow should be checked at the end of next run 
+
+          P          T  
+     969.66     295.05 
+XCET1(N2) = 3bar
+XCET2(He) = 3bar "
+25418;Thu  04 Oct 2018 19:06:10 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744090";"Pi-";"50 GeV";;;"started";"None";"6.7";"2 % SF6 5% CO2 93% TFE";"Top - Right Corner";;"DB=Dome_42chambres_Reference_v4_266 
+
+XCET1(N2) = 3bar
+XCET2(He) = 3bar "
+25417;Thu  04 Oct 2018 18:13:48 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744088";"Pi-";"50 GeV";;;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"Top - Right Corner";;"DB=Dome_42chambres_Reference_v4_266 
+Run stopped due to stuck diff (#79) at 1122 events over 1193 events.
+
+XCET1(N2) = 3bar
+XCET2(He) = 3bar "
+25416;Thu  04 Oct 2018 18:12:30 +0200;"Gerald Grenier";;"744087";;;;;;;;;;"Bad data"
+25414;Thu  04 Oct 2018 17:50:30 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744086";"Pi-";"50 GeV";;;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";"Top - Right Corner";;"DB=Dome_42chambres_Reference_v4_266 
+Run stopped due to stuck diff (#79) at 130 events.
+
+XCET1(N2) = 3bar
+XCET2(He) = 3bar "
+25413;Thu  04 Oct 2018 16:58:29 +0200;"SPS_ZOZO10_2018";;"744082";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25412;Thu  04 Oct 2018 16:26:51 +0200;"SPS_ZOZO10_2018";"m3";"744081";"Pi-";"50 GeV";;;"started";"18 mm lead";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+testing 40GeV file, rate is too low (350/spill -> less than 1pi/trigger)"
+25411;Thu  04 Oct 2018 16:24:15 +0200;"SPS_ZOZO10_2018";;"744081";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25410;Thu  04 Oct 2018 16:11:59 +0200;"SPS_ZOZO10_2018";;"744080";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25409;Thu  04 Oct 2018 15:23:49 +0200;"SPS_ZOZO10_2018";;"744079";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 
+Ecal debug + beam tuning after wobbling change"
+25408;Thu  04 Oct 2018 14:25:21 +0200;"SPS_ZOZO10_2018";"m3";"744078";"Pi-";"20GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"Top - Right Corner";;"DB=Dome_42chambres_Reference_v4_266 
+          P          T
+     970.05     294.85
+
+XCET1(N2) = 3
+XCET2(He) = 3 "
+25407;Thu  04 Oct 2018 12:30:36 +0200;"SPS_ZOZO10_2018";"m3";"744077";"Muons";"20GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";"Top - Right Corner";;"DB=Dome_42chambres_Reference_v4_266 
+
+Wrong file loaded...we ran on muons instead of pions!
+
+Ecal present but not in front of the beam
+
+          P          T
+     970.95     294.35
+
+XCET1(N2) = 3
+XCET2(He) = 3 "
+25406;Thu  04 Oct 2018 12:21:31 +0200;"SPS_ZOZO10_2018";"m3";"744076";"Pi-";"30 GeV";"200";;"64";;"6.7";"2 % SF6 5% CO2 93% TFE";"Top - Right Corner";;"DB=Dome_42chambres_Reference_v4_268 
+
+Run stopped as we need to go to lower energy before wobbling change.
+
+Until now beam was in Center (on the vertical axis) and left.
+Reading of the moving tables were at y=677mm, x =-108 until now.
+New position is y=477mm, x=-512mm
+
+          P          T
+     970.97     294.25"
+25405;Thu  04 Oct 2018 11:54:13 +0200;"SPS_ZOZO10_2018";"m3";"744075";"pi";;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25403;Thu  04 Oct 2018 09:03:12 +0200;"Pingault Antoine";;;;;;;;;;;;;"<p>Since 8am and until 6pm we run with only 1spill/41s cycle. SPS is running parallel MD. Data taking will take longer....</p>"
+25401;Thu  04 Oct 2018 07:32:58 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744074";"Pi-";"30 GeV";"200";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+
+          P          T  
+     970.84     293.75 
+
+XCET1(N2) = 1.6 
+XCET2(He) = 3 "
+25400;Thu  04 Oct 2018 05:42:06 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744073";"Pi-";"30 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25399;Thu  04 Oct 2018 03:49:31 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744072";"Pi-";"20 GeV";"uniform";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 "
+25398;Thu  04 Oct 2018 01:43:37 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744071";"Pi-";"20 GeV";"200";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+
+continuation of 744069
+Greatly increased the spiil rate ~2000 particules per spill because most of the spill is actually muons"
+25397;Thu  04 Oct 2018 01:36:34 +0200;"SPS_ZOZO10_2018";;"744070";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_268 "
+25396;Thu  04 Oct 2018 00:08:06 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744069";"Pi-";"20GeV";"200";;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+          P          T  
+     971.20     294.95 
+
+slot 35 back in"
+25395;Wed  03 Oct 2018 23:45:10 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744068";"Noise run";;;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_268 
+test spillon/spillof for ECAL"
+25394;Wed  03 Oct 2018 23:22:39 +0200;"Gerald Grenier";"m3 + ecal";"744067";"Pi-";"10GeV";"200";;;"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_268 
+ECAL spillon changed to 0.8 ms
+Slot 35 is absent (LV is off )
+          P          T   
+     971.55     295.25 "
+25392;Wed  03 Oct 2018 19:48:34 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744066";"Pi-";"10GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+Slot 35 is absent (LV is off )
+          P          T  
+     971.09     295.75 
+
+XCET1(N2) = 1.53 (K tag = 0%)
+XCET2(He) = 3    (Pi tag =29%)"
+25391;Wed  03 Oct 2018 19:35:45 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744065";"Muons";"20GeV";;;"started";"ECAL 24X0";"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     971.15     295.75 "
+25390;Wed  03 Oct 2018 19:25:16 +0200;"SPS_ZOZO10_2018";;"744064";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25389;Wed  03 Oct 2018 19:02:52 +0200;"SPS_ZOZO10_2018";;"744063";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25388;Wed  03 Oct 2018 19:00:31 +0200;"SPS_ZOZO10_2018";;"744062";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25387;Wed  03 Oct 2018 14:07:22 +0200;"SPS_ZOZO10_2018";;"744055";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25386;Wed  03 Oct 2018 13:59:11 +0200;"SPS_ZOZO10_2018";;"744054";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25385;Wed  03 Oct 2018 13:52:57 +0200;"SPS_ZOZO10_2018";;"744053";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25384;Wed  03 Oct 2018 08:50:59 +0200;"SPS_ZOZO10_2018";;"744052";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25383;Wed  03 Oct 2018 07:02:01 +0200;"SPS_ZOZO10_2018";"m3";"744051";"Pi+";"40 GeV";"uniform state";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     972.25     293.45
+
+!!Cerenkov not set correctly!!"
+25382;Wed  03 Oct 2018 04:36:59 +0200;"SPS_ZOZO10_2018";"m3";"744050";"Pi+";"40 GeV";"uniform state";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     971.79     293.85 
+No beam, so stop"
+25381;Wed  03 Oct 2018 03:32:14 +0200;"SPS_ZOZO10_2018";"m3";"744049";"Pi+";"30 GeV";"uniform state";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"<p>DB=Dome_42chambres_Reference_v4_266</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; T &nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 971.63&nbsp;&nbsp;&nbsp;&nbsp; 294.05</p>
+
+<p>&nbsp;</p>
+
+<p>The DAQ was crashed before we stop</p>"
+25379;Wed  03 Oct 2018 01:43:28 +0200;"SPS_ZOZO10_2018";"m3";"744048";"Pi+";"30 GeV";"uniform state";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+
+We unplugged slot3 as we were not able to record data otherwise. (DIF129 sending bad gobal header
+
+          P          T  
+     971.73     294.25 
+
+The run is stopped due to the high rate."
+25378;Wed  03 Oct 2018 01:37:38 +0200;"SPS_ZOZO10_2018";;"744047";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25377;Wed  03 Oct 2018 01:22:29 +0200;"SPS_ZOZO10_2018";;"744046";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25376;Wed  03 Oct 2018 01:17:00 +0200;"SPS_ZOZO10_2018";;"744045";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25375;Wed  03 Oct 2018 00:51:39 +0200;"SPS_ZOZO10_2018";;"744044";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 
+rate is ok at the exp area (~1000/spill) but too high at the XCET point (10k) -> XCET is killing the acquisition.
+
+DIF129 is blocking acq"
+25374;Wed  03 Oct 2018 00:16:20 +0200;"Antoine Pingault";;;;;;;;;;;;;"<p>slot 17 successfully repaired, some asu/asu were disconnocted.</p>
+
+<p>Open entry for more info:<br />
+slot17 no longer working after insertion in the structure.</p>
+
+<p>Conclusion : https://www.youtube.com/watch?v=qON17rGUHYc</p>"
+25373;Tue  02 Oct 2018 23:13:30 +0200;"SPS_ZOZO10_2018";;"744043";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25372;Tue  02 Oct 2018 23:07:54 +0200;"SPS_ZOZO10_2018";;"744042";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25371;Tue  02 Oct 2018 22:35:16 +0200;"SPS_ZOZO10_2018";;"744041";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25370;Tue  02 Oct 2018 16:52:19 +0200;"SPS_ZOZO10_2018";;"744030";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25369;Tue  02 Oct 2018 16:30:25 +0200;"SPS_ZOZO10_2018";;"744029";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25368;Tue  02 Oct 2018 14:51:58 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744027";"Pi+";"20 GeV";"200";;"1080";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+Not sure of the content of the beam, seems that we had some pions at the beginning (~800/spill) but mostly muons by the end of the run.
+No Cerenkov info in this run."
+25367;Tue  02 Oct 2018 14:50:27 +0200;"SPS_ZOZO10_2018";;"744026";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25366;Tue  02 Oct 2018 13:55:09 +0200;"SPS_ZOZO10_2018";;"744022";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+spilloff at 20Mclocks=400ms
+spillon at 250k=5ms.
+
+Not much better. "
+25365;Tue  02 Oct 2018 13:43:33 +0200;"SPS_ZOZO10_2018";;"744021";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25364;Tue  02 Oct 2018 13:33:16 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744020";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+Try again with spilloff at 12M=240ms, spillon still at 500k = 10ms "
+25363;Tue  02 Oct 2018 13:19:14 +0200;"SPS_ZOZO10_2018";;"744019";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25362;Tue  02 Oct 2018 13:10:16 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744018";"Muons";;"200";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+It's working!
+Ecal gets desynchronized after ~40spills
+spilloff at 3Mclocks=60ms
+spillon at 500k=10ms"
+25361;Tue  02 Oct 2018 13:03:45 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744017";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+DIFs from slot 15 (difs 127-154-186) are not taking data....trying to restart again"
+25360;Tue  02 Oct 2018 12:58:58 +0200;"Pingault Antoine";;;;;;;;;;;;;"<p>Current in some of the chambers are really high, and increasing.</p>
+
+<p>&nbsp; Chan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VSET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ISET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IOUT&nbsp;&nbsp;&nbsp;&nbsp; RAMPUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; STATUS<br />
+#0000&nbsp;&nbsp;&nbsp; 6900.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6901.04&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16)<br />
+#0001&nbsp;&nbsp;&nbsp; 6900.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6901.02&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16)<br />
+#0002&nbsp;&nbsp;&nbsp; 6900.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6901.12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -1.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16)<br />
+#0003&nbsp;&nbsp;&nbsp; 6900.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6901.05&nbsp;&nbsp;&nbsp;&nbsp; -10.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00 80 outputOn(0) outputConstantVoltage(16)<br />
+#0004&nbsp;&nbsp;&nbsp; 6900.00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30.00&nbsp;&nbsp; -6901.05&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -6.00&nbsp;&nbsp;&nbsp;&nbsp; -25.00&nbsp; BITS: 80 00"
+25359;Tue  02 Oct 2018 12:52:06 +0200;"Pingault Antoine";;;;;;;;;;;;;"<p>There was a short circuit problem between the pins from the rpi USB Hub alim and the ground of the usb connector. Added some Kapton tape between the pins and the usb connector and all is ok.</p>
+
+<p>We are testing the common DAQ now.</p>
+
+<p>For some reason slot 15 tripped in the last hour...</p>"
+25358;Tue  02 Oct 2018 12:47:21 +0200;"SPS_ZOZO10_2018";"m3 + ecal";"744016";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+Common DAQ test"
+25357;Tue  02 Oct 2018 12:20:47 +0200;"SPS_ZOZO10_2018";;"744015";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25356;Tue  02 Oct 2018 11:15:33 +0200;"SPS_ZOZO10_2018";;"744014";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25355;Tue  02 Oct 2018 10:45:12 +0200;"SPS_ZOZO10_2018";;"744012";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25354;Tue  02 Oct 2018 10:40:01 +0200;"SPS_ZOZO10_2018";;"744011";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25353;Tue  02 Oct 2018 10:23:02 +0200;"Gerald Grenier";;"DAQ status";;;;;;;;;;;"<p>We are not successful with making RPI03 DIF all communicating properly.</p>
+
+<p>We access to check USB cable plugging on the raspberry.</p>
+
+<p>After, we will resume ECAL+HCAL comon DAQ attempts</p>
+
+<p>&nbsp;</p>"
+25352;Tue  02 Oct 2018 09:39:53 +0200;"SPS_ZOZO10_2018";"m3";"744010";"e-";;"260";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_257 
+works with this trheshold but some bad header message. DAQ hanged due to DIF 118.
+          P          T  
+     970.61     293.45 "
+25351;Tue  02 Oct 2018 09:35:54 +0200;"SPS_ZOZO10_2018";;"744009";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_260 "
+25350;Tue  02 Oct 2018 09:33:28 +0200;"SPS_ZOZO10_2018";"m3";"744008";"e-";;"200";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_260 
+DAQ hanging due to DIF 118 and 129"
+25349;Tue  02 Oct 2018 09:17:10 +0200;"Acquisition ";;"Le message precedent est incomprehensible";;;;;;;;;;;"<p>J&#39;essaie de trouver pourquoi la DAQ se bloque avec le setup 266. Ca marche avec des seuils plus eleves.</p>
+
+<p>Ca marchait tres bien hier avant les tests ECA/HCAL. L&#39;un des trucs qui a change dans restrt_daq est le spillon/spilloff. Au GIF, on reduisqit ces parametres quand le gamma rate augmentait. D&#39;ou l&#39;idee que ce pourrait etre relie.</p>
+
+<p>Ce peut etre un probleme de canal bruyant avec trop de ramfull dans une DIF : le fait qu&#39;en montant le seuil, ca passe est favorable a cette option.</p>
+
+<p>Je continue a chercher.</p>
+
+<p>&nbsp;</p>"
+25347;Tue  02 Oct 2018 09:12:58 +0200;"SPS_ZOZO10_2018";"m3";"744007";"e-";;"300";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_255 
+Try with intermediate threshold : seems OK"
+25346;Tue  02 Oct 2018 09:09:24 +0200;"LM";"m3";"744006";"e-";;"440";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"[quote=""SPS_ZOZO10_2018""]DB=Dome_42chambres_Reference_v4_248 
+It works with higher threshold, getting to lower threshold with the current DAQ configuration leads to DAQ hanging. 
+Probably, can go down with a better setting of the spillon/spilloff values.[/quote]
+
+Spillon/Off are not connected to daq hanging or not. Most probabbly some DIF are faulty"
+25345;Tue  02 Oct 2018 09:08:09 +0200;"Acquisition ";;"Le message precedent est incomprehensible";;;;;;;;;;
+25344;Tue  02 Oct 2018 08:46:58 +0200;"SPS_ZOZO10_2018";"m3";"744006";"e-";;"440";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_248 
+It works with higher threshold, getting to lower threshold with the current DAQ configuration leads to DAQ hanging. 
+Probably, can go down with a better setting of the spillon/spilloff values."
+25343;Tue  02 Oct 2018 08:29:34 +0200;"SPS_ZOZO10_2018";"m3";"744005";"e-";;"uniform state";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_266 
+2 DIF with problems in data sending : DIF 119 and 129 
+          P          T  
+     970.02     293.15 "
+25342;Tue  02 Oct 2018 08:26:15 +0200;"SPS_ZOZO10_2018";;"744004";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 
+HV varying"
+25341;Tue  02 Oct 2018 04:37:43 +0200;"SPS_ZOZO10_2018";;"744003";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25340;Tue  02 Oct 2018 04:34:36 +0200;"SPS_ZOZO10_2018";;"744002";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25339;Tue  02 Oct 2018 04:28:30 +0200;"SPS_ZOZO10_2018";;"744001";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25338;Tue  02 Oct 2018 04:18:00 +0200;"SPS_ZOZO10_2018";;"744000";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25337;Tue  02 Oct 2018 04:07:14 +0200;"yvan";"m3";"743999";"e+";"40 GeV";;;"started";;"6.8";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.83     293.65 "
+25336;Tue  02 Oct 2018 03:55:18 +0200;"yvan";"m3";"743998";"e+";"40 GeV";;;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.76     293.65 "
+25335;Tue  02 Oct 2018 03:35:39 +0200;"yvan";"m3";"743997";"e+";"40 GeV";;;"started";;"6.6";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.81     293.75 "
+25334;Tue  02 Oct 2018 03:16:35 +0200;"yvan";"m3";"743996";"e+";"40 GeV";;;"started";;"6.5";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.66     293.75 "
+25333;Tue  02 Oct 2018 03:10:48 +0200;"SPS_ZOZO10_2018";;"743995";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25332;Tue  02 Oct 2018 02:49:59 +0200;"yvan";"m3";"743994";"e+";"40 GeV";;;"started";;"6.4";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.65     293.85"
+25331;Tue  02 Oct 2018 02:37:33 +0200;"SPS_ZOZO10_2018";;"743993";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25330;Tue  02 Oct 2018 01:57:51 +0200;"yvan";"m3";"743992";"e+";"40 GeV";;;"started";;"6.3";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.53     293.85 "
+25329;Tue  02 Oct 2018 01:48:35 +0200;"SPS_ZOZO10_2018";;"743991";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25328;Tue  02 Oct 2018 01:32:12 +0200;"yvan";"m3";"743990";"e+";"40 GeV";;;"started";;"6.2";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.38     293.95 "
+25327;Tue  02 Oct 2018 00:34:47 +0200;"yvan";"m3";"743989";"e+";"40 GeV";;;"started";;"6.1";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     968.77     294.05 "
+25326;Tue  02 Oct 2018 00:18:21 +0200;"SPS_ZOZO10_2018";;"743988";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25325;Mon  01 Oct 2018 23:46:52 +0200;"SPS_ZOZO10_2018";;"743987";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25324;Mon  01 Oct 2018 23:07:31 +0200;"SPS_ZOZO10_2018";;"743986";"e+";"40 GeV";;;"started";;"6.4";;;;"DB=Dome_42chambres_Reference_v4_266 
+
+Detector is crazy noisy, acq time at 13ms at 6.4kV
+https://www.youtube.com/watch?v=CoB36zxT940"
+25323;Mon  01 Oct 2018 23:03:44 +0200;"SPS_ZOZO10_2018";;"743985";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25322;Mon  01 Oct 2018 22:58:25 +0200;"SPS_ZOZO10_2018";;"743984";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25321;Mon  01 Oct 2018 22:24:32 +0200;"SPS_ZOZO10_2018";;"743983";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25320;Mon  01 Oct 2018 20:52:27 +0200;"SPS_ZOZO10_2018";;"743982";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25319;Mon  01 Oct 2018 20:32:05 +0200;"SPS_ZOZO10_2018";;"743981";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25318;Mon  01 Oct 2018 20:30:06 +0200;"SPS_ZOZO10_2018";;"743980";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25317;Mon  01 Oct 2018 20:17:56 +0200;"SPS_ZOZO10_2018";;"743979";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25316;Mon  01 Oct 2018 20:10:20 +0200;"SPS_ZOZO10_2018";;"743978";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25315;Mon  01 Oct 2018 20:01:13 +0200;"SPS_ZOZO10_2018";;"743977";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25314;Mon  01 Oct 2018 19:57:56 +0200;"SPS_ZOZO10_2018";;"743976";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25313;Mon  01 Oct 2018 19:53:29 +0200;"SPS_ZOZO10_2018";;"743975";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25312;Mon  01 Oct 2018 19:42:19 +0200;"SPS_ZOZO10_2018";;"743974";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25311;Mon  01 Oct 2018 19:32:50 +0200;"SPS_ZOZO10_2018";;"743973";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25310;Mon  01 Oct 2018 19:24:17 +0200;"SPS_ZOZO10_2018";;"743972";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25309;Mon  01 Oct 2018 18:58:57 +0200;"SPS_ZOZO10_2018";;"743971";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25308;Mon  01 Oct 2018 18:54:51 +0200;"SPS_ZOZO10_2018";;"743970";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25307;Mon  01 Oct 2018 18:27:38 +0200;"SPS_ZOZO10_2018";;"743969";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25306;Mon  01 Oct 2018 18:07:43 +0200;"SPS_ZOZO10_2018";;"743968";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25305;Mon  01 Oct 2018 17:58:31 +0200;"SPS_ZOZO10_2018";;"743967";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25304;Mon  01 Oct 2018 17:39:04 +0200;"SPS_ZOZO10_2018";;"743966";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25303;Mon  01 Oct 2018 17:16:39 +0200;"SPS_ZOZO10_2018";;"743965";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25302;Mon  01 Oct 2018 17:09:29 +0200;"SPS_ZOZO10_2018";;"743964";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25301;Mon  01 Oct 2018 16:40:50 +0200;"SPS_ZOZO10_2018";;"743963";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25300;Mon  01 Oct 2018 16:32:05 +0200;"SPS_ZOZO10_2018";;"743962";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25299;Mon  01 Oct 2018 16:28:39 +0200;"SPS_ZOZO10_2018";;"743961";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25298;Mon  01 Oct 2018 16:21:03 +0200;"SPS_ZOZO10_2018";;"743960";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25297;Mon  01 Oct 2018 15:52:11 +0200;"SPS_ZOZO10_2018";;"743959";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25296;Mon  01 Oct 2018 15:49:16 +0200;"SPS_ZOZO10_2018";;"743958";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25295;Mon  01 Oct 2018 15:22:23 +0200;"SPS_ZOZO10_2018";;"743957";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25294;Mon  01 Oct 2018 15:08:30 +0200;"SPS_ZOZO10_2018";;"743956";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25293;Mon  01 Oct 2018 14:12:38 +0200;"SPS_ZOZO10_2018";;"743955";;;;;"started";;;;;"Bad data";"<p>- keep original text -</p>
+
+<p>Test synchro ecal</p>"
+25292;Mon  01 Oct 2018 13:41:43 +0200;"SPS_ZOZO10_2018";"m3";"743954";"e-";;"uniform state";;"started";;"6.4";"2 % SF6 5% CO2 93% TFE";;"Bad data";"DB=Dome_42chambres_Reference_v4_266 
+run stop for access"
+25291;Mon  01 Oct 2018 13:27:12 +0200;"SPS_ZOZO10_2018";"m3";"743953";"e-";;"uniform state";;"started";;"6.3";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     965.33     294.25 "
+25290;Mon  01 Oct 2018 13:14:00 +0200;"SPS_ZOZO10_2018";"m3";"743952";"e-";;"uniform state";;"started";;"6.2";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     965.24     294.25 "
+25289;Mon  01 Oct 2018 13:06:19 +0200;"SPS_ZOZO10_2018";"m3";"743951";"e-";;"uniform state";;"started";;"6.1";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_266 
+          P          T  
+     965.20     294.25 "
+25288;Mon  01 Oct 2018 12:58:11 +0200;"SPS_ZOZO10_2018";"m3";"743950";"e-";;"200";;"started";;"6.1";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     965.08     294.25"
+25287;Mon  01 Oct 2018 12:43:47 +0200;"SPS_ZOZO10_2018";"m3";"743949";"e-";;"200";;"started";;"6.2";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     965.06     294.25"
+25286;Mon  01 Oct 2018 12:19:08 +0200;"SPS_ZOZO10_2018";"m3";"743948";"e-";;"200";;"started";;"6.3";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.96     294.25"
+25285;Mon  01 Oct 2018 11:37:47 +0200;"SPS_ZOZO10_2018";"m3";"743947";"e-";;"200";;"started";;"6.9";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.91     294.15 
+position change by around 4 cm coparing to previous run."
+25284;Mon  01 Oct 2018 11:34:46 +0200;"Imad Laktineh";;;;;;;;;;;;;"<p>even at 6.4 kV we have good efficiency and many muons hits are 2d and 3d threshold.&nbsp; We should really check the SF6 percentage and if there is no problem. Also we need to check the&nbsp; the HV controler. Pleasediscuss with Laurent &amp; Christophe</p>"
+25283;Mon  01 Oct 2018 11:34:46 +0200;"SPS_ZOZO10_2018";"m3";"743946";"e-";;"200";;"started";;"6.8";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+continuation"
+25282;Mon  01 Oct 2018 11:27:01 +0200;"SPS_ZOZO10_2018";"m3";"743945";"e-";;"200";;"started";;"6.8";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.78     294.25 "
+25281;Mon  01 Oct 2018 11:17:38 +0200;"SPS_ZOZO10_2018";"m3";"743944";"e-";;"200";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.78     294.25 "
+25280;Mon  01 Oct 2018 11:09:00 +0200;"SPS_ZOZO10_2018";"m3";"743943";"e-";;"200";;"started";;"6.6";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.73     294.15 "
+25279;Mon  01 Oct 2018 10:56:19 +0200;"SPS_ZOZO10_2018";"m3";"743942";"e-";;"200";;"started";;"6.5";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+continuation
+          P          T  
+     964.57     294.25 "
+25278;Mon  01 Oct 2018 10:27:31 +0200;"SPS_ZOZO10_2018";"m3";"743941";"e-";;"200";;"started";;"6.5";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.49     294.25 "
+25277;Mon  01 Oct 2018 10:08:32 +0200;"SPS_ZOZO10_2018";"m3";"743940";"e-";;"200";;"started";;"6.4";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     964.37     294.35 "
+25276;Mon  01 Oct 2018 09:44:17 +0200;"SPS_ZOZO10_2018";"m3";"743939";"e-";;"170";;"started";;"6.4";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     964.09     294.35 "
+25275;Mon  01 Oct 2018 08:52:33 +0200;"SPS_ZOZO10_2018";"m3";"743938";"e-";;"170";;"started";;"6.6";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     963.66     294.35 "
+25274;Mon  01 Oct 2018 07:32:42 +0200;"SPS_ZOZO10_2018";"m3";"743937";"e-";;"170";;"started";;"6.5";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     962.50     294.35 "
+25273;Mon  01 Oct 2018 06:47:47 +0200;"SPS_ZOZO10_2018";"m3";"743936";"e-";;"180";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_261 
+Continuation
+          P          T  
+     962.30     294.55 "
+25272;Mon  01 Oct 2018 06:35:34 +0200;"SPS_ZOZO10_2018";"m3";"743935";"e-";;"180";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_261 
+high increase of the noise"
+25271;Mon  01 Oct 2018 06:01:12 +0200;"yvan";"m3";"743934";"e-";;"200";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     961.70     294.55 "
+25270;Mon  01 Oct 2018 05:23:24 +0200;"SPS_ZOZO10_2018";"m3";"743933";"e-";;"220";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_259 
+          P          T  
+     961.57     294.65 "
+25269;Mon  01 Oct 2018 04:49:49 +0200;"SPS_ZOZO10_2018";"m3";"743932";"e-";;"240";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_258 
+       P          T  
+     961.48     294.65 "
+25268;Mon  01 Oct 2018 04:15:24 +0200;"SPS_ZOZO10_2018";"m3";"743931";"e-";;"260";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_257 
+          P          T  
+     961.71     294.75 "
+25267;Mon  01 Oct 2018 03:43:15 +0200;"yvan";"m3";"743930";"e-";;"280";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_256 
+          P          T  
+     962.09     294.75
+Continuation"
+25266;Mon  01 Oct 2018 03:38:11 +0200;"SPS_ZOZO10_2018";"m3";"743929";"e-";;"280";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_256 
+          P          T  
+     961.79     294.75"
+25265;Mon  01 Oct 2018 03:05:50 +0200;"SPS_ZOZO10_2018";"m3";"743928";"e-";;"300";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_255 
+          P          T  
+     962.04     294.75 "
+25264;Mon  01 Oct 2018 02:34:06 +0200;"SPS_ZOZO10_2018";"m3";"743927";"e-";;"320";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_254 
+          P          T  
+     961.90     294.75 "
+25263;Mon  01 Oct 2018 02:03:46 +0200;"SPS_ZOZO10_2018";"m3";"743926";"e-";;"340";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_253 
+        P          T  
+     962.12     294.75 "
+25262;Mon  01 Oct 2018 01:32:14 +0200;"SPS_ZOZO10_2018";"m3";"743925";"e-";;"360";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_252 
+       P          T  
+     962.28     294.85 "
+25261;Mon  01 Oct 2018 01:00:02 +0200;"SPS_ZOZO10_2018";"m3";"743924";"e-";;"380";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_251 
+          P          T  
+     962.50     294.95 "
+25260;Mon  01 Oct 2018 00:32:50 +0200;"yvan";"m3";"743923";"e-";;"400";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_250 
+          P          T  
+     962.58     294.95 "
+25259;Mon  01 Oct 2018 00:06:02 +0200;"yvan";"m3";"743922";"e-";;"420";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_249 
+          P          T  
+     962.85     294.95 "
+25258;Sun  30 Sep 2018 23:43:25 +0200;"yvan";"m3";"743921";"e-";;"440";;"started";;"6.7";"2 % SF6 5% CO2 93% TFE";;;"DB=Dome_42chambres_Reference_v4_248 
+          P          T  
+     962.84     294.95 "
+25257;Sun  30 Sep 2018 23:37:09 +0200;"SPS_ZOZO10_2018";;"743920";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_248 "
+25256;Sun  30 Sep 2018 23:33:58 +0200;"SPS_ZOZO10_2018";;"743919";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_248 "
+25255;Sun  30 Sep 2018 21:54:48 +0200;"SPS_ZOZO10_2018";"m3";"743918";"e+";"20 GeV";"uniform state";;"started";;"6.5";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_266 "
+25254;Sun  30 Sep 2018 21:29:44 +0200;"SPS_ZOZO10_2018";"m3";"743917";"e+";"20 GeV";"uniform state";;"started";;"6.6";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_266 "
+25253;Sun  30 Sep 2018 21:20:58 +0200;"Imad Laktineh";;;;;;;;;;;;;"<p>It will be nice to have the next run at 6.6 kV for SDHCAL. at 6.7 the efficiency seems quite good.</p>"
+25252;Sun  30 Sep 2018 19:23:50 +0200;"SPS_ZOZO10_2018";"m3";"743916";"e+";"40 GeV";"uniform state";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_266 
+
+Last 10~15min are probably e+ at 20Gev"
+25251;Sun  30 Sep 2018 19:20:00 +0200;"SPS_ZOZO10_2018";"m3";"743915";"e+";"40 GeV";"uniform state";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25250;Sun  30 Sep 2018 18:48:50 +0200;"SPS_ZOZO10_2018";"m3";"743914";"e+";"40 GeV";"uniform state";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_266 "
+25249;Sun  30 Sep 2018 18:22:46 +0200;"SPS_ZOZO10_2018";"m3";"743913";"e+";"150 GeV";"uniform state";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_266 "
+25248;Sun  30 Sep 2018 17:58:09 +0200;"Pingault Antoine";"m3";"743912";"e+";"150 GeV";"uniform state";;;;"6.8";;;;"<p>DB=Dome_42chambres_Reference_v4_266</p>"
+25247;Sun  30 Sep 2018 17:57:22 +0200;"Pingault Antoine";"m3";"743911";"e+";"150 GeV";"uniform state";;;;"6.8";;;"Bad data";"<p>DB=Dome_42chambres_Reference_v4_266</p>"
+25246;Sun  30 Sep 2018 15:43:52 +0200;"SPS_ZOZO10_2018";"m3";"743910";"e+";"150 GeV";"uniform state";;"started";;"6.9";;;;"DB=Dome_42chambres_Reference_v4_266 "
+25245;Sun  30 Sep 2018 15:35:18 +0200;"SPS_ZOZO10_2018";"m3";"743909";"e+";"150 GeV";"uniform state";;"started";;"6.9";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Bad data";"DB=Dome_42chambres_Reference_v4_266 "
+25244;Sun  30 Sep 2018 14:40:10 +0200;"Imad Laktineh";;;;;;;;;;;;;"<p>Hi could you please give the HV value and the thresholds as well</p>"
+25243;Sun  30 Sep 2018 13:10:33 +0200;"SPS_";"m3";"743908 ?";;;;;;;"6.9";"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_266 "
+25242;Sun  30 Sep 2018 11:16:48 +0200;"SPS_ZOZO10_2018";;"743907";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+
+Noise Check, SDHCAL/ECAL plugged on different CERN Ground. Ecal not in acq"
+25241;Sun  30 Sep 2018 10:49:02 +0200;"SPS_ZOZO10_2018";;"743906";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+
+Noise Check, Ecal unplugged from common ground and not running"
+25240;Sun  30 Sep 2018 10:07:40 +0200;"SPS_ZOZO10_2018";;"743905";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+
+Noise test. Ecal unplugged from common ground but running"
+25239;Sun  30 Sep 2018 08:06:05 +0200;"SPS_ZOZO10_2018";;"743904";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25238;Sun  30 Sep 2018 07:42:55 +0200;"SPS_ZOZO10_2018";;"743903";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25237;Sun  30 Sep 2018 07:24:45 +0200;"SPS_ZOZO10_2018";;"743902";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25236;Sun  30 Sep 2018 07:20:50 +0200;"Laurent ";;;;;"Attention ! Le bruit est trop haut";;;;;;;;"<p>Avec le seuil a 170, le bruit pic monte a 400 000 Hz/Asic. L&#39;event display me montre au&nbsp; seuil 180 enormement d&#39;evt avec tous les plans allumes. Il y a clairement un probleme de mise a la terre.</p>
+
+<p>Pour la physique je garderai un seuil &gt;= 200. Sinon les courrants sont toujours trop haut</p>"
+25235;Sun  30 Sep 2018 06:03:38 +0200;"SPS_ZOZO10_2018";;"743901";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25234;Sun  30 Sep 2018 05:37:10 +0200;"SPS_ZOZO10_2018";;"743900";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25233;Sun  30 Sep 2018 04:37:22 +0200;"SPS_ZOZO10_2018";;"743899";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 "
+25232;Sun  30 Sep 2018 04:19:44 +0200;"SPS_ZOZO10_2018";;"743898";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_266 
+test3"
+25231;Sun  30 Sep 2018 02:33:11 +0200;"SPS_ZOZO10_2018";;"743897";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_265 
+test2"
+25230;Sun  30 Sep 2018 00:52:07 +0200;"SPS_ZOZO10_2018";;"743896";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_264 
+test
+targets : multiplicity 1.5 
+effThr2 : 0.55
+effThr3 = 0.05"
+25229;Sat  29 Sep 2018 23:26:24 +0200;"yvan";"m3";"743895";"Muons";;"170";;"started";;"7.0";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     967.44     294.85 "
+25228;Sat  29 Sep 2018 23:18:27 +0200;"yvan";"m3";"743894";"Muons";;"170";;"started";;"6.9";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     967.42     294.95 "
+25227;Sat  29 Sep 2018 23:08:09 +0200;"yvan";"m3";"743893";"Muons";;"170";;"started";;"6.8";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     967.35     294.95 "
+25226;Sat  29 Sep 2018 22:53:53 +0200;"yvan";"m3";"743892";"Muons";;"170";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     967.48     294.95 "
+25225;Sat  29 Sep 2018 22:43:49 +0200;"SPS_ZOZO10_2018";"m3";"743891";"Muons";;;;"started";;"6.6";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     967.44     295.05 
+HV Scan"
+25224;Sat  29 Sep 2018 22:30:35 +0200;"SPS_ZOZO10_2018";"m3";"743890";"Muons";;"170";;"started";;"6.5";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     967.51     295.05 
+HVScan"
+25223;Sat  29 Sep 2018 22:25:46 +0200;"SPS_ZOZO10_2018";;"743889";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_263 
+
+Restarting the HV Scan as pressure/temp have changed since the last point"
+25222;Sat  29 Sep 2018 18:19:12 +0200;"Pingault Antoine";;;;;;;;;;;;;"<p>No beam for ~30min. Ecal is recalibrating</p>"
+25221;Sat  29 Sep 2018 18:09:13 +0200;"yvan";"m3";"743888";"Muons";;"170";;"started";;"6.6";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     966.11     296.05 
+HV Scan"
+25220;Sat  29 Sep 2018 18:00:35 +0200;"yvan";"m3";"743887";"Muons";;"170";;"started";;"6.5";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     966.10     295.95 
+HV Scan"
+25219;Sat  29 Sep 2018 17:05:53 +0200;"yvan";"m3";"743886";"Muons";;"170";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_263 
+          P          T  
+     966.07     296.05 "
+25218;Sat  29 Sep 2018 16:05:57 +0200;"yvan";"m3";"743885";"Muons";;"180";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_261 
+          P          T  
+     966.08     295.95"
+25217;Sat  29 Sep 2018 15:50:20 +0200;"yvan";"m3";"743884";"Muons";;"200";;"started";;"7.0";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     966.26     295.75"
+25216;Sat  29 Sep 2018 15:35:27 +0200;"yvan";"m3";"743883";"Muons";;"200";;"started";;"6.9";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     966.34     295.75 "
+25215;Sat  29 Sep 2018 15:21:11 +0200;"yvan";"m3";"743882";"Muons";;"200";;"started";;"6.8";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     966.36     295.65 "
+25214;Sat  29 Sep 2018 15:08:22 +0200;"yvan";"m3";"743881";"Muons";;"200";;"started";;"6.7";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     966.38     295.55 "
+25213;Sat  29 Sep 2018 14:52:44 +0200;"yvan";"m3";"743880";"Muons";;"200";;"started";;"6.6";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     966.38     295.55 "
+25212;Sat  29 Sep 2018 14:47:21 +0200;"SPS_ZOZO10_2018";;"743879";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_260 "
+25211;Sat  29 Sep 2018 14:43:01 +0200;"SPS_ZOZO10_2018";;"743878";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_260 "
+25210;Sat  29 Sep 2018 14:38:28 +0200;"SPS_ZOZO10_2018";;"743877";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_260 "
+25209;Sat  29 Sep 2018 14:33:09 +0200;"SPS_ZOZO10_2018";;"743876";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_260 "
+25208;Sat  29 Sep 2018 14:23:09 +0200;"yvan";"m3";"743875";"Muons";;"200";;"started";;"6.5";"SF6 2% - CO2 2.6% - TFE 95.4%";;"Good data";"DB=Dome_42chambres_Reference_v4_260 
+          P          T  
+     966.38     295.55 "
+25207;Sat  29 Sep 2018 14:06:34 +0200;"Imad Laktineh";;;;;;;;;;;;;"<p>Peut-on faire un test avec 6.7 kV et un&nbsp; seuil &agrave; 170? ou &agrave; 180 et comparer les r&eacute;sultats avec ceux de 6.9 et un seuil &agrave; 190 ou 200?</p>"
+25206;Sat  29 Sep 2018 13:31:53 +0200;"SPS_ZOZO10_2018";;"743874";;;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_262 
+
+test"
+25205;Sat  29 Sep 2018 13:04:37 +0200;"SPS_ZOZO10_2018";;"743873";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_261 
+muon scan (180, 136, 180)
+Too much noise"
+25204;Sat  29 Sep 2018 12:34:06 +0200;"SPS_ZOZO10_2018";;"743872";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_260 
+Continuation"
+25203;Sat  29 Sep 2018 12:20:31 +0200;"SPS_ZOZO10_2018";;"743871";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_260 
+Continuation"
+25202;Sat  29 Sep 2018 11:53:11 +0200;"SPS_ZOZO10_2018";;"743870";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_260 
+muon scan (200, 143, 191)"
+25201;Sat  29 Sep 2018 11:37:40 +0200;"SPS_ZOZO10_2018";;"743869";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_259 
+continuation"
+25200;Sat  29 Sep 2018 10:58:37 +0200;"SPS_ZOZO10_2018";;"743868";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_259 
+muon scan (220, 152, 202)"
+25199;Sat  29 Sep 2018 10:22:44 +0200;"SPS_ZOZO10_2018";;"743867";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_258 
+Continuation"
+25198;Sat  29 Sep 2018 10:17:51 +0200;"SPS_ZOZO10_2018";;"743866";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_258 
+Continuation"
+25197;Sat  29 Sep 2018 10:02:09 +0200;"SPS_ZOZO10_2018";;"743865";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_258 
+muon scan (240, 163, 216)"
+25196;Sat  29 Sep 2018 09:24:26 +0200;"SPS_ZOZO10_2018";;"743864";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_257 
+continuation"
+25195;Sat  29 Sep 2018 09:10:48 +0200;"SPS_ZOZO10_2018";;"743863";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_257 
+muon scan (260, 176, 231)"
+25194;Sat  29 Sep 2018 08:37:09 +0200;"SPS_ZOZO10_2018";;"743862";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_256 
+continuation"
+25193;Sat  29 Sep 2018 08:11:58 +0200;"SPS_ZOZO10_2018";;"743861";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_256 
+continuation"
+25192;Sat  29 Sep 2018 08:07:34 +0200;"SPS_ZOZO10_2018";;"743860";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_256 
+continuation"
+25191;Sat  29 Sep 2018 07:59:48 +0200;"SPS_ZOZO10_2018";;"743859";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_256 
+muon scan (280, 192, 248)"
+25190;Sat  29 Sep 2018 07:26:51 +0200;"SPS_ZOZO10_2018";;"743858";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_255 
+continuation "
+25189;Sat  29 Sep 2018 07:22:10 +0200;"SPS_ZOZO10_2018";;"743857";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_255 
+continuation"
+25188;Sat  29 Sep 2018 07:18:15 +0200;"SPS_ZOZO10_2018";;"743856";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_255 
+continuation"
+25187;Sat  29 Sep 2018 07:14:50 +0200;"SPS_ZOZO10_2018";;"743855";;;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;"Bad data";"DB=Dome_42chambres_Reference_v4_255 "
+25186;Sat  29 Sep 2018 07:09:15 +0200;"SPS_ZOZO10_2018";;"743854";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_255 
+muon scan (300,211,267)"
+25185;Sat  29 Sep 2018 07:01:35 +0200;"SPS_ZOZO10_2018";;"743853";;;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_254 
+continuation"
+25184;Sat  29 Sep 2018 06:59:08 +0200;"SPS_ZOZO10_2018";;"743852";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_254 "
+25183;Sat  29 Sep 2018 06:52:41 +0200;"SPS_ZOZO10_2018";;"743851";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_254
+continuation"
+25182;Sat  29 Sep 2018 06:44:19 +0200;"SPS_ZOZO10_2018";;"743850";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_254 
+continuation"
+25181;Sat  29 Sep 2018 06:34:35 +0200;"SPS_ZOZO10_2018";;"743849";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_254 
+continuation"
+25180;Sat  29 Sep 2018 06:27:12 +0200;"SPS_ZOZO10_2018";;"743848";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_254 
+continuation"
+25179;Sat  29 Sep 2018 06:20:07 +0200;"SPS_ZOZO10_2018";;"743847";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_254 
+muon scan (320,233,288)"
+25178;Sat  29 Sep 2018 06:10:59 +0200;"SPS_ZOZO10_2018";;"743846";"Muons";;"YEEEE";"EEEES";"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25177;Sat  29 Sep 2018 06:07:57 +0200;"SPS_ZOZO10_2018";;"743845";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 "
+25176;Sat  29 Sep 2018 06:04:50 +0200;"SPS_ZOZO10_2018";;"743844";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 "
+25175;Sat  29 Sep 2018 06:02:18 +0200;"SPS_ZOZO10_2018";;"743843";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 "
+25174;Sat  29 Sep 2018 05:59:39 +0200;"SPS_ZOZO10_2018";;"743842";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 
+
+FUCK FUCK FUCK"
+25173;Sat  29 Sep 2018 05:56:02 +0200;"SPS_ZOZO10_2018";;"743841";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 "
+25172;Sat  29 Sep 2018 05:52:02 +0200;"SPS_ZOZO10_2018";;"743840";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 
+
+xdgfwsdrb wsrfw  d wgt w5df4g6x 4r1 32x1df35g47 xrtyx ghwet -q '""ycfgbvy"
+25171;Sat  29 Sep 2018 05:48:51 +0200;"SPS_ZOZO10_2018";;"743839";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 "
+25170;Sat  29 Sep 2018 05:44:38 +0200;"SPS_ZOZO10_2018";;"743838";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25169;Sat  29 Sep 2018 05:40:28 +0200;"SPS_ZOZO10_2018";;"743837";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25168;Sat  29 Sep 2018 05:35:43 +0200;"SPS_ZOZO10_2018";;"743836";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25167;Sat  29 Sep 2018 05:31:07 +0200;"SPS_ZOZO10_2018";;"743835";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25166;Sat  29 Sep 2018 05:27:57 +0200;"SPS_ZOZO10_2018";;"743834";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25165;Sat  29 Sep 2018 05:23:14 +0200;"SPS_ZOZO10_2018";;"743833";"Muons";;;;"started";;;"SF6 2% - CO2 2.6% - TFE 95.4%";;;"DB=Dome_42chambres_Reference_v4_253 
+
+continuation"
+25164;Sat  29 Sep 2018 05:20:35 +0200;"SPS_ZOZO10_2018";;"743832";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_253 
+
+this one is 7 triggers we can skip"
+25163;Sat  29 Sep 2018 05:08:43 +0200;"SPS_ZOZO10_2018";;"743831";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_253 
+
+muon scan (340 , 260 , 313)"
+25162;Sat  29 Sep 2018 04:42:36 +0200;"SPS_ZOZO10_2018";;"743830";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_252 
+
+muon scan (360 , 292 , 340)"
+25161;Sat  29 Sep 2018 04:29:26 +0200;"SPS_ZOZO10_2018";;"743829";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_251 
+
+continuation"
+25160;Sat  29 Sep 2018 04:24:07 +0200;"SPS_ZOZO10_2018";;"743828";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_251 
+
+continuation"
+25159;Sat  29 Sep 2018 04:06:13 +0200;"SPS_ZOZO10_2018";;"743827";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_251 
+
+muon scan (380 , 330 , 371)"
+25158;Sat  29 Sep 2018 03:36:19 +0200;"SPS_ZOZO10_2018";;"743826";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_250 
+
+muon scan (400 , 376 , 405)"
+25157;Sat  29 Sep 2018 03:08:39 +0200;"SPS_ZOZO10_2018";;"743825";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_249 
+
+muon scan run (420 , 431 , 445)"
+25156;Sat  29 Sep 2018 02:49:51 +0200;"SPS_ZOZO10_2018";;"743824";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_248 "
+25155;Sat  29 Sep 2018 02:46:14 +0200;"SPS_ZOZO10_2018";;"743823";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_248 
+
+SHIT"
+25154;Sat  29 Sep 2018 02:44:53 +0200;"SPS_ZOZO10_2018";;"743823";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_248 
+
+continuation"
+25153;Sat  29 Sep 2018 02:32:28 +0200;"SPS_ZOZO10_2018";;"743823";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_248 
+
+muon scan run (440,498,489) continuation of previous run"
+25152;Sat  29 Sep 2018 02:06:11 +0200;"SPS_ZOZO10_2018";;"743822";"Muons";;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_248 
+
+muon scan run (440,498,489)"
+25151;Sat  29 Sep 2018 00:42:01 +0200;"SPS_ZOZO10_2018";;"743821";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_246 
+
+muon test run"
+25150;Sat  29 Sep 2018 00:30:25 +0200;"SPS_ZOZO10_2018";;"743820";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_246 "
+25149;Sat  29 Sep 2018 00:20:13 +0200;"SPS_ZOZO10_2018";;"743819";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_246 
+
+DIF110 stopped taking data after 75triggers
+
+muon test run"
+25148;Fri  28 Sep 2018 23:49:14 +0200;"SPS_ZOZO10_2018";;"743818";;;;;"started";;;;;"Bad data";"DB=Dome_42chambres_Reference_v4_246 "
+25147;Fri  28 Sep 2018 22:52:36 +0200;"SPS_ZOZO10_2018";;"743817";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_245 
+
+muon test run"
+25146;Fri  28 Sep 2018 20:21:07 +0200;"SPS_ZOZO10_2018";;"743816";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 
+
+DIF 110 stopped taking data after 110triggers"
+25145;Fri  28 Sep 2018 20:14:26 +0200;"Pingault Antoine";;"Update";;;;;;;;;;;"<p>We took out slot2 in the afternoon.</p>
+
+<p>It appears there is a short somewhere on the lft slab: using a standalone LV power supply we see a Voltage drop from 6-&gt;4V when we power on the left dif. No Vdrop appears if DIF-ASU unplugged</p>
+
+<p>GAS: Recyling system is up and running with a total gas flow of 30l/h, system is not bubbling. We found and fixed a gas leak yesterday evening, we consumed about 8kg of gas during the day, there is 4kg left in the bottle but decided to switch bottle in order not to go out of gas overnight. After the gas leak we use about 2kg of gas in 8h.</p>
+
+<p>&nbsp;</p>
+
+<p>To be continued...we go for lunch</p>
+
+<p>&nbsp;</p>"
+25143;Fri  28 Sep 2018 19:16:54 +0200;"SPS_ZOZO10_2018";;"743814";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25142;Fri  28 Sep 2018 18:37:29 +0200;"SPS_ZOZO10_2018";;"743813";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25141;Fri  28 Sep 2018 14:19:38 +0200;"SPS_ZOZO10_2018";;"743812";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25140;Fri  28 Sep 2018 14:15:25 +0200;"SPS_ZOZO10_2018";;"743811";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25139;Fri  28 Sep 2018 14:11:44 +0200;"SPS_ZOZO10_2018";;"743810";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25138;Fri  28 Sep 2018 14:09:11 +0200;"SPS_ZOZO10_2018";;"743809";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25137;Fri  28 Sep 2018 14:06:30 +0200;"SPS_ZOZO10_2018";;"743808";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25136;Fri  28 Sep 2018 14:02:47 +0200;"SPS_ZOZO10_2018";;"743807";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25135;Fri  28 Sep 2018 13:56:19 +0200;"SPS_ZOZO10_2018";;"743806";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25134;Fri  28 Sep 2018 13:42:29 +0200;"SPS_ZOZO10_2018";;"743805";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_243 "
+25133;Fri  28 Sep 2018 13:29:03 +0200;"SPS_ZOZO10_2018";;"743804";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25132;Fri  28 Sep 2018 13:23:54 +0200;"SPS_ZOZO10_2018";;"743803";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25131;Fri  28 Sep 2018 12:21:49 +0200;"Gerald Grenier";"m3";"Repair activities";;;;;;;;;;;"<p>Chamber 2 (3rd chamber) has a short circuit on the left PCB (lookig from upstream position). This is the part which is behind the ECAL.</p>
+
+<p>This is not fixable by bypassing the faulty ASIC. We remove the faulty chamber and put the last one (slot 37) at its slot (slot 2)</p>
+
+<p>&nbsp;</p>"
+25130;Fri  28 Sep 2018 09:05:16 +0200;"gerald";"m3";"743802";"Muons";;"250 500 500";;"Few to test";;"6.9";"3 % SF6 5% CO2 92% TFE";"Center Middle behind ECAL 24X0";;"DB=Dome_42chambres_Reference_v4_244 
+
+NB chamber 35 at 3kV, high current.
+First test of small run with muons."
+25129;Thu  27 Sep 2018 17:44:07 +0200;"SPS_ZOZO10_2018";;"743801";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25128;Thu  27 Sep 2018 15:04:12 +0200;"Coco l'asticot";;"743798";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 C'est pas encore aujourd'hui qu'on av voir des traces"
+25127;Thu  27 Sep 2018 14:59:05 +0200;"Coco l'asticot";;"743797";;;;;"started";;;;;;"DB=Dome_42chambres_Reference_v4_244 "
+25126;Thu  27 Sep 2018 14:49:44 +0200;"Coco l'asticot";;"100001";;;;;"started";;;;;;"DAQ Name= UNTEST "
+25125;Thu  27 Sep 2018 14:48:44 +0200;"SPS_12_2014";;"100000";;;;;"started";;;;;;"DAQ Name= UNTEST "
