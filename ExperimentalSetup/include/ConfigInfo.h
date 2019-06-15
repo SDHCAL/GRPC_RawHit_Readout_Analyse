@@ -219,8 +219,8 @@ class DAQ_Object_Info
   std::pair<bool,unsigned int> getNumberOfLayer(OBJECT obj) const
   { auto it=m_objectsInDAQ.find(obj); return (it ==  m_objectsInDAQ.end() ? std::make_pair(false,0U) : std::make_pair(true,it->second));}
 
-  //void clear();
-  //bool setToRun(unsigned int run);
+  void clear() {m_objectsInDAQ.clear();}
+  bool setToRun(unsigned int run);
 
  private:
     std::map<OBJECT,unsigned int> m_objectsInDAQ;
@@ -272,6 +272,11 @@ class  all_ConfigInfo
 
   void addRun(unsigned int run, Beam_Conditions &cond) {m_runBeamConditionsMap[run]=cond;}
   const Beam_Conditions& getBeamConditions(unsigned int run) const; // throw RunNotFound_ConfigException
+
+  void addRun(unsigned int run, DAQ_Object_Info &info) {m_runDAQ_Object_InfoMap[run]=info;}
+  void addDAQobjectToRun(unsigned int run, DAQ_Object_Info::OBJECT obj,unsigned int number=1) { m_runDAQ_Object_InfoMap[run].addObject(obj,number);}
+  const DAQ_Object_Info& getDAQObjectInfo(unsigned int run) const; // throw RunNotFound_ConfigException
+  
  private:
   static all_ConfigInfo* m_instance;
   std::map<std::string,Setup_ConfigInfo> m_configs;
@@ -279,7 +284,7 @@ class  all_ConfigInfo
   std::map<unsigned int,GIF_Conditions> m_runGIFconditionsMap;
   std::map<unsigned int,RunQualityInfo> m_runQualityInfoMap;
   std::map<unsigned int,Beam_Conditions> m_runBeamConditionsMap;
-  //std::map<unsigned int,DAQ_Object_Info> m_runDAQ_Object_InfoMap;
+  std::map<unsigned int,DAQ_Object_Info> m_runDAQ_Object_InfoMap;
   //std::map<unsigned int,HV_Info> m_runHV_InfoMap;
   
   friend class GIF_oct2016_ExperimentalSetup;

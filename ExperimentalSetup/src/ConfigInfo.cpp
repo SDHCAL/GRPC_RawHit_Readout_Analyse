@@ -124,6 +124,23 @@ bool Beam_Conditions::setToRun(unsigned int run)
   return success;
 }
 
+bool DAQ_Object_Info::setToRun(unsigned int run)
+{
+  all_ConfigInfo &all=all_ConfigInfo::instance();
+  bool success=false;
+  clear();
+  try 
+    {
+      const DAQ_Object_Info &s=all.getDAQObjectInfo(run);
+      success=true;
+      (*this)=s;
+    }
+  catch (std::exception &e)
+    {
+      std::cout << e.what();
+    }
+  return success;
+}
 
 
 std::string all_ConfigInfo::UnknownConfig=std::string("UnknownConfig");
@@ -182,6 +199,13 @@ const Beam_Conditions& all_ConfigInfo::getBeamConditions(unsigned int run) const
 {
   std::map<unsigned int,Beam_Conditions>::const_iterator  it=m_runBeamConditionsMap.find(run);
   if (it==m_runBeamConditionsMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::getBeamConditions");
+  return it->second;
+}
+  
+const DAQ_Object_Info& all_ConfigInfo::getDAQObjectInfo(unsigned int run) const
+{
+  std::map<unsigned int,DAQ_Object_Info>::const_iterator  it=m_runDAQ_Object_InfoMap.find(run);
+  if (it==m_runDAQ_Object_InfoMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::getDAQObjectInfo");
   return it->second;
 }
   
