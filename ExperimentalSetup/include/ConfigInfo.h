@@ -55,10 +55,12 @@ class DIF_ASIC_HR_ConfigInfo
 class Setup_ConfigInfo
 {
  public:
-  Setup_ConfigInfo() : m_setup_ConfigInfo() {}
+  Setup_ConfigInfo(bool uniformSDHCAL=false) : m_setup_ConfigInfo(), m_SDHCAL_uniformSetup(uniformSDHCAL) {}
   void setConfig(unsigned int DIF,ASIC_HR_ConfigInfo a) { m_setup_ConfigInfo[DIF]=DIF_ASIC_HR_ConfigInfo(a);}
   void setConfig(unsigned int DIF,unsigned int asic,ASIC_HR_ConfigInfo a){ m_setup_ConfigInfo[DIF].setConfig(asic,a);}
   const DIF_ASIC_HR_ConfigInfo& getConfig(unsigned int DIF) const; //throw UnknownDIFexception
+  void setUniformSDHCAL(bool uniformSDHCAL=true) {m_SDHCAL_uniformSetup=uniformSDHCAL;}
+  bool uniformSDHCAL() const {return m_SDHCAL_uniformSetup;}
   // To ease interactive access
   std::vector<unsigned int> getKnownDIFnumbers() const;
   const ASIC_HR_ConfigInfo& getConfig(unsigned int DIF,unsigned int asic) const {return getConfig(DIF).getConfig(asic);}
@@ -72,10 +74,11 @@ class Setup_ConfigInfo
   float get_threshold_charge(unsigned int threshold,unsigned int DIF,unsigned int asic) const;
   unsigned int getGain(unsigned int DIF,unsigned int asic,unsigned int channel) const { return getConfig(DIF,asic).getGain(channel);}
   // end to ease interactive access
-  void clear() {m_setup_ConfigInfo.clear();}
+  void clear() {m_setup_ConfigInfo.clear();m_SDHCAL_uniformSetup=false;}
   bool setToRun(unsigned int run);
  private:
   std::map<unsigned int,DIF_ASIC_HR_ConfigInfo> m_setup_ConfigInfo;
+  bool m_SDHCAL_uniformSetup;
 };
 
 class RunQualityInfo
