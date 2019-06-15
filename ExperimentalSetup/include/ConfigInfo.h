@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include "ConfigInfoExceptions.h"
@@ -132,6 +133,110 @@ class GIF_Conditions
   float attenuatorFactor(unsigned int att);
 };
 
+
+#define GG_ENUM_CLASS(CLASSNAME, ...) class CLASSNAME { public : enum VALUE {__VA_ARGS__}; };
+
+class CerenkovGaz
+{
+ public:
+  enum GAZ {HELIUM,NITROGEN};
+  CerenkovGaz(GAZ g=HELIUM,float pressure=1) : m_gaz(g), m_pressureInBar(pressure) {;}
+  void setGazAndPressure(GAZ g,float pressure) {m_gaz=g; m_pressureInBar=pressure;}
+  void setGaz(GAZ g) {m_gaz=g;}
+  void setPressure(float pressure) {m_pressureInBar=pressure;}
+  GAZ getGaz() const {return m_gaz;}
+  float getPressure() const {return m_pressureInBar;}
+ private:
+  GAZ m_gaz;
+  float m_pressureInBar; 
+};
+
+class Beam_Conditions
+{
+ public:
+  GG_ENUM_CLASS(STATE, UNKNOWN,ON,OFF);
+  GG_ENUM_CLASS(PARTICLE, UNKNOWN,NONE,ELECTRON,MUON,PION,KAON,PROTON,COSMIC);
+  GG_ENUM_CLASS(PARTICLE_CHARGE, UNKNOWN,POSITIVE,NEGATIVE,MIXED);
+  GG_ENUM_CLASS(LINE, UNKNOWN,SPS_H2,SPS_H4);
+  GG_ENUM_CLASS(POSITION, UNKNOWN,CENTER,TOP_RIGHT,TOP,OUT);
+  GG_ENUM_CLASS(ABSORBER, NONE,ECAL,LEAD8MM,LEAD18MM,TUNGSTEN);
+
+  void setState(STATE::VALUE val) {m_beamState=val;}
+  STATE::VALUE getState() const {return m_beamState;}
+
+  void setParticle(PARTICLE::VALUE part, PARTICLE_CHARGE::VALUE charge=PARTICLE_CHARGE::UNKNOWN) {m_beamParticle=part; m_beamParticleCharge=charge;}
+  PARTICLE::VALUE getParticle() const {return m_beamParticle;}
+  PARTICLE_CHARGE::VALUE getParticleCharge() const {return m_beamParticleCharge;}
+
+  void setBeamEnergy(float value) {m_beamEnergyInGeV=value;}
+  float getBeamEnergy() const {return m_beamEnergyInGeV;}
+
+  void setBeamLine(LINE::VALUE val) {m_beamLine=val;}
+  LINE::VALUE getBeamLine() const {return m_beamLine;}
+
+  void setBeamPosition(POSITION::VALUE val) {m_beamPosition=val;}
+  POSITION::VALUE getBeamPosition() const {return m_beamPosition;}
+
+  void addGaz(CerenkovGaz g) {m_cerenkov.push_back(g);}
+  // should add something about particle that can be detected according to beam energy
+  unsigned int nGaz() const {return m_cerenkov.size();}
+  CerenkovGaz getGaz(unsigned int i) const {return m_cerenkov[i];}
+
+  void setBeamIntensityInHzPerSquareCm(float value) {m_beamIntensityInHzPerSquareCm=value;}
+  float getBeamIntensityInHzPerSquareCm() const {return m_beamIntensityInHzPerSquareCm;}
+
+  void setAbsorber(ABSORBER::VALUE val) {m_beamObstacle.clear(); m_beamObstacle.push_back(val);}
+  void addAbsorber(ABSORBER::VALUE val) {m_beamObstacle.push_back(val);}
+  unsigned int nAbsorber() const {return m_beamObstacle.size();}
+  ABSORBER::VALUE getAbsorber(unsigned int i) const {return m_beamObstacle[i];}
+  bool hasAbsorber(ABSORBER::VALUE val) const {return std::find(m_beamObstacle.begin(),m_beamObstacle.end(),val) != m_beamObstacle.end();}
+
+ private:
+  STATE::VALUE m_beamState=STATE::UNKNOWN;
+  PARTICLE::VALUE m_beamParticle=PARTICLE::UNKNOWN;
+  PARTICLE_CHARGE::VALUE m_beamParticleCharge=PARTICLE_CHARGE::UNKNOWN;
+  float m_beamEnergyInGeV=0;
+  LINE::VALUE m_beamLine=LINE::UNKNOWN;
+  POSITION::VALUE m_beamPosition=POSITION::UNKNOWN;
+  std::vector<CerenkovGaz> m_cerenkov;
+  float m_beamIntensityInHzPerSquareCm=0;
+  std::vector<ABSORBER::VALUE> m_beamObstacle;
+};
+
+class DAQ_Object_Info
+{
+ public:
+  enum OBJECT {SDHCAL,SIWECAL,TRICOT,AEGIS};
+  
+  DAQ_Object_Info() : m_objectsInDAQ() {;}
+  DAQ_Object_Info(unsigned int nSDHCALplan) : m_objectsInDAQ() {m_objectsInDAQ[SDHCAL]=nSDHCALplan;}
+  void addObject(OBJECT obj,unsigned int number=1) { m_objectsInDAQ[obj]+=number;}
+
+  bool hasObject(OBJECT obj) const {return m_objectsInDAQ.find(obj) != m_objectsInDAQ.end();}
+  std::pair<bool,unsigned int> getNumberOfLayer(OBJECT obj) const
+  { auto it=m_objectsInDAQ.find(obj); return (it ==  m_objectsInDAQ.end() ? std::make_pair(false,0U) : std::make_pair(true,it->second));}
+ private:
+    std::map<OBJECT,unsigned int> m_objectsInDAQ;
+};
+
+class HV_Info
+{
+ public:
+  enum STATUS {NOINFO,ON,OFF};
+  STATUS get_globalStatus() const {return m_globalStatus;}
+  float get_globalHV() const {return  m_globalHV;}
+  float HVforPlan(unsigned int planNumber) const {return m_HV_in_kV_byPlan[planNumber];}
+
+  HV_Info(float value,unsigned int NPlan=1) : m_globalStatus(NOINFO),m_globalHV(value),m_HV_in_kV_byPlan(NPlan,value) {}
+  void set_Status(STATUS s) {m_globalStatus=s;}
+  void set_globalHV(float value) {m_globalHV=value;}
+  void setPlanHV(int planNumber,bool value) {m_HV_in_kV_byPlan[planNumber]=value;}
+
+ private:
+  STATUS m_globalStatus;
+  float m_globalHV;
+  std::vector<float> m_HV_in_kV_byPlan;
+};
 
 
 class  all_ConfigInfo
