@@ -142,6 +142,24 @@ bool DAQ_Object_Info::setToRun(unsigned int run)
   return success;
 }
 
+bool HV_Info::setToRun(unsigned int run)
+{
+  all_ConfigInfo &all=all_ConfigInfo::instance();
+  bool success=false;
+  clear();
+  try 
+    {
+      const HV_Info &s=all.getHVInfo(run);
+      success=true;
+      (*this)=s;
+    }
+  catch (std::exception &e)
+    {
+      std::cout << e.what();
+    }
+  return success;
+}
+
 
 std::string all_ConfigInfo::UnknownConfig=std::string("UnknownConfig");
 
@@ -206,6 +224,13 @@ const DAQ_Object_Info& all_ConfigInfo::getDAQObjectInfo(unsigned int run) const
 {
   std::map<unsigned int,DAQ_Object_Info>::const_iterator  it=m_runDAQ_Object_InfoMap.find(run);
   if (it==m_runDAQ_Object_InfoMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::getDAQObjectInfo");
+  return it->second;
+}
+  
+const HV_Info& all_ConfigInfo::getHVInfo(unsigned int run) const
+{
+  std::map<unsigned int,HV_Info>::const_iterator  it=m_runHV_InfoMap.find(run);
+  if (it==m_runHV_InfoMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::getHVInfo");
   return it->second;
 }
   

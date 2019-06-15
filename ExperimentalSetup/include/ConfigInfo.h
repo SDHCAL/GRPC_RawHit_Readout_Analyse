@@ -234,13 +234,13 @@ class HV_Info
   float get_globalHV() const {return  m_globalHV;}
   float HVforPlan(unsigned int planNumber) const {return m_HV_in_kV_byPlan[planNumber];}
 
-  HV_Info(float value,unsigned int NPlan=1) : m_globalStatus(NOINFO),m_globalHV(value),m_HV_in_kV_byPlan(NPlan,value) {}
+  HV_Info(float value=0,unsigned int NPlan=1) : m_globalStatus(NOINFO),m_globalHV(value),m_HV_in_kV_byPlan(NPlan,value) {}
   void set_Status(STATUS s) {m_globalStatus=s;}
   void set_globalHV(float value) {m_globalHV=value;}
-  void setPlanHV(int planNumber,bool value) {m_HV_in_kV_byPlan[planNumber]=value;}
+  void setPlanHV(int planNumber,float value) {m_HV_in_kV_byPlan[planNumber]=value;}
 
-  //void clear();
-  //bool setToRun(unsigned int run);
+  void clear() {m_globalStatus=NOINFO;m_globalHV=0;m_HV_in_kV_byPlan.clear();}
+  bool setToRun(unsigned int run);
 
  private:
   STATUS m_globalStatus;
@@ -276,7 +276,9 @@ class  all_ConfigInfo
   void addRun(unsigned int run, DAQ_Object_Info &info) {m_runDAQ_Object_InfoMap[run]=info;}
   void addDAQobjectToRun(unsigned int run, DAQ_Object_Info::OBJECT obj,unsigned int number=1) { m_runDAQ_Object_InfoMap[run].addObject(obj,number);}
   const DAQ_Object_Info& getDAQObjectInfo(unsigned int run) const; // throw RunNotFound_ConfigException
-  
+
+  void addRun(unsigned int run, HV_Info &info) {m_runHV_InfoMap[run]=info;}
+  const HV_Info& getHVInfo(unsigned int run) const; // throw RunNotFound_ConfigException
  private:
   static all_ConfigInfo* m_instance;
   std::map<std::string,Setup_ConfigInfo> m_configs;
@@ -285,7 +287,7 @@ class  all_ConfigInfo
   std::map<unsigned int,RunQualityInfo> m_runQualityInfoMap;
   std::map<unsigned int,Beam_Conditions> m_runBeamConditionsMap;
   std::map<unsigned int,DAQ_Object_Info> m_runDAQ_Object_InfoMap;
-  //std::map<unsigned int,HV_Info> m_runHV_InfoMap;
+  std::map<unsigned int,HV_Info> m_runHV_InfoMap;
   
   friend class GIF_oct2016_ExperimentalSetup;
   GIF_Conditions& changeGIFconditions(unsigned int run); // throw RunNotFound_ConfigException
