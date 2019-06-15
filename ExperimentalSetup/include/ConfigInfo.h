@@ -191,6 +191,9 @@ class Beam_Conditions
   ABSORBER::VALUE getAbsorber(unsigned int i) const {return m_beamObstacle[i];}
   bool hasAbsorber(ABSORBER::VALUE val) const {return std::find(m_beamObstacle.begin(),m_beamObstacle.end(),val) != m_beamObstacle.end();}
 
+  void clear();
+  bool setToRun(unsigned int run);
+  
  private:
   STATE::VALUE m_beamState=STATE::UNKNOWN;
   PARTICLE::VALUE m_beamParticle=PARTICLE::UNKNOWN;
@@ -215,6 +218,10 @@ class DAQ_Object_Info
   bool hasObject(OBJECT obj) const {return m_objectsInDAQ.find(obj) != m_objectsInDAQ.end();}
   std::pair<bool,unsigned int> getNumberOfLayer(OBJECT obj) const
   { auto it=m_objectsInDAQ.find(obj); return (it ==  m_objectsInDAQ.end() ? std::make_pair(false,0U) : std::make_pair(true,it->second));}
+
+  //void clear();
+  //bool setToRun(unsigned int run);
+
  private:
     std::map<OBJECT,unsigned int> m_objectsInDAQ;
 };
@@ -231,6 +238,9 @@ class HV_Info
   void set_Status(STATUS s) {m_globalStatus=s;}
   void set_globalHV(float value) {m_globalHV=value;}
   void setPlanHV(int planNumber,bool value) {m_HV_in_kV_byPlan[planNumber]=value;}
+
+  //void clear();
+  //bool setToRun(unsigned int run);
 
  private:
   STATUS m_globalStatus;
@@ -259,13 +269,19 @@ class  all_ConfigInfo
 
   void addRun(unsigned int run,unsigned int Nplan, RunQualityInfo::STATUS s=RunQualityInfo::NOINFO,std::string badcause="") {m_runQualityInfoMap[run]=RunQualityInfo(Nplan); m_runQualityInfoMap[run].set_Status(s,badcause);}
   const RunQualityInfo& getRunQualityInfo(unsigned int run) const; //throw RunNotFound_ConfigException
+
+  void addRun(unsigned int run, Beam_Conditions &cond) {m_runBeamConditionsMap[run]=cond;}
+  const Beam_Conditions& getBeamConditions(unsigned int run) const; // throw RunNotFound_ConfigException
  private:
   static all_ConfigInfo* m_instance;
   std::map<std::string,Setup_ConfigInfo> m_configs;
   std::map<unsigned int,std::string> m_runConfigMap;
   std::map<unsigned int,GIF_Conditions> m_runGIFconditionsMap;
   std::map<unsigned int,RunQualityInfo> m_runQualityInfoMap;
-
+  std::map<unsigned int,Beam_Conditions> m_runBeamConditionsMap;
+  //std::map<unsigned int,DAQ_Object_Info> m_runDAQ_Object_InfoMap;
+  //std::map<unsigned int,HV_Info> m_runHV_InfoMap;
+  
   friend class GIF_oct2016_ExperimentalSetup;
   GIF_Conditions& changeGIFconditions(unsigned int run); // throw RunNotFound_ConfigException
   RunQualityInfo& changeRunQualityInfo(unsigned int run); // throw RunNotFound_ConfigException

@@ -93,6 +93,38 @@ void RunQualityInfo::set_Status(STATUS s,std::string badcause)
   m_qualityByPlan.assign(m_qualityByPlan.size(),good);
 }
 
+void Beam_Conditions::clear()
+{
+  m_beamState=STATE::UNKNOWN;
+  m_beamParticle=PARTICLE::UNKNOWN;
+  m_beamParticleCharge=PARTICLE_CHARGE::UNKNOWN;
+  m_beamEnergyInGeV=0;
+  m_beamLine=LINE::UNKNOWN;
+  m_beamPosition=POSITION::UNKNOWN;
+  m_cerenkov.clear();
+  m_beamIntensityInHzPerSquareCm=0;
+  m_beamObstacle.clear();
+}
+
+bool Beam_Conditions::setToRun(unsigned int run)
+{
+  all_ConfigInfo &all=all_ConfigInfo::instance();
+  bool success=false;
+  clear();
+  try 
+    {
+      const Beam_Conditions &s=all.getBeamConditions(run);
+      success=true;
+      (*this)=s;
+    }
+  catch (std::exception &e)
+    {
+      std::cout << e.what();
+    }
+  return success;
+}
+
+
 
 std::string all_ConfigInfo::UnknownConfig=std::string("UnknownConfig");
 
@@ -146,3 +178,10 @@ RunQualityInfo& all_ConfigInfo::changeRunQualityInfo(unsigned int run)
   return it->second;
 }
 
+const Beam_Conditions& all_ConfigInfo::getBeamConditions(unsigned int run) const
+{
+  std::map<unsigned int,Beam_Conditions>::const_iterator  it=m_runBeamConditionsMap.find(run);
+  if (it==m_runBeamConditionsMap.end()) throw RunNotFound_ConfigException(run,"all_ConfigInfo::getBeamConditions");
+  return it->second;
+}
+  
