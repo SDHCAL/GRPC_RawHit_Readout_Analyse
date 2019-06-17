@@ -280,21 +280,29 @@ def makeTree(lciofileName,guillaumeCutVar=True):
 #produce_root_tree_for_ECAL_HCAL.makeTree("DHCAL_744193_I0_0_TriventSplit.slcio")
 #produce_root_tree_for_ECAL_HCAL.makeTree("/data/software/binaries/SDHCAL/ggarillot/Trivent/script/TDHCAL.slcio")
 
-def drawComparison(rootFileName1,rootFileName2,variable,condition="",first=1):
+
+def drawComparison(rootFileName1,rootFileName2,variable,condition="",first=1,labels=["GRPC_RawHit_Readout_Analyse","Trivent"]):
     if first==1:
         file1=ROOT.TFile(rootFileName1)
         file2=ROOT.TFile(rootFileName2)
         file2.SDHCAL.SetLineColor(2)
         file2.SDHCAL.SetMarkerColor(2)
+        label1=labels[0]
+        label2=labels[1]
     else:
         file2=ROOT.TFile(rootFileName1)
         file1=ROOT.TFile(rootFileName2)
         file1.SDHCAL.SetLineColor(2)
         file1.SDHCAL.SetMarkerColor(2)
+        label1=labels[1]
+        label2=labels[0]
 
     file1.SDHCAL.SetMarkerStyle(20)
     file2.SDHCAL.SetMarkerStyle(20)
     c=ROOT.TCanvas()
     file1.SDHCAL.Draw(variable,condition)
     file2.SDHCAL.Draw(variable,condition,"SAME")
+    leg=c.BuildLegend();
+    leg.GetListOfPrimitives()[0].SetLabel(label1)
+    leg.GetListOfPrimitives()[1].SetLabel(label2)
     return c
