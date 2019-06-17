@@ -51,14 +51,14 @@ def Graph3DNhit(lciofileName,numeroEvent,layerCode="K"):
         if experience.PlanIsTricot(numeroplan):
             grTricot.SetPoint(indiceTricot,pos[0],pos[2],pos[1])
             indiceTricot=indiceTricot+1
-    gr.SetMarkerStyle(20)
+    gr.SetMarkerStyle(21)
     gr.SetMarkerSize(1)
     gr.GetXaxis().SetTitle("X")
     gr.GetYaxis().SetTitle("Z")
     gr.GetZaxis().SetTitle("Y")
     gr.Draw("P")
     a.append(gr)
-    grTricot.SetMarkerStyle(20)
+    grTricot.SetMarkerStyle(22)
     grTricot.SetMarkerSize(1)
     grTricot.SetMarkerColor(2)
     if grTricot.GetN() >0:
