@@ -75,6 +75,7 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     Unset=0
     Guillaume=1
     Gerald=2
+    Antoine=3
     mode=Unset
 
     #determine mode
@@ -83,6 +84,10 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     ev=lcReader.readNextEvent()
     ke=ROOT.vector('string')()
     ev.parameters().getIntKeys(ke)
+    kf=ROOT.vector('string')()
+    ev.parameters().getFloatKeys(kf)
+    if 'beamEnergy' in kf:
+        mode=Antoine
     if 'Sub_Readout_Frame_start_time_in_trigger' in ke:
         mode=Gerald
     if 'eventTimeInTrigger' in ke:
@@ -90,7 +95,7 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     print " mode is set to value = {0}".format(mode)
     lcReader.close()
 
-    if mode==Guillaume:
+    if mode==Guillaume or mode==Antoine:
         #get the min,max of hit time for each readout
         triggerdict=dict()
         lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
@@ -135,7 +140,7 @@ def makeTree(lciofileName,guillaumeCutVar=True):
         for i in range(len(spills)):
             for triggers in spills[i][1]:
                 triggerSpillDict[triggers]=[i+1,spills[i][0]]
-        print "Guillaume mode spill analysis finished"
+        print "Guillaume/Antoine mode spill analysis finished"
     
     rootfileName=os.path.basename(lciofileName).split('.')[0]+'.root'
     f=ROOT.TFile(rootfileName,"recreate")
@@ -183,12 +188,14 @@ def makeTree(lciofileName,guillaumeCutVar=True):
         if mode==Gerald:
             mytime.BCID=evparam.getIntVal('BCID')
             mytime.EventClockStamp=evparam.getIntVal('Sub_Readout_Frame_start_time_in_trigger')
-        if mode==Guillaume:
+        if mode==Guillaume or mode==Antoine:
             mytime.BCID=-1
-            mytime.EventClockStamp=evparam.getIntVal('eventTimeInTrigger')
+            mytime.EventClockStamp=-1
+            if mode==Guillaume:
+                mytime.EventClockStamp=evparam.getIntVal('eventTimeInTrigger')
             cerenkovFlag[0]=evparam.getIntVal('cerenkovTag')
 
-        if  mode==Guillaume:
+        if  mode==Guillaume or mode==Antoine:
             mytime.spillNumber=triggerSpillDict[mytime.readoutCounter][0]
             mytime.clockCountInSpill=(absoluteBCID-mytime.EventClockStamp)-triggerSpillDict[mytime.readoutCounter][1]
         if mode==Gerald:
@@ -213,7 +220,7 @@ def makeTree(lciofileName,guillaumeCutVar=True):
                 difID='DIF'
                 asicID='ASIC'
                 channelID='Channel'
-            if mode==Guillaume:
+            if mode==Guillaume or mode==Antoine:
                 difID='Dif_id'
                 asicID='Asic_id'
                 channelID='Chan_id'
