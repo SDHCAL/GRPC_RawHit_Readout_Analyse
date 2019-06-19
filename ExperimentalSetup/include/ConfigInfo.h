@@ -266,6 +266,7 @@ class  all_ConfigInfo
   void addRun(unsigned int run,std::string conf=UnknownConfig) {m_runConfigMap[run]=conf;}
   std::string getConfigName(unsigned int run) const; // throw RunNotFound_ConfigException
   const Setup_ConfigInfo& getConfigInfo(unsigned int run) const {return getConfigInfo(getConfigName(run));}
+  std::vector<unsigned int> getRunNumberList() const;
 
   void addRun(unsigned int run,GIF_Conditions &cond) {m_runGIFconditionsMap[run]=cond;}
   const GIF_Conditions& getGIFconditions(unsigned int run) const; // throw RunNotFound_ConfigException

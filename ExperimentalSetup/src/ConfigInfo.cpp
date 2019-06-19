@@ -185,6 +185,14 @@ std::string all_ConfigInfo::getConfigName(unsigned int run) const
   return it->second;
 }
 
+std::vector<unsigned int> all_ConfigInfo::getRunNumberList() const
+{
+  std::vector<unsigned int> keys;
+  for (auto const& imap: m_runConfigMap) keys.push_back(imap.first);
+  return keys;
+}
+
+
 const GIF_Conditions& all_ConfigInfo::getGIFconditions(unsigned int run) const
 {
   std::map<unsigned int,GIF_Conditions>::const_iterator  it=m_runGIFconditionsMap.find(run);
