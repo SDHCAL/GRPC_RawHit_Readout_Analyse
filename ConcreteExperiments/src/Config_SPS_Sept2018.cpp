@@ -421,3 +421,156 @@ void CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::setRunList()
 
 }
 
+
+//
+// for good runs :
+// for entry in {25127..25563}; do grep $entry ConcreteExperiments/ElogExtract/SPS_September2018/M3_elog_export.csv | awk -F\; '$5 !~ "Update" && $5 !~ "Repair" && $5 !~ "message" && $5 !~ "DAQ" && $16 !~ "quote" {run=substr($5,2,6); if (run!="" && $15 =="\"Good data\"") {print "  all.addRun("run",nLayer,RunQualityInfo::GOOD);"} }'; done
+//
+// for Bad runs :
+// for entry in {25127..25563}; do grep $entry ConcreteExperiments/ElogExtract/SPS_September2018/M3_elog_export.csv | awk -F\; '$5 !~ "Update" && $5 !~ "Repair" && $5 !~ "message" && $5 !~ "DAQ" && $16 !~ "quote" {run=substr($5,2,6); if (run!="" && $15 =="\"Bad data\"") {print "  all.addRun("run",nLayer,RunQualityInfo::BAD);"} }'; done
+// Run 744087 to be added by hand (don't know why)
+//
+// Then add cause of bad data manually if known
+//
+void CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::setRunQuality()
+{
+  //call after setRunList()
+  all_ConfigInfo &all=all_ConfigInfo::instance();
+  std::vector<unsigned int> v=all.getRunNumberList();
+  unsigned int nLayer=nPlans();
+  for (auto run: v) all.addRun(run,nLayer);
+
+  //GOOD Runs
+  all.addRun(743875,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743880,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743881,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743882,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743883,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743884,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743885,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743886,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743887,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743888,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743890,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743891,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743892,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743893,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743894,nLayer,RunQualityInfo::GOOD);
+  all.addRun(743895,nLayer,RunQualityInfo::GOOD);
+
+  //BAD runs
+  all.addRun(743818,nLayer,RunQualityInfo::BAD);
+  all.addRun(743820,nLayer,RunQualityInfo::BAD);
+  all.addRun(743823,nLayer,RunQualityInfo::BAD);
+  all.addRun(743832,nLayer,RunQualityInfo::BAD);
+  all.addRun(743839,nLayer,RunQualityInfo::BAD);
+  all.addRun(743840,nLayer,RunQualityInfo::BAD);
+  all.addRun(743841,nLayer,RunQualityInfo::BAD);
+  all.addRun(743842,nLayer,RunQualityInfo::BAD);
+  all.addRun(743843,nLayer,RunQualityInfo::BAD);
+  all.addRun(743844,nLayer,RunQualityInfo::BAD);
+  all.addRun(743845,nLayer,RunQualityInfo::BAD);
+  all.addRun(743852,nLayer,RunQualityInfo::BAD);
+  all.addRun(743855,nLayer,RunQualityInfo::BAD);
+  all.addRun(743876,nLayer,RunQualityInfo::BAD);
+  all.addRun(743877,nLayer,RunQualityInfo::BAD);
+  all.addRun(743878,nLayer,RunQualityInfo::BAD);
+  all.addRun(743879,nLayer,RunQualityInfo::BAD);
+  all.addRun(743889,nLayer,RunQualityInfo::BAD);
+  all.addRun(743909,nLayer,RunQualityInfo::BAD);
+  all.addRun(743911,nLayer,RunQualityInfo::BAD);
+  all.addRun(743915,nLayer,RunQualityInfo::BAD);
+  all.addRun(743954,nLayer,RunQualityInfo::BAD);
+  all.addRun(743955,nLayer,RunQualityInfo::BAD);
+  all.addRun(743956,nLayer,RunQualityInfo::BAD);
+  all.addRun(743957,nLayer,RunQualityInfo::BAD);
+  all.addRun(743958,nLayer,RunQualityInfo::BAD);
+  all.addRun(743959,nLayer,RunQualityInfo::BAD);
+  all.addRun(743960,nLayer,RunQualityInfo::BAD);
+  all.addRun(743961,nLayer,RunQualityInfo::BAD);
+  all.addRun(743962,nLayer,RunQualityInfo::BAD);
+  all.addRun(743963,nLayer,RunQualityInfo::BAD);
+  all.addRun(743964,nLayer,RunQualityInfo::BAD);
+  all.addRun(743965,nLayer,RunQualityInfo::BAD);
+  all.addRun(743966,nLayer,RunQualityInfo::BAD);
+  all.addRun(743967,nLayer,RunQualityInfo::BAD);
+  all.addRun(743968,nLayer,RunQualityInfo::BAD);
+  all.addRun(743969,nLayer,RunQualityInfo::BAD);
+  all.addRun(743970,nLayer,RunQualityInfo::BAD);
+  all.addRun(743971,nLayer,RunQualityInfo::BAD);
+  all.addRun(743972,nLayer,RunQualityInfo::BAD);
+  all.addRun(743973,nLayer,RunQualityInfo::BAD);
+  all.addRun(743974,nLayer,RunQualityInfo::BAD);
+  all.addRun(743975,nLayer,RunQualityInfo::BAD);
+  all.addRun(743976,nLayer,RunQualityInfo::BAD);
+  all.addRun(743977,nLayer,RunQualityInfo::BAD);
+  all.addRun(743978,nLayer,RunQualityInfo::BAD);
+  all.addRun(743979,nLayer,RunQualityInfo::BAD);
+  all.addRun(743980,nLayer,RunQualityInfo::BAD);
+  all.addRun(743981,nLayer,RunQualityInfo::BAD);
+  all.addRun(743982,nLayer,RunQualityInfo::BAD);
+  all.addRun(743983,nLayer,RunQualityInfo::BAD);
+  all.addRun(743991,nLayer,RunQualityInfo::BAD);
+  all.addRun(743993,nLayer,RunQualityInfo::BAD);
+  all.addRun(743995,nLayer,RunQualityInfo::BAD);
+  all.addRun(744000,nLayer,RunQualityInfo::BAD);
+  all.addRun(744001,nLayer,RunQualityInfo::BAD);
+  all.addRun(744002,nLayer,RunQualityInfo::BAD);
+  all.addRun(744003,nLayer,RunQualityInfo::BAD);
+  all.addRun(744004,nLayer,RunQualityInfo::BAD,"HV varying");
+  all.addRun(744005,nLayer,RunQualityInfo::BAD,"2 DIF with problems in data sending : DIF 119 and 129");
+  all.addRun(744008,nLayer,RunQualityInfo::BAD,"DAQ hanging due to DIF 118 and 129");
+  all.addRun(744009,nLayer,RunQualityInfo::BAD);
+  all.addRun(744010,nLayer,RunQualityInfo::BAD,"some bad header message. DAQ hanged due to DIF 118.");
+  all.addRun(744029,nLayer,RunQualityInfo::BAD);
+  all.addRun(744030,nLayer,RunQualityInfo::BAD);
+  all.addRun(744041,nLayer,RunQualityInfo::BAD);
+  all.addRun(744042,nLayer,RunQualityInfo::BAD);
+  all.addRun(744043,nLayer,RunQualityInfo::BAD);
+  all.addRun(744044,nLayer,RunQualityInfo::BAD,"XCET is killing the acquisition. DIF129 is blocking acq.");
+  all.addRun(744050,nLayer,RunQualityInfo::BAD,"No beam, so stop");
+  all.addRun(744052,nLayer,RunQualityInfo::BAD);
+  all.addRun(744053,nLayer,RunQualityInfo::BAD);
+  all.addRun(744054,nLayer,RunQualityInfo::BAD);
+  all.addRun(744055,nLayer,RunQualityInfo::BAD);
+  all.addRun(744062,nLayer,RunQualityInfo::BAD);
+  all.addRun(744063,nLayer,RunQualityInfo::BAD);
+  all.addRun(744064,nLayer,RunQualityInfo::BAD);
+  all.addRun(744068,nLayer,RunQualityInfo::BAD,"test spillon/spillof for ECAL");
+  all.addRun(744070,nLayer,RunQualityInfo::BAD);
+  all.addRun(744075,nLayer,RunQualityInfo::BAD);
+  all.addRun(744079,nLayer,RunQualityInfo::BAD,"Ecal debug + beam tuning after wobbling change");
+  all.addRun(744099,nLayer,RunQualityInfo::BAD);
+  all.addRun(744100,nLayer,RunQualityInfo::BAD);
+  all.addRun(744102,nLayer,RunQualityInfo::BAD);
+  all.addRun(744114,nLayer,RunQualityInfo::BAD);
+  all.addRun(744114,nLayer,RunQualityInfo::BAD);
+  all.addRun(744115,nLayer,RunQualityInfo::BAD);
+  all.addRun(744116,nLayer,RunQualityInfo::BAD);
+  all.addRun(744117,nLayer,RunQualityInfo::BAD);
+  all.addRun(744118,nLayer,RunQualityInfo::BAD);
+  all.addRun(744121,nLayer,RunQualityInfo::BAD);
+  all.addRun(744122,nLayer,RunQualityInfo::BAD);
+  all.addRun(744123,nLayer,RunQualityInfo::BAD);
+  all.addRun(744127,nLayer,RunQualityInfo::BAD,"too small rate with all collimators wide open (because of 18mm lead ?)");
+  all.addRun(744135,nLayer,RunQualityInfo::BAD);
+  all.addRun(744140,nLayer,RunQualityInfo::BAD);
+  all.addRun(744141,nLayer,RunQualityInfo::BAD);
+  all.addRun(744142,nLayer,RunQualityInfo::BAD);
+  all.addRun(744143,nLayer,RunQualityInfo::BAD);
+  all.addRun(744144,nLayer,RunQualityInfo::BAD);
+  all.addRun(744148,nLayer,RunQualityInfo::BAD);
+  all.addRun(744151,nLayer,RunQualityInfo::BAD);
+  all.addRun(744152,nLayer,RunQualityInfo::BAD);
+  all.addRun(744153,nLayer,RunQualityInfo::BAD,"spill measurement of <1s. Cable which delivers the SDHCAL clock from he MDCC to the ECAL : Ecal side was disconnected but not the SDHCAL.");
+  all.addRun(744236,nLayer,RunQualityInfo::BAD);
+  all.addRun(744313,nLayer,RunQualityInfo::BAD);
+  all.addRun(744314,nLayer,RunQualityInfo::BAD);
+  all.addRun(744330,nLayer,RunQualityInfo::BAD);
+  all.addRun(744357,nLayer,RunQualityInfo::BAD,"DIF 164 faulty");
+  all.addRun(744384,nLayer,RunQualityInfo::BAD);
+  all.addRun(744087,nLayer,RunQualityInfo::BAD);
+
+  
+}
+

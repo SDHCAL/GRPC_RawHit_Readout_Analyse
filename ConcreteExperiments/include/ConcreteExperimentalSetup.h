@@ -31,6 +31,7 @@ class CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup  : public ExperimentalSetup
   CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup();
  private:
   void setRunList();
+  void setRunQuality();
 };
 
 #endif

@@ -1076,4 +1076,5 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
   aegisPos.translate(2, aegis_layer_width); addOneDIFPadDevice(8,aegisPos);
 
   setRunList();
+  setRunQuality();
 }
