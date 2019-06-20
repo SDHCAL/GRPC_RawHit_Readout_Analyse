@@ -106,5 +106,8 @@ BIFListener_check.saveTo(dd)
 
 rootFile.Close()
 
+masterReader.writeSpillInfoStatShort()
+masterReader.writeSpillInfoStatExtendedInFile()
+
 lcReader.close()
 LCIOoutputWriter.close()

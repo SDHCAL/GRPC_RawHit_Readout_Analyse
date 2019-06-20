@@ -5,6 +5,7 @@
 #include "IO/LCEventListener.h"
 #include <string>
 
+#include "GG_counter.h"
 #include "GG_messageCounter.h"
 
 class RawHit_SDHCAL_Data;
@@ -19,6 +20,12 @@ class RawHit_SDHCAL_Data_Reader_From_LCEvent : public RawHit_SDHCAL_Data_Reader,
   void processEvent(EVENT::LCEvent * evt);
   void modifyEvent(EVENT::LCEvent * evt) {;}
 
+  void writeSpillInfoStatShort(std::ostream& oflux=std::cout);
+  void writeSpillInfoStatProblemOnly(std::ostream& oflux=std::cout);
+  void writeSpillInfoStatExtended(std::ostream& oflux=std::cout);
+  void writeSpillInfoStatExtendedInFile(std::string filename="SpillInfoStatOutput.txt");
+  
+  
   GG_messageCounter negativeTimeStamp=GG_messageCounter("Warning RawHit_SDHCAL_Data_Reader_From_LCEvent negative time stamp seen in event");
   GG_messageCounter highValueTimeStamp=GG_messageCounter("Warning RawHit_SDHCAL_Data_Reader_From_LCEvent time stamp greater than absoluteBCID seen in event");
  private:
@@ -28,6 +35,11 @@ class RawHit_SDHCAL_Data_Reader_From_LCEvent : public RawHit_SDHCAL_Data_Reader,
   bool m_fillSpillInfo;
   float m_interSpillInSeconds;
   void fillSpillInfo(const RawHit_SDHCAL_Data&);
+  //fillSpillInfo stats
+  DIFCounters m_negativeTimeStamp_counter;
+  DIFCounters m_highValueTimeStamp_counter;
+  DIFCounters m_startSpillUsedTimeStamp_counter;
+  std::string m_fillInfo_counters_labels[4]={"Setup","DIF","ASIC","Channel"};
 };
 
 #endif
