@@ -15,9 +15,7 @@ ROOT.gROOT.Reset()
 ROOT.gROOT.ProcessLine(
 "struct MyEventTime {\
 UInt_t     readoutCounter;\
-UInt_t     BCID;\
-UInt_t     AbsBCIDup;\
-UInt_t     AbsBCIDlow;\
+Int_t      BCID;\
 ULong64_t  AbsBCID;\
 Int_t     EventClockStamp;\
 UInt_t     spillNumber;\
@@ -162,7 +160,7 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     y = array( 'f', maxnhits*[0.] )
     z = array( 'f', maxnhits*[0.] )
 
-    t.Branch( 'EventTime', mytime, 'triggerCounter/i:BCID:AbsBCIDup:AbsBCIDlow:AbsBCID/l:EventClockStamp/I:spillNumber/i:clockCountInSpill')
+    t.Branch( 'EventTime', mytime, 'triggerCounter/i:BCID/I:AbsBCID/l:EventClockStamp/I:spillNumber/i:clockCountInSpill')
     t.Branch( 'cerenkovFlag', cerenkovFlag, 'cerenkov/I' )
     t.Branch( 'nHits', nHits, 'nHits/I' )
     t.Branch( 'plan', plan, 'plan[nHits]/I' )
@@ -183,9 +181,9 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     for ev in lcReader:            
         evparam=ev.parameters()
         mytime.readoutCounter=evparam.getIntVal('trigger')
-        mytime.AbsBCIDup=evparam.getIntVal('bcid1')
-        mytime.AbsBCIDlow=evparam.getIntVal('bcid2')
-        absoluteBCID=((mytime.AbsBCIDup)<<24)+mytime.AbsBCIDlow
+        AbsBCIDup=evparam.getIntVal('bcid1')
+        AbsBCIDlow=evparam.getIntVal('bcid2')
+        absoluteBCID=((AbsBCIDup)<<24)+AbsBCIDlow
         mytime.AbsBCID=absoluteBCID
         if mode==Gerald:
             mytime.BCID=evparam.getIntVal('BCID')
