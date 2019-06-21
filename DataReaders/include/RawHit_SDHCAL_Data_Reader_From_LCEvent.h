@@ -28,6 +28,7 @@ class RawHit_SDHCAL_Data_Reader_From_LCEvent : public RawHit_SDHCAL_Data_Reader,
   
   GG_messageCounter negativeTimeStamp=GG_messageCounter("Warning RawHit_SDHCAL_Data_Reader_From_LCEvent negative time stamp seen in event");
   GG_messageCounter highValueTimeStamp=GG_messageCounter("Warning RawHit_SDHCAL_Data_Reader_From_LCEvent time stamp greater than absoluteBCID seen in event");
+  GG_messageCounter moreThanOneSpillInReadout=GG_messageCounter("WARNING the readout contains more than one beam spill");
  private:
   unsigned int m_nProcessedEvent; 
   unsigned int m_nMissingCollectionEvent; 

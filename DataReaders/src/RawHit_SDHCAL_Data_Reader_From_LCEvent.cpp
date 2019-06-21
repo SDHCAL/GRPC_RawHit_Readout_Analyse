@@ -48,6 +48,7 @@ void RawHit_SDHCAL_Data_Reader_From_LCEvent::fillSpillInfo(const RawHit_SDHCAL_D
   m_startSpillUsedTimeStamp_counter.add(1,keptKeys);
   RawHit_SDHCAL_Data::m_spill.max_readoutTimeStamp=maxTimeStamp;
   RawHit_SDHCAL_Data::m_spill.startSpill_BCID=AbsoluteBCID-maxTimeStamp;
+  if (maxTimeStamp*200e-9>m_interSpillInSeconds) moreThanOneSpillInReadout.print();
   //std::cout << " New spill info filled " << std::endl;
   m_negativeTimeStamp_counter.newSet();
   m_highValueTimeStamp_counter.newSet();
