@@ -152,20 +152,32 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     cerenkovFlag  = array( 'i', [0] )
     nHits = array( 'i', [0] )
     plan = array( 'i', maxnhits*[0] )
+    CellI = array( 'i', maxnhits*[0] )
+    CellJ = array( 'i', maxnhits*[0] )
+    DIFnum = array( 'i', maxnhits*[0] )
+    ASICnum = array( 'i', maxnhits*[0] )
+    Channelnum = array( 'i', maxnhits*[0] )
     threshold = array( 'i', maxnhits*[0] )
     timestamp = array( 'i', maxnhits*[0] )
+    BCID_Frame = array( 'i', maxnhits*[0] )
     timeSinceResumeAcq_s = array( 'f', maxnhits*[0.] )
     timeSinceRunStart_s = array( 'f', maxnhits*[0.] )
     x = array( 'f', maxnhits*[0.] )
     y = array( 'f', maxnhits*[0.] )
     z = array( 'f', maxnhits*[0.] )
 
-    t.Branch( 'EventTime', mytime, 'triggerCounter/i:BCID/I:AbsBCID/l:EventClockStamp/I:spillNumber/i:clockCountInSpill')
+    t.Branch( 'EventTime', mytime, 'triggerCounter/i:BCID_DIF/I:AbsoluteBCID/l:EventClockStamp/I:BeamSpillNumber/i:clockCountInBeamSpill')
     t.Branch( 'cerenkovFlag', cerenkovFlag, 'cerenkov/I' )
     t.Branch( 'nHits', nHits, 'nHits/I' )
     t.Branch( 'plan', plan, 'plan[nHits]/I' )
+    t.Branch( 'I', CellI, 'I[nHits]/I' )
+    t.Branch( 'J', CellJ, 'J[nHits]/I' )
+    t.Branch( 'DIF', DIFnum, 'DIF[nHits]/I' )
+    t.Branch( 'ASIC', ASICnum, 'ASIC[nHits]/I' )
+    t.Branch( 'CHANNEL', Channelnum, 'CHANNEL[nHits]/I' )
     t.Branch( 'threshold', threshold, 'threshold[nHits]/I' )
     t.Branch( 'timestamp', timestamp, 'timestamp[nHits]/I' )
+    t.Branch( 'BCID_Frame', BCID_Frame, 'BCID_Frame[nHits]/I' )
     t.Branch( 'timeSinceResumeAcq_s', timeSinceResumeAcq_s, 'timeSinceResumeAcq_seconds[nHits]/F' )
     t.Branch( 'timeSinceRunStart_s', timeSinceRunStart_s, 'timeSinceRunStart_seconds[nHits]/F' )
     t.Branch( 'x', x, 'x[nHits]/F' )
@@ -215,15 +227,16 @@ def makeTree(lciofileName,guillaumeCutVar=True):
             else:
                 cerenkovFlag[0]=vecint[0]
 
+        if mode==Gerald:
+            difID='DIF'
+            asicID='ASIC'
+            channelID='Channel'
+        if mode==Guillaume or mode==Antoine:
+            difID='Dif_id'
+            asicID='Asic_id'
+            channelID='Chan_id'
+            
         if guillaumeCutVar:
-            if mode==Gerald:
-                difID='DIF'
-                asicID='ASIC'
-                channelID='Channel'
-            if mode==Guillaume or mode==Antoine:
-                difID='Dif_id'
-                asicID='Asic_id'
-                channelID='Chan_id'
             RamFullCount=dict()
             AsicFillCount=dict()
             LayerFillCount=dict()
@@ -239,8 +252,10 @@ def makeTree(lciofileName,guillaumeCutVar=True):
             timestamp[ihit]=int(hit.getTime())
             
             timeSinceRunStart_s[ihit]=(absoluteBCID-timestamp[ihit])*2e-7
+            BCID_Frame[ihit] = -1
             timeSinceResumeAcq_s[ihit]=-1
             if mode==Gerald:
+                BCID_Frame[ihit]=mytime.BCID-timestamp[ihit]
                 timeSinceResumeAcq_s[ihit]=(mytime.BCID-timestamp[ihit])*2e-7
             
             position=hit.getPosition()
@@ -248,10 +263,16 @@ def makeTree(lciofileName,guillaumeCutVar=True):
             y[ihit]=position[1]
             z[ihit]=position[2]
 
+            DIF=q(hit)[difID].value()
+            ASIC=q(hit)[asicID].value()
+            CHANNEL=q(hit)[channelID].value()
+            DIFnum[ihit]=DIF
+            ASICnum[ihit]=ASIC
+            Channelnum[ihit]=CHANNEL
+            CellI[ihit]=q(hit)['I'].value()
+            CellJ[ihit]=q(hit)['J'].value()
+            
             if guillaumeCutVar:
-                DIF=q(hit)[difID].value()
-                ASIC=q(hit)[asicID].value()
-                CHANNEL=q(hit)[channelID].value()
                 if CHANNEL in [29,31]:
                     RamFullCount[DIF]=RamFullCount.get(DIF,0)+1
                 AsicFillCount[DIF*1000+ASIC]=AsicFillCount.get(DIF*1000+ASIC,0)+1
