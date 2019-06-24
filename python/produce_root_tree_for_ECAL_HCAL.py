@@ -144,7 +144,9 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     rootfileName=os.path.basename(lciofileName).split('.')[0]+'.root'
     f=ROOT.TFile(rootfileName,"recreate")
     t=ROOT.TTree('SDHCAL','SDHCAL events')
-
+    treeDoc=ROOT.TPaveText(.05,.1,.95,.8)
+    treeDoc.SetName("README")
+    
     mytime = MyEventTime()
     
     maxnhits = 8000
@@ -184,6 +186,28 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     t.Branch( 'y', y, 'y[nHits]/F' )
     t.Branch( 'z', z, 'z[nHits]/F' )
 
+    treeDoc.AddText("clock tick is 200 ns")
+    treeDoc.AddText("triggerCounter=data readout number in the run, should correspond to ECAL spill number")
+    treeDoc.AddText("BCID_DIF=data readout time in clock tick since acquisition has resumed")
+    treeDoc.AddText("AbsoluteBCID=long counter (48 bits) in clock tick that is not reset during one run")
+    treeDoc.AddText("AbsoluteBCID is reset at zero typically at the first start of acquisition after a power cycle or a configure")
+    treeDoc.AddText("EventClockStamp=number of clock ticks separating the start of this event subset of hits and the BCID_DIF of the readout it comes from")
+    treeDoc.AddText("BeamSpillNumber=SPS beam particle spill number")
+    treeDoc.AddText("clockCountInBeamSpill=estimated number of clock ticks separating this event data and the start time of the SPS beam spill")
+    treeDoc.AddText("cerenkovFlag=The BIF amplitude (Cernkov signal) for this event")
+    treeDoc.AddText("nHits=total number of hits in this event")
+    treeDoc.AddText("For the following tables, data for a hit are at the same array index")
+    treeDoc.AddText("plan=plan or layer for each hit")
+    treeDoc.AddText("I and J=pad coordinate in the layer in pad size unit")
+    treeDoc.AddText("DIF, ASIC and CHANNEL=electronic coordinates for the hit")
+    treeDoc.AddText("threshold=the threshold crossed (1, 2 or 3)")
+    treeDoc.AddText("timestamp=the time (in clock tick) as stored in the RawCalorimeterHit collection")
+    treeDoc.AddText("BCID_Frame=the hit time (in clock tick) since acquisition has resumed. It equals BCID_DIF-timestamp")
+    treeDoc.AddText("BCID_Frame is the time that should be used to match HCAL data and ECAL data")
+    treeDoc.AddText("timeSinceResumeAcq_s=BCID_Frame*200e-9")
+    treeDoc.AddText("timeSinceRunStart_s=(AbsoluteBCID-timestamp)*200e-9")
+    treeDoc.AddText("x, y, z= hit coordinates")
+    
     if guillaumeCutVar:
         myGCutVar = GuillaumeVariables()
         t.Branch( 'GuillaumeCutVariables', myGCutVar, 'MaxRamFullCount/I:NFullASIC:MaxNHitsInLayer:MaxNConsecutiveLayers:MaxNConsecutiveLayersWithOneHole')
@@ -298,7 +322,8 @@ def makeTree(lciofileName,guillaumeCutVar=True):
                 myGCutVar.MaxNConsecutiveLayers=computeMaxNumberOfConsecutivePlan(PlancOccupancyList)
                 myGCutVar.MaxNConsecutiveLayersWithOneHole=computeMaxNumberOfConsecutivePlanWithOneHole(PlancOccupancyList)
         t.Fill() 
-            
+
+    treeDoc.Write()
     f.Write()
     f.Close()
     lcReader.close()
