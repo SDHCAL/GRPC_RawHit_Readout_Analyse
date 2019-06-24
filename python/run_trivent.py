@@ -3,6 +3,40 @@
 #to be executed in the lib directory where all the needed libraries are installed 
 # usage python <name>.py  list_of_slcio_files
 
+#########################################################################################
+##                   Documentation
+##
+##  experience describes the experimental setup (which DIF is where, ... )
+##  BIFtriggerWindow is the clock tick shift between signal of the particle
+##                   interaction in the Cerenkov detector on the beam line
+##                   and the one of particles interacting in the detector
+##  lcReader is the LCIO file event reader
+##
+##  The DataListener architecture is the following
+##     master (directly connected to lcReader)
+##      ^  ^
+##      |  |
+##      |  BIFListener (used to determine the BIFtriggerWindow, can be omitted in production)
+##      |
+##      trivent (the time clustering algorithm)
+##      ^    ^
+##      |    |
+##      |    BIFListener_check (used to cross check the BIFtriggerWindow, can be omitted in production)
+##      |
+##      filter (filters events selected by trivent, see below)
+##      ^
+##      |
+##      LCIOoutputWriter (Write LCIO output : both original RawCalorimeterHit ans CalorimeterHit collection
+##
+##  the filters
+##
+##  first filter is doubleFilter (planFilter,CL_Filter) : reject events rejected by the 2 filters :
+##                                planFilter : reject events with no hits in layer 0,1,2
+##                                CL_Filter  : reject events with less than 6 consecutive fired layer (allowing one hole among the consecutive layer count)
+##  second filter is RamfullFilter : reject events containing a DIF with more than 36 RAMfull channels (channel 29 and 31) if this DIF represents more than 80% of all hits in the event.
+##
+#########################################################################################
+
 import sys
 import os
 import ROOT
@@ -25,7 +59,6 @@ for file in inputFileNames:
     
 outputFileName=os.path.splitext(os.path.basename(inputFileNames[0]))[0]+'_TriventSplit.slcio'
 print "output file name is ", outputFileName
-
 
     
 experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
