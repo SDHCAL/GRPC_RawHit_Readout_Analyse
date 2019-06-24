@@ -10,7 +10,7 @@
 
 #include <sstream>
 
-RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName) : RawHit_SDHCAL_Data_LCWriter(collectionName), m_setup(&setup), m_tricot_DIFs(m_setup->getTricotDevice_DIFnumber())
+RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName,bool correctHR2) : RawHit_SDHCAL_Data_LCWriter(collectionName), m_setup(&setup), m_tricot_DIFs(m_setup->getTricotDevice_DIFnumber()),m_correctHR2amplitude(correctHR2)
 {
   if (m_setup->hasBIF()) m_parametersFromSetup["BIF"]=std::vector<int>(1,m_setup->getBIF());
   std::vector<DIFdrivenDevice*> plans=m_setup->getPlans();
@@ -69,7 +69,10 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
       IMPL::CalorimeterHitImpl *newHit=new IMPL::CalorimeterHitImpl();
       newHit->setCellID0(ID0);
       newHit->setCellID1((*itHit)->getCellID0());
-      newHit->setEnergy((*itHit)->getAmplitude());
+      if (m_correctHR2amplitude)
+	newHit->setEnergy(HR2CorrectedAmplitude((*itHit)->getAmplitude()));
+      else
+	newHit->setEnergy((*itHit)->getAmplitude());
       newHit->setTime((*itHit)->getTimeStamp());
       m_setup->getOrAddDevice(itHit->dif()).getAbsolutePositionIn_mm(I,J,pos); //could try to optimise this
       newHit->setPosition(pos)  ; //FIXME : Write a WARNING when not implemented
@@ -89,4 +92,16 @@ void RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::finalizeCollection(IMPL::LCColl
   for (std::map<std::string, std::vector<int> >::iterator it=m_parametersFromSetup.begin(); it != m_parametersFromSetup.end(); ++it)
     col->parameters().setValues(it->first,it->second);
     
+}
+
+unsigned int RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::HR2CorrectedAmplitude(unsigned int amp) const
+{
+  unsigned int thresh=amp&0x3;
+  unsigned int info=(amp>>2)<<2;
+  switch (thresh)
+    {
+    case 1 : return (info+2);  //threshold 2 if value 1 set
+    case 2 : return (info+1);  //threshold 1 if value 2 set
+    default: return amp;
+    }
 }

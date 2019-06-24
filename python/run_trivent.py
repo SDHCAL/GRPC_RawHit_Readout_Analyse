@@ -80,6 +80,7 @@ filter.registerDataListener(LCIOoutputWriter_timer)
 
 
 LCIOoutputWriter_extra=ROOT.RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(experience)
+LCIOoutputWriter_extra.setCorrectHR2(True)
 LCIOoutputWriter.addLCWriter(LCIOoutputWriter_extra)
 
 #open file and event loop
