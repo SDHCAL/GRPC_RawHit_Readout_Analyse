@@ -65,6 +65,8 @@
 #pragma link C++ class RunThresholdCounter<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
 #pragma link C++ class RunThresholdCounter<MappedCounters<MappedCounters<MappedCounters<SingleMapCounter,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>,SingleMapCounter>+;
 
+#pragma link C++ class GG_ExperimentalSetup_Counter+
+
 #pragma link C++ class GG_messageCounter;
 
 #pragma link C++ class SDHCAL::Cluster<RawCalorimeterHitPointer>+;
@@ -97,6 +99,7 @@
 #pragma link C++ class RawHit_Occupancy_Listener;
 #pragma link C++ class RawHit_Plan_Occupancy_Listener;
 #pragma link C++ class RawHit_Plan_Cluster_Occupancy_Listener;
+#pragma link C++ class RawHit_TimePlot_Listener+;
 
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_BIFtrigger_GIFoct2016;
 #pragma link C++ class RawHit_SDHCAL_Data_Reader_tracker_GIFoct2016;

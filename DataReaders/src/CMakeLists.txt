@@ -8,6 +8,7 @@ add_test(test_RawHit_standard_merge_predicate_runs test_RawHit_standard_merge_pr
 
 set (${PROJECT_NAME}_sources  
  ${CMAKE_CURRENT_SOURCE_DIR}/GG_counter_histos.cpp 
+ ${CMAKE_CURRENT_SOURCE_DIR}/GG_experimentalsetup_counters.cpp 
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_From_LCEvent.cpp 
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_FromBIF.cpp 
  ${CMAKE_CURRENT_SOURCE_DIR}/RawHit_SDHCAL_Data_Reader_FromTimeAnalysis.cpp

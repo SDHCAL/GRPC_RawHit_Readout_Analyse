@@ -14,19 +14,21 @@
 ##
 ##  The DataListener architecture is the following
 ##     master (directly connected to lcReader)
-##      ^  ^
-##      |  |
-##      |  BIFListener (used to determine the BIFtriggerWindow, can be omitted in production)
-##      |
-##      trivent (the time clustering algorithm)
-##      ^    ^
-##      |    |
-##      |    BIFListener_check (used to cross check the BIFtriggerWindow, can be omitted in production)
-##      |
-##      filter (filters events selected by trivent, see below)
-##      ^
-##      |
-##      LCIOoutputWriter (Write LCIO output : both original RawCalorimeterHit ans CalorimeterHit collection
+##     ^  ^ ^
+##     |  | |
+##     |  | timePlotListener (plot where are negative time stamps, can be omitted in production)
+##     |  |
+##     |  BIFListener (used to determine the BIFtriggerWindow, can be omitted in production)
+##     |
+##     trivent (the time clustering algorithm)
+##     ^    ^
+##     |    |
+##     |    BIFListener_check (used to cross check the BIFtriggerWindow, can be omitted in production)
+##     |
+##     filter (filters events selected by trivent, see below)
+##     ^
+##     |
+##     LCIOoutputWriter (Write LCIO output : both original RawCalorimeterHit ans CalorimeterHit collection
 ##
 ##  the filters
 ##
@@ -78,6 +80,10 @@ lcReader.registerLCEventListener(masterReader)
 BIFListener=ROOT.BIF_Data_Listener(numeroBIF)
 BIFListener_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener,"BIFListener")
 masterReader.registerDataListener(BIFListener_timer)
+
+timePlotListener=ROOT.RawHit_TimePlot_Listener(experience)
+timePlotListener_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(timePlotListener,"timePlotListener")
+masterReader.registerDataListener(timePlotListener_timer)
 
 trivent=ROOT.RawHit_SDHCAL_Data_Reader_Trivent(2,7) # 2=event windows half size, 7=threshold number for hits
 trivent.setSkipIfBIFisOutsideReadout(False)
@@ -138,6 +144,9 @@ BIFListener.saveTo(d)
 dd=rootFile.mkdir("BIFDelay_check")
 BIFListener_check.saveTo(dd)
 
+dtime=rootFile.mkdir("TimePlot")
+timePlotListener.saveTo(dtime)
+#timePlotListener.printReport()
 rootFile.Close()
 
 masterReader.writeSpillInfoStatShort()
