@@ -39,8 +39,8 @@
 ##
 #########################################################################################
 
+from InputOutputFileNames import generateFileList
 import sys
-import os
 import ROOT
 ROOT.gROOT.Reset()
 ROOT.gSystem.Load('liblcio')
@@ -50,8 +50,15 @@ if ROOT.gROOT.GetVersion()[0]=='6':
   #ROOT 6.08.02 don't understand non template dictionnary without it (don't know why)
   dummy=ROOT.intervalle('unsigned int')()
 
+IOnames=generateFileList()
+  
 inputFileNames=ROOT.vector("string")()
-for f in sys.argv[1:]:
+
+filelist=set(IOnames[0])
+if len(filelist)==0:
+  sys.exit("No input files to process")
+   
+for f in filelist:
     inputFileNames.push_back(f);
 
 for file in inputFileNames:
@@ -59,7 +66,7 @@ for file in inputFileNames:
 
 
     
-outputFileName=os.path.splitext(os.path.basename(inputFileNames[0]))[0]+'_TriventSplit.slcio'
+outputFileName=IOnames[1]+'.slcio'
 print "output file name is ", outputFileName
 
     
@@ -134,7 +141,7 @@ lcReader.readStream()
 #end of event loop
 BIFListener_check.printMaxDelay()
 
-rootFile=ROOT.TFile("noisetrivent_check.root"  , "RECREATE")
+rootFile=ROOT.TFile(IOnames[1]+"_check.root"  , "RECREATE")
 #load ROOT library missing
 ROOT.TH1F
 
