@@ -43,8 +43,14 @@ cd python
 python run_trivent.py file1.slcio file2.slcio file3.slcio ...
 ```
 This produces the following files :
-- file1_TriventSplit.slcio  (if file1.slcio is not in the current directory, only the file1.slcio basename is used to name the output file)
-- noisetrivent_check.root  : contains monitoring plots
+- file1_file2_file3_TriventSplit.slcio  (if file1.slcio is not in the current directory, only the file1.slcio basename is used to name the output file)
+- file1_file2_file_TriventSplit_check.root  : contains monitoring plots
+
+You can also use option -d to specify the directory where are the files and option -r to specify the list of runs :
+```
+python  run_trivent.py -d directory -r 656 658
+```
+The 2 produced files are names run_656_658_TriventSplit.slcio and run_656_658_TriventSplit_check.root
 
 Then in the python directory, starts the python interpreter and :
 ```
