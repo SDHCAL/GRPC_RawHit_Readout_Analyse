@@ -27,7 +27,7 @@ def generateFileList():
             outputFileBase=outputFileBase+os.path.splitext(os.path.basename(f))[0]+'_'
 
     outputFileBase=outputFileBase+"TriventSplit"    
-    return [args.runs,directory,args.frList,inputFiles,outputFileBase]
+    return [inputFiles,outputFileBase]
 
     
 if __name__ == '__main__':
