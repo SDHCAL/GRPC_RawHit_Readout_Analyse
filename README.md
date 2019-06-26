@@ -24,7 +24,7 @@ To run python script under the python directory, you need to add the lib/ direct
 - produce_october2016_GIF_plot.py : produce plots and slides from output of  produce_run_tree_GIF.py 
 
 
-### Relayed to SDHCAL+SiWECAL september 2018 test beam
+### Related to SDHCAL+SiWECAL september 2018 test beam
 - run_trivent.py : perform the trivent operation (readout splitting based on time clustering and outputs LCIO CalorimeterHit collection)
 - produce_root_tree_for_ECAL_HCAL.py : produce root tree from run_trivent.py
 
@@ -45,6 +45,7 @@ python run_trivent.py file1.slcio file2.slcio file3.slcio ...
 This produces the following files :
 - file1_TriventSplit.slcio  (if file1.slcio is not in the current directory, only the file1.slcio basename is used to name the output file)
 - noisetrivent_check.root  : contains monitoring plots
+
 Then in the python directory, starts the python interpreter and :
 ```
 import produce_root_tree_for_ECAL_HCAL
