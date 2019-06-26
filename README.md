@@ -53,6 +53,8 @@ produce_root_tree_for_ECAL_HCAL.makeTree("file1_TriventSplit.slcio")
 ```
 This produces the file file1_TriventSplit.root
 
+At the ROOT prompt enter `README->Draw()` to get an explanation of the ROOT tree variables.
+
 ## License
 Code licensed under the CeCILL 2.1 license :
 - http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
