@@ -1,7 +1,11 @@
 #!/usr/bin/python
 
 #to be executed in the lib directory where all the needed libraries are installed 
-# usage python <name>.py  list_of_slcio_files
+# usage :
+#  python <name>.py  list_of_slcio_files
+#  or
+#  python <name>.py -d directory -r list_of_run_numbers
+#
 
 #########################################################################################
 ##                   Documentation
