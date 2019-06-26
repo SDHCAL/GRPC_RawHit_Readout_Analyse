@@ -25,17 +25,17 @@ void GG_ExperimentalSetup_Counter::write(std::ostream& oflux)
   getCounter(1).write(s_labels,oflux);  
 }
 
-void GG_ExperimentalSetup_Counter::saveTo(TDirectory* ROOTdir,std::string histoBaseName)
+void GG_ExperimentalSetup_Counter::saveTo(TDirectory* ROOTdir,std::string histoBaseName,bool secondHist)
 {
   if (getCounter(0).sumcount()==0) return;
   if (NULL==ROOTdir) return;
   ROOTdir->cd();
   TDirectory *byDifDir=ROOTdir->mkdir("ByDIF","ByDIF");
   byDifDir->cd();
-  std::pair<TH2F*,TH2F*> difAsicHisto=convert(getCounter(0),histoBaseName,"DIF","ASIC",1);
+  std::pair<TH2F*,TH2F*> difAsicHisto=convert(getCounter(0),histoBaseName,"DIF","ASIC",1,"",secondHist);
   if (difAsicHisto.first) difAsicHisto.first->Write();
   if (difAsicHisto.second) difAsicHisto.second->Write();
-  std::pair<TH2F*,TH2F*>* difAsicChannelHistos=convert(getCounter(0),histoBaseName,"DIF","ASIC","CHANNEL",1);
+  std::pair<TH2F*,TH2F*>* difAsicChannelHistos=convert(getCounter(0),histoBaseName,"DIF","ASIC","CHANNEL",1,"",secondHist);
   for (unsigned int i=0; i<getCounter(0).size(); ++i)
     {
       if (difAsicChannelHistos[i].first) difAsicChannelHistos[i].first->Write();
@@ -47,7 +47,7 @@ void GG_ExperimentalSetup_Counter::saveTo(TDirectory* ROOTdir,std::string histoB
   TDirectory *byLayerDir=ROOTdir->mkdir("ByLayer","ByLayer");
   byLayerDir->cd();
   delete [] difAsicChannelHistos;
-  difAsicChannelHistos=convert(getCounter(1),histoBaseName,"Plan","J","I",1,"CHANNEL");
+  difAsicChannelHistos=convert(getCounter(1),histoBaseName,"Plan","J","I",1,"CHANNEL",secondHist);
   auto itmap=getCounter(1).begin();
   for (unsigned int i=0; i<getCounter(1).size(); ++i)
     {

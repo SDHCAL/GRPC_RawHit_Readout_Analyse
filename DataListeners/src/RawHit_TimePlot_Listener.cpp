@@ -13,7 +13,7 @@ void RawHit_TimePlot_Listener::printReport(std::ostream& oflux)
 void RawHit_TimePlot_Listener::saveTo(TDirectory* ROOTdir)
 {
   if (NULL==ROOTdir) return;
-  m_negativeTimeStampCounters.saveTo(ROOTdir,"NegativeTimeStamp");
+  m_negativeTimeStampCounters.saveTo(ROOTdir,"NegativeTimeStamp",false);
 }
 
 void RawHit_TimePlot_Listener::process(const RawHit_SDHCAL_Data& d)
