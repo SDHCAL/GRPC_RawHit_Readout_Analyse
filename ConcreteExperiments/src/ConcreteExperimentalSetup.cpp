@@ -1015,7 +1015,9 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
 {
   //counting from beam upstream
   addBIF(3);
-  Plane_position SDHCALPos({0,0,0},{0,1,0},{1,0,0});
+  float padSize=10.408f;
+  float zShift=229;
+  Plane_position SDHCALPos({padSize/2,96*padSize-padSize/2,zShift},{0,-1,0},{1,0,0});
   float SDHCAL_layer_width=26.131f;
   /*                                      */ addSDHCALPlan( 30, 94,181, SDHCALPos); //slot  0
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(100, 97, 92, SDHCALPos); //slot  1
@@ -1058,7 +1060,7 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
   //5 tricots
   //FIXME, don't know exactly the positions, and what should be the direction ?
   Plane_position tricotPos;
-  tricotPos.setPosition({0,0,37*SDHCAL_layer_width+100});
+  tricotPos.setPosition({0,0,zShift+50*SDHCAL_layer_width+100});
   float tricot_layer_width=25.0f;
   /*                                       */ addTricot(80,tricotPos);
   tricotPos.translate(2, tricot_layer_width); addTricot(182,tricotPos);
