@@ -50,7 +50,7 @@ You can also use option -d to specify the directory where are the files and opti
 ```
 python  run_trivent.py -d directory -r 656 658
 ```
-The 2 produced files are names run_656_658_TriventSplit.slcio and run_656_658_TriventSplit_check.root
+The 2 produced files are named run_656_658_TriventSplit.slcio and run_656_658_TriventSplit_check.root
 
 Then in the python directory, starts the python interpreter and :
 ```
