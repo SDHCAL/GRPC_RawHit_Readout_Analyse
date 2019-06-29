@@ -198,6 +198,7 @@ def makeTree(lciofileName,guillaumeCutVar=True):
     treeDoc.AddText("nHits=total number of hits in this event")
     treeDoc.AddText("For the following tables, data for a hit are at the same array index")
     treeDoc.AddText("layer=plan or layer for each hit, although known as K")
+    treeDoc.AddText("note : for 09/2018 test beam, layers 0 to 36 are in the SDHCAL, layers 37 to 41 (tricot) and 42 to 44 (aegis) are behind.")
     treeDoc.AddText("I and J=pad coordinate in the layer in pad size unit")
     treeDoc.AddText("DIF, ASIC and CHANNEL=electronic coordinates for the hit")
     treeDoc.AddText("threshold=the threshold crossed (1, 2 or 3)")
