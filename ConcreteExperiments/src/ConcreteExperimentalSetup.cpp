@@ -1018,7 +1018,7 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
   float padSize=10.408f;
   float zShift=237;
   Plane_position SDHCALPos({-padSize/2,96*padSize+padSize/2,zShift},{0,-1,0},{1,0,0});
-  float SDHCAL_layer_width=26.131f;
+  float SDHCAL_layer_width=28.0f;//26.131f;
   /*                                      */ addSDHCALPlan( 30, 94,181, SDHCALPos); //slot  0
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(100, 97, 92, SDHCALPos); //slot  1
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 40, 93, 98, SDHCALPos); //slot  2
