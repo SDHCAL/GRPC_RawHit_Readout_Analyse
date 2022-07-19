@@ -53,6 +53,8 @@ class RawHit_SDHCAL_Data
   void setFrameSubSet_intervalle_startTime(unsigned int val) {m_frameSubSet_intervalle_startTime=val;}
   const std::vector<RawCalorimeterHitPointer>& getHitVector() const {return m_hitvec;}
   std::map<unsigned int,DIF_timeInfo> DIFtimeInfo() const {return m_DIFtimeInfo;}
+  std::map<unsigned int,DIF_timeInfo>::const_iterator DIFtimeInfoBegin() const { return m_DIFtimeInfo.begin();}
+  std::map<unsigned int,DIF_timeInfo>::const_iterator DIFtimeInfoEnd() const { return m_DIFtimeInfo.end();}
   const EVENT::LCParameters* getCollectionParameters() const {return m_originalCollectionParameters;}
 
 

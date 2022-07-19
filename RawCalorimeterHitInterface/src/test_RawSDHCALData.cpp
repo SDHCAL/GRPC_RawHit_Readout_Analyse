@@ -55,12 +55,12 @@ void testDataContent(const RawHit_SDHCAL_Data& d)
   assert( d.getCollectionParameters()!=NULL ); 
   assert( d.getNumberOfEventInThisData()==1);
 
-  std::map<unsigned int,DIF_timeInfo>::iterator it=d.DIFtimeInfo().begin();
+  std::map<unsigned int,DIF_timeInfo>::const_iterator it=d.DIFtimeInfoBegin();
   assert( it->first==3 );
   ++it; assert( it->first==4 );
   ++it; assert( it->first==5 );
 
-  for (it=d.DIFtimeInfo().begin(); it!=d.DIFtimeInfo().end(); ++it)
+  for (it=d.DIFtimeInfoBegin(); it!=d.DIFtimeInfoEnd(); ++it)
     {
       assert(it->second.DTC==10*it->first+1);
       assert(it->second.GTC==10);
