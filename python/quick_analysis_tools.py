@@ -30,7 +30,8 @@ def histoNhit(lciofileName):
     return a
 
 def Graph3DNhit(lciofileName,numeroEvent,layerCode="K"):
-    experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+    #experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+    experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
     lcReader.skipNEvents(numeroEvent-1)
