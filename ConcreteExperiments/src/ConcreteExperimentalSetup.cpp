@@ -1080,3 +1080,52 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
   setRunList();
   setRunQuality();
 }
+
+
+CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup::CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
+{
+  //counting from beam upstream
+  addBIF(252); //There is a second BIF unpluggged number 251
+  float padSize=10.408f;
+  float zShift=226.5f;
+  Plane_position SDHCALPos({-padSize/2,96*padSize+padSize/2,zShift},{0,-1,0},{1,0,0});
+  float SDHCAL_layer_width=28.0f;//26.131f;
+  /*                                      */ addSDHCALPlan( 30, 94,181, SDHCALPos); //slot  0
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(100, 97, 92, SDHCALPos); //slot  1
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 40, 93, 98, SDHCALPos); //slot  2
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(119,118,129, SDHCALPos); //slot  3
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(151,152,164, SDHCALPos); //slot  4
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 75, 61, 74, SDHCALPos); //slot  5
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(110,111,156, SDHCALPos); //slot  6
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(103,177,102, SDHCALPos); //slot  7
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(176,175,174, SDHCALPos); //slot  8
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(121,120,128, SDHCALPos); //slot  9
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 58, 64, 65, SDHCALPos); //slot 10
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 73, 72,148, SDHCALPos); //slot 11
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 60, 79, 78, SDHCALPos); //slot 12
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(113, 43, 44, SDHCALPos); //slot 13
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(243,242,241, SDHCALPos); //slot 14
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(186,127,154, SDHCALPos); //slot 15
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 71, 70,147, SDHCALPos); //slot 16
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(139,140, 47, SDHCALPos); //slot 17
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 76, 77,143, SDHCALPos); //slot 18
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 36, 91,159, SDHCALPos); //slot 19
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(183,178,179, SDHCALPos); //slot 20
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 67, 42, 41, SDHCALPos); //slot 21
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(138, 46,137, SDHCALPos); //slot 22
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(144,173,131, SDHCALPos); //slot 23
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(160,184,189, SDHCALPos); //slot 24
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(171,167,172, SDHCALPos); //slot 25
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(145,135,146, SDHCALPos); //slot 26
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(180,170,185, SDHCALPos); //slot 27
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(190,188,187, SDHCALPos); //slot 28
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(166,165,169, SDHCALPos); //slot 29
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 50, 57,155, SDHCALPos); //slot 30
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(153,108, 25, SDHCALPos); //slot 31
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(109, 56, 51, SDHCALPos); //slot 32
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(107,150,116, SDHCALPos); //slot 33
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan( 49,124,126, SDHCALPos); //slot 34
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(115,149,117, SDHCALPos); //slot 35
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(114, 45, 48, SDHCALPos); //slot 36
+  SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(133, 68, 90, SDHCALPos); //slot 37
+}

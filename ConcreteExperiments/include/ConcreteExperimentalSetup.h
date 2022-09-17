@@ -34,4 +34,10 @@ class CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup  : public ExperimentalSetup
   void setRunQuality();
 };
 
+class CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup  : public ExperimentalSetup
+{
+public:
+  CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup();
+};
+
 #endif
