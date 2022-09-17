@@ -74,11 +74,12 @@ outputFileName=IOnames[1]+'.slcio'
 print "output file name is ", outputFileName
 
     
-experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+#experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
 numeroBIF=experience.getBIF()
 
 print numeroBIF
-BIFtriggerWindow=ROOT.intervalle('int')(-7,-6)
+BIFtriggerWindow=ROOT.intervalle('int')(-9,-5)
 
     
 #start LCIO reader
