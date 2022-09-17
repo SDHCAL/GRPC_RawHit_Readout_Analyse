@@ -20,7 +20,8 @@ for f in sys.argv[1:]:
 for file in inputFileNames:
     print file
 
-experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+#experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
+experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
 numeroBIF=experience.getBIF()
 
 print numeroBIF
