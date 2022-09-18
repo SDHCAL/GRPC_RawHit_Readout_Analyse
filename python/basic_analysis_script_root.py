@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
 #to be executed in the lib directory where all the needed libraries are installed or set LD_LIBRARY_PATH to contain the lib directory
-#it uses the pyroot ROOT dictionnary interface 
-# usage python <name>.py  list_of_slcio_files
+#it uses the pyroot ROOT dictionnary interface
+# input files names should be with .slcio extension
+# usage python <name>.py  directory list_of_run_numbers
 
 import sys
 import glob
@@ -37,13 +38,13 @@ for file in filelist:
     inputFileNames.push_back(file)
 
 for file in inputFileNames:
-    print file
+    print (file)
 
 
 experience=ROOT.GIF_oct2016_ExperimentalSetup()
 numeroBIF=experience.getBIF()
 
-print numeroBIF
+print (numeroBIF)
 
 BIFtriggerWindow=ROOT.intervalle('unsigned int')(6,8)
 BIFtriggerWindowNoise=ROOT.intervalle('int')(-BIFtriggerWindow.second,-BIFtriggerWindow.first)
@@ -108,7 +109,7 @@ rootFileName="analyse"
 for run in set(runNumbers):
   rootFileName=rootFileName+"_"+run
 rootFileName=rootFileName+".root"
-print rootFileName
+print (rootFileName)
 
 rootFile=ROOT.TFile(rootFileName  , "RECREATE")
 
