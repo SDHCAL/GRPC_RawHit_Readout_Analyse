@@ -66,19 +66,19 @@ for f in filelist:
     inputFileNames.push_back(f);
 
 for file in inputFileNames:
-    print file
+    print (file)
 
 
     
 outputFileName=IOnames[1]+'.slcio'
-print "output file name is ", outputFileName
+print ("output file name is ", outputFileName)
 
     
 #experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
 experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
 numeroBIF=experience.getBIF()
 
-print numeroBIF
+print (numeroBIF)
 BIFtriggerWindow=ROOT.intervalle('int')(-9,-5)
 
     

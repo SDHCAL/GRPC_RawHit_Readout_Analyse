@@ -32,5 +32,5 @@ def generateFileList():
     
 if __name__ == '__main__':
     a=generateFileList()
-    print a
+    print (a)
     
