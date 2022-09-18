@@ -41,7 +41,7 @@ for file in filelist:
     inputFileNames.push_back(file)
 
 for file in inputFileNames:
-    print file
+    print (file)
 
 experience=ROOT.ExperimentalSetup()
 experience.addCMSstrip(66,69); #glass
