@@ -18,12 +18,13 @@ for f in sys.argv[1:]:
     inputFileNames.push_back(f);
 
 for file in inputFileNames:
-    print file
+    print (file)
 
-experience=ROOT.GIF_oct2016_ExperimentalSetup()
+#experience=ROOT.GIF_oct2016_ExperimentalSetup()
+experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
 numeroBIF=experience.getBIF();
 
-print numeroBIF
+print (numeroBIF)
 
 BIFtriggerWindow=ROOT.intervalle('int')(-8,-6)
 NoiseWindowLength=50; #10 microsecond
