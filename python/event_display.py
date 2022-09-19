@@ -7,15 +7,21 @@ import sys
 #ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
 #dummy=ROOT.intervalle('unsigned int')()
 
-def display_event(lciofileName):
+def display_event(lciofileName,minNhits,maxNhits):
     #experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
     canvas=ROOT.TCanvas()
+    h=ROOT.TH1F("Nhits","Nhits",2000,0,2000)
     for event in lcReader:
         lcCol=event.getCollection("SDHCAL_HIT")
         #q=pyLCIO.UTIL.CellIDDecoder('EVENT::CalorimeterHit')(lcCol)
         Nhits=lcCol.size()
+        h.Fill(Nhits)  
+        if Nhits<minNhits:
+            continue
+        if Nhits>maxNhits:
+            continue
         gr=ROOT.TGraph2D(Nhits)
         indice=0
         for hit in lcCol:
@@ -30,12 +36,17 @@ def display_event(lciofileName):
         gr.Draw("P")
         canvas.Update()
         #raw_input is python2
-        a=raw_input("press s to stop, any other key to continue")
+        #a=raw_input("press s to stop, any other key to continue")
+        a=input("Number of hits = "+str(Nhits)+" press s to stop, any other key to continue")
         if a=='s':
             break
         del gr
     lcReader.close()
+    h.Draw()
+    canvas.Update()
+    a=input("The hit number distribution seen so far, press any other key to quit")
     
 if __name__ == '__main__':
-    display_event(sys.argv[1])
+    print("Usage : python3 event_diplay.py lcio_file_name min_number_of_hits max_number_of_hits")
+    display_event(sys.argv[1],int(sys.argv[2]),int(sys.argv[3]))
 
