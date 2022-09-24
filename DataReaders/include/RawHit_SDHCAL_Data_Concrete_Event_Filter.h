@@ -5,7 +5,18 @@
 #include "domain.h"
 
 
+class Inverse_Filter : public RawHit_SDHCAL_Data_Event_Filter
+{
+public:
+  Inverse_Filter(RawHit_SDHCAL_Data_Event_Filter& theFilter)
+    : m_theFilter(theFilter) {;}
 
+  bool reject(const RawHit_SDHCAL_Data& d) { return not m_theFilter.reject(d);} 
+  std::string name();
+  
+private:
+  RawHit_SDHCAL_Data_Event_Filter& m_theFilter;
+};
 
 class Both_Reject_Filter : public RawHit_SDHCAL_Data_Event_Filter
 {

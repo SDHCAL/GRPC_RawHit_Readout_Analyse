@@ -4,6 +4,14 @@
 #include <map>
 #include <set>
 
+std::string Inverse_Filter::name()
+{
+  std::stringstream ss;
+  ss << " Opposite of [" <<  m_theFilter.name() << "]";
+  return ss.str();
+}
+
+
 std::string Both_Reject_Filter::name()
 {
   std::stringstream ss;
