@@ -97,7 +97,7 @@ timePlotListener=ROOT.RawHit_TimePlot_Listener(experience)
 timePlotListener_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(timePlotListener,"timePlotListener")
 masterReader.registerDataListener(timePlotListener_timer)
 
-trivent=ROOT.RawHit_SDHCAL_Data_Reader_Trivent(2,7) # 2=event windows half size, 7=threshold number for hits
+trivent=ROOT.RawHit_SDHCAL_Data_Reader_Trivent(2,25) # 2=event windows half size, 25=threshold number for hits
 trivent.setSkipIfBIFisOutsideReadout(False)
 trivent.setBIFparameters(numeroBIF,BIFtriggerWindow) # event window = [-2,2] so BIF window = [-9,-4]
 #trivent.setUltraVerboseDebugOutput(True)
