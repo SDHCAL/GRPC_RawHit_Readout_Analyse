@@ -34,10 +34,10 @@ def plane_stat_study(col):
             planeStat[key]=1
     #sort dict by keys
     sorted_plane_by_layer = {k: v for k, v in sorted(planeStat.items(), key=lambda item: item[0])}
-    print (sorted_plane_by_layer)
+    print ("plane content sorted by layer",sorted_plane_by_layer)
     #sort dict by values
     sorted_plane_by_hit_content = {k: v for k, v in sorted(planeStat.items(), key=lambda item: item[1])}
-    print (sorted_plane_by_hit_content)
+    print ("plane content sorted by increasing number of hits",sorted_plane_by_hit_content)
     
     
     
