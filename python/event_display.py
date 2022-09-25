@@ -28,16 +28,25 @@ def display_event(lciofileName,minNhits,maxNhits,theStudy):
             continue
         gr=ROOT.TGraph2D(Nhits)
         indice=0
+        grThresh={1:ROOT.TGraph2D(),2:ROOT.TGraph2D(),3:ROOT.TGraph2D()}
+        for i,g in grThresh.items():
+            g.SetMarkerStyle(21)
+            g.SetMarkerSize(0.5)
+            g.SetMarkerColor(5-i) # 1=blue, 2=green, 3=red
         for hit in lcCol:
             pos=hit.getPosition()
             gr.SetPoint(indice,pos[0],pos[2],pos[1])
             indice=indice+1
+            threshkey=int(hit.getEnergy())&3
+            grThresh[threshkey].AddPoint(pos[0],pos[2],pos[1])
         gr.SetMarkerStyle(21)
-        gr.SetMarkerSize(1)
+        gr.SetMarkerSize(0.5)
         gr.GetXaxis().SetTitle("X")
         gr.GetYaxis().SetTitle("Z")
         gr.GetZaxis().SetTitle("Y")
         gr.Draw("P")
+        for g in grThresh.values():
+            g.Draw("P SAME")
         canvas.Update()
         func(lcCol)
         #raw_input is python2
@@ -46,6 +55,8 @@ def display_event(lciofileName,minNhits,maxNhits,theStudy):
         if a=='s':
             break
         del gr
+        for g in grThresh.values():
+            del g
     lcReader.close()
     h.Draw()
     canvas.Update()
