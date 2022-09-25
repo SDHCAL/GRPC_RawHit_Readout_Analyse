@@ -15,6 +15,7 @@ def display_event(lciofileName,minNhits,maxNhits,theStudy):
     #experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
+    timecanvas=ROOT.TCanvas()
     canvas=ROOT.TCanvas()
     h=ROOT.TH1F("Nhits","Nhits",2000,0,2000)
     for event in lcReader:
@@ -33,21 +34,41 @@ def display_event(lciofileName,minNhits,maxNhits,theStudy):
             g.SetMarkerStyle(21)
             g.SetMarkerSize(0.5)
             g.SetMarkerColor(5-i) # 1=blue, 2=green, 3=red
+        timeList=set()
+        grTime={}
         for hit in lcCol:
             pos=hit.getPosition()
             gr.SetPoint(indice,pos[0],pos[2],pos[1])
             indice=indice+1
             threshkey=int(hit.getEnergy())&3
             grThresh[threshkey].AddPoint(pos[0],pos[2],pos[1])
+            timekey=int(hit.getTime())
+            if timekey in grTime:
+                grTime[timekey].AddPoint(pos[0],pos[2],pos[1])
+            else:
+                grTime[timekey]=ROOT.TGraph2D()
+                grTime[timekey].AddPoint(pos[0],pos[2],pos[1])
+                timeList.add(timekey)
         gr.SetMarkerStyle(21)
         gr.SetMarkerSize(0.5)
         gr.GetXaxis().SetTitle("X")
         gr.GetYaxis().SetTitle("Z")
         gr.GetZaxis().SetTitle("Y")
+        canvas.cd()
         gr.Draw("P")
         for g in grThresh.values():
             g.Draw("P SAME")
         canvas.Update()
+        i=0
+        timecanvas.cd()
+        gr.Draw("P")
+        for t in timeList:
+            grTime[t].SetMarkerStyle(21)
+            grTime[t].SetMarkerSize(0.5)
+            grTime[t].SetMarkerColor(i+1)
+            i+=1
+            grTime[t].Draw("P SAME")
+        timecanvas.Update()
         func(lcCol)
         #raw_input is python2
         #a=raw_input("press s to stop, any other key to continue")
@@ -57,7 +78,12 @@ def display_event(lciofileName,minNhits,maxNhits,theStudy):
         del gr
         for g in grThresh.values():
             del g
+        for g in grTime:
+            del g
+        grTime.clear()
+        timeList.clear()
     lcReader.close()
+    canvas.cd()
     h.Draw()
     canvas.Update()
     a=input("The hit number distribution seen so far, press any other key to quit")
