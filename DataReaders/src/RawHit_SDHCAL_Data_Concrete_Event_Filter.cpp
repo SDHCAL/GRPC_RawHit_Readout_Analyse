@@ -3,6 +3,7 @@
 #include <sstream>
 #include <map>
 #include <set>
+#include <algorithm>
 
 std::string Inverse_Filter::name()
 {
@@ -118,5 +119,26 @@ std::string MinNumberOfHits_Filter::name()
   std::stringstream ss;
   ss << "Reject events with number of hits less than ";
   ss << m_MinNumberOfRamFullHitToKeep <<".";
+  return ss.str();
+}
+
+bool HitFractionInOneAsicAbove_Filter::reject(const RawHit_SDHCAL_Data& d)
+{
+  std::map<unsigned int, unsigned int> asicOccupancy;
+  for (auto hit : d.getHitVector())
+    asicOccupancy[1000*hit.dif()+hit.asic()]+=1;
+  auto maxVal_ptrInMap=std::max_element(asicOccupancy.begin(), asicOccupancy.end(),
+				       [](const auto &x, const auto &y) {return x.second < y.second;}
+				       );
+  float maxVal=float(maxVal_ptrInMap->second);
+  if (maxVal/d.getHitVector().size() > m_FractionAboveWhichToReject) return true;
+  return false;
+}
+
+std::string HitFractionInOneAsicAbove_Filter::name()
+{
+  std::stringstream ss;
+  ss << "Reject events with fraction of hits in a single asic above ";
+  ss << m_FractionAboveWhichToReject << ".";
   return ss.str();
 }

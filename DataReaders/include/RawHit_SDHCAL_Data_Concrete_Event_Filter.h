@@ -80,5 +80,15 @@ class MinNumberOfHits_Filter : public RawHit_SDHCAL_Data_Event_Filter
   unsigned int m_MinNumberOfRamFullHitToKeep;
 };
 
+class HitFractionInOneAsicAbove_Filter : public RawHit_SDHCAL_Data_Event_Filter
+{
+public:
+  HitFractionInOneAsicAbove_Filter(float FractionAboveWhichToReject)
+    : m_FractionAboveWhichToReject(FractionAboveWhichToReject) {;}
+  bool reject(const RawHit_SDHCAL_Data& d);
+  std::string name();
+ private:
+  float m_FractionAboveWhichToReject;
+};
 
 #endif

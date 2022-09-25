@@ -126,6 +126,9 @@ filter.addRejectConditions(CL_Filter)
 RamfullFilter=ROOT.RamFull_Filter(36,0.8)
 filter.addRejectConditions(RamfullFilter)
 
+singleAsicNoise_Filter=ROOT.HitFractionInOneAsicAbove_Filter(0.8)
+filter.addRejectConditions(singleAsicNoise_Filter)
+
 trivent.registerDataListener(filter)
 
 
