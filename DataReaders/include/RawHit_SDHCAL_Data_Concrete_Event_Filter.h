@@ -69,4 +69,16 @@ class ConsecutiveLayers_Filter : public RawHit_SDHCAL_Data_Event_Filter_Using_Ex
 };
 
 
+class MinNumberOfHits_Filter : public RawHit_SDHCAL_Data_Event_Filter
+{
+ public:
+  MinNumberOfHits_Filter(unsigned int MinNumberOfRamFullHitToKeep)
+    : m_MinNumberOfRamFullHitToKeep(MinNumberOfRamFullHitToKeep) {;}
+  bool reject(const RawHit_SDHCAL_Data& d) {return d.getHitVector().size()<m_MinNumberOfRamFullHitToKeep;}
+  std::string name();
+ private:
+  unsigned int m_MinNumberOfRamFullHitToKeep;
+};
+
+
 #endif

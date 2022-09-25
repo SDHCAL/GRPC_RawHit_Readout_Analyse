@@ -111,6 +111,11 @@ trivent.registerDataListener(BIFListener_check_timer)
 
 #Filters
 filter=ROOT.RawHit_SDHCAL_Data_Reader_Event_Filter()
+
+HighNhitFilter=ROOT.MinNumberOfHits_Filter(15000)
+bigNoiseFilter=ROOT.Inverse_Filter(HighNhitFilter)
+filter.addRejectConditions(bigNoiseFilter)
+
 planDomain=ROOT.UI_domain(ROOT.UI_intervalle(0,2))
 planFilter=ROOT.NoHitInLayers_Filter(planDomain,experience)
 CL_Filter=ROOT.ConsecutiveLayers_Filter(6,experience)

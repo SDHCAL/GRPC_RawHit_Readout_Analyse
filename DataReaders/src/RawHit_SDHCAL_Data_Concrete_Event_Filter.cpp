@@ -113,3 +113,10 @@ bool ConsecutiveLayers_Filter::reject(const RawHit_SDHCAL_Data& d)
   return true;
 }
 
+std::string MinNumberOfHits_Filter::name()
+{
+  std::stringstream ss;
+  ss << "Reject events with number of hits less than ";
+  ss << m_MinNumberOfRamFullHitToKeep <<".";
+  return ss.str();
+}
