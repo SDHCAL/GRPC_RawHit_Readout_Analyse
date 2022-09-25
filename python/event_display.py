@@ -7,7 +7,11 @@ import sys
 #ROOT.gSystem.Load('libGRPC_RawHit_Readout_Analyser_dict')
 #dummy=ROOT.intervalle('unsigned int')()
 
-def display_event(lciofileName,minNhits,maxNhits):
+import Event_studies
+
+
+def display_event(lciofileName,minNhits,maxNhits,theStudy):
+    func=getattr(Event_studies,theStudy)
     #experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
     lcReader=pyLCIO.IOIMPL.LCFactory.getInstance().createLCReader(pyLCIO.IO.LCReader.directAccess)
     lcReader.open( lciofileName )
@@ -35,6 +39,7 @@ def display_event(lciofileName,minNhits,maxNhits):
         gr.GetZaxis().SetTitle("Y")
         gr.Draw("P")
         canvas.Update()
+        func(lcCol)
         #raw_input is python2
         #a=raw_input("press s to stop, any other key to continue")
         a=input("Number of hits = "+str(Nhits)+" press s to stop, any other key to continue")
@@ -47,6 +52,10 @@ def display_event(lciofileName,minNhits,maxNhits):
     a=input("The hit number distribution seen so far, press any other key to quit")
     
 if __name__ == '__main__':
-    print("Usage : python3 event_diplay.py lcio_file_name min_number_of_hits max_number_of_hits")
-    display_event(sys.argv[1],int(sys.argv[2]),int(sys.argv[3]))
+    print("Usage : python3 event_diplay.py lcio_file_name min_number_of_hits max_number_of_hits <study>")
+    print("study is an optionnal keyword corresponding to functions in Event_studies.py file")
+    theStudy="doNothing"
+    if len(sys.argv)==5:
+        theStudy=(sys.argv[4])
+    display_event(sys.argv[1],int(sys.argv[2]),int(sys.argv[3]),theStudy)
 
