@@ -23,7 +23,7 @@ def asic_study(col):
     print (three_highest_ASIC,sum_ASIC,three_highest_ASIC/sum_ASIC)
     
 
-def plane_stat_study(col):
+def plane_stat(col):
     q=pyLCIO.UTIL.CellIDDecoder('EVENT::CalorimeterHit')(col)
     planeStat={}
     for hit in col:
