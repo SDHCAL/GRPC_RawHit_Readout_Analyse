@@ -23,5 +23,21 @@ def asic_study(col):
     print (three_highest_ASIC,sum_ASIC,three_highest_ASIC/sum_ASIC)
     
 
-
+def plane_stat_study(col):
+    q=pyLCIO.UTIL.CellIDDecoder('EVENT::CalorimeterHit')(col)
+    planeStat={}
+    for hit in col:
+        key=q(hit)["K"].value()
+        if key in planeStat:
+            planeStat[key]+=1
+        else:
+            planeStat[key]=1
+    #sort dict by keys
+    sorted_plane_by_layer = {k: v for k, v in sorted(planeStat.items(), key=lambda item: item[0])}
+    print (sorted_plane_by_layer)
+    #sort dict by values
+    sorted_plane_by_hit_content = {k: v for k, v in sorted(planeStat.items(), key=lambda item: item[1])}
+    print (sorted_plane_by_hit_content)
+    
+    
     
