@@ -41,7 +41,8 @@
 ##   first filter is bigNoiseFilter : reject events that have more than 15000 hits.
 ##   second filter is CL_Filter : reject events with less than 6 consecutive fired layer (allowing one hole among the consecutive layer count)
 ##   third filter is RamfullFilter : reject events containing a DIF with more than 36 RAMfull channels (channel 29 and 31) if this DIF represents more than 80% of all hits in the event.
-##   fourth filter is singleAsicNoise_Filter : reject events if a single ASIC contains more than 80 percent of all the event hits. 
+##   fourth filter is singleAsicNoise_Filter : reject events if a single ASIC contains more than 80 percent of all the event hits.
+##   fifth filter is multipleAsicNoise_Filter : reject events containing at least 3 ASICs having more than 80 hits each.
 ## 
 ## Filter status for GIF like analysis was :
 ##  first filter is doubleFilter (planFilter,CL_Filter) : reject events rejected by the 2 filters :
@@ -136,6 +137,9 @@ filter.addRejectConditions(RamfullFilter)
 
 singleAsicNoise_Filter=ROOT.HitFractionInOneAsicAbove_Filter(0.8)
 filter.addRejectConditions(singleAsicNoise_Filter)
+
+multipleAsicNoise_Filter=ROOT.MaxNumberASICwithMoreThanHits_Filter(80,3)
+filter.addRejectConditions(multipleAsicNoise_Filter)
 
 trivent.registerDataListener(filter)
 

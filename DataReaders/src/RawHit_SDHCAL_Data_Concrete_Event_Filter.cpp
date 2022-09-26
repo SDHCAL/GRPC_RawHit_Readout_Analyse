@@ -142,3 +142,25 @@ std::string HitFractionInOneAsicAbove_Filter::name()
   ss << m_FractionAboveWhichToReject << ".";
   return ss.str();
 }
+
+bool MaxNumberASICwithMoreThanHits_Filter::reject(const RawHit_SDHCAL_Data& d)
+{
+  std::map<unsigned int, unsigned int> asicOccupancy;
+  for (auto hit : d.getHitVector())
+    asicOccupancy[1000*hit.dif()+hit.asic()]+=1;
+  int nAsic=0;
+  for (auto const& mapItem :  asicOccupancy)
+    if (mapItem.second > m_MinNumberOfHitToConsiderAsicIsBig)
+      ++nAsic;
+  if (nAsic<m_NumberOfBigAsicAboveWhichToReject) return false;
+  return true;
+}
+
+std::string MaxNumberASICwithMoreThanHits_Filter::name()
+{
+  std::stringstream ss;
+  ss << "Reject events which contains at least ";
+  ss << m_NumberOfBigAsicAboveWhichToReject;
+  ss << " ASICs containing  more than " << m_MinNumberOfHitToConsiderAsicIsBig << " hits.";
+  return ss.str();
+}

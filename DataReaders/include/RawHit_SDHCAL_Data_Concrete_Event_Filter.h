@@ -91,4 +91,17 @@ public:
   float m_FractionAboveWhichToReject;
 };
 
+class MaxNumberASICwithMoreThanHits_Filter : public RawHit_SDHCAL_Data_Event_Filter
+{
+public:
+  MaxNumberASICwithMoreThanHits_Filter(int MinNumberOfHitToConsiderAsicIsBig, int NumberOfBigAsicAboveWhichToReject)
+    : m_MinNumberOfHitToConsiderAsicIsBig(MinNumberOfHitToConsiderAsicIsBig), m_NumberOfBigAsicAboveWhichToReject(NumberOfBigAsicAboveWhichToReject) {;}
+  bool reject(const RawHit_SDHCAL_Data& d);
+  std::string name();
+ private:
+  int m_MinNumberOfHitToConsiderAsicIsBig;
+  int m_NumberOfBigAsicAboveWhichToReject;
+};
+
+
 #endif
