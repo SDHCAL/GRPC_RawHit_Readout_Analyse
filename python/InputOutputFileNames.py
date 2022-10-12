@@ -18,6 +18,7 @@ def generateFileList():
         outputFileBase="run_"
         for run in args.frList:
             inputFiles.extend( glob.glob(directory+'/*_'+run+'_*.slcio') )
+            inputFiles.extend( glob.glob(directory+'/*_R'+run+'.slcio') )
             outputFileBase=outputFileBase+run+"_"
     else:
        #file List
