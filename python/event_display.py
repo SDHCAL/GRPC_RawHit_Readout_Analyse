@@ -86,6 +86,9 @@ def display_event(lciofileName,minNhits,maxNhits,theStudy):
     canvas.cd()
     h.Draw()
     canvas.Update()
+    rootFile=ROOT.TFile("Nhit.root", "RECREATE")
+    h.Write()
+    rootFile.Close()
     a=input("The hit number distribution seen so far, press any other key to quit")
     
 if __name__ == '__main__':
