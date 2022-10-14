@@ -161,7 +161,7 @@ class Beam_Conditions
   GG_ENUM_CLASS(PARTICLE, UNKNOWN,NONE,ELECTRON,MUON,PION,KAON,PROTON,COSMIC);
   GG_ENUM_CLASS(PARTICLE_CHARGE, UNKNOWN,POSITIVE,NEGATIVE,MIXED);
   GG_ENUM_CLASS(LINE, UNKNOWN,SPS_H2,SPS_H4);
-  GG_ENUM_CLASS(POSITION, UNKNOWN,CENTER,TOP_RIGHT,TOP,OUT);
+  GG_ENUM_CLASS(POSITION, UNKNOWN,CENTER,RIGHT,TOP_RIGHT,TOP,BOTTOM_LEFT,BOTTOM_RIGHT,OUT);
   GG_ENUM_CLASS(ABSORBER, NONE,ECAL,LEAD8MM,LEAD18MM,TUNGSTEN);
 
   void setState(STATE::VALUE val) {m_beamState=val;}
@@ -184,6 +184,7 @@ class Beam_Conditions
   // should add something about particle that can be detected according to beam energy
   unsigned int nGaz() const {return m_cerenkov.size();}
   CerenkovGaz getGaz(unsigned int i) const {return m_cerenkov[i];}
+  void setGazPressure(unsigned int i,float pressure) {m_cerenkov[i].setPressure(pressure);}
 
   void setBeamIntensityInHzPerSquareCm(float value) {m_beamIntensityInHzPerSquareCm=value;}
   float getBeamIntensityInHzPerSquareCm() const {return m_beamIntensityInHzPerSquareCm;}

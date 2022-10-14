@@ -38,6 +38,8 @@ class CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup  : public Experimental
 {
 public:
   CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup();
+private:
+  void setRunList();
 };
 
 #endif

@@ -1128,4 +1128,132 @@ CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup::CERN_SPS_H2_Sept2022_part1_
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(115,149,117, SDHCALPos); //slot 35
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(114, 45, 48, SDHCALPos); //slot 36
   SDHCALPos.translate(2,SDHCAL_layer_width); addSDHCALPlan(133, 68, 90, SDHCALPos); //slot 37
+
+  setRunList();
+}
+
+
+void  CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup::setRunList()
+{
+  all_ConfigInfo &all=all_ConfigInfo::instance();
+  Beam_Conditions test; test.setParticle(Beam_Conditions::PARTICLE::NONE); test.setBeamLine(Beam_Conditions::LINE::SPS_H2);
+  Beam_Conditions unknown; unknown.setParticle(Beam_Conditions::PARTICLE::UNKNOWN); unknown.setBeamLine(Beam_Conditions::LINE::SPS_H2);
+  Beam_Conditions muon; muon.setParticle(Beam_Conditions::PARTICLE::MUON); muon.setBeamLine(Beam_Conditions::LINE::SPS_H2);
+  muon.setBeamPosition(Beam_Conditions::POSITION::CENTER);
+  
+  CerenkovGaz helium; helium.setGaz(CerenkovGaz::HELIUM);
+  CerenkovGaz nitrogen; helium.setGaz(CerenkovGaz::NITROGEN);
+  Beam_Conditions pion; pion.setParticle(Beam_Conditions::PARTICLE::PION); pion.setBeamLine(Beam_Conditions::LINE::SPS_H2);
+  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER);
+  pion.addGaz(helium);
+  pion.addGaz(nitrogen);
+  //lambda function to set pion energy and Cerenkov Pressure
+  auto setPionEnergAndCerenkovPressure=[&pion](float beamEnergy,float heliumPressure,float nitrogenPressure)
+				       { pion.setBeamEnergy(beamEnergy);
+					 pion.setGazPressure(0,heliumPressure);
+					 pion.setGazPressure(1,nitrogenPressure);};
+  
+  for (int run=1000; run<=1025; ++run){all.addRun(run);all.addRun(run,test);}
+  for (int run=1026; run<=1033; ++run){all.addRun(run);all.addRun(run,unknown);}
+  int run;
+  run=1034; all.addRun(run); all.addRun(run,muon);
+  run=1035; all.addRun(run); all.addRun(run,muon);
+  run=1036; all.addRun(run); all.addRun(run,muon);
+  run=1037; all.addRun(run); all.addRun(run,muon);
+  run=1038; all.addRun(run); all.addRun(run,muon);
+  run=1039; all.addRun(run); all.addRun(run,muon);
+  run=1040; all.addRun(run); all.addRun(run,muon);
+  run=1041; all.addRun(run); all.addRun(run,muon);
+  run=1042; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  all.addRun(run,pion);
+  run=1043; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  all.addRun(run,pion);
+  run=1044; all.addRun(run); setPionEnergAndCerenkovPressure(20,1.0,0.6);  all.addRun(run,pion);
+  run=1045; all.addRun(run); setPionEnergAndCerenkovPressure(20,1.0,0.6);  all.addRun(run,pion);
+  run=1046; all.addRun(run); setPionEnergAndCerenkovPressure(20,1.0,0.6);  all.addRun(run,pion);
+  run=1047; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); all.addRun(run,pion);
+  run=1048; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); all.addRun(run,pion);
+  run=1049; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); all.addRun(run,pion);
+  run=1050; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); all.addRun(run,pion);
+  run=1051; all.addRun(run);all.addRun(run,test);
+  run=1052; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); all.addRun(run,pion);
+  run=1053; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  all.addRun(run,pion);
+  run=1054; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  all.addRun(run,pion);
+  run=1055; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  all.addRun(run,pion);
+  run=1056; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  all.addRun(run,pion);
+  run=1057; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  all.addRun(run,pion);
+  run=1058; all.addRun(run);all.addRun(run,test);
+  run=1059; all.addRun(run);all.addRun(run,test);
+  run=1060; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  all.addRun(run,pion);
+  run=1061; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  all.addRun(run,pion);
+  run=1062; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  all.addRun(run,pion);
+  run=1063; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  all.addRun(run,pion);
+  for (int run=1064; run<=1073; ++run){all.addRun(run);all.addRun(run,test);}
+  run=1074; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  all.addRun(run,pion);
+  run=1075; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::RIGHT); all.addRun(run,pion);
+  run=1076; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1077; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_RIGHT); all.addRun(run,pion);
+  run=1078; all.addRun(run);all.addRun(run,test); //change DB state
+  run=1079; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_RIGHT); all.addRun(run,pion);
+  run=1080; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_RIGHT); all.addRun(run,pion);
+  run=1081; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_RIGHT); all.addRun(run,pion);
+  run=1082; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  //scan muon Guillaume
+  for (int run=1083; run<=1090; ++run){all.addRun(run);all.addRun(run,muon);}
+  run=1091; all.addRun(run);all.addRun(run,test); //test uniform state
+  for (int run=1092; run<=1096; ++run){all.addRun(run);all.addRun(run,test);}
+  //now uniform DB a la Guillaume
+  run=1097; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1098; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1099; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1100; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1101; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1102; all.addRun(run); setPionEnergAndCerenkovPressure(30,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1103; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1104; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1105; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1106; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1107; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1108; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1109; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1110; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1111; all.addRun(run); setPionEnergAndCerenkovPressure(40,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  for (int run=1112; run<=1119; ++run){all.addRun(run);all.addRun(run,test);}
+  run=1120; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1121; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1122; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1123; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1124; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1125; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1126; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1127; all.addRun(run); setPionEnergAndCerenkovPressure(50,1.0,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1128; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1129; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1130; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1131; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1132; all.addRun(run); setPionEnergAndCerenkovPressure(50,0.9,0.1);  pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1133; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1134; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1135; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1136; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1137; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1138; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1139; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::TOP_RIGHT); all.addRun(run,pion);
+  run=1140; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1141; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1142; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1143; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  run=1144; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1145; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::BOTTOM_LEFT); all.addRun(run,pion);
+  //centered starting at this run 1146
+  run=1146; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); pion.setBeamPosition(Beam_Conditions::POSITION::CENTER); all.addRun(run,pion);
+  run=1147; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.5,0.02); all.addRun(run,pion);
+  run=1148; all.addRun(run); all.addRun(run,test);
+  run=1149; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); all.addRun(run,pion);
+  run=1150; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); all.addRun(run,pion);
+  run=1151; all.addRun(run); setPionEnergAndCerenkovPressure(60,0.6,0.05); all.addRun(run,pion);
+  run=1152; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.6,0.05); all.addRun(run,pion);
+  run=1153; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.6,0.05); all.addRun(run,pion);
+  run=1154; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.6,0.05); all.addRun(run,pion);
+  run=1155; all.addRun(run); setPionEnergAndCerenkovPressure(70,0.6,0.05); all.addRun(run,pion);
+  run=1156; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); all.addRun(run,pion);
+  run=1157; all.addRun(run); setPionEnergAndCerenkovPressure(80,0.4,0.02); all.addRun(run,pion);
 }
