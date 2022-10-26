@@ -24,7 +24,8 @@ class ExperimentalSetup
 
   void addBIF(DIFNUMBER bif) {if (DIFnumberIsKnown(bif)) message(bif); else m_BIFs.insert(bif);}
   bool hasBIF() const {return ! m_BIFs.empty();}
-  DIFNUMBER getBIF() const { return *(m_BIFs.begin());} // Assume only one BIF per experimental setup, to rethink if one day we put 2 BIFs during a testbeam
+  DIFNUMBER getSingleBIF() const { return *(m_BIFs.begin());} // Assume only one BIF per experimental setup, to rethink if one day we put 2 BIFs during a testbeam
+  DIFNUMBER getBIF(int n) const { return *(m_BIFs.begin());} // to write
 
   bool DIFnumberIsBIF(DIFNUMBER dif) const {return (! m_BIFs.empty()) && m_BIFs.find(dif)!=m_BIFs.end();}
   bool DIFnumberIsStrip(DIFNUMBER dif) const {return (! m_stripDeviceDIFMap.empty()) && m_stripDeviceDIFMap.find(dif) != m_stripDeviceDIFMap.end();}
