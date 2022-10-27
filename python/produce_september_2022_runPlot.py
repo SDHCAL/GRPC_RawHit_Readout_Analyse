@@ -18,9 +18,9 @@ palette=array.array('i',[4,1,3,2,6])
 
 ROOT.gStyle.SetPalette(5,palette)
 
-a=all.getRunNumberList()
-runMin=min(a)
-runMax=max(a)
+allRunList=all.getRunNumberList()
+runMin=min(allRunList)
+runMax=max(allRunList)
 histoXmin=runMin
 histoXmax=runMax+1
 histoNbins=histoXmax-histoXmin
@@ -28,18 +28,18 @@ histoNbins=histoXmax-histoXmin
 
 grRunBeam=ROOT.TGraph()
 grRunBeam.SetMarkerStyle(20)
-grRunBeam.SetMarkerSize(0.5)
+grRunBeam.SetMarkerSize(0.75)
 grRunPos=[ROOT.TGraph(),ROOT.TGraph(),ROOT.TGraph(),ROOT.TGraph(),ROOT.TGraph()]
 for gr in grRunPos:
     gr.SetMarkerStyle(20)
-    gr.SetMarkerSize(0.5)
+    gr.SetMarkerSize(0.75)
     gr.SetLineColor(0)
 grRunPos[0].SetTitle("unknown")
 grRunPos[1].SetTitle("test run")
 grRunPos[2].SetTitle("electron")
 grRunPos[3].SetTitle("muon")
 grRunPos[4].SetTitle("pion")
-for run in a:
+for run in allRunList:
     beam=all.getBeamConditions(run)
     grRunBeam.AddPoint(run,beam.getParticle()+0.5)
     grRunPos[beam.getParticle()].AddPoint(run,beam.getBeamPosition()+0.5)
@@ -81,10 +81,50 @@ grRunPos[3].Draw("P PMC")
 grRunPos[4].Draw("P PMC")
 canvasB.BuildLegend()
 canvasB.Update()
+print (min(allRunList),max(allRunList))
 
 
+pionRunList=[x for x in allRunList if all.getBeamConditions(x).getParticle() == ROOT.Beam_Conditions.PARTICLE.PION ]
+grPionEnergyConfig={"Dome_42chambres_first_version19":ROOT.TGraph(),"State_280":ROOT.TGraph(),"Dome_42chambres_first_version21":ROOT.TGraph()}
+for gr in grPionEnergyConfig.values():
+    gr.SetLineColor(0)
+    gr.SetMarkerStyle(20)
+    gr.SetMarkerSize(0.75)
+grPionEnergyConfig["Dome_42chambres_first_version19"].SetTitle("DB 2022 version 19")
+grPionEnergyConfig["State_280"].SetTitle("old state 280 (uniform)")
+grPionEnergyConfig["State_280"].SetMarkerStyle(24)
+grPionEnergyConfig["State_280"].SetMarkerSize(1.25)
+grPionEnergyConfig["Dome_42chambres_first_version21"].SetTitle("DB 2022 version 21 (uniform)")
+grPionEnergyConfig["Dome_42chambres_first_version21"].SetMarkerStyle(24)
+grPionEnergyConfig["Dome_42chambres_first_version21"].SetMarkerSize(1.75)
 
+pionConfigNames=set()
+for run in pionRunList:
+  beam=all.getBeamConditions(run)
+  confName=all.getConfigName(run)
+  grPionEnergyConfig[confName].AddPoint(beam.getBeamPosition()+0.5,beam.getBeamEnergy())
+  pionConfigNames.add(confName)
+print (pionConfigNames)
 
-print (min(a),max(a))
-a=input("press")
+hPionBeamPosition=ROOT.TH2F("DBstate","Database States ", 7,0,7,  100,0,100)
+hPionBeamPosition.SetLineColor(0)
+hPionBeamPosition.SetMarkerColor(0)
+hPionBeamPosition.GetYaxis().SetTitle("Pion energy (GeV)")
+hPionBeamPosition.GetXaxis().SetTitle("Beam position")
+hPionBeamPosition.GetXaxis().CenterTitle(True)
+hPionBeamPosition.GetXaxis().SetBinLabel(1,"unknown"); 
+hPionBeamPosition.GetXaxis().SetBinLabel(2,"center"); 
+hPionBeamPosition.GetXaxis().SetBinLabel(3,"right"); 
+hPionBeamPosition.GetXaxis().SetBinLabel(4,"top right"); 
+hPionBeamPosition.GetXaxis().SetBinLabel(5,"top"); 
+hPionBeamPosition.GetXaxis().SetBinLabel(6,"bottom left"); 
+hPionBeamPosition.GetXaxis().SetBinLabel(7,"bottom right"); 
 
+canvasC=ROOT.TCanvas()
+hPionBeamPosition.Draw()
+grPionEnergyConfig["Dome_42chambres_first_version19"].Draw("P PMC")
+grPionEnergyConfig["State_280"].Draw("P PMC")
+grPionEnergyConfig["Dome_42chambres_first_version21"].Draw("P PMC")
+canvasC.BuildLegend()
+canvasC.Update()
+dummy=input("press")
