@@ -12,7 +12,12 @@
 
 RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::RawHit_SDHCAL_Data_LCWriter_CalorimeterHit(ExperimentalSetup& setup,std::string collectionName,bool correctHR2) : RawHit_SDHCAL_Data_LCWriter(collectionName), m_setup(&setup), m_tricot_DIFs(m_setup->getTricotDevice_DIFnumber()),m_correctHR2amplitude(correctHR2)
 {
-  if (m_setup->hasBIF()) m_parametersFromSetup["BIF"]=std::vector<int>(1,m_setup->getBIF());
+  if (m_setup->hasBIF())
+    {
+      std::vector<int> vecBIFnumber;
+      for (unsigned int iBIF=0; iBIF<m_setup->nBIFs(); ++iBIF) vecBIFnumber.push_back(m_setup->getBIF(iBIF));
+      m_parametersFromSetup["BIF"]=vecBIFnumber;
+    }
   std::vector<DIFdrivenDevice*> plans=m_setup->getPlans();
   for (unsigned int i=0; i<plans.size(); ++i)
     {
