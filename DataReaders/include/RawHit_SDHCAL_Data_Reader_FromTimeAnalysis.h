@@ -46,8 +46,6 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
  private:
   intervalle<int> m_SelectEventTimeWindow;
   std::map<unsigned int, intervalle<int> > m_BIFtimeWindow_per_BIF_DIFnumber;
-  //unsigned int m_DIFnumber_of_the_BIF; 
-  //intervalle<int> m_BIFtimeWindow;
 
   //counters;
   unsigned int m_nEventSeen;
