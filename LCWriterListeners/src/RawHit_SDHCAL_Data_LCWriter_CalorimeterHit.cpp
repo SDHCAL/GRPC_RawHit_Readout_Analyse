@@ -48,6 +48,7 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
 
   float pos[3];
   EVENT::IntVec BIFvaluesFound;
+  EVENT::IntVec BIFnumbersFound;
 
   
   if (! m_tricot_DIFs.empty())
@@ -64,6 +65,7 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
     {
       if (m_setup->DIFnumberIsBIF(itHit->dif()))
 	{
+	  BIFnumbersFound.push_back(itHit->dif());
 	  BIFvaluesFound.push_back((*itHit)->getAmplitude());
 	  continue;
 	}
@@ -83,6 +85,7 @@ IMPL::LCCollectionVec* RawHit_SDHCAL_Data_LCWriter_CalorimeterHit::createAndFill
       newHit->setPosition(pos)  ; //FIXME : Write a WARNING when not implemented
       col->addElement(newHit);
     }
+  if (m_setup->nBIFs() >1 ) col->parameters().setValues("BIF_numbers",BIFnumbersFound);
   col->parameters().setValues("BIF_amplitudes",BIFvaluesFound);
   return col;
 }
