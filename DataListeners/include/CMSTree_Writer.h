@@ -11,13 +11,17 @@ class TTree;
 class CMSTree_Writer : public RawHit_SDHCAL_Data_Listener
 {
  public:
- CMSTree_Writer(ExperimentalSetup& setup,unsigned int halfdecalage,bool allowsDuplicate=false) : m_setup(setup), m_BIFnumber(setup.getBIF()), m_decalage(2*halfdecalage), m_allowsDuplicate(allowsDuplicate), EventCount(0) {}
+ CMSTree_Writer(ExperimentalSetup& setup,unsigned int halfdecalage,bool allowsDuplicate=false) : m_setup(setup), m_BIFnumber(setup.getBIF(0)), m_decalage(2*halfdecalage), m_allowsDuplicate(allowsDuplicate), EventCount(0)
+  {
+    if (setup.nBIFs()!=1) multiBIFnumbermessage.print();
+  }
 
   void process(const RawHit_SDHCAL_Data&);
 
   void createTree();
   TTree* getTree() {return CMSTree;}
 
+  GG_messageCounter multiBIFnumbermessage=GG_messageCounter("Warning CMSTree_Writer is expected a setup containing one BIF exactly"); //C++11
   GG_messageCounter multiBIFmessage=GG_messageCounter("Warning CMSTree_Writer expect receiving a data set with one BIF trigger"); //C++11
   GG_messageCounter duplicatemessage=GG_messageCounter("CMSTree_Writer : Events will be duplicated in the Tree"); //C++11
 
