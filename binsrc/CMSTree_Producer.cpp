@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
   GIF_oct2016_ExperimentalSetup experience;
 
-  unsigned int numeroBIF=experience.getBIF();
+  unsigned int numeroBIF=experience.getBIF(0); // this setup  has one BIF
   intervalle<int> BIFtriggerWindow(-25,50);
 
   
