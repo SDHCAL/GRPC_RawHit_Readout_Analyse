@@ -25,7 +25,7 @@ class ExperimentalSetup
 
   void addBIF(DIFNUMBER bif) {if (DIFnumberIsKnown(bif)) message(bif); else m_BIFs.insert(bif);}
   bool hasBIF() const {return ! m_BIFs.empty();}
-  DIFNUMBER getBIF(unsigned int which=0) const { std::set<DIFNUMBER>::const_iterator it=m_BIFs.begin(); std::advance(it,which); return which<m_BIFs.size() ? *it : 0;}
+  DIFNUMBER getBIF(unsigned int which) const { std::set<DIFNUMBER>::const_iterator it=m_BIFs.begin(); std::advance(it,which); return which<m_BIFs.size() ? *it : 0;}
   
   
   bool DIFnumberIsBIF(DIFNUMBER dif) const {return (! m_BIFs.empty()) && m_BIFs.find(dif)!=m_BIFs.end();}
