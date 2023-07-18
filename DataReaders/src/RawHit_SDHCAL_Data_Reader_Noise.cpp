@@ -9,7 +9,8 @@ RawHit_SDHCAL_Data_Reader_Noise::RawHit_SDHCAL_Data_Reader_Noise(ExperimentalSet
   : RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle(0,noiseWindowLength-1)),
     m_setup(setup), m_noiseWindowLength(noiseWindowLength), m_maxTouchedPlans(NO_CUTVALUE), m_maxNumberOfHits(NO_CUTVALUE) 
 {
-  if (m_setup.hasBIF()) setBIFparameters(m_setup.getBIF(),intervalle<int>(-8,-6)); //default interval corresponds to october 2016 GIF++ test beam
+  for (unsigned int iBif=0; iBif<m_setup.nBIFs(); ++iBif)
+    setBIFparameters(m_setup.getBIF(iBif),intervalle<int>(-8,-6)); //default interval corresponds to october 2016 GIF++ test beam
   setSplitEventForListeners(false);
   setVetoOnBIF();
 }
