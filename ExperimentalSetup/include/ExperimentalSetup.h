@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <iterator>
 
 #include "DIFdrivenDevice.h"
 #include "PadDevice.h"
@@ -24,8 +25,9 @@ class ExperimentalSetup
 
   void addBIF(DIFNUMBER bif) {if (DIFnumberIsKnown(bif)) message(bif); else m_BIFs.insert(bif);}
   bool hasBIF() const {return ! m_BIFs.empty();}
-  DIFNUMBER getBIF() const { return *(m_BIFs.begin());} // Assume only one BIF per experimental setup, to rethink if one day we put 2 BIFs during a testbeam
-
+  DIFNUMBER getBIF(unsigned int which=0) const { std::set<DIFNUMBER>::const_iterator it=m_BIFs.begin(); std::advance(it,which); return which<m_BIFs.size() ? *it : 0;}
+  
+  
   bool DIFnumberIsBIF(DIFNUMBER dif) const {return (! m_BIFs.empty()) && m_BIFs.find(dif)!=m_BIFs.end();}
   bool DIFnumberIsStrip(DIFNUMBER dif) const {return (! m_stripDeviceDIFMap.empty()) && m_stripDeviceDIFMap.find(dif) != m_stripDeviceDIFMap.end();}
   bool DIFnumberIsPad(DIFNUMBER dif) const {return (! m_padDeviceDIFMap.empty()) && m_padDeviceDIFMap.find(dif) != m_padDeviceDIFMap.end();}
@@ -55,6 +57,7 @@ class ExperimentalSetup
   void getCoord3D(unsigned int dif,unsigned int asic, unsigned int channel, unsigned int& I, unsigned int& J, unsigned int & K); 
   void getDAQ_ID(unsigned int I, unsigned int J, unsigned int K, unsigned int &dif,unsigned int &asic, unsigned int &channel);
   
+  unsigned int nBIFs() const {return m_BIFs.size();}
   unsigned int nPlans() const {return m_plans.size();}
   unsigned int getPlanNumber(unsigned int dif) {return getOrAddDevice(dif).getK();} //Warning : will crash if dif is a BIF
   unsigned int getPlanNumberSafe(unsigned int dif) {return (DIFnumberIsKnown(dif) and not DIFnumberIsBIF(dif)) ? getOrAddDevice(dif).getK() : 1000000;}

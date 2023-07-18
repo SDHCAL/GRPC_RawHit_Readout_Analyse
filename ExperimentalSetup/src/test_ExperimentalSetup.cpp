@@ -12,6 +12,7 @@ void testExperimentalSetup()
 {
   std::cout << "testing experimental setup" << std::endl;
   ExperimentalSetup aSetup;
+  assert(aSetup.nBIFs()==0);
   aSetup.addBIF(2);
   aSetup.addOneDIFPadDevice(14);
   aSetup.addOneDIFPadDevice(15);
@@ -20,6 +21,7 @@ void testExperimentalSetup()
   aSetup.addTricot(888);
   
   assert(aSetup.hasBIF());
+  assert(aSetup.nBIFs()==1);
   assert(aSetup.getBIF()==2);
   assert(aSetup.DIFnumberIsBIF(2));
   assert(aSetup.DIFnumberIsKnown(2));
@@ -69,7 +71,30 @@ void testExperimentalSetup()
   assert (aSetup.getTricotDevice(215) == NULL);
   assert (aSetup.getTricotDevice(888) != NULL);
 
-  
+  //test if there are more than one BIFs
+  aSetup.addBIF(3);
+  assert(aSetup.hasBIF());
+  assert(aSetup.nBIFs()==2);
+  assert(aSetup.getBIF()==2);
+  assert(aSetup.getBIF(0)==2);
+  assert(aSetup.getBIF(1)==3);
+  assert(aSetup.getBIF(2)==0);
+  assert(aSetup.getBIF(14)==0);
+  assert(aSetup.DIFnumberIsBIF(2));
+  assert(aSetup.DIFnumberIsBIF(3));
+
+  aSetup.addBIF(1);
+  assert(aSetup.hasBIF());
+  assert(aSetup.nBIFs()==3);
+  assert(aSetup.getBIF()==1);
+  assert(aSetup.getBIF(0)==1);
+  assert(aSetup.getBIF(1)==2);
+  assert(aSetup.getBIF(2)==3);
+  assert(aSetup.getBIF(14)==0);
+  assert(aSetup.DIFnumberIsBIF(1));
+  assert(aSetup.DIFnumberIsBIF(2));
+  assert(aSetup.DIFnumberIsBIF(3));
+
 }
 
 
