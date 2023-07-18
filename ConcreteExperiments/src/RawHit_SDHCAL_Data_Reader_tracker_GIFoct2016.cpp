@@ -13,7 +13,7 @@
 
 RawHit_SDHCAL_Data_Reader_tracker_GIFoct2016::RawHit_SDHCAL_Data_Reader_tracker_GIFoct2016()
 {
-  m_DIFnumber_of_the_BIF=m_setup.getBIF();
+  m_DIFnumber_of_the_BIF=m_setup.getBIF(0); //this setup has only one BIF
   std::vector<DIFdrivenDevice*> plans=m_setup.getPlans();
   for (std::vector<DIFdrivenDevice*>::iterator it=plans.begin(); it!= plans.end(); ++it)
     {
