@@ -15,20 +15,20 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
 {
  public:
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(intervalle<int> timeWindow) 
-    :  m_SelectEventTimeWindow(timeWindow), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false) {setMaxEventsToSendDefault();}
+    :  m_SelectEventTimeWindow(timeWindow), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false) {setMaxEventsToSendDefault();}
   RawHit_SDHCAL_Data_Reader_FromTimeAnalysis(UI_intervalle timeWindow) 
-    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_DIFnumber_of_the_BIF(0), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false)  {setMaxEventsToSendDefault();}
+    : m_SelectEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second)), m_nEventSeen(0), m_nHitWithNegativeTimeStampSeen(0), m_discardNegativeTimeStamp(true), m_skipIfBIFisOutsideReadout(true), m_splitEventForListeners(true), m_vetoOnBIF(false)  {setMaxEventsToSendDefault();}
   virtual ~RawHit_SDHCAL_Data_Reader_FromTimeAnalysis();
 
 
   void setDiscardNegativeTimeStamp(bool value=true)  {m_discardNegativeTimeStamp=value;}
   void setSkipIfBIFisOutsideReadout(bool value=true) {m_skipIfBIFisOutsideReadout=value;}
   void setSplitEventForListeners(bool value=true) {m_splitEventForListeners=value;}
-  void setBIFparameters(unsigned int BIF,intervalle<int> timeWindow) {m_DIFnumber_of_the_BIF=BIF; m_BIFtimeWindow=timeWindow;}
+  void setBIFparameters(unsigned int BIF,intervalle<int> timeWindow) {m_BIFtimeWindow_per_BIF_DIFnumber[BIF]=timeWindow;}
   void setBIFparameters(unsigned int BIF,UI_intervalle timeWindow) {setBIFparameters(BIF,intervalle<int>(timeWindow.first,timeWindow.second));}
-  void setBIFtimeWindow(intervalle<int> timeWindow) {m_BIFtimeWindow=timeWindow;}
-  void setBIFtimeWindow(UI_intervalle timeWindow) {setBIFtimeWindow(intervalle<int>(timeWindow.first,timeWindow.second));}
-  bool hasBIFnumber() {return m_DIFnumber_of_the_BIF!=0;}
+  void setBIFtimeWindow(unsigned int BIF,intervalle<int> timeWindow) {m_BIFtimeWindow_per_BIF_DIFnumber.at(BIF)=timeWindow;}
+  void setBIFtimeWindow(unsigned int BIF,UI_intervalle timeWindow) {setBIFtimeWindow(BIF,intervalle<int>(timeWindow.first,timeWindow.second));}
+  bool hasBIFnumber() {return !m_BIFtimeWindow_per_BIF_DIFnumber.empty() ;}
 
   void setEventTimeWindow(intervalle<int> timeWindow) {m_SelectEventTimeWindow=timeWindow;}
   void setEventTimeWindow(UI_intervalle timeWindow) {setEventTimeWindow(intervalle<int>(timeWindow.first,timeWindow.second));}
@@ -41,12 +41,13 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   //messages (public)
   GG_messageCounter outOfTimeReadout=GG_messageCounter("WARNING : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : requested intervalle after readout"); //C++11
   GG_messageCounter outOfTimeBIF=GG_messageCounter("WARNING : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : requested intervalle for BIF after readout"); //C++11
- GG_messageCounter tooMuchEvent=GG_messageCounter("INFORMATION : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : above max events"); //C++11
+  GG_messageCounter tooMuchEvent=GG_messageCounter("INFORMATION : RawHit_SDHCAL_Data_Reader_fromTimeAnalysis : above max events"); //C++11
 
  private:
   intervalle<int> m_SelectEventTimeWindow;
-  unsigned int m_DIFnumber_of_the_BIF; 
-  intervalle<int> m_BIFtimeWindow;
+  std::map<unsigned int, intervalle<int> > m_BIFtimeWindow_per_BIF_DIFnumber;
+  //unsigned int m_DIFnumber_of_the_BIF; 
+  //intervalle<int> m_BIFtimeWindow;
 
   //counters;
   unsigned int m_nEventSeen;
@@ -68,7 +69,7 @@ class RawHit_SDHCAL_Data_Reader_FromTimeAnalysis : public RawHit_SDHCAL_Data_Lis
   void BIFveto(std::list<unsigned int>& eventsTimes, const RawHit_SDHCAL_Data& d);
 
   //internal needed data for process
-  std::vector<RawCalorimeterHitPointer> BIF_hitvector;
+  std::map<unsigned int,std::vector<RawCalorimeterHitPointer> > BIF_hitvector_per_BIF_DIFnumber;
 
 };
 

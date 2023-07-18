@@ -10,12 +10,13 @@ RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::~RawHit_SDHCAL_Data_Reader_FromTimeA
   std::cout << " RawHit_SDHCAL_Data_Reader_fromTimeAnalysis " << m_nEventSeen << "  events seen  and " << m_nHitWithNegativeTimeStampSeen << " hits discarded due to negative time stamp. Maximum was set to  " << m_maxEventsToSend << std::endl;
 }
 
+
 void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::FillReadoutTimeDistribution(const RawHit_SDHCAL_Data& d)
 {
   m_readoutTimeDistribution.clear();
   for (std::vector<RawCalorimeterHitPointer>::const_iterator itHit=d.getHitVector().begin(); itHit!= d.getHitVector().end(); ++itHit)
     {
-      if (hasBIFnumber() && m_DIFnumber_of_the_BIF==itHit->dif()) continue;
+      if (hasBIFnumber() && m_BIFtimeWindow_per_BIF_DIFnumber.count(itHit->dif())==1) continue;
       if ((*itHit)->getTimeStamp()<0) {++m_nHitWithNegativeTimeStampSeen; if (m_discardNegativeTimeStamp) continue;}
       ++m_readoutTimeDistribution[(unsigned int)(*itHit)->getTimeStamp()];
     }
@@ -32,11 +33,17 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::BIFveto(std::list<unsigned int>
   while (it!= eventsTimes.end())
     {
       bool toDelete=false;
-      if (m_BIFtimeWindow.first+int(*it)+m_SelectEventTimeWindow.first<0 || m_BIFtimeWindow.second+int(*it)+m_SelectEventTimeWindow.second<0) toDelete=true;
-      else 
+      for (std::map<unsigned int, intervalle<int> >::iterator BIFtimeWindows_iterator= m_BIFtimeWindow_per_BIF_DIFnumber.begin(); BIFtimeWindows_iterator != m_BIFtimeWindow_per_BIF_DIFnumber.end(); ++BIFtimeWindows_iterator)
 	{
-	  UI_intervalle BIF_timeWindow_to_search((*it)+m_SelectEventTimeWindow.first+m_BIFtimeWindow.first,(*it)+m_SelectEventTimeWindow.second+m_BIFtimeWindow.second);
-	  if (std::count_if(BIF_hitvector.begin(), BIF_hitvector.end(), rawHit_IsInIntervalle<rawHit_TimeStamp>(BIF_timeWindow_to_search))>0) toDelete=true;
+	  const unsigned int &BIF_number=BIFtimeWindows_iterator->first;
+	  intervalle<int> &timeWindow=BIFtimeWindows_iterator->second;
+	  if (timeWindow.first+int(*it)+m_SelectEventTimeWindow.first<0 || timeWindow.second+int(*it)+m_SelectEventTimeWindow.second<0) toDelete=true;
+	  else 
+	    {
+	      UI_intervalle BIF_timeWindow_to_search((*it)+m_SelectEventTimeWindow.first+timeWindow.first,(*it)+m_SelectEventTimeWindow.second+timeWindow.second);
+	      if (std::count_if(BIF_hitvector_per_BIF_DIFnumber[BIF_number].begin(), BIF_hitvector_per_BIF_DIFnumber[BIF_number].end(), rawHit_IsInIntervalle<rawHit_TimeStamp>(BIF_timeWindow_to_search))>0) toDelete=true;
+	    }
+	  if (toDelete) break;
 	}
       if (toDelete) it=eventsTimes.erase(it);
       else ++it;
@@ -50,7 +57,11 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
 
   if (m_nEventSeen>=m_maxEventsToSend) {tooMuchEvent.print(); return;}
 
-  BIF_hitvector=extract(d.getHitVector(),m_DIFnumber_of_the_BIF,rawHit_DIF());
+  
+  for (std::map<unsigned int, intervalle<int> >::iterator BIFtimeWindows_iterator= m_BIFtimeWindow_per_BIF_DIFnumber.begin(); BIFtimeWindows_iterator != m_BIFtimeWindow_per_BIF_DIFnumber.end(); ++BIFtimeWindows_iterator)
+    {
+      BIF_hitvector_per_BIF_DIFnumber[BIFtimeWindows_iterator->first]=extract(d.getHitVector(),BIFtimeWindows_iterator->first,rawHit_DIF());
+    }
   FillReadoutTimeDistribution(d);
 
   std::list<unsigned int> eventTimes;
@@ -74,17 +85,26 @@ void RawHit_SDHCAL_Data_Reader_FromTimeAnalysis::process(const RawHit_SDHCAL_Dat
 	{
 	  int intervalleLowerBound=m_SelectEventTimeWindow.first+ (*itTime);
 	  std::vector<RawCalorimeterHitPointer> eventHits=extract(eventHits_all,UI_intervalle(intervalleLowerBound,m_SelectEventTimeWindow.second+(*itTime)),rawHit_TimeStamp());
-	  if (hasBIFnumber() && ! eventHits.empty())
+	  if (hasBIFnumber() && ! eventHits.empty()) // il y a au moins une BIF
 	    {
-	      eventHits.erase(std::remove_if(eventHits.begin(),eventHits.end(), rawHit_IsEqual<rawHit_DIF>(m_DIFnumber_of_the_BIF) ),eventHits.end());//remove BIF data
-	      int BIFintervalleLowerBound=m_BIFtimeWindow.first+intervalleLowerBound;
-	      if (BIFintervalleLowerBound<0)
+	      bool skip_this_eventTimes=false;
+	      for (std::map<unsigned int, intervalle<int> >::iterator BIFtimeWindows_iterator= m_BIFtimeWindow_per_BIF_DIFnumber.begin();
+		   BIFtimeWindows_iterator != m_BIFtimeWindow_per_BIF_DIFnumber.end(); ++BIFtimeWindows_iterator)
 		{
-		  outOfTimeBIF.print();
-		  if (m_skipIfBIFisOutsideReadout) continue;
+		  const unsigned int &BIF_number=BIFtimeWindows_iterator->first;
+		  intervalle<int> &BIFtimeWindow=BIFtimeWindows_iterator->second;
+
+		  eventHits.erase(std::remove_if(eventHits.begin(),eventHits.end(), rawHit_IsEqual<rawHit_DIF>( BIF_number) ),eventHits.end());//remove BIF data
+		  int BIFintervalleLowerBound=BIFtimeWindow.first+intervalleLowerBound;
+		  if (BIFintervalleLowerBound<0)
+		    {
+		      outOfTimeBIF.print();
+		      if (m_skipIfBIFisOutsideReadout) {skip_this_eventTimes=true;break;} // skip cet  eventTimes, sort de la boucle sur les BIF  
+		    }
+		  std::vector<RawCalorimeterHitPointer> BIFhits=extract(BIF_hitvector_per_BIF_DIFnumber[BIF_number],UI_intervalle(BIFintervalleLowerBound,BIFtimeWindow.second+m_SelectEventTimeWindow.second+(*itTime)),rawHit_TimeStamp()); //ajoute les hits BIF ayant le bon intervalle
+		  eventHits.insert(eventHits.end(),BIFhits.begin(),BIFhits.end());
 		}
-	      std::vector<RawCalorimeterHitPointer> BIFhits=extract(BIF_hitvector,UI_intervalle(BIFintervalleLowerBound,m_BIFtimeWindow.second+m_SelectEventTimeWindow.second+(*itTime)),rawHit_TimeStamp());
-	      eventHits.insert(eventHits.end(),BIFhits.begin(),BIFhits.end());
+	      if (skip_this_eventTimes) continue;
 	    }
 	  ++m_nEventSeen;
 	  RawHit_SDHCAL_Data eventData(eventHits,d);
