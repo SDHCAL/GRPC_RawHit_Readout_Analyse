@@ -20,9 +20,9 @@ for f in sys.argv[1:]:
 for file in inputFileNames:
     print file
 
+#this analysis script is based on cases with a single BIF serving as trigger
 experience=ROOT.GIF_oct2016_ExperimentalSetup()
-numeroBIF=experience.getBIF();
-
+numeroBIF=experience.getBIF(0);
 print numeroBIF
 
 BIFtriggerWindow=ROOT.intervalle('unsigned int')(6,8)

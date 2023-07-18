@@ -41,8 +41,9 @@ for file in inputFileNames:
     print (file)
 
 
+#In GIF oct2016, there was one BIF serving as trigger signal
 experience=ROOT.GIF_oct2016_ExperimentalSetup()
-numeroBIF=experience.getBIF()
+numeroBIF=experience.getBIF(0)
 
 print (numeroBIF)
 

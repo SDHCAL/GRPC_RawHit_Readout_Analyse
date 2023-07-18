@@ -40,9 +40,8 @@ for file in inputFileNames:
 
 
 experience=ROOT.GIF_oct2016_ExperimentalSetup()
-numeroBIF=experience.getBIF()
-
-print numeroBIF
+#numeroBIF=experience.getBIF()
+#print numeroBIF
 
 BIFtriggerWindow=ROOT.intervalle('unsigned int')(6,8)
 BIFtriggerWindowNoise=ROOT.intervalle('int')(-BIFtriggerWindow.second,-BIFtriggerWindow.first)
