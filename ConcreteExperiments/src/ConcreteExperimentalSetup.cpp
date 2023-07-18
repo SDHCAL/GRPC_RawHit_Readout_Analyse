@@ -1085,7 +1085,8 @@ CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup::CERN_SPS_Sept2018_SDHCAL_Experimenta
 CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup::CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
 {
   //counting from beam upstream
-  addBIF(252); //There is a second BIF unpluggged number 251
+  addBIF(251);
+  addBIF(252);
   float padSize=10.408f;
   float zShift=226.5f;
   Plane_position SDHCALPos({-padSize/2,96*padSize+padSize/2,zShift},{0,-1,0},{1,0,0});
