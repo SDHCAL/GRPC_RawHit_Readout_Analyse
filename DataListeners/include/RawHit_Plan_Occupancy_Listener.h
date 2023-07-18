@@ -25,7 +25,6 @@ class RawHit_Plan_Occupancy_Listener : public RawHit_SDHCAL_Data_Listener
   void saveToThreshold(unsigned int threshold,TDirectory* d);
   RunThresholdCounter_PlaneGap& runSummary() {return m_PlaneAsicCounters;}
  private:
-  unsigned int m_DIFnumber_of_the_BIF; 
   UI_domain m_padDIFs, m_stripEvenDifs, m_stripOddDifs;
 
   ExperimentalSetup& m_setup;   
