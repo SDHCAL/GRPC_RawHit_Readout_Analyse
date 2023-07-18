@@ -22,7 +22,7 @@ void testExperimentalSetup()
   
   assert(aSetup.hasBIF());
   assert(aSetup.nBIFs()==1);
-  assert(aSetup.getBIF()==2);
+  assert(aSetup.getBIF(0)==2);
   assert(aSetup.DIFnumberIsBIF(2));
   assert(aSetup.DIFnumberIsKnown(2));
   assert(aSetup.DIFnumberIsKnown(14));
@@ -75,7 +75,6 @@ void testExperimentalSetup()
   aSetup.addBIF(3);
   assert(aSetup.hasBIF());
   assert(aSetup.nBIFs()==2);
-  assert(aSetup.getBIF()==2);
   assert(aSetup.getBIF(0)==2);
   assert(aSetup.getBIF(1)==3);
   assert(aSetup.getBIF(2)==0);
@@ -86,7 +85,6 @@ void testExperimentalSetup()
   aSetup.addBIF(1);
   assert(aSetup.hasBIF());
   assert(aSetup.nBIFs()==3);
-  assert(aSetup.getBIF()==1);
   assert(aSetup.getBIF(0)==1);
   assert(aSetup.getBIF(1)==2);
   assert(aSetup.getBIF(2)==3);
