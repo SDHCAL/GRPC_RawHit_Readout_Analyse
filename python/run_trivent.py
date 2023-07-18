@@ -85,9 +85,10 @@ print ("output file name is ", outputFileName)
     
 #experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
 experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
-numeroBIF=experience.getBIF()
+numeroBIFs=[experience.getBIF(x) for x in range(experience.nBIFs())]
 
-print (numeroBIF)
+print (numeroBIFs)
+#For the moment, put the same time window for all BIFs
 BIFtriggerWindow=ROOT.intervalle('int')(-9,-5)
 
     
@@ -98,9 +99,10 @@ lcReader=ROOT.IOIMPL.LCFactory.getInstance().createLCReader()
 masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent("DHCALRawHits",True,10)
 lcReader.registerLCEventListener(masterReader)
 
-BIFListener=ROOT.BIF_Data_Listener(numeroBIF)
-BIFListener_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener,"BIFListener")
-masterReader.registerDataListener(BIFListener_timer)
+BIFListeners=[ROOT.BIF_Data_Listener(x) for x in numeroBIFs]
+BIFListeners_timer=[ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(x,"BIFListener_BIF_{}".format(x.BIF_number())) for x in BIFListeners]
+for x in BIFListeners_timer:
+  masterReader.registerDataListener(x)
 
 timePlotListener=ROOT.RawHit_TimePlot_Listener(experience)
 timePlotListener_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(timePlotListener,"timePlotListener")
@@ -108,15 +110,17 @@ masterReader.registerDataListener(timePlotListener_timer)
 
 trivent=ROOT.RawHit_SDHCAL_Data_Reader_Trivent(2,25) # 2=event windows half size, 25=threshold number for hits
 trivent.setSkipIfBIFisOutsideReadout(False)
-trivent.setBIFparameters(numeroBIF,BIFtriggerWindow) # event window = [-2,2] so BIF window = [-9,-4]
+for x in BIFListeners:
+  trivent.setBIFparameters(x.BIF_number(),BIFtriggerWindow) # event window = [-2,2] so BIF window = [-9,-4]
 #trivent.setUltraVerboseDebugOutput(True)
 trivent_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(trivent,"trivent")
 masterReader.registerDataListener(trivent_timer)
 
 
-BIFListener_check=ROOT.BIF_Data_Listener(numeroBIF)
-BIFListener_check_timer=ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(BIFListener_check,"BIFListener_check")
-trivent.registerDataListener(BIFListener_check_timer)
+BIFListeners_check=[ROOT.BIF_Data_Listener(x) for x in numeroBIFs]
+BIFListeners_check_timer=[ROOT.Time_Decorator_For_RawHit_SDHCAL_Data_Listener(x,"BIFListener_check_BIF_{}".format(x.BIF_number())) for x in BIFListeners_check]
+for x in BIFListeners_check_timer:
+  trivent.registerDataListener(x)
 
 #Filters
 filter=ROOT.RawHit_SDHCAL_Data_Reader_Event_Filter()
@@ -165,17 +169,22 @@ lcReader.open( inputFileNames )
 lcReader.readStream()
 
 #end of event loop
-BIFListener_check.printMaxDelay()
+for x in BIFListeners_check:
+  x.printMaxDelay()
 
 rootFile=ROOT.TFile(IOnames[1]+"_check.root"  , "RECREATE")
 #load ROOT library missing
 ROOT.TH1F
 
 d=rootFile.mkdir("BIFDelay")
-BIFListener.saveTo(d)
+for x in BIFListeners:
+  sub_d=d.mkdir("BIF_{}".format(x.BIF_number()))
+  x.saveTo(sub_d)
 
 dd=rootFile.mkdir("BIFDelay_check")
-BIFListener_check.saveTo(dd)
+for x in BIFListeners_check:
+  sub_dd=dd.mkdir("BIF_{}".format(x.BIF_number()))
+  x.saveTo(sub_dd)
 
 dtime=rootFile.mkdir("TimePlot")
 timePlotListener.saveTo(dtime)
