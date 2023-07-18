@@ -6,7 +6,7 @@ Database installation code works only on old architecture (ubuntu12,SLC6, ...)
 The installation script for the database library is 
 Modules/ILC_SDHCAL_ConfDB_installer.sh
 
-For october 2016 GIF, the configuration setup has been included in the soft : you don't need to build against the database. So therecommended build is :
+For october 2016 GIF, the configuration setup has been included in the soft : you don't need to build against the database. So the recommended build is :
 
 - mkdir build
 - cd build 
