@@ -22,9 +22,9 @@ for file in inputFileNames:
 
 #experience=ROOT.GIF_oct2016_ExperimentalSetup()
 experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
-numeroBIF=experience.getBIF();
-
+numeroBIF=experience.getBIF(0);
 print (numeroBIF)
+print ("prevoir plusieurs BIF")
 
 BIFtriggerWindow=ROOT.intervalle('int')(-8,-6)
 NoiseWindowLength=50; #10 microsecond
@@ -38,7 +38,7 @@ lcReader.registerLCEventListener(masterReader)
 
 noiseReader=ROOT.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
 noiseReader.setVetoOnBIF()
-noiseReader.setBIFtimeWindow(BIFtriggerWindow)
+noiseReader.setBIFtimeWindow(numeroBIF,BIFtriggerWindow)
 masterReader.registerDataListener(noiseReader)
 
 

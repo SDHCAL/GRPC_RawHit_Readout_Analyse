@@ -40,8 +40,8 @@ for file in inputFileNames:
 
 
 experience=ROOT.GIF_oct2016_ExperimentalSetup()
-#numeroBIF=experience.getBIF()
-#print numeroBIF
+numeroBIF=experience.getBIF(0)
+print numeroBIF
 
 BIFtriggerWindow=ROOT.intervalle('int')(-8,-6)
 
@@ -65,7 +65,7 @@ masterReader=ROOT.RawHit_SDHCAL_Data_Reader_From_LCEvent()
 lcReader.registerLCEventListener(masterReader)
 
 trackReader=ROOT.RawHit_SDHCAL_Data_Reader_HorizontalTrack(experience,True)
-trackReader.setBIFtimeWindow(BIFtriggerWindow)
+trackReader.setBIFtimeWindow(numeroBIF,BIFtriggerWindow)
 WrapTime=ROOT.Wrap_TimeCount_RawHit_SDHCAL_Data_Listener(trackReader,"tracker")
 masterReader.registerDataListener(WrapTime)
 

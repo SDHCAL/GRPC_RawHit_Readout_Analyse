@@ -81,7 +81,7 @@ BIF_splitter_shift=ROOT.RawHit_SDHCAL_Data_Reader_FromBIF(numeroBIF,BIFtriggerWi
 masterReader.registerDataListener(BIF_splitter_shift)
 noiseReader=ROOT.RawHit_SDHCAL_Data_Reader_Noise(experience,NoiseWindowLength)
 noiseReader.setVetoOnBIF()
-noiseReader.setBIFtimeWindow(BIFtriggerWindowNoise)
+noiseReader.setBIFtimeWindow(numeroBIF,BIFtriggerWindowNoise)
 noiseReader.setMaxEventsToSend(1000000)
 masterReader.registerDataListener(noiseReader)
 

@@ -22,9 +22,9 @@ for file in inputFileNames:
 
 #experience=ROOT.CERN_SPS_Sept2018_SDHCAL_ExperimentalSetup()
 experience=ROOT.CERN_SPS_H2_Sept2022_part1_SDHCAL_ExperimentalSetup()
-numeroBIF=experience.getBIF()
+numeroBIFs=[experience.getBIF(x) for x in range(experience.nBIFs())]
 
-print numeroBIF
+print numeroBIFs
 
     
 #start LCIO reader
@@ -37,8 +37,9 @@ lcReader.registerLCEventListener(masterReader)
 hitOccupancy=ROOT.RawHit_Occupancy_Listener()
 masterReader.registerDataListener(hitOccupancy)
 
-BIFListener=ROOT.BIF_Data_Listener(numeroBIF)
-masterReader.registerDataListener(BIFListener)
+BIFListener=[ROOT.BIF_Data_Listener(x) for x in numeroBIFs]
+for BIFListen in BIFListener:
+  masterReader.registerDataListener(BIFListen)
 
 #open file and event loop
 lcReader.open( inputFileNames )
@@ -46,7 +47,8 @@ lcReader.open( inputFileNames )
 lcReader.readStream()
 
 #end of event loop
-BIFListener.printMaxDelay()
+for BIFListen in BIFListener:
+  BIFListen.printMaxDelay()
 
 rootFile=ROOT.TFile("noise.root"  , "RECREATE")
 #load ROOT library missing
@@ -55,7 +57,9 @@ d=rootFile.mkdir("RawHits")
 hitOccupancy.saveTo(d,experience)
 
 dd=rootFile.mkdir("BIFDelay")
-BIFListener.saveTo(dd)
+for BIFListen in BIFListener:
+  sub_dd=dd.mkdir("BIF_{}".format(BIFListen.BIF_number()))
+  BIFListen.saveTo(sub_dd)
 
 rootFile.Close()
 

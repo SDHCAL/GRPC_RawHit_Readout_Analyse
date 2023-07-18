@@ -19,6 +19,7 @@ public:
   void process(const RawHit_SDHCAL_Data&);
   void saveTo(TDirectory* d);
   void printMaxDelay(std::ostream& out=std::cout);
+  unsigned int BIF_number() {return m_DIFnumber_of_the_BIF;}
  private:
   unsigned int m_DIFnumber_of_the_BIF; 
   std::map<int,int> map_HitBIFDeltaTime_NumberOfHits[3];
