@@ -55,12 +55,18 @@ bool RawHit_SDHCAL_Data_Reader_HorizontalTrack::clusterIsOK(std::vector<RawCalor
 void RawHit_SDHCAL_Data_Reader_HorizontalTrack::addBIFhit(std::vector<RawCalorimeterHitPointer>& event,std::vector<RawCalorimeterHitPointer>& trackEvent,UI_intervalle &timeSpan)
 {
   if (not m_setup.hasBIF()) return;
-  int maxBIFtime=timeSpan.second+m_BIFtimeWindow.second;
-  if (maxBIFtime<0) return;
-  int minBIFtime=timeSpan.first+m_BIFtimeWindow.first;
-  if (minBIFtime<0) minBIFtime=0;
-  UI_intervalle BIFtimeWindow(minBIFtime,maxBIFtime);
-  std::vector<RawCalorimeterHitPointer> BIF_hitvector=extract(event,m_setup.getBIF(),rawHit_DIF());
-  BIF_hitvector=extract(BIF_hitvector,BIFtimeWindow,rawHit_TimeStamp());
-  trackEvent.insert(trackEvent.end(),BIF_hitvector.begin(),BIF_hitvector.end());
+  for (std::map<unsigned int,intervalle<int> >::iterator it=m_BIFtimeWindow_per_BIF_DIF_number.begin();
+       it != m_BIFtimeWindow_per_BIF_DIF_number.end(); ++it)
+    {
+      const unsigned int &BIF_number=it->first;
+      intervalle<int> &BIFtimeWindow=it->second;
+      int maxBIFtime=timeSpan.second+BIFtimeWindow.second;
+      if (maxBIFtime<0) continue;
+      int minBIFtime=timeSpan.first+BIFtimeWindow.first;
+      if (minBIFtime<0) minBIFtime=0;
+      UI_intervalle BIFtimeWindow_ext(minBIFtime,maxBIFtime);
+      std::vector<RawCalorimeterHitPointer> BIF_hitvector=extract(event,BIF_number,rawHit_DIF());
+      BIF_hitvector=extract(BIF_hitvector,BIFtimeWindow_ext,rawHit_TimeStamp());
+      trackEvent.insert(trackEvent.end(),BIF_hitvector.begin(),BIF_hitvector.end());
+    }
 }
